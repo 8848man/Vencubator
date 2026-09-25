@@ -1,0 +1,28 @@
+:root{--motion-enter:260ms;--motion-feedback:180ms;--motion-press:80ms;--motion-release:140ms;--motion-ease:cubic-bezier(.2,.7,.2,1)}
+.motion-enter{animation:component-enter var(--motion-enter) var(--motion-ease) var(--enter-delay,0ms) both}
+.motion-feedback,dialog[open]{animation:component-feedback var(--motion-feedback) var(--motion-ease) both}
+@keyframes component-enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes component-feedback{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+:is(button,.choice,summary,a.btn){transition:scale var(--motion-release) var(--motion-ease),translate var(--motion-release) var(--motion-ease),box-shadow var(--motion-release) ease,background-color var(--motion-release) ease}
+/* Individual transforms compose with entry transforms; no layout size change. */
+:is(button,.choice,summary,a.btn).is-pressed,
+:is(button,.choice,summary,a.btn):active:not(:disabled):not([aria-disabled="true"]):not(:has(input:disabled)){
+ scale:.98;translate:0 2px;transition-duration:var(--motion-press);box-shadow:inset 0 2px 3px #274f411b;
+}
+.choice:has(input:checked){border-color:var(--green);background:#edf3e4}
+.project-tile:hover{transform:none}
+.question-load-group{position:relative}
+.question-load-group[aria-busy="true"] .question-copy{visibility:hidden}
+.question-skeleton{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:12px;pointer-events:none}
+.skeleton-line{display:block;position:relative;overflow:hidden;height:13px;border-radius:6px;background:#e4eadf;width:94%}
+.skeleton-line.title{height:25px;width:82%;margin-bottom:12px}.skeleton-line.short{width:62%}
+.skeleton-line::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent,#f4f7efb3,transparent);animation:skeleton-sweep 1.5s ease-in-out infinite;transform:translateX(-100%)}
+@keyframes skeleton-sweep{to{transform:translateX(100%)}}
+.question-load-status{min-height:24px;font-size:11px;color:var(--muted);margin:5px 0}
+.question-load-status.error{color:#965848}
+body.reduce-motion :is(.motion-enter,.motion-feedback,dialog[open]),body.reduce-motion .skeleton-line::after{animation:none!important}
+body.reduce-motion :is(button,.choice,summary,a.btn){scale:none!important;translate:none!important;transition:none!important}
+@media(prefers-reduced-motion:reduce){
+ .motion-enter,.motion-feedback,dialog[open],.skeleton-line::after{animation:none!important}
+ :is(button,.choice,summary,a.btn){scale:none!important;translate:none!important;transition:none!important}
+}

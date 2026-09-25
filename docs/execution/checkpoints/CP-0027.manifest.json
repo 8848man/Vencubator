@@ -1,0 +1,132 @@
+{
+  "checkpoint_id": "CP-0027",
+  "target_state_revision": 27,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "path": "landing/docs/SPEC-006-landing.md",
+      "exists": true,
+      "sha256": "A39F0ACE32BDBB36AF542C6EFAF97F42C1FF59D3922961F241044C05E3DB7233"
+    },
+    {
+      "path": "landing/docs/ANALYSIS.md",
+      "exists": true,
+      "sha256": "95887400EE87A625D2FDD5F17075CBD75B099E6EAD71F62BEB97AB25B41FC970"
+    },
+    {
+      "path": "landing/docs/AI-IMPROVEMENT.md",
+      "exists": true,
+      "sha256": "ED3B4448DE74AA70837FE4FB68FE79CB9A051E999E467FA371D59CB671625480"
+    },
+    {
+      "path": "landing/docs/VAL-L01.md",
+      "exists": true,
+      "sha256": "F5726D58A8509108837699BB9B12B7C75F3FDAE15942A87DCE507BCB13E0F9C9"
+    },
+    {
+      "path": "landing/README.md",
+      "exists": true,
+      "sha256": "5299473A9720B25468299212CB1A86C41E6038E20753CEB6035EC2CA68954B2A"
+    },
+    {
+      "path": "landing/index.html",
+      "exists": true,
+      "sha256": "29F7311844A46977E4FBF2C8DB9212F1D25725AFDD7CBDA3803EA733ACEFC32A"
+    },
+    {
+      "path": "landing/dist/index.html",
+      "exists": true,
+      "sha256": "60CE3DC8883657B421934CD4151ECD91B1B150FA266E883596536FE355985C8C"
+    },
+    {
+      "path": "landing/src/content.mjs",
+      "exists": true,
+      "sha256": "3BE45410974B15DC60A9D15BAD6BB6468FEA2C60BAC400F0D902A5C9E4723C2A"
+    },
+    {
+      "path": "landing/src/render.mjs",
+      "exists": true,
+      "sha256": "ED546821F227E1D14A565675AB9AE5DE282B3ECAAC804870535108E561A1A4AE"
+    },
+    {
+      "path": "landing/src/motion.mjs",
+      "exists": true,
+      "sha256": "78A0DA0519BF15E8F6134E72A34D83B3B54178031812C4612E574125C5E4706F"
+    },
+    {
+      "path": "landing/src/main.mjs",
+      "exists": true,
+      "sha256": "DF235EC81D212472B10AAAD62F84C71863C899219F7B5241F05BA0BF3ECDDC0C"
+    },
+    {
+      "path": "landing/src/tokens.css",
+      "exists": true,
+      "sha256": "8D78098A3459E7CB969A1E647744AB79828C4D0CE320F1C4F5E6850C59ACAD46"
+    },
+    {
+      "path": "landing/src/landing.css",
+      "exists": true,
+      "sha256": "179A5300F2D7F735E8785AFDC63282DAE6742B90E6B64F0BA57D22335F9F6CBC"
+    },
+    {
+      "path": "landing/scripts/build.mjs",
+      "exists": true,
+      "sha256": "FA152C2197BFDAEEA428709D7C90DC7394F5221A668DD39BEA2751032215C86B"
+    },
+    {
+      "path": "landing/scripts/serve.mjs",
+      "exists": true,
+      "sha256": "BA935A32B941D185475F5BD086854F5FF96AE9DC0ECACA72BF13082863AD53D7"
+    },
+    {
+      "path": "landing/scripts/qa.mjs",
+      "exists": true,
+      "sha256": "5EF728EC7185A6610DDA04D92ABABEE7DC4CED39518B3528EE529F57F1F615B9"
+    },
+    {
+      "path": "landing/tests/_util.mjs",
+      "exists": true,
+      "sha256": "59F69BFE21FE69AAA3450D0509C913EA900D1C5B21678B399FD33ED7A560FFF6"
+    },
+    {
+      "path": "landing/tests/spec.test.mjs",
+      "exists": true,
+      "sha256": "26FE63629A352B0B13EB60F2827D49F86E0352453AF5C8A69B74900717F0657E"
+    },
+    {
+      "path": "landing/tests/render.test.mjs",
+      "exists": true,
+      "sha256": "2EEFC465FA181B0B0341E4C4B946F0B7168B8C38524AD9EEF90E47DE5F93CE28"
+    },
+    {
+      "path": "landing/tests/motion.test.mjs",
+      "exists": true,
+      "sha256": "EE006BEE5D6DE3EDA61497D31DD3BFB37E1563B24DDEE6965F6DD8092BD05E4F"
+    },
+    {
+      "path": "landing/tests/content.test.mjs",
+      "exists": true,
+      "sha256": "66813E563FFED1EA54AF8CF38ED0159E953F8FAE3DDA1CD0B3E825F98859E1CC"
+    },
+    {
+      "path": "landing/tests/build.test.mjs",
+      "exists": true,
+      "sha256": "3FB04F3354B6A5133EE4486FD4B6CFF33878B476D2CE7947B25D13A6FB8674BD"
+    },
+    {
+      "path": "docs/process/APPROVALS.md",
+      "exists": true,
+      "sha256": "452F032DA712DF7EB235730C915755F5EB102DD8D0A4F0158623828FBE013F14"
+    },
+    {
+      "path": "docs/execution/work-items/L01-W01.md",
+      "exists": true,
+      "sha256": "398299A5E01D75A33C6FEC2A8FF799106B57D8B01405A0495AC99466B80AC319"
+    },
+    {
+      "path": "README.md",
+      "exists": true,
+      "sha256": "F43B145829D7D415A7627A65024FFA580066FD6CE8A83C694480ACCEB19F6343"
+    }
+  ]
+}

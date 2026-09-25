@@ -1,0 +1,33 @@
+import {readFileSync,writeFileSync,existsSync,mkdirSync,appendFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {resolve,relative} from 'node:path';
+const root=process.cwd();
+const [work,status,note,next='']=process.argv.slice(2);
+if(!work||!status||!note)throw Error('usage: node scripts/checkpoint.mjs W-ID status note [next-W-ID]');
+const statePath=resolve(root,'docs/execution/STATE.json');
+const s=JSON.parse(readFileSync(statePath,'utf8'));
+if(!s.work_items[work])throw Error('Unknown work ID');
+if(!['in_progress','validating','completed','waiting_external','blocked'].includes(status))throw Error('Unknown status');
+const n=s.revision+1,id=`CP-${String(n).padStart(4,'0')}`,now=new Date().toISOString();
+const phase=s.work_items[work].phase;
+const validation=phase==='P06'?'docs/validation/VAL-005-motion.md':phase==='P05'?'docs/validation/VAL-004-guided-learning.md':'docs/validation/VAL-003-prototype.md';
+const authorization=phase==='P06'?'AUTH-008, SPEC-008 r0.1':phase==='P05'?'AUTH-004, SPEC-005 r0.1':'AUTH-003, SPEC-004 r0.1';
+const definition=`docs/execution/work-items/${work}.md`;
+if(!existsSync(definition)){writeFileSync(definition,`# ${work}\n\nAUTH-003 · S1/${phase} · SPEC-004 r0.1\n\n범위·AC: docs/plans/stages/STAGE-01-prototype.md 해당 W. 실시간 상태는 STATE.json.\n\n예정 변경: prototype 소스/테스트 및 관련 검증 문서. 변경 경계마다 CP로 기록.\n\n검증: domain node:test, 브라우저 직접 실행 및 상태 복원. 완료 근거는 VAL-003.\n`);}
+const paths=['docs/specs/SPEC-003-ux.md','docs/context/REQUIREMENTS.md','docs/process/TRACEABILITY.md','docs/plans/IMPLEMENTATION-ROADMAP.md',...JSON.parse(readFileSync(s.checkpoint.manifest,'utf8')).files.map(f=>f.path),'docs/specs/SPEC-008-motion.md','prototype/motion.mjs','prototype/motion.css','prototype/tests/motion.test.mjs','docs/validation/VAL-005-motion.md','docs/plans/stages/STAGE-01-prototype.md','docs/specs/SPEC-005-guided-learning.md','prototype/guided.mjs','prototype/guided-ui.mjs','prototype/guided.css','prototype/tests/guided.test.mjs','docs/validation/VAL-004-guided-learning.md','docs/specs/SPEC-004-prototype.md','docs/process/APPROVALS.md','docs/plans/PROTOTYPE-SCENARIOS.md','docs/adr/ADR-003-prototype-runtime.md',definition,'prototype/domain.mjs','prototype/content.mjs','prototype/app.mjs','prototype/style.css','prototype/index.html','prototype/server.mjs','prototype/adapters.mjs','prototype/tests/domain.test.mjs','docs/validation/VAL-003-prototype.md','scripts/checkpoint.mjs','scripts/verify-checkpoint.mjs','prototype/tests/claims.test.mjs','prototype/tests/adapters.test.mjs','prototype/README.md','README.md','docs/validation/PROTOTYPE-RESEARCH-KIT.md','docs/plans/PROTOTYPE-HANDOVER.md'];
+const manifest={checkpoint_id:id,target_state_revision:n,algorithm:'SHA256',files:[...new Set(paths)].map(path=>({path,exists:existsSync(path),sha256:existsSync(path)?createHash('sha256').update(readFileSync(path)).digest('hex').toUpperCase():null}))};
+const cpPath=`docs/execution/checkpoints/${id}.md`,manifestPath=`docs/execution/checkpoints/${id}.manifest.json`;
+if(existsSync(cpPath))throw Error('Checkpoint already exists');
+const body=`# ${id} — ${work}\n\nprevious: ${s.checkpoint.id}\ntarget_state_revision: ${n}\n시간: ${now}\n상태: ${status}\n승인: ${authorization}\n\n## 작업·검증·다음 행동\n\n${note}\n\n다음 W: ${next||work}. 해당 W의 Stage 계획과 ${validation}을 먼저 확인한다.\n\n## 변경·환경\n\n변경 대상은 manifest 참조. 아직 존재하지 않는 파일은 미구현이다. 사용자 선행 output/tmp/build 스크립트 변경 없음. git HEAD 없음, commit/배포 없음. 앱 서버/검사 진행 여부는 ${validation} 및 프로세스 목록을 확인한다. 실제 사용자 연구 미실행.\n`;
+writeFileSync(cpPath,body);writeFileSync(manifestPath,JSON.stringify(manifest,null,2));
+s.revision=n;s.updated_at=now;s.implementation_status='in_progress';
+s.work_items[work]={...s.work_items[work],status,definition_path:definition,validation_status:status==='completed'?'passed':'not_run',validation_refs:status==='completed'?[validation]:[],completed_checkpoint:status==='completed'?id:null};
+s.phases[phase].status='in_progress';s.stages.S1.status='in_progress';s.stages.S1.authorization_ref=phase==='P06'?'AUTH-008':phase==='P05'?'AUTH-004':'AUTH-003';
+if(s.phases[phase].work_item_ids.every(w=>s.work_items[w].status==='completed'))Object.assign(s.phases[phase],{status:'completed',gate_status:'passed',validation_status:'passed',validation_refs:[validation],completed_checkpoint:id});
+s.active={stage:'S1',phase,work_item:work,owner:'prototype-session',run_state:status==='completed'?'idle':status};
+if(status==='completed')s.active={stage:null,phase:null,work_item:null,owner:null,run_state:'idle'};
+s.next={stage:'S1',phase:s.work_items[next||work].phase,work_item:next||work,condition:'해당 W 승인 범위, 외부 연구는 실제 참가자 필요',action:note};s.checkpoint={id,path:cpPath,manifest:manifestPath};
+writeFileSync(statePath,JSON.stringify(s,null,2));JSON.parse(readFileSync(statePath,'utf8'));
+appendFileSync('docs/execution/WORKLOG.md',`\n| ${now} | ${id} / ${n} | ${work} ${status} | ${note.replaceAll('|','/').replaceAll('\n',' ')} | ${next||work} |\n`);
+for(const name of ['CURRENT','HANDOFF']){const old=readFileSync(`docs/context/${name}.md`,'utf8');const extra=old.includes('## 독립 트랙')?old.slice(old.indexOf('## 독립 트랙')):'## 독립 트랙\n\n랜딩 v1: landing/ (4174), v2: landing-v2/ (4175), 수요 검증 계획: growth/. 기존 산출물 보존. 프로토타입 기본 포트4183.\n';writeFileSync(`docs/context/${name}.md`,`# 프로토타입 진행 — ${name}\n\n${id} / STATE revision ${n} / ${now}\n\n${authorization}: 해당 프로토타입 작업. S1만 구현, 실제 AI/인증/푸시 없음.\n\n현재 ${work}: ${status}.\n\n${note}\n\n다음: ${next||work}. STATE와 ${cpPath} 및 manifest를 대조하고 관련 Phase/Spec과 ${validation}을 읽어 재개한다.\n\n진행률은 STATE가 권위다. 기존 기획·연구는 보존. MVP 및 고도화 미착수. 사용자 연구는 아직 수행하지 않았으며 완료로 간주하지 않는다.\n\n${extra}`);}
+console.log(`${id}: ${work} ${status}`);

@@ -1,0 +1,82 @@
+{
+  "checkpoint_id": "CP-0003",
+  "target_state_revision": 3,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "path": "docs/specs/SPEC-004-prototype.md",
+      "exists": true,
+      "sha256": "2DBBC4DF961ED012A1D2E7EA1CE43B590F2EEF0B8A44AD5273240142B59B60DD"
+    },
+    {
+      "path": "docs/process/APPROVALS.md",
+      "exists": true,
+      "sha256": "91C843FD46C6E49C9DEB5908E57A46A52FADC87C3E33FCE65AAE62D74BF57265"
+    },
+    {
+      "path": "docs/plans/PROTOTYPE-SCENARIOS.md",
+      "exists": true,
+      "sha256": "1E25AE520E0B03FABDBC9BED4CC4362358535793A22261A4534FEBCA5B96489B"
+    },
+    {
+      "path": "docs/adr/ADR-003-prototype-runtime.md",
+      "exists": true,
+      "sha256": "9C9606DCB87EB35030DE4D60875FB05362C14D13527739669C03C66B4912ACD3"
+    },
+    {
+      "path": "docs/execution/work-items/P01-W02.md",
+      "exists": true,
+      "sha256": "50D5D1A22FEF22B78C642E1C8A6895546FB1E83B34EE538C8169576D3D8100A1"
+    },
+    {
+      "path": "prototype/domain.mjs",
+      "exists": false,
+      "sha256": null
+    },
+    {
+      "path": "prototype/content.mjs",
+      "exists": false,
+      "sha256": null
+    },
+    {
+      "path": "prototype/app.mjs",
+      "exists": false,
+      "sha256": null
+    },
+    {
+      "path": "prototype/style.css",
+      "exists": false,
+      "sha256": null
+    },
+    {
+      "path": "prototype/index.html",
+      "exists": false,
+      "sha256": null
+    },
+    {
+      "path": "prototype/server.mjs",
+      "exists": false,
+      "sha256": null
+    },
+    {
+      "path": "prototype/adapters.mjs",
+      "exists": false,
+      "sha256": null
+    },
+    {
+      "path": "prototype/tests/domain.test.mjs",
+      "exists": false,
+      "sha256": null
+    },
+    {
+      "path": "docs/validation/VAL-003-prototype.md",
+      "exists": true,
+      "sha256": "06212055469FB0D0F246E6B097D62C6CEECC435222BF5EB706FF0A8413A104F1"
+    },
+    {
+      "path": "scripts/checkpoint.mjs",
+      "exists": true,
+      "sha256": "528BD91F68D245F1920D8450F47C86F40BBFD3878E9AD0319447E87E5F73B3A4"
+    }
+  ]
+}

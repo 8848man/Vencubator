@@ -1,0 +1,82 @@
+{
+  "checkpoint_id": "CP-0017",
+  "target_state_revision": 17,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "path": "docs/specs/SPEC-004-prototype.md",
+      "exists": true,
+      "sha256": "2DBBC4DF961ED012A1D2E7EA1CE43B590F2EEF0B8A44AD5273240142B59B60DD"
+    },
+    {
+      "path": "docs/process/APPROVALS.md",
+      "exists": true,
+      "sha256": "91C843FD46C6E49C9DEB5908E57A46A52FADC87C3E33FCE65AAE62D74BF57265"
+    },
+    {
+      "path": "docs/plans/PROTOTYPE-SCENARIOS.md",
+      "exists": true,
+      "sha256": "1E25AE520E0B03FABDBC9BED4CC4362358535793A22261A4534FEBCA5B96489B"
+    },
+    {
+      "path": "docs/adr/ADR-003-prototype-runtime.md",
+      "exists": true,
+      "sha256": "9C9606DCB87EB35030DE4D60875FB05362C14D13527739669C03C66B4912ACD3"
+    },
+    {
+      "path": "docs/execution/work-items/P03-W03.md",
+      "exists": true,
+      "sha256": "A4DB6E962EF1D9A3FD14C6457350C466E757D9ED7182429F86BE848AA35A7A41"
+    },
+    {
+      "path": "prototype/domain.mjs",
+      "exists": true,
+      "sha256": "01683F70E4FA551E417054D7A3FD9907FD2E57E33C9CEC7664A60A438D86C3E2"
+    },
+    {
+      "path": "prototype/content.mjs",
+      "exists": true,
+      "sha256": "62BCD44851A13DAC3ED416D439E59485D4C0199770046D944E2F74CE89A9B407"
+    },
+    {
+      "path": "prototype/app.mjs",
+      "exists": true,
+      "sha256": "319A7FF6F25121F83810C161DE575F76FC8E384F78C54D653FF59E5FCCA1FFBE"
+    },
+    {
+      "path": "prototype/style.css",
+      "exists": true,
+      "sha256": "C5EF7E2E044803432B30A95869B65BCF52E4480517EF5D6E393ACC2F27CF87DF"
+    },
+    {
+      "path": "prototype/index.html",
+      "exists": true,
+      "sha256": "EC446C447DC606F0139CF9FEC7D6A5DAD8A324E5C23072D872C4747800306AA8"
+    },
+    {
+      "path": "prototype/server.mjs",
+      "exists": true,
+      "sha256": "ED5A47F63729DECA5DB1AB737B712BE2302570160847B959438E3C1B9406E823"
+    },
+    {
+      "path": "prototype/adapters.mjs",
+      "exists": true,
+      "sha256": "90770C22DC96A2309F64392BB3D6DF80F185391639D0376F2BAFF705FB4DAC9C"
+    },
+    {
+      "path": "prototype/tests/domain.test.mjs",
+      "exists": true,
+      "sha256": "37ADBC7FC60B6C7D80AED3BC0827448C8B869AE4ABB18289D3326B651FA4FE5E"
+    },
+    {
+      "path": "docs/validation/VAL-003-prototype.md",
+      "exists": true,
+      "sha256": "7FBEFADED489B9959B1D5D65E9DA8F512B80EA1D47FA0C6F30BE4B0772D92F0F"
+    },
+    {
+      "path": "scripts/checkpoint.mjs",
+      "exists": true,
+      "sha256": "528BD91F68D245F1920D8450F47C86F40BBFD3878E9AD0319447E87E5F73B3A4"
+    }
+  ]
+}

@@ -1,0 +1,467 @@
+{
+  "checkpoint_id": "CP-0033",
+  "target_state_revision": 33,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "path": "landing/docs/SPEC-006-landing.md",
+      "exists": true,
+      "sha256": "A39F0ACE32BDBB36AF542C6EFAF97F42C1FF59D3922961F241044C05E3DB7233"
+    },
+    {
+      "path": "landing/docs/ANALYSIS.md",
+      "exists": true,
+      "sha256": "95887400EE87A625D2FDD5F17075CBD75B099E6EAD71F62BEB97AB25B41FC970"
+    },
+    {
+      "path": "landing/docs/AI-IMPROVEMENT.md",
+      "exists": true,
+      "sha256": "ED3B4448DE74AA70837FE4FB68FE79CB9A051E999E467FA371D59CB671625480"
+    },
+    {
+      "path": "landing/docs/VAL-L01.md",
+      "exists": true,
+      "sha256": "F5726D58A8509108837699BB9B12B7C75F3FDAE15942A87DCE507BCB13E0F9C9"
+    },
+    {
+      "path": "landing/README.md",
+      "exists": true,
+      "sha256": "A6F930ED710028874BFDB93755D6D36410A3148521E67900E6BFC9E17DC1FAAE"
+    },
+    {
+      "path": "landing/index.html",
+      "exists": true,
+      "sha256": "ABF49D4F33AB1EEC5DA46F3FE7575D46C26498C5570BD45D07F95C9447CFEF8E"
+    },
+    {
+      "path": "landing/dist/index.html",
+      "exists": true,
+      "sha256": "5431F785CD8B4030575095ACF99A6CE5D12571C39B12DB960AD286B268B7F3A2"
+    },
+    {
+      "path": "landing/src/content.mjs",
+      "exists": true,
+      "sha256": "C46F37013C6E3C5B0633ABA0BD428B35A3628C35D6CB4A4BFAFD71D77CFECE3A"
+    },
+    {
+      "path": "landing/src/render.mjs",
+      "exists": true,
+      "sha256": "ED546821F227E1D14A565675AB9AE5DE282B3ECAAC804870535108E561A1A4AE"
+    },
+    {
+      "path": "landing/src/motion.mjs",
+      "exists": true,
+      "sha256": "78A0DA0519BF15E8F6134E72A34D83B3B54178031812C4612E574125C5E4706F"
+    },
+    {
+      "path": "landing/src/main.mjs",
+      "exists": true,
+      "sha256": "DF235EC81D212472B10AAAD62F84C71863C899219F7B5241F05BA0BF3ECDDC0C"
+    },
+    {
+      "path": "landing/src/tokens.css",
+      "exists": true,
+      "sha256": "8D78098A3459E7CB969A1E647744AB79828C4D0CE320F1C4F5E6850C59ACAD46"
+    },
+    {
+      "path": "landing/src/landing.css",
+      "exists": true,
+      "sha256": "179A5300F2D7F735E8785AFDC63282DAE6742B90E6B64F0BA57D22335F9F6CBC"
+    },
+    {
+      "path": "landing/scripts/build.mjs",
+      "exists": true,
+      "sha256": "D4395966FAD54354EBBFF0E8F94ACE1FA19B6B31CE1A224AFEC90CF9F7AAF01C"
+    },
+    {
+      "path": "landing/scripts/serve.mjs",
+      "exists": true,
+      "sha256": "BA935A32B941D185475F5BD086854F5FF96AE9DC0ECACA72BF13082863AD53D7"
+    },
+    {
+      "path": "landing/scripts/qa.mjs",
+      "exists": true,
+      "sha256": "5EF728EC7185A6610DDA04D92ABABEE7DC4CED39518B3528EE529F57F1F615B9"
+    },
+    {
+      "path": "landing/tests/_util.mjs",
+      "exists": true,
+      "sha256": "59F69BFE21FE69AAA3450D0509C913EA900D1C5B21678B399FD33ED7A560FFF6"
+    },
+    {
+      "path": "landing/tests/spec.test.mjs",
+      "exists": true,
+      "sha256": "26FE63629A352B0B13EB60F2827D49F86E0352453AF5C8A69B74900717F0657E"
+    },
+    {
+      "path": "landing/tests/render.test.mjs",
+      "exists": true,
+      "sha256": "2EEFC465FA181B0B0341E4C4B946F0B7168B8C38524AD9EEF90E47DE5F93CE28"
+    },
+    {
+      "path": "landing/tests/motion.test.mjs",
+      "exists": true,
+      "sha256": "EE006BEE5D6DE3EDA61497D31DD3BFB37E1563B24DDEE6965F6DD8092BD05E4F"
+    },
+    {
+      "path": "landing/tests/content.test.mjs",
+      "exists": true,
+      "sha256": "66813E563FFED1EA54AF8CF38ED0159E953F8FAE3DDA1CD0B3E825F98859E1CC"
+    },
+    {
+      "path": "landing/tests/build.test.mjs",
+      "exists": true,
+      "sha256": "8153B95DAF090694C23D08B6B924D3688FC42B4F944AC9EB04CA4D124200D27B"
+    },
+    {
+      "path": "docs/process/APPROVALS.md",
+      "exists": true,
+      "sha256": "318B2E53442F69FAA9514BBEDE2AB30D1D8CC4FF706EA5E99487FA9F5124F3CA"
+    },
+    {
+      "path": "docs/execution/work-items/L01-W01.md",
+      "exists": true,
+      "sha256": "398299A5E01D75A33C6FEC2A8FF799106B57D8B01405A0495AC99466B80AC319"
+    },
+    {
+      "path": "README.md",
+      "exists": true,
+      "sha256": "EBDE98E3E17791D7515F4A3358F773856DF8AD3CCBAC6F16886649117377D7D4"
+    },
+    {
+      "path": "prototype/server.mjs",
+      "exists": true,
+      "sha256": "6D7A2F3D78F438E2CE1912475F99CCF4F75EB3319AB304271BF6B859D503FFE3"
+    },
+    {
+      "path": "prototype/README.md",
+      "exists": true,
+      "sha256": "8D14B03DDBADA867DCC651AFD741048F98934FD56F80372A8339661280D9DF9B"
+    },
+    {
+      "path": "landing/start.cmd",
+      "exists": true,
+      "sha256": "A9F79BBD7A3E592E7DA19F055B96036B38859BC86C3554C5EB50FC6A1FD9E5A5"
+    },
+    {
+      "path": "landing-v2/.gitignore",
+      "exists": true,
+      "sha256": "E062DB0AA302602B73B2EDE365EC75DE7E694A35656F9408C1E53BB93E4267CD"
+    },
+    {
+      "path": "landing-v2/README.md",
+      "exists": true,
+      "sha256": "FE613B249C4BE24ED2409054665689F7F17332A2C0AE40C9A2A2D02ED36936C9"
+    },
+    {
+      "path": "landing-v2/dist/index.html",
+      "exists": true,
+      "sha256": "9A7D447E1B682EFDA66EAD358DFD0DD1EB80B53557D1C3CF8A1989BB327AC613"
+    },
+    {
+      "path": "landing-v2/docs/AI-IMPROVEMENT.md",
+      "exists": true,
+      "sha256": "859CC181E98ACDBFF80FEAEDC567BEB11111544C6E2A80039DD1A8C177679BCB"
+    },
+    {
+      "path": "landing-v2/docs/PRINCIPLES.md",
+      "exists": true,
+      "sha256": "69238BFF6470F643EF30BDE64EA2999EA24AD298BFC4333680011A7E4DE8CD81"
+    },
+    {
+      "path": "landing-v2/docs/SPEC-007-landing-v2.md",
+      "exists": true,
+      "sha256": "0E36954ECDD4DF85FED8104A3EBD22537D62E30F7AC6118D71929D0AE7FE15A9"
+    },
+    {
+      "path": "landing-v2/docs/VAL-L02.md",
+      "exists": true,
+      "sha256": "0E0C8C45B8573DD3A894DFB064FBCC2734BF7904657D9A3E93589F07E380A33F"
+    },
+    {
+      "path": "landing-v2/index.html",
+      "exists": true,
+      "sha256": "1DECE40520F6F9430DDE3B14D1740F9005C74C6C09FB5218C5435D69A221FEF0"
+    },
+    {
+      "path": "landing-v2/scripts/build.mjs",
+      "exists": true,
+      "sha256": "097CC2205FB2E4B81EAA6B6EAB7BD8A220651C73A3BE28BC2FA0609E7B0B02DB"
+    },
+    {
+      "path": "landing-v2/scripts/qa.mjs",
+      "exists": true,
+      "sha256": "A71253351A6314979CEFAC959166EF750BFE3385AEE17A8D0BFC9F16D515AA7A"
+    },
+    {
+      "path": "landing-v2/scripts/serve.mjs",
+      "exists": true,
+      "sha256": "C810EB453180D8A77E3F1093655FF62B89629980FE3C7E9E3D6CBE6128EF8FC9"
+    },
+    {
+      "path": "landing-v2/src/content.mjs",
+      "exists": true,
+      "sha256": "9661102B7F7AC68A2CC8D4C7CD0BD5D5C10FF118CF81E1B3E871DD7339AA5184"
+    },
+    {
+      "path": "landing-v2/src/interact.mjs",
+      "exists": true,
+      "sha256": "29D7DFCBD78594FA9D455B51BFD2E215697D45ECE49B0218A20DF36056FFA559"
+    },
+    {
+      "path": "landing-v2/src/landing.css",
+      "exists": true,
+      "sha256": "7894BA1766A1E87F0AEF6E48CA5FF80B5304C64058E2D82E0503C418CA01D8A0"
+    },
+    {
+      "path": "landing-v2/src/main.mjs",
+      "exists": true,
+      "sha256": "5260AF9BB924AA1578D26A6C3453209FF9ED853DA6D50E1CD8DA0C4D929FD675"
+    },
+    {
+      "path": "landing-v2/src/render.mjs",
+      "exists": true,
+      "sha256": "2A3737AF29EFB266EBFF4FA46C9B838FE669930AA4DBB1D3DF1BD761AB95579A"
+    },
+    {
+      "path": "landing-v2/src/state.mjs",
+      "exists": true,
+      "sha256": "32FFCC4CC29DE4F12456029703BC65D44ED6A7856B6996901C8E76401A6D1B52"
+    },
+    {
+      "path": "landing-v2/src/tokens.css",
+      "exists": true,
+      "sha256": "96FD3CED1E117A050946B04A8F380B68AA89E8DB48DAF2B82B1C41BF48C001DE"
+    },
+    {
+      "path": "landing-v2/start.cmd",
+      "exists": true,
+      "sha256": "5C1498F826B302283895A98F86C77508F78E51AD59D86EE27D9A245D857D92AA"
+    },
+    {
+      "path": "landing-v2/tests/_util.mjs",
+      "exists": true,
+      "sha256": "796ED77513F7DC5E2C8DA843DC496A935860284A2BC7677C6B3E915C8DEAE181"
+    },
+    {
+      "path": "landing-v2/tests/build.test.mjs",
+      "exists": true,
+      "sha256": "5013B61CFB0FDBCC09EB77F258D84302C6C01B30B9762D9FCAC158C3A99B09EC"
+    },
+    {
+      "path": "landing-v2/tests/content.test.mjs",
+      "exists": true,
+      "sha256": "C5ACC66A5B17EE0B10BA3BCD4338D86F0D0EA768183DD5F205618C04606A1320"
+    },
+    {
+      "path": "landing-v2/tests/render.test.mjs",
+      "exists": true,
+      "sha256": "7A643DEEE18D96B1C1164A6BC5CF5301129E6404C0F1450454C86B52808B2893"
+    },
+    {
+      "path": "landing-v2/tests/spec.test.mjs",
+      "exists": true,
+      "sha256": "BB84B09F1A3EE01858701DBC0B6176787F34D9A3B3C5110E0146863F6C56AEAF"
+    },
+    {
+      "path": "landing-v2/tests/state.test.mjs",
+      "exists": true,
+      "sha256": "4D89B68C95E936CEAEE15B5AE4E10925781B79041C15E07E4A07542D0E4B37CE"
+    },
+    {
+      "path": "docs/execution/work-items/L02-W01.md",
+      "exists": true,
+      "sha256": "D8D86C8BE3CBCD53BEAFE39806DAF230B518551348019FD7DC6A0DF2C98AC951"
+    },
+    {
+      "path": "growth/CHANNELS.md",
+      "exists": true,
+      "sha256": "4C540D1343987027BC0C0E111BBDB6F704FA5D8A397A08E72B04BB035B46428C"
+    },
+    {
+      "path": "growth/EXPERIMENT-LOG.md",
+      "exists": true,
+      "sha256": "062E8F8DC74A438BE387E74FF52C15AD4FB8DC7C6C5B5D08ACE9A1B9B9143F57"
+    },
+    {
+      "path": "growth/GROWTH-PLAN.md",
+      "exists": true,
+      "sha256": "4D7C40D18DD19ECDACB0FABC2278ADE7BF471180BF6DDA0119FCCEFB8E0357E5"
+    },
+    {
+      "path": "growth/LAUNCH-CHECKLIST.md",
+      "exists": true,
+      "sha256": "017D7701264DAC36FFCDB1D49446ED8AF8589BBB69B4EC7207A6BE139CF5ACCF"
+    },
+    {
+      "path": "growth/METRICS.md",
+      "exists": true,
+      "sha256": "48032CCD6B16668326A1DE97E1236D8641337E16D2AB6DB7D8B46ECB521D1F3A"
+    },
+    {
+      "path": "growth/PIVOT-PLAYBOOK.md",
+      "exists": true,
+      "sha256": "BD2983EF6D652552E66A470EEAFDC201BB7593440B755C52E16FBBC475A17804"
+    },
+    {
+      "path": "growth/README.md",
+      "exists": true,
+      "sha256": "3986680D3FD88DA06A104CD4D9AB4952C784CF5939B6914C17B5A8A8119D7005"
+    },
+    {
+      "path": "docs/execution/work-items/G01-W01.md",
+      "exists": true,
+      "sha256": "1A875834D3442660B6BECF65A74F16A24B6C14B548C5E50FADEB8812A656892F"
+    },
+    {
+      "path": "docs/specs/SPEC-008-motion.md",
+      "exists": true,
+      "sha256": "3323F526B93B99ECBBDD6D147021B63E83E416D97CB680AD9789D25E8AE3FA58"
+    },
+    {
+      "path": "prototype/motion.mjs",
+      "exists": true,
+      "sha256": "80290BDBFADDAC986A66327FE3484985A1E431F746D73B3F4DAFF00F7A181A72"
+    },
+    {
+      "path": "prototype/motion.css",
+      "exists": true,
+      "sha256": "206C2F29333490817299951DFC05936EB675FE9098C23F4A89AA122B8B0138ED"
+    },
+    {
+      "path": "prototype/tests/motion.test.mjs",
+      "exists": true,
+      "sha256": "B0DC45B61A5B742B71D86F106077E5DD080E55177CBCCED05FE2BE06449A4856"
+    },
+    {
+      "path": "docs/validation/VAL-005-motion.md",
+      "exists": true,
+      "sha256": "078A5AE2F11C56A76CD60B218AD10775C106168B7233AD14887D599D5CF48B32"
+    },
+    {
+      "path": "docs/plans/stages/STAGE-01-prototype.md",
+      "exists": true,
+      "sha256": "A85AE713D196248608E912131A1CAF48D5F8467A7BCF721D97214B2A6E99B786"
+    },
+    {
+      "path": "docs/specs/SPEC-005-guided-learning.md",
+      "exists": true,
+      "sha256": "DECB5703F382049735880E129E8952FF95FE7DBD6C618EFC79069976079D7548"
+    },
+    {
+      "path": "prototype/guided.mjs",
+      "exists": true,
+      "sha256": "F21799256B72580C46349044E56ADED8E5ECE985BA0AF1C40458CD9D4C58BEA1"
+    },
+    {
+      "path": "prototype/guided-ui.mjs",
+      "exists": true,
+      "sha256": "88DD9BECFD9F8F61096505B1CA0E15053172D1C8518436EE5B9D2651E88177B0"
+    },
+    {
+      "path": "prototype/guided.css",
+      "exists": true,
+      "sha256": "2A436834F49F647DEF207E743601CB6D31C787CB4FF36E79E960B9E5A4395DAC"
+    },
+    {
+      "path": "prototype/tests/guided.test.mjs",
+      "exists": true,
+      "sha256": "3782E1CDAB97FF89205543CEB14892328B29FC225DA5A28003E439C0B3444C30"
+    },
+    {
+      "path": "docs/validation/VAL-004-guided-learning.md",
+      "exists": true,
+      "sha256": "17106EB8D43EBF2F1FBEEB5C045E756524DB1DF63675C0B30730279D3B03C327"
+    },
+    {
+      "path": "docs/specs/SPEC-004-prototype.md",
+      "exists": true,
+      "sha256": "60D08794248664BAFEE74EF99E93AD5A4E5CAE4CF64C3E00D6C16EEA7BBDF660"
+    },
+    {
+      "path": "docs/plans/PROTOTYPE-SCENARIOS.md",
+      "exists": true,
+      "sha256": "1E25AE520E0B03FABDBC9BED4CC4362358535793A22261A4534FEBCA5B96489B"
+    },
+    {
+      "path": "docs/adr/ADR-003-prototype-runtime.md",
+      "exists": true,
+      "sha256": "9C9606DCB87EB35030DE4D60875FB05362C14D13527739669C03C66B4912ACD3"
+    },
+    {
+      "path": "docs/execution/work-items/P06-W01.md",
+      "exists": true,
+      "sha256": "AE088D020FA234C5B827201298653FC6653108573B045603786AB5EA5C53D798"
+    },
+    {
+      "path": "prototype/domain.mjs",
+      "exists": true,
+      "sha256": "4429FEF71E5701DF7A8B947BB0FBDBDE07FBBCE581DDA25ABFB26B1C0FF9EF47"
+    },
+    {
+      "path": "prototype/content.mjs",
+      "exists": true,
+      "sha256": "62BCD44851A13DAC3ED416D439E59485D4C0199770046D944E2F74CE89A9B407"
+    },
+    {
+      "path": "prototype/app.mjs",
+      "exists": true,
+      "sha256": "AB4FD240F5EF1D0EDD1A5600A4BFEB9937A1D55CACE4361A43724A67245F57C2"
+    },
+    {
+      "path": "prototype/style.css",
+      "exists": true,
+      "sha256": "26BE1E89A7FEBFC72C9DA89009C9D2A04EDF9C18FFEE476BA069B0AD35DA40A6"
+    },
+    {
+      "path": "prototype/index.html",
+      "exists": true,
+      "sha256": "9DF730CA63F150E1B7CECF166008A55963D873AF633B52D71FF51BD1A166A4FF"
+    },
+    {
+      "path": "prototype/adapters.mjs",
+      "exists": true,
+      "sha256": "90770C22DC96A2309F64392BB3D6DF80F185391639D0376F2BAFF705FB4DAC9C"
+    },
+    {
+      "path": "prototype/tests/domain.test.mjs",
+      "exists": true,
+      "sha256": "37ADBC7FC60B6C7D80AED3BC0827448C8B869AE4ABB18289D3326B651FA4FE5E"
+    },
+    {
+      "path": "docs/validation/VAL-003-prototype.md",
+      "exists": true,
+      "sha256": "FEF6DCA2946C12045C0E8D02926C498AD26D2F0D2D774D70A1795C48BA853A0C"
+    },
+    {
+      "path": "scripts/checkpoint.mjs",
+      "exists": true,
+      "sha256": "5A27876BC6D0132F0036B80F59CFE1F78F78B8E6AD9C63897711E824B2F3D663"
+    },
+    {
+      "path": "scripts/verify-checkpoint.mjs",
+      "exists": true,
+      "sha256": "8FA6948CEDD5075C2B587D9E6C04D3A6A0DF2442CA557E6629D37168107D0001"
+    },
+    {
+      "path": "prototype/tests/claims.test.mjs",
+      "exists": true,
+      "sha256": "5A207271B83DD26E3FD84632575D4A6DD5C3DDE3CCC6DB2B28834537327DC9CF"
+    },
+    {
+      "path": "prototype/tests/adapters.test.mjs",
+      "exists": true,
+      "sha256": "7367038DD624F0CB2B55326FAEEAD67B79F23C5144DEE2783CC3B50C029F5E92"
+    },
+    {
+      "path": "docs/validation/PROTOTYPE-RESEARCH-KIT.md",
+      "exists": true,
+      "sha256": "1965D420EA820127CB2E0A337C39DC426F885EC06747E2DD4A501E59255E2DFB"
+    },
+    {
+      "path": "docs/plans/PROTOTYPE-HANDOVER.md",
+      "exists": true,
+      "sha256": "3738544B9BCB11C783CCE4E9D7864AE181AA71B045AE3D18551F2D82EC3E8586"
+    }
+  ]
+}

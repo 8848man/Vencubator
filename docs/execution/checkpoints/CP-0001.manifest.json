@@ -1,0 +1,77 @@
+{
+  "checkpoint_id": "CP-0001",
+  "target_state_revision": 1,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "path": "docs/plans/IMPLEMENTATION-ROADMAP.md",
+      "exists": true,
+      "sha256": "24A9E283841182BBEA1E28C8739F8E0580F5F7AC740769654F5224426A2A87B1"
+    },
+    {
+      "path": "docs/plans/stages/STAGE-01-prototype.md",
+      "exists": true,
+      "sha256": "AC8E4D29C067250629ED2CCD7C4CBF734BB14AE4232B8742C2A100DC4C95C364"
+    },
+    {
+      "path": "docs/plans/stages/STAGE-02-mvp.md",
+      "exists": true,
+      "sha256": "C0FF4D4D7CD2A562A1B4F9543F3245988D6BF6370C3AB0F4636E2001D58AC75B"
+    },
+    {
+      "path": "docs/plans/stages/STAGE-03-enhancement.md",
+      "exists": true,
+      "sha256": "06190B7520B7FA247BFEFDD9348E3D36E1AB7779A4950AEBA90B2DFE4BF5D904"
+    },
+    {
+      "path": "docs/specs/SPEC-001-first-loop.md",
+      "exists": true,
+      "sha256": "E79B0B824ECFBF3EE75EF23DAECF2C5CD69B473640E74E12432D8F7470651C09"
+    },
+    {
+      "path": "docs/specs/SPEC-002-growth.md",
+      "exists": true,
+      "sha256": "5CEB4CFE50617B1B7A79695668744F7528AEE6A4A8AC3E960ABA85670CE34A14"
+    },
+    {
+      "path": "docs/specs/SPEC-003-ux.md",
+      "exists": true,
+      "sha256": "3FE2227CDFD9A160E7F1D09FB382914E0FBD638B42AC50CDBD5BE2FED46BE7C4"
+    },
+    {
+      "path": "docs/specs/SPEC-004-prototype.md",
+      "exists": true,
+      "sha256": "562EF01FD5DD69A44FD47E00AE0707C543E837E7331EDF151B626E531EE4E4B6"
+    },
+    {
+      "path": "docs/adr/ADR-001-platform.md",
+      "exists": true,
+      "sha256": "CE110AF3D62524738AE1446A07CE8BD2206ADC4AAD32A319BCFB4C36B171EE3C"
+    },
+    {
+      "path": "docs/adr/ADR-002-authority.md",
+      "exists": true,
+      "sha256": "81152EED28251EEF9F1A4D754C33D3CF26D9B2A0EF60CD73A8159098459EF24A"
+    },
+    {
+      "path": "docs/architecture/ARCHITECTURE.md",
+      "exists": true,
+      "sha256": "A2A7F0D16FC6354BF11437197D15D6F42FCC032874F9D8604E52DE954AF66404"
+    },
+    {
+      "path": "docs/context/REQUIREMENTS.md",
+      "exists": true,
+      "sha256": "AF6F957EC1A5FFF29BA267B6D94F84C2BF91078F4750276447CBA4E35E4748A7"
+    },
+    {
+      "path": "docs/execution/CHECKPOINT-PROTOCOL.md",
+      "exists": true,
+      "sha256": "E9C57B89FC416A72B9F7468F01CACF6F669FAF9F8237A8806B27FC44AF242F9C"
+    },
+    {
+      "path": "docs/process/APPROVALS.md",
+      "exists": true,
+      "sha256": "025B9159891D1DA4D00AFFD89903AC9ADBDEC96E258E62CFEEDBE3312B68C91D"
+    }
+  ]
+}

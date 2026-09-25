@@ -1,0 +1,1363 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vencubator · 아이디어를 심으면 근거가 뿌리내려요</title>
+<meta name="description" content="아이디어 한 문장을 이름표에 적어 심어 보세요. 땅속으로 내려갈수록 오늘 배울 것, 물어볼 질문, 들은 답, 내린 결정이 뿌리가 되어 자라요. 1인 빌더를 위한 창업 학습 코파일럿 Vencubator(프로토타입).">
+<meta name="theme-color" content="#f2f6ec">
+<meta name="generator" content="landing-v3/scripts/build.mjs · SPEC-010">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232e5e47'/%3E%3Cpath d='M16 21l16 27 16-27M32 36V14' stroke='%23b9da8c' stroke-width='6' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;700;800&family=Nanum+Pen+Script&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* SPEC-010 · 원시 색상값(hex)은 이 파일에만. PRINCIPLES §4 시각 언어 */
+:root {
+  /* 지상 */
+  --sky: #f2f6ec;
+  --sky-2: #e3eddb;
+  --paper: #fbf7ec;
+  --tag: #fffaf0;
+  --wood: #b98c5a;
+  --wood-dark: #8a6440;
+  /* 흙 (밝기 = 깊이, DP-9) */
+  --topsoil: #e9dfcb;
+  --subsoil: #cdb690;
+  --deep: #4a3b2d;
+  --deeper: #3a2e23;
+  --humus: #241d16;
+  /* 뿌리·새싹 */
+  --root: #b9da8c;
+  --root-edge: #5d4a33;
+  --root-pale: #efe6cf;
+  --green: #2e5e47;
+  --green-2: #3f7a5d;
+  --leaf: #7fb069;
+  --refuted: #d08a4a;
+  /* 글자 */
+  --ink: #1f2a22;
+  --ink-2: #4a5249;
+  --ink-soft: #6c6a5c;
+  --cream: #f6efdf;
+  --cream-2: #cbbfa6;
+  --white: #ffffff;
+  /* 7영역 (prototype/content.mjs STATS 와 일치 — AC-L3-07) */
+  --c-customer: #347a63;
+  --c-market: #568abb;
+  --c-product: #b58b45;
+  --c-gtm: #a47283;
+  --c-finance: #8a79a5;
+  --c-operations: #668d8f;
+  --c-strategy: #bb825b;
+  /* 마스코트 */
+  --m-body: #9fcf7c;
+  --m-body-dark: #5d9a4f;
+  --m-line: #213a2c;
+  --m-cheek: #f2a48e;
+  --m-gem: #f0c75e;
+
+  --f-display: 'Hahmlet', 'Noto Serif KR', serif;
+  --f-body: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  --f-pen: 'Nanum Pen Script', 'Hahmlet', cursive;
+  --f-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --shell: 1200px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --top-h: 60px;
+  --r: 14px;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+
+/* SPEC-010 랜딩 v3 “뿌리”. 색은 tokens.css 변수만 쓴다. sticky는 상단바만(DP-11). */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--top-h); -webkit-text-size-adjust: 100%; }
+html.reduced { scroll-behavior: auto; }
+body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.65 var(--f-body); word-break: keep-all; overflow-wrap: break-word; -webkit-font-smoothing: antialiased; }
+[hidden] { display: none !important; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--refuted); outline-offset: 3px; border-radius: 6px; }
+h1, h2, h3 { margin: 0; font-family: var(--f-display); text-wrap: balance; }
+h2:focus { outline: none; }
+.l3-shell { width: 100%; max-width: calc(var(--shell) + 2 * var(--gutter)); margin: 0 auto; padding: 0 var(--gutter); }
+.l3-mono { font-family: var(--f-mono); }
+.l3-pen { font-family: var(--f-pen); }
+.l3-skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: var(--sky); padding: 8px 14px; border-radius: 8px; z-index: 50; }
+.l3-skip:focus { left: 12px; }
+
+/* ── 버튼 ── */
+.l3-btn { display: inline-flex; align-items: center; gap: 8px; border: 0; border-radius: 999px; background: var(--green); color: var(--white); padding: 12px 22px; font-weight: 700; font-size: 16px; line-height: 1.2; text-decoration: none; transition: background .2s, transform .2s var(--ease); }
+.l3-btn:hover { background: var(--green-2); transform: translateY(-1px); }
+.l3-btn.small { padding: 8px 16px; font-size: 14px; }
+.l3-btn.big { padding: 17px 28px; font-size: 18px; }
+.l3-btn.ghost { background: transparent; color: inherit; box-shadow: inset 0 0 0 1.5px currentColor; }
+.l3-btn[aria-pressed="true"] { background: var(--root); color: var(--ink); }
+.l3-textbtn { border: 0; background: none; padding: 8px 6px; font-size: 14px; font-weight: 600; opacity: .8; }
+.l3-textbtn:hover { opacity: 1; text-decoration: underline; }
+
+/* ── L3S-00 상단바 ── */
+.l3-top { position: sticky; top: 0; z-index: 20; height: var(--top-h); background: color-mix(in srgb, var(--sky) 86%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid color-mix(in srgb, var(--ink) 8%, transparent); transition: background .4s, color .4s; }
+.l3-top.is-dark { background: color-mix(in srgb, var(--humus) 84%, transparent); color: var(--cream); border-color: color-mix(in srgb, var(--cream) 10%, transparent); }
+.l3-top-row { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.l3-brand { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 800; font-size: 19px; letter-spacing: -.02em; }
+.l3-mark { width: 24px; height: 26px; color: var(--green); }
+.l3-top.is-dark .l3-mark, .l3-footer .l3-mark { color: var(--root); }
+.l3-top-actions { display: flex; align-items: center; gap: 6px; }
+
+/* ── L3S-01 지상 ── */
+.l3-surface { position: relative; z-index: 1; background: linear-gradient(180deg, var(--sky) 0%, var(--sky-2) 100%); min-height: min(calc(100svh - var(--top-h)), 900px); display: flex; align-items: stretch; padding-top: clamp(32px, 6vh, 72px); }
+.l3-surface-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: clamp(24px, 4vw, 64px); align-items: stretch; }
+.l3-surface-copy { align-self: center; padding: 24px 0 clamp(72px, 12vh, 128px); }
+.l3-eyebrow { margin: 0 0 18px; font-size: 14px; font-weight: 700; color: var(--green); letter-spacing: .01em; }
+.l3-surface h1 { font-size: clamp(40px, 4.9vw, 76px); font-weight: 800; line-height: 1.1; letter-spacing: -.03em; }
+.l3-surface h1 span { display: block; white-space: nowrap; }
+.l3-h1-root { position: relative; color: var(--green); width: fit-content; }
+.l3-h1-root::before { content: ''; position: absolute; left: .04em; right: .1em; bottom: -.02em; height: 4px; border-radius: 4px; background: var(--root-edge); }
+.l3-h1-root::after { content: ''; position: absolute; left: .1em; right: .2em; top: calc(100% + .02em); height: .34em; background: repeating-linear-gradient(90deg, var(--root-edge) 0 2px, transparent 2px 1.1em); -webkit-mask: linear-gradient(180deg, black, transparent); mask: linear-gradient(180deg, black, transparent); }
+.l3-lead { margin: 36px 0 26px; max-width: 34em; font-size: clamp(17px, 1.35vw, 19px); color: var(--ink-2); }
+.l3-samples { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.l3-samples > span { font-size: 14px; font-weight: 600; color: var(--ink-2); margin-right: 4px; }
+.l3-chip { border: 1.5px solid var(--ink); background: transparent; border-radius: 999px; padding: 6px 14px; font-size: 14px; font-weight: 600; transition: background .2s, color .2s; }
+.l3-chip:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.l3-chip[aria-pressed="true"] { background: var(--ink); color: var(--sky); }
+.l3-privacy { margin: 14px 0 0; font-size: 13.5px; color: var(--ink-soft); }
+.l3-down { display: inline-block; margin-top: 26px; font-weight: 700; font-size: 15px; text-decoration: none; border-bottom: 2px solid var(--root-edge); padding-bottom: 2px; }
+
+.l3-scene { position: relative; display: flex; flex-direction: column; align-items: flex-end; min-height: clamp(420px, 60vh, 580px); padding-top: clamp(32px, 9vh, 110px); }
+.l3-tag { position: relative; z-index: 2; width: min(440px, 100%); rotate: -2deg; background: var(--tag); border: 2px solid var(--ink); border-radius: 20px; padding: 26px 24px 18px; box-shadow: 8px 10px 0 color-mix(in srgb, var(--ink) 12%, transparent); transform-origin: 60% 100%; }
+.l3-tag::before { content: ''; position: absolute; top: 10px; left: 50%; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; border: 2px solid var(--ink); background: var(--sky-2); }
+.l3-tag.is-planted { animation: plant .7s var(--ease); }
+@keyframes plant { 0% { rotate: -2deg; } 25% { rotate: 2deg; translate: 0 8px; } 55% { rotate: -3.5deg; translate: 0 2px; } 100% { rotate: -2deg; translate: 0 0; } }
+.l3-tag-label { display: block; font-size: 13px; font-weight: 700; color: var(--ink-2); }
+.l3-tag-line { position: relative; margin-top: 6px; }
+.l3-tag input { width: 100%; border: 0; border-bottom: 2px dashed var(--cream-2); background: transparent; padding: 4px 0 6px; font-family: var(--f-pen); font-size: clamp(28px, 2.6vw, 36px); line-height: 1.25; color: var(--ink); outline: none; border-radius: 0; }
+.l3-tag input:focus { border-bottom: 2px solid var(--green); }
+.l3-tag input::placeholder { color: var(--cream-2); }
+.l3-typing { position: absolute; left: 0; top: 4px; right: 0; font-family: var(--f-pen); font-size: clamp(28px, 2.6vw, 36px); line-height: 1.25; color: var(--ink-soft); pointer-events: none; white-space: nowrap; overflow: hidden; opacity: 0; }
+.l3-typing.is-on { opacity: 1; }
+.l3-typing.is-on::after { content: ''; display: inline-block; width: 2px; height: .9em; margin-left: 2px; vertical-align: -.1em; background: var(--ink-soft); animation: caret 1s steps(1) infinite; }
+@keyframes caret { 50% { opacity: 0; } }
+.l3-tag-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; }
+.l3-msg { margin: 0; font-size: 14px; font-weight: 600; color: var(--refuted); min-height: 1.2em; }
+.l3-stake { flex: 1 1 auto; min-height: 150px; width: 22px; margin-right: 34%; margin-bottom: -26px; background: linear-gradient(90deg, var(--wood-dark), var(--wood) 45%, var(--wood-dark)); border-radius: 0 0 6px 6px; }
+.l3-stake.small { min-height: 160px; flex: 1 1 auto; margin-bottom: 0; }
+.l3-surface-sprout { position: absolute; left: 0; bottom: -6px; width: min(50%, 260px); height: auto; z-index: 1; }
+
+/* ── 새싹 마스코트 (L3M-07) ── */
+.l3-sprout { overflow: visible; }
+.l3-sprout .m-torso { fill: var(--m-body); stroke: var(--m-line); stroke-width: 3; }
+.l3-sprout .m-arm, .l3-sprout .m-feet { fill: var(--m-body-dark); stroke: var(--m-line); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.l3-sprout .m-shine { fill: none; stroke: var(--white); stroke-width: 4; stroke-linecap: round; opacity: .55; }
+.l3-sprout .m-eye { fill: var(--m-line); }
+.l3-sprout .m-cheek { fill: var(--m-cheek); opacity: .75; }
+.l3-sprout .m-mouth { fill: none; stroke: var(--m-line); stroke-width: 3; stroke-linecap: round; }
+.l3-sprout .m-gem { fill: var(--m-gem); stroke: var(--m-line); stroke-width: 2; }
+.l3-sprout .m-stem { fill: none; stroke: var(--green); stroke-width: 5; stroke-linecap: round; }
+.l3-sprout .m-leaf-a, .l3-sprout .m-leaf-b { fill: var(--leaf); stroke: var(--green); stroke-width: 2.5; }
+.l3-sprout .m-vein { fill: none; stroke: var(--green); stroke-width: 2; stroke-linecap: round; }
+.l3-sprout .m-sprout { transform-origin: 108px 98px; transform: scale(calc(.55 + var(--grow, .35) * .6)); transition: transform .9s var(--ease); }
+.l3-sprout .m-spark { fill: var(--m-gem); opacity: calc(var(--grow, .35) * 2 - 1.2); transition: opacity .6s; }
+
+/* ── 흙 (L3S-02~07) ── */
+.l3-soil { position: relative; z-index: 2; }
+.l3-horizon { position: relative; z-index: 2; display: block; width: 100%; height: 60px; margin-top: -30px; margin-bottom: -1px; }
+.l3-horizon .h-soil { fill: var(--topsoil); }
+.l3-horizon .h-grass { fill: none; stroke: var(--green-2); stroke-width: 2.2; stroke-linecap: round; }
+
+.l3-rail { --rail-x: 52px; --rail-turn: 34px; position: absolute; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
+.l3-root { position: absolute; left: 0; top: 0; overflow: visible; }
+.l3-root path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.l3-root-edge { stroke: var(--root-edge); stroke-width: 10; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.l3-root-main { stroke: var(--root); stroke-width: 5; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.l3-root [data-root-hairs] path { stroke: var(--root-edge); stroke-width: 2; opacity: 0; transition: opacity .6s; }
+.l3-root [data-root-hairs] path.is-drawn { opacity: .75; }
+.l3-side { stroke-dasharray: 1 1; stroke-dashoffset: 1; transition: stroke-dashoffset .6s var(--ease), opacity .4s; }
+.l3-side.is-edge { stroke: var(--root-edge); stroke-width: 7; }
+.l3-side.is-top { stroke: var(--root); stroke-width: 3.5; }
+.l3-side.is-drawn { stroke-dashoffset: 0; }
+.l3-side.is-example { stroke-dasharray: .03 .04; stroke-dashoffset: 0; opacity: 0; }
+.l3-side.is-example.is-edge { stroke: var(--root-edge); stroke-width: 2.5; }
+.l3-side.is-example.is-top { stroke: transparent; }
+.l3-side.is-example.is-drawn { opacity: .85; }
+.l3-side.is-turn.is-top { stroke: var(--refuted); }
+.l3-root-stub { stroke: var(--refuted); stroke-width: 3; stroke-dasharray: 6 6; opacity: 0; transition: opacity .5s; }
+.l3-root-stub.is-drawn { opacity: 1; }
+.l3-ticks .l3-tick { position: absolute; transform: translate(calc(-100% - 16px), -50%); font: 500 11px/1 var(--f-mono); color: var(--ink); background: color-mix(in srgb, var(--paper) 88%, transparent); padding: 4px 6px; border-radius: 4px; white-space: nowrap; }
+.l3-tip { position: absolute; left: 0; top: 0; width: 0; height: 0; opacity: 0; transition: opacity .3s; will-change: transform; }
+.l3-tip.is-visible { opacity: 1; }
+.l3-tip::before { content: ''; position: absolute; left: -8px; top: -8px; width: 16px; height: 16px; border-radius: 50%; background: var(--root); border: 3px solid var(--root-edge); }
+.l3-tip-box { position: absolute; left: 16px; top: -14px; display: flex; gap: 8px; align-items: center; white-space: nowrap; background: var(--ink); color: var(--root); font: 500 12px/1 var(--f-mono); padding: 7px 10px; border-radius: 999px; }
+.l3-tip-box [data-tip-name] { color: var(--cream); font-family: var(--f-body); font-weight: 600; }
+.l3-legend { position: absolute; z-index: 4; top: 64px; right: var(--gutter); margin: 0; display: flex; gap: 16px; font: 500 12px/1 var(--f-mono); color: var(--ink-2); }
+.l3-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.l3-legend span::before { content: ''; width: 22px; height: 0; border-top: 4px solid var(--root); box-shadow: 0 0 0 1.5px var(--root-edge); border-radius: 3px; }
+.l3-legend .l3-legend-example::before { border-top: 2px dashed var(--root-edge); box-shadow: none; }
+
+.l3-layer { position: relative; }
+.l3-layer::after { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(color-mix(in srgb, var(--root-edge) 22%, transparent) 1.3px, transparent 1.8px), radial-gradient(color-mix(in srgb, var(--root-edge) 14%, transparent) 2px, transparent 2.6px); background-size: 37px 41px, 83px 71px; background-position: 0 0, 19px 27px; }
+.l3-edge { position: absolute; left: 0; top: -39px; width: 100%; height: 40px; display: block; }
+.l3-learn { background: var(--topsoil); }
+.l3-learn .l3-edge { display: none; }
+.l3-ask { background: var(--subsoil); }
+.l3-ask .l3-edge path { fill: var(--subsoil); }
+.l3-observe { background: var(--deep); color: var(--cream); }
+.l3-observe .l3-edge path { fill: var(--deep); }
+.l3-decide { background: var(--deeper); color: var(--cream); }
+.l3-decide .l3-edge path { fill: var(--deeper); }
+.l3-roots { background: var(--humus); color: var(--cream); }
+.l3-roots .l3-edge path { fill: var(--humus); }
+.l3-observe::after, .l3-decide::after, .l3-roots::after { background-image: radial-gradient(color-mix(in srgb, var(--cream) 9%, transparent) 1.3px, transparent 1.8px), radial-gradient(color-mix(in srgb, var(--cream) 5%, transparent) 2px, transparent 2.6px); }
+
+.l3-layer-grid { position: relative; z-index: 2; max-width: calc(var(--shell) + 136px); margin: 0 auto; padding: clamp(96px, 13vh, 150px) var(--gutter) clamp(104px, 14vh, 160px) 136px; display: grid; grid-template-columns: 240px minmax(0, 1fr); column-gap: clamp(32px, 5vw, 72px); }
+.l3-strata { padding-top: 6px; }
+.l3-depth { margin: 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; }
+.l3-depth .l3-mono { font-size: 13px; font-weight: 500; padding: 3px 8px; border-radius: 4px; background: color-mix(in srgb, currentColor 10%, transparent); }
+.l3-stratum { font-family: var(--f-display); font-size: 24px; font-weight: 700; }
+.l3-meaning { margin: 8px 0 0; font-size: 15px; font-weight: 700; color: var(--green); }
+.l3-observe .l3-meaning, .l3-decide .l3-meaning, .l3-roots .l3-meaning { color: var(--root); }
+.l3-note { margin: 28px 0 0; max-width: 240px; background: var(--paper); color: var(--ink); padding: 12px 16px 14px; border-radius: 4px 14px 14px 14px; rotate: -1.4deg; box-shadow: 0 1px 0 color-mix(in srgb, var(--ink) 10%, transparent), 0 12px 26px -16px color-mix(in srgb, var(--ink) 70%, transparent); }
+.l3-note figcaption { font: 500 11px/1 var(--f-mono); color: var(--ink-soft); letter-spacing: .04em; }
+.l3-note .l3-pen { margin: 8px 0 10px; font-size: 26px; line-height: 1.12; color: var(--ink-soft); }
+.l3-note[data-status="mine"] .l3-pen { color: var(--green); }
+.l3-note.is-writing .l3-pen { animation: write .7s var(--ease); }
+@keyframes write { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.l3-stamp { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; border: 1px dashed var(--ink-soft); color: var(--ink-soft); line-height: 1.3; }
+.l3-note[data-status="mine"] .l3-stamp { border: 1px solid var(--root-edge); background: var(--root); color: var(--ink); }
+.l3-note[data-flag="refuted"] .l3-stamp { border-color: var(--refuted); background: var(--refuted); color: var(--white); }
+
+.l3-story { min-width: 0; }
+.l3-story h2 { font-size: clamp(32px, 4.1vw, 56px); font-weight: 700; line-height: 1.2; letter-spacing: -.02em; }
+.l3-body { margin: 22px 0 0; max-width: 36em; font-size: 18px; color: var(--ink-2); }
+.l3-observe .l3-body, .l3-decide .l3-body, .l3-roots .l3-body { color: var(--cream-2); }
+
+/* 겉흙 */
+.l3-concept { margin: 56px 0 0; font-family: var(--f-display); font-size: clamp(40px, 6.2vw, 88px); font-weight: 800; line-height: 1.08; letter-spacing: -.035em; color: var(--green); text-wrap: balance; }
+.l3-summary { margin: 22px 0 0; max-width: 38em; font-size: 17px; color: var(--ink-2); }
+.l3-summary small { display: block; margin-top: 6px; font: 500 12px/1.4 var(--f-mono); color: var(--ink-soft); }
+
+/* 조작 판 (테두리는 조작할 수 있는 것에만) */
+.l3-panel { margin-top: 40px; max-width: 680px; border: 2px solid var(--ink); border-radius: var(--r); background: var(--paper); color: var(--ink); padding: clamp(18px, 2.4vw, 28px); box-shadow: 6px 7px 0 color-mix(in srgb, var(--ink) 14%, transparent); }
+.l3-observe .l3-panel, .l3-decide .l3-panel { background: color-mix(in srgb, var(--cream) 6%, transparent); border-color: color-mix(in srgb, var(--cream) 55%, transparent); color: var(--cream); box-shadow: none; }
+.l3-panel-tag { display: block; margin: 0 0 10px; font: 500 12px/1.3 var(--f-mono); letter-spacing: .05em; color: var(--ink-soft); }
+.l3-q { margin: 0 0 14px; font-size: 19px; font-weight: 700; line-height: 1.45; }
+.l3-options { display: grid; gap: 10px; }
+.l3-option { text-align: left; padding: 14px 16px; border: 1.5px solid color-mix(in srgb, var(--ink) 28%, transparent); background: var(--white); border-radius: 10px; font-size: 16px; line-height: 1.45; transition: border-color .2s, background .2s; }
+.l3-option:hover:not(:disabled) { border-color: var(--ink); }
+.l3-option:disabled { opacity: .55; cursor: default; }
+.l3-option.is-right { opacity: 1; border-color: var(--green); background: color-mix(in srgb, var(--root) 45%, var(--white)); font-weight: 700; }
+.l3-feedback { margin: 12px 0 0; min-height: 1.5em; font-size: 15.5px; font-weight: 600; }
+.l3-feedback[data-tone="good"] { color: var(--green); }
+.l3-feedback[data-tone="retry"] { color: var(--refuted); }
+.l3-feedback[data-tone="soft"] { color: var(--ink-2); }
+
+/* 속흙 */
+.l3-customer { margin: 48px 0 0; font-size: clamp(38px, 5vw, 66px); line-height: 1.15; }
+.l3-customer .l3-pen { font-size: inherit; color: var(--ink); background: linear-gradient(transparent 64%, color-mix(in srgb, var(--root) 75%, transparent) 64%, color-mix(in srgb, var(--root) 75%, transparent) 92%, transparent 92%); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.l3-customer-suffix { font-size: 19px; font-weight: 600; color: var(--ink-2); margin-left: 10px; white-space: nowrap; }
+.l3-asksheet input { width: 100%; border: 1.5px solid var(--ink); border-radius: 10px; background: var(--white); padding: 12px 14px; font-size: 17px; }
+.l3-hint { margin: 8px 0 18px; font-size: 14px; color: var(--ink-soft); }
+.l3-questions { margin: 0; padding-left: 1.3em; }
+.l3-questions li { margin: 6px 0; font-size: 16.5px; line-height: 1.55; }
+.l3-avoid { margin: 16px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 15px; }
+.l3-avoid span { font-size: 12px; font-weight: 700; color: var(--refuted); }
+.l3-avoid s { color: var(--ink-soft); }
+.l3-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 20px; }
+.l3-row .l3-msg { color: var(--green); }
+
+/* 깊은 흙: 들은 답 */
+.l3-setup { margin: 40px 0 0; font-size: 17px; color: var(--cream-2); }
+.l3-stamp.is-example { border-color: var(--cream-2); color: var(--cream-2); margin-right: 6px; }
+.l3-quotes { list-style: none; margin: 30px 0 0; padding: 0; display: grid; gap: 22px; max-width: 760px; }
+.l3-quotes li { font-family: var(--f-display); font-size: clamp(20px, 2vw, 26px); font-weight: 500; line-height: 1.45; color: var(--cream); padding-left: 20px; border-left: 3px solid color-mix(in srgb, var(--root) 55%, transparent); }
+.l3-who { display: block; margin-bottom: 4px; font: 500 12px/1.3 var(--f-mono); color: var(--cream-2); }
+.l3-observe-panel .l3-q { color: var(--cream); }
+.l3-choice-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.l3-choice { border: 1.5px solid var(--cream-2); background: transparent; color: var(--cream); border-radius: 999px; padding: 12px 20px; font-weight: 700; transition: background .2s, color .2s; }
+.l3-choice:hover { background: color-mix(in srgb, var(--cream) 10%, transparent); }
+.l3-choice[data-observe="supported"][aria-pressed="true"] { background: var(--root); border-color: var(--root); color: var(--ink); }
+.l3-choice[data-observe="refuted"][aria-pressed="true"] { background: var(--refuted); border-color: var(--refuted); color: var(--ink); }
+.l3-note-msg { margin: 14px 0 0; min-height: 1.4em; font-size: 15.5px; color: var(--cream); }
+.l3-note-msg[data-tone="refuted"] { color: color-mix(in srgb, var(--refuted) 65%, var(--cream)); }
+
+/* 결정 */
+.l3-waiting { margin: 0; font-size: 16px; color: var(--cream-2); }
+.l3-decisions { display: grid; gap: 10px; }
+.l3-decision { display: grid; gap: 4px; text-align: left; padding: 16px 18px; border: 1.5px solid color-mix(in srgb, var(--cream) 45%, transparent); background: transparent; color: var(--cream); border-radius: 12px; transition: background .2s, border-color .2s; }
+.l3-decision:hover { border-color: var(--cream); }
+.l3-decision strong { font-size: 17px; }
+.l3-decision span { font-size: 14.5px; color: var(--cream-2); line-height: 1.5; }
+.l3-decision[aria-pressed="true"] { background: var(--root); border-color: var(--root); color: var(--ink); }
+.l3-decision[aria-pressed="true"] span { color: var(--ink-2); }
+
+/* 부엽토: 일곱 갈래 */
+.l3-roots .l3-layer-grid { padding-bottom: 24px; }
+.l3-map { position: relative; z-index: 2; padding-bottom: clamp(96px, 14vh, 150px); }
+.l3-map-lines { display: block; width: 100%; height: 190px; }
+.l3-map-lines path { fill: none; stroke: color-mix(in srgb, var(--root) 22%, transparent); stroke-width: 2; stroke-linecap: round; transition: stroke .5s, stroke-width .5s; }
+.l3-map-lines path.is-current { stroke: var(--root); stroke-width: 5; }
+.l3-map-lines path.is-next { stroke: var(--root); stroke-width: 3; stroke-dasharray: 6 9; }
+.l3-map-lines circle { fill: var(--root); }
+.l3-areas { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; }
+.l3-area { display: grid; justify-items: center; text-align: center; gap: 4px; padding: 0 4px; opacity: .55; transition: opacity .4s; }
+.l3-area.is-current, .l3-area.is-next { opacity: 1; }
+.l3-area-dot { display: grid; place-items: center; width: 46px; height: 46px; margin-bottom: 8px; border-radius: 50%; font-size: 19px; color: var(--cream); background: color-mix(in srgb, var(--c) 40%, var(--humus)); border: 2px solid color-mix(in srgb, var(--c) 75%, var(--cream)); }
+.l3-area.is-current .l3-area-dot { background: var(--c); box-shadow: 0 0 0 7px color-mix(in srgb, var(--root) 22%, transparent); }
+.l3-area.is-next .l3-area-dot { border-style: dashed; border-color: var(--root); }
+.l3-area-name { font-size: 15.5px; font-weight: 700; color: var(--cream); }
+.l3-area-q { font-size: 13px; line-height: 1.45; color: var(--cream-2); }
+.l3-area-badge { min-height: 1.2em; font: 500 12px/1.2 var(--f-mono); font-style: normal; color: var(--root); }
+.l3-area.is-moved .l3-area-name { color: color-mix(in srgb, var(--refuted) 60%, var(--cream)); }
+.l3-rule { margin: 40px auto 0; max-width: 40em; text-align: center; font-size: 17px; color: var(--cream); }
+.l3-map .l3-hint { text-align: center; color: var(--cream-2); }
+
+/* ── L3S-08 위와 아래 ── */
+.l3-ab-above { background: var(--sky); padding-top: clamp(96px, 13vh, 150px); }
+.l3-ab-below { background: var(--topsoil); border-top: 4px solid var(--wood-dark); padding-bottom: clamp(96px, 13vh, 150px); }
+.l3-ab-grid { display: grid; grid-template-columns: 200px minmax(0, 1fr); column-gap: clamp(32px, 5vw, 80px); }
+.l3-ab-above .l3-ab-grid { align-items: end; }
+.l3-ab-above .l3-ab-grid > div { padding-bottom: 56px; }
+.l3-ab-below .l3-ab-grid > div { padding-top: 48px; }
+.l3-ab-stem, .l3-ab-roots { display: block; width: 200px; height: 260px; }
+.l3-ab-stem .s-stem { fill: none; stroke: var(--green); stroke-width: 6; stroke-linecap: round; }
+.l3-ab-stem .s-leaf { fill: var(--leaf); stroke: var(--green); stroke-width: 2.5; }
+.l3-ab-roots path { fill: none; stroke: var(--root-edge); stroke-width: 4; stroke-linecap: round; }
+.l3-ab-roots path:first-child { stroke-width: 6; }
+.l3-ab h2 { font-size: clamp(32px, 4.4vw, 58px); font-weight: 800; line-height: 1.15; letter-spacing: -.025em; margin-bottom: 40px; max-width: 16em; }
+.l3-ab h3 { margin-top: 12px; font-size: clamp(22px, 2.2vw, 28px); font-weight: 700; }
+.l3-ab .l3-body { margin-top: 12px; font-size: 17px; }
+.l3-ab-tag { display: inline-block; margin: 0; font: 500 12.5px/1 var(--f-mono); padding: 6px 10px; border-radius: 999px; background: var(--ink); color: var(--sky); }
+.l3-ab-below .l3-ab-tag { background: var(--root-edge); color: var(--cream); }
+.l3-leaves, .l3-rootlets { list-style: none; margin: 20px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.l3-leaves li { padding: 7px 16px 7px 14px; border-radius: 999px 0 999px 0; background: color-mix(in srgb, var(--leaf) 38%, var(--white)); font-size: 14.5px; font-weight: 600; color: var(--green); }
+.l3-rootlets li { padding: 7px 14px; border-radius: 0 999px 999px 0; background: color-mix(in srgb, var(--root-edge) 14%, transparent); font-size: 14.5px; font-weight: 600; color: var(--root-edge); }
+.l3-ab-below .l3-hint { margin-top: 24px; }
+
+/* ── L3S-09 솔직한 안내 ── */
+.l3-honest { background: var(--paper); padding: clamp(96px, 13vh, 140px) 0; }
+.l3-honest-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(40px, 6vw, 96px); }
+.l3-honest h2 { font-size: clamp(30px, 3.6vw, 46px); font-weight: 700; margin-bottom: 28px; }
+.l3-status { list-style: none; margin: 0; padding: 0; }
+.l3-status li { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 16px; align-items: start; padding: 20px 0; border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
+.l3-status li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
+.l3-status .l3-mono { font-size: 13px; color: var(--ink-soft); padding-top: 3px; }
+.l3-status strong { font-size: 18px; }
+.l3-status p { margin: 4px 0 0; font-size: 15px; color: var(--ink-2); }
+.l3-status em { font: 500 12px/1 var(--f-mono); font-style: normal; padding: 6px 10px; border-radius: 999px; border: 1px dashed var(--ink-soft); color: var(--ink-soft); white-space: nowrap; }
+.l3-status li[data-status="in_progress"] em { border: 1px solid var(--root-edge); background: var(--root); color: var(--ink); }
+.l3-faq-title { font-size: 22px; font-weight: 700; margin-bottom: 12px; padding-top: 8px; }
+.l3-faq details { border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
+.l3-faq details:last-child { border-bottom: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
+.l3-faq summary { list-style: none; display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; font-size: 16.5px; font-weight: 700; cursor: pointer; }
+.l3-faq summary::-webkit-details-marker { display: none; }
+.l3-faq summary::after { content: '+'; font-family: var(--f-mono); font-weight: 400; color: var(--ink-soft); }
+.l3-faq details[open] summary::after { content: '−'; }
+.l3-faq p { margin: 0 0 18px; font-size: 15.5px; color: var(--ink-2); }
+
+/* ── L3S-10 다시 지상으로 ── */
+.l3-harvest { background: linear-gradient(180deg, var(--sky-2), var(--sky)); padding-top: clamp(96px, 13vh, 150px); }
+.l3-harvest-grid { display: grid; grid-template-columns: minmax(260px, 400px) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: end; }
+.l3-harvest-grid > div:last-child { padding-bottom: clamp(80px, 12vh, 130px); }
+.l3-harvest-scene { position: relative; display: flex; flex-direction: column; align-items: flex-end; min-height: 440px; }
+.l3-harvest-sprout { position: absolute; left: 0; bottom: -4px; width: 46%; }
+.l3-mini-tag { position: relative; z-index: 1; width: 60%; background: var(--tag); border-radius: 16px; padding: 14px 18px 16px; rotate: 3deg; box-shadow: 0 1px 0 color-mix(in srgb, var(--ink) 12%, transparent), 0 16px 30px -18px color-mix(in srgb, var(--ink) 70%, transparent); margin-right: 0; }
+.l3-mini-tag .l3-pen { margin: 4px 0 0; font-size: 26px; line-height: 1.15; color: var(--green); }
+.l3-harvest-scene .l3-stake { margin-right: 30%; }
+.l3-harvest h2 { font-size: clamp(32px, 4.4vw, 58px); font-weight: 800; line-height: 1.18; letter-spacing: -.025em; }
+.l3-harvest .l3-body { font-size: 18px; }
+.l3-harvest .l3-row { margin-top: 32px; }
+
+/* ── L3S-11 푸터 ── */
+.l3-footer { background: var(--humus); color: var(--cream-2); padding: 56px 0 64px; font-size: 14px; }
+.l3-footer .l3-brand { color: var(--cream); }
+.l3-footer p { max-width: 48em; margin: 16px 0; }
+.l3-footer ul { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-wrap: wrap; gap: 18px; }
+.l3-footer small { color: color-mix(in srgb, var(--cream-2) 70%, transparent); }
+
+/* ── L3M-06 층 진입 (초기 불투명도 .35 이상) ── */
+.js .l3-rise, .js .l3-layer h2, .js .l3-note, .js .l3-panel { transition: opacity .7s var(--ease), translate .7s var(--ease); }
+.js .l3-rise:not(.is-in), .js .l3-layer h2:not(.is-in), .js .l3-note:not(.is-in), .js .l3-panel:not(.is-in) { opacity: .35; translate: 0 12px; }
+.js .l3-quotes li { transition-delay: calc(var(--i, 0) * 90ms); }
+
+/* ── 반응형 ── */
+@media (max-width: 1100px) {
+  .l3-ticks { display: none; }
+}
+@media (max-width: 900px) {
+  .l3-surface { min-height: 0; }
+  .l3-surface-grid { grid-template-columns: 1fr; }
+  .l3-surface-copy { padding-bottom: 8px; }
+  .l3-surface h1 span { white-space: normal; }
+  .l3-scene { min-height: 0; align-items: stretch; padding-top: 24px; }
+  .l3-tag { width: 100%; rotate: -1deg; }
+  .l3-stake { min-height: 150px; margin-right: 22%; align-self: flex-end; }
+  .l3-surface-sprout { width: 150px; }
+  .l3-tip-box [data-tip-name] { display: none; }
+  .l3-legend { position: relative; top: auto; right: auto; z-index: 4; padding: 12px var(--gutter) 0 48px; background: var(--topsoil); flex-wrap: wrap; gap: 8px 16px; }
+  .l3-rail { --rail-x: 20px; --rail-turn: 12px; }
+  .l3-layer-grid { grid-template-columns: 1fr; padding: 80px var(--gutter) 96px 48px; }
+  .l3-note { max-width: 100%; margin: 16px 0 28px; }
+  .l3-concept { margin-top: 36px; }
+  .l3-customer-suffix { display: block; margin: 8px 0 0; }
+  .l3-map-lines { display: none; }
+  .l3-map { padding-left: 48px; }
+  .l3-areas { grid-template-columns: 1fr; gap: 0; }
+  .l3-area { grid-template-columns: 46px minmax(0, 1fr); justify-items: start; text-align: left; column-gap: 14px; row-gap: 0; padding: 12px 0; border-top: 1px solid color-mix(in srgb, var(--cream) 10%, transparent); }
+  .l3-area-dot { grid-row: span 3; margin: 0; }
+  .l3-rule, .l3-map .l3-hint { text-align: left; }
+  .l3-ab-grid { grid-template-columns: 90px minmax(0, 1fr); }
+  .l3-ab-stem, .l3-ab-roots { width: 90px; height: 170px; }
+  .l3-honest-grid, .l3-harvest-grid { grid-template-columns: 1fr; }
+  .l3-harvest-scene { min-height: 360px; max-width: 360px; order: 2; }
+  .l3-harvest-grid > div:last-child { padding-bottom: 8px; }
+}
+@media (max-width: 480px) {
+  .l3-top-actions .l3-textbtn { display: none; }
+  .l3-tag { padding: 24px 18px 16px; }
+  .l3-tag-foot { flex-wrap: wrap; }
+  .l3-ab-grid { grid-template-columns: 1fr; }
+  .l3-ab-stem, .l3-ab-roots { display: none; }
+  .l3-status li { grid-template-columns: 34px minmax(0, 1fr); }
+  .l3-status em { grid-column: 2; justify-self: start; }
+}
+
+/* ── 모션 감소: 최종 상태, 효과 없음 ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+</style>
+</head>
+<body>
+<div id="app" data-prerendered="1">
+<header class="l3-top" data-spec="L3S-00">
+<a class="l3-skip" href="#main">본문으로 이동</a>
+<div class="l3-shell l3-top-row">
+<a class="l3-brand" href="#surface" aria-label="vencubator 맨 위로"><svg class="l3-mark" viewBox="0 0 32 35" fill="none" aria-hidden="true"><path d="M4 9 16 30 28 9M16 24V4" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M16 14C7 14 8 4 8 4c7 0 8 5 8 10ZM17 13c0-8 9-9 9-9s0 9-9 9Z" fill="currentColor"/></svg><span>vencubator</span></a>
+<div class="l3-top-actions"><button type="button" class="l3-textbtn" data-action="reset">처음부터</button><a class="l3-btn small" href="../../app/?from=v3" data-cta="prototype">앱 열기</a></div>
+</div></header>
+<main id="main">
+<section id="surface" class="l3-surface" data-spec="L3S-01" aria-labelledby="surface-title">
+<div class="l3-shell l3-surface-grid">
+<div class="l3-surface-copy">
+<p class="l3-eyebrow">1인 빌더를 위한 창업 학습 코파일럿 · 프로토타입</p>
+<h1 id="surface-title"><span>아이디어를 심으면,</span><span class="l3-h1-root">근거가 뿌리내려요.</span></h1>
+<p class="l3-lead">떠오른 아이디어를 이름표에 한 문장으로 적어 심어 보세요. 아래로 내려갈수록 오늘 배울 것, 물어볼 질문, 들은 답, 내린 결정이 뿌리가 되어 자라요.</p>
+<div class="l3-samples" role="group" aria-label="예시로 심어 보기"><span>예시로 심어 보기</span><button type="button" class="l3-chip" data-sample="teamup" aria-pressed="false">팀플 동료 찾기</button><button type="button" class="l3-chip" data-sample="banchan" aria-pressed="false">동네 반찬 구독</button><button type="button" class="l3-chip" data-sample="plant" aria-pressed="false">반려식물 케어</button></div>
+<p id="idea-help" class="l3-privacy">적은 내용은 서버로 보내지 않고 이 브라우저에만 저장돼요.</p>
+<a class="l3-down" href="#learn">땅속으로 내려가 보기 <span aria-hidden="true">↓</span></a>
+</div>
+<div class="l3-scene">
+<form class="l3-tag" data-form="idea" novalidate>
+<label for="idea-input" class="l3-tag-label">이름표에 적을 아이디어 한 문장</label>
+<div class="l3-tag-line"><input id="idea-input" name="idea" type="text" maxlength="120" autocomplete="off" placeholder="예: 시간과 역할이 맞는 팀플 동료를 찾아주는 서비스" aria-describedby="idea-help idea-msg"><span class="l3-typing" aria-hidden="true" data-typing="[&quot;동네 반찬을 조금씩 나눠 사는 구독&quot;,&quot;초보 식물 집사에게 물 주기 알림&quot;,&quot;시간과 역할이 맞는 팀플 동료 찾기&quot;]"></span></div>
+<div class="l3-tag-foot"><p id="idea-msg" class="l3-msg" aria-live="polite" data-empty="이름표에 한 문장을 적거나 아래 예시를 골라 주세요."></p><button type="submit" class="l3-btn">심기 <span aria-hidden="true">↓</span></button></div>
+</form>
+<div class="l3-stake" aria-hidden="true"></div>
+<svg class="l3-sprout l3-surface-sprout" viewBox="0 0 220 240" role="img" aria-label="이름표 옆에서 자라는 새싹">
+<g class="m-sprout"><path class="m-stem" d="M108 98C111 60 102 47 91 31"/><path class="m-leaf-a" d="M104 64C64 63 60 28 64 20c37 1 51 16 40 44Z"/><path class="m-leaf-b" d="M106 73c2-41 41-52 55-48-1 39-23 54-55 48Z"/><path class="m-vein" d="M110 62c15-14 25-22 38-26"/></g>
+<g class="m-body"><path class="m-arm" d="M69 98c-8 8-28 17-32 35-5 24 13 35 34 24"/><path class="m-arm" d="M153 106c14-12 29-10 34 2 5 11-1 26-18 33"/><path class="m-feet" d="M75 187c-5 14-8 25 3 28 13 4 18-13 22-22M128 192c4 14 9 23 20 21 12-3 5-22 0-28"/><path class="m-torso" d="M56 124c0-37 23-50 55-50 32 0 59 21 59 64 0 44-23 63-58 63-35 0-56-24-56-77Z"/><path class="m-shine" d="M65 122c3-29 16-39 34-41"/><ellipse class="m-eye" cx="87" cy="136" rx="5" ry="7"/><ellipse class="m-eye" cx="136" cy="136" rx="5" ry="7"/><ellipse class="m-cheek" cx="78" cy="150" rx="10" ry="5"/><ellipse class="m-cheek" cx="145" cy="150" rx="10" ry="5"/><path class="m-mouth" d="M104 151q8 10 16 0"/><path class="m-gem" d="m114 174 5-6 5 6-5 6Z"/></g>
+<g class="m-spark"><path d="m185 70 2-7 2 7 7 2-7 2-2 7-2-7-7-2Z"/><circle cx="44" cy="82" r="3"/></g>
+</svg>
+</div>
+</div>
+</section>
+<div class="l3-soil" data-soil>
+<svg class="l3-horizon" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path class="h-soil" d="M0 60V30C200 22 420 34 700 28S1180 20 1440 30V60Z"/><path class="h-grass" d="M12 30q-3 -4 -1 -8M49 29q3 -4.5 0 -9M75 28q-3 -5 1 -10M112 27q3 -5.5 -1 -11M138 30q-3 -6 0 -12M164 29q3 -6.5 1 -13M201 28q-3 -7 -1 -14M227 27q3 -7.5 0 -15M253 30q-3 -8 1 -16M290 29q3 -8.5 -1 -17M316 28q-3 -9 0 -18M342 27q3 -9.5 1 -19M379 30q-3 -4 -1 -8M405 29q3 -4.5 0 -9M442 28q-3 -5 1 -10M468 27q3 -5.5 -1 -11M494 30q-3 -6 0 -12M531 29q3 -6.5 1 -13M557 28q-3 -7 -1 -14M583 27q3 -7.5 0 -15M620 30q-3 -8 1 -16M646 29q3 -8.5 -1 -17M672 28q-3 -9 0 -18M709 27q3 -9.5 1 -19M735 30q-3 -4 -1 -8M772 29q3 -4.5 0 -9M798 28q-3 -5 1 -10M824 27q3 -5.5 -1 -11M861 30q-3 -6 0 -12M887 29q3 -6.5 1 -13M913 28q-3 -7 -1 -14M950 27q3 -7.5 0 -15M976 30q-3 -8 1 -16M1002 29q3 -8.5 -1 -17M1039 28q-3 -9 0 -18M1065 27q3 -9.5 1 -19M1102 30q-3 -4 -1 -8M1128 29q3 -4.5 0 -9M1154 28q-3 -5 1 -10M1191 27q3 -5.5 -1 -11M1217 30q-3 -6 0 -12M1243 29q3 -6.5 1 -13M1280 28q-3 -7 -1 -14M1306 27q3 -7.5 0 -15M1332 30q-3 -8 1 -16M1369 29q3 -8.5 -1 -17M1395 28q-3 -9 0 -18M1432 27q3 -9.5 1 -19"/></svg>
+<div id="gauge" class="l3-rail" data-spec="L3S-02" aria-hidden="true">
+<svg class="l3-root" preserveAspectRatio="none"><g data-root-hairs></g><path class="l3-root-edge" data-root-main-edge d=""/><path class="l3-root-main" data-root-main pathLength="1" d=""/><path class="l3-root-stub" data-root-stub d=""/><g data-root-sides></g></svg>
+<div class="l3-ticks" data-ticks></div>
+<div class="l3-tip" data-tip><div class="l3-tip-box"><span class="l3-mono" data-tip-depth>0cm</span><span data-tip-name>지상</span></div></div>
+</div>
+<p class="l3-legend"><span class="l3-legend-mine">실선 · 내가 채운 뿌리</span><span class="l3-legend-example">점선 · 예시 기록</span></p>
+<section id="learn" class="l3-layer l3-learn" data-spec="L3S-03" data-chapter="learn" aria-labelledby="learn-title">
+<svg class="l3-edge" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V22C120 8 260 30 420 18S700 2 860 16 1180 34 1320 14L1440 10V40Z"/></svg>
+<div class="l3-layer-grid"><div class="l3-strata">
+<p class="l3-depth"><span class="l3-mono">0–15cm</span><span class="l3-stratum">겉흙</span></p>
+<p class="l3-meaning">오늘 배울 것</p>
+<figure class="l3-note" data-slot="learn" data-status="example"><figcaption>배운 것</figcaption><p class="l3-pen" data-value>좋다는 말보다 지난 행동을 묻는다</p><span class="l3-stamp" data-stamp>예시 기록</span></figure>
+</div>
+<div class="l3-story"><h2 id="learn-title" tabindex="-1">뿌리가 처음 닿는 곳에는<br>개념이 하나 있어요.</h2><p class="l3-body l3-rise">지금 아이디어에 가장 먼저 필요한 개념 한 가지. 읽고 끝내지 않고 한 문항으로 바로 확인해요.</p>
+<p class="l3-concept l3-rise">좋다는 말보다, 지난 행동</p>
+<p class="l3-summary l3-rise">고객에게 아이디어가 괜찮은지 묻기보다, 최근에 실제로 어떻게 했는지를 물어보세요. 칭찬은 쉽게 나오지만 지난 행동은 거짓말을 잘 하지 않아요. <small>NSF I-Corps 고객 발견 방식</small></p>
+<div class="l3-panel l3-quiz" data-quiz><p class="l3-panel-tag">확인 문제 <span data-bind="quiz-no">1</span></p><p class="l3-q" data-bind="quiz-q">고객의 실제 문제를 알아보기에 더 좋은 질문은?</p><div class="l3-options" data-options><button type="button" class="l3-option" data-choice="0">이 앱이 있으면 쓰고 싶으세요?</button><button type="button" class="l3-option" data-choice="1">최근 팀원을 찾았을 때 어떻게 하셨나요?</button><button type="button" class="l3-option" data-choice="2">제 아이디어가 괜찮지 않나요?</button></div><p class="l3-feedback" aria-live="polite" data-bind="quiz-feedback"></p></div></div>
+</div></section>
+<section id="ask" class="l3-layer l3-ask" data-spec="L3S-04" data-chapter="ask" aria-labelledby="ask-title">
+<svg class="l3-edge" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V16C160 30 300 6 480 20S780 36 960 18 1260 4 1440 22V40Z"/></svg>
+<div class="l3-layer-grid"><div class="l3-strata">
+<p class="l3-depth"><span class="l3-mono">15–40cm</span><span class="l3-stratum">속흙</span></p>
+<p class="l3-meaning">물어볼 질문</p>
+<figure class="l3-note" data-slot="ask" data-status="example"><figcaption>물어볼 질문</figcaption><p class="l3-pen" data-value>신입생 3명에게 지난 학기 팀원 구한 방법</p><span class="l3-stamp" data-stamp>예시 기록</span></figure>
+</div>
+<div class="l3-story"><h2 id="ask-title" tabindex="-1">배운 걸 내 아이디어에 대면<br>질문이 생겨요.</h2><p class="l3-body l3-rise">누구에게 물어볼지만 정하면, 방금 배운 방식으로 질문 세 개가 준비돼요.</p>
+<p class="l3-customer l3-rise"><span class="l3-pen" data-bind="customer"></span><span class="l3-customer-suffix">에게 물어볼게요</span></p>
+<div class="l3-panel l3-asksheet">
+<label for="customer-input" class="l3-panel-tag">누구에게 물어볼까요?</label>
+<input id="customer-input" type="text" maxlength="60" autocomplete="off" aria-describedby="customer-hint">
+<p id="customer-hint" class="l3-hint">모든 사람보다, 이번 주에 만날 수 있는 한 사람.</p>
+<p class="l3-panel-tag">물어볼 질문</p>
+<ol class="l3-questions"><li>마지막으로 이 문제를 겪은 건 언제였나요? 그때 상황을 들려주세요.</li><li>그때는 어떻게 해결하셨어요? 지금도 그 방법을 쓰세요?</li><li>그 방법에서 가장 번거롭거나 아쉬웠던 점은 무엇이었나요?</li></ol>
+<p class="l3-avoid"><span>이런 질문은 피해요</span><s>이런 서비스가 있으면 쓰실 건가요?</s></p>
+<div class="l3-row"><button type="button" class="l3-btn" data-action="save-questions" aria-pressed="false">이 질문으로 기록</button><span class="l3-msg" aria-live="polite" data-bind="ask-msg" data-saved="뿌리에 기록했어요"></span></div>
+</div></div>
+</div></section>
+<section id="observe" class="l3-layer l3-observe" data-spec="L3S-05" data-chapter="observe" aria-labelledby="observe-title">
+<svg class="l3-edge" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V24C140 10 340 34 520 16S820 0 1000 20 1300 34 1440 12V40Z"/></svg>
+<div class="l3-layer-grid"><div class="l3-strata">
+<p class="l3-depth"><span class="l3-mono">40–70cm</span><span class="l3-stratum">깊은 흙</span></p>
+<p class="l3-meaning">들은 답</p>
+<figure class="l3-note" data-slot="observe" data-status="example"><figcaption>들은 답</figcaption><p class="l3-pen" data-value>모집보다 시간 맞추기가 더 불편했다</p><span class="l3-stamp" data-stamp>예시 기록</span></figure>
+</div>
+<div class="l3-story"><h2 id="observe-title" tabindex="-1">예상과 다른 답을 만나면,<br>뿌리는 방향을 틀어요.</h2><p class="l3-body l3-rise">좋은 답만 골라 적지 않아요. 막힌 쪽으로 뻗었던 뿌리도 기록으로 남고, 다음 방향을 정하는 근거가 돼요.</p>
+<p class="l3-setup l3-rise"><span class="l3-stamp is-example">가상 예시</span> 같은 질문을 세 명에게 물어봤다고 해볼게요. 이런 답을 들었어요.</p>
+<ul class="l3-quotes"><li class="l3-rise" style="--i:0"><span class="l3-who">응답 1</span>“지난달에도 겪었어요. 그때는 아는 사람한테 물어서 겨우 해결했죠.”</li><li class="l3-rise" style="--i:1"><span class="l3-who">응답 2</span>“불편하긴 한데, 지금 방법으로도 그럭저럭 돼요.”</li><li class="l3-rise" style="--i:2"><span class="l3-who">응답 3</span>“저는 사실 다른 게 더 급해요. 시간 맞추는 게 제일 힘들어요.”</li></ul>
+<div class="l3-panel l3-observe-panel"><p class="l3-q">당신의 예상과 비교하면 어땠나요?</p>
+<div class="l3-choice-row" role="group" aria-label="당신의 예상과 비교하면 어땠나요?"><button type="button" class="l3-choice" data-observe="supported" aria-pressed="false">예상과 같았어요</button><button type="button" class="l3-choice" data-observe="refuted" aria-pressed="false">예상과 달랐어요</button></div>
+<p class="l3-note-msg" aria-live="polite" data-bind="observe-note" data-turn="뿌리가 방향을 틀었어요. 막힌 쪽 뿌리도 그대로 남아요."></p></div></div>
+</div></section>
+<section id="decide" class="l3-layer l3-decide" data-spec="L3S-06" data-chapter="decide" aria-labelledby="decide-title">
+<svg class="l3-edge" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V14C200 26 360 34 560 18S900 4 1080 22 1320 30 1440 18V40Z"/></svg>
+<div class="l3-layer-grid"><div class="l3-strata">
+<p class="l3-depth"><span class="l3-mono">70–100cm</span><span class="l3-stratum">깊은 흙</span></p>
+<p class="l3-meaning">결정</p>
+<figure class="l3-note" data-slot="decide" data-status="example"><figcaption>결정</figcaption><p class="l3-pen" data-value>대상을 좁혀 다시 묻기로 했다</p><span class="l3-stamp" data-stamp>예시 기록</span></figure>
+</div>
+<div class="l3-story"><h2 id="decide-title" tabindex="-1">어디로 뻗을지는<br>당신이 정해요.</h2><p class="l3-body l3-rise">AI는 선택지를 정리해 줄 뿐이에요. 들은 답을 근거로 다음 방향을 직접 골라요.</p>
+<div class="l3-panel"><p class="l3-waiting" data-bind="decide-waiting">먼저 바로 위 층에서 들은 답을 해석해 주세요. 결과에 따라 갈 수 있는 방향이 달라져요.</p><div class="l3-decisions" role="group" aria-label="다음 방향" data-decisions></div></div></div>
+</div></section>
+<section id="roots" class="l3-layer l3-roots" data-spec="L3S-07" aria-labelledby="roots-title">
+<svg class="l3-edge" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V20C180 6 380 28 600 14S960 32 1160 12 1360 20 1440 16V40Z"/></svg>
+<div class="l3-layer-grid"><div class="l3-strata">
+<p class="l3-depth"><span class="l3-mono">100cm 아래</span><span class="l3-stratum">부엽토</span></p>
+<p class="l3-meaning">앞으로 자랄 영역</p>
+
+</div>
+<div class="l3-story"><h2 id="roots-title" tabindex="-1">일곱 갈래 중,<br>지금 자라는 건 한 갈래.</h2><p class="l3-body l3-rise">창업에 필요한 일곱 가지 질문이 뿌리 갈래처럼 뻗어 있어요. 한 번에 다 키우지 않고, 지금 필요한 갈래 하나만 자라요.</p></div>
+</div>
+<div class="l3-shell l3-map">
+<svg class="l3-map-lines" viewBox="0 0 1000 220" preserveAspectRatio="none" aria-hidden="true"><path data-branch="customer" d="M500 0C435.65 56 57 120 71 214"/><path data-branch="product" d="M500 0C457.1 88 232 120 214 214"/><path data-branch="market" d="M500 0C478.55 56 343 120 357 214"/><path data-branch="gtm" d="M500 0C500 88 518 120 500 214"/><path data-branch="finance" d="M500 0C521.45 56 629 120 643 214"/><path data-branch="operations" d="M500 0C542.9 88 804 120 786 214"/><path data-branch="strategy" d="M500 0C564.35 56 915 120 929 214"/><circle cx="500" cy="0" r="7"/></svg>
+<ol class="l3-areas" data-path data-current="지금 자라는 갈래" data-next="다음 갈래"><li class="l3-area" data-key="customer" style="--c:var(--c-customer)"><span class="l3-area-dot" aria-hidden="true">◎</span><span class="l3-area-name">고객 이해</span><span class="l3-area-q">누가, 언제, 무엇 때문에 불편할까?</span><em class="l3-area-badge" data-badge>지금 자라는 갈래</em></li><li class="l3-area" data-key="product" style="--c:var(--c-product)"><span class="l3-area-dot" aria-hidden="true">◇</span><span class="l3-area-name">제품 가치</span><span class="l3-area-q">쓰고 나면 무엇이 더 좋아질까?</span><em class="l3-area-badge" data-badge>다음 갈래</em></li><li class="l3-area" data-key="market" style="--c:var(--c-market)"><span class="l3-area-dot" aria-hidden="true">◈</span><span class="l3-area-name">시장 기회</span><span class="l3-area-q">이 문제를 어디서 먼저 해결할까?</span><em class="l3-area-badge" data-badge></em></li><li class="l3-area" data-key="gtm" style="--c:var(--c-gtm)"><span class="l3-area-dot" aria-hidden="true">↗</span><span class="l3-area-name">고객 확보·판매</span><span class="l3-area-q">어떻게 만나서 쓰거나 사게 할까?</span><em class="l3-area-badge" data-badge></em></li><li class="l3-area" data-key="finance" style="--c:var(--c-finance)"><span class="l3-area-dot" aria-hidden="true">₩</span><span class="l3-area-name">수익·재무</span><span class="l3-area-q">돈이 어떻게 들어오고 얼마나 남을까?</span><em class="l3-area-badge" data-badge></em></li><li class="l3-area" data-key="operations" style="--c:var(--c-operations)"><span class="l3-area-dot" aria-hidden="true">▦</span><span class="l3-area-name">실행·운영</span><span class="l3-area-q">약속한 가치를 계속 전달할 수 있을까?</span><em class="l3-area-badge" data-badge></em></li><li class="l3-area" data-key="strategy" style="--c:var(--c-strategy)"><span class="l3-area-dot" aria-hidden="true">✧</span><span class="l3-area-name">전략·학습</span><span class="l3-area-q">지금 무엇을 확인하고 어떤 결정을 할까?</span><em class="l3-area-badge" data-badge></em></li></ol>
+<p class="l3-rule" aria-live="polite" data-bind="path-rule" data-default="기본 순서는 고객 이해에서 시작해 전략·학습으로 이어져요." data-refuted="들은 답이 예상과 달라서, 방향을 바꿀 기준을 세우는 전략·학습 갈래가 다음으로 당겨졌어요.">기본 순서는 고객 이해에서 시작해 전략·학습으로 이어져요.</p>
+<p class="l3-hint">순서가 바뀌는 건 정해진 규칙이에요. AI 개인화라고 부르지 않아요.</p>
+</div></section>
+</div>
+<section id="grow" class="l3-ab" data-spec="L3S-08" aria-labelledby="grow-title">
+<div class="l3-ab-above"><div class="l3-shell l3-ab-grid">
+<svg class="l3-ab-stem" viewBox="0 0 200 260" aria-hidden="true"><path class="s-stem" d="M100 260C100 200 96 150 104 92"/><path class="s-leaf" d="M102 170c-40-4-62-30-60-56 34 0 58 20 60 56Z"/><path class="s-leaf" d="M103 128c30-6 52-30 50-58-32 4-50 26-50 58Z"/><path class="s-leaf" d="M104 92c-18-20-16-46 0-64 16 18 18 44 0 64Z"/></svg>
+<div><h2 id="grow-title" tabindex="-1">위로는 아이디어가, 아래로는 내가 자라요.</h2>
+<p class="l3-ab-tag">땅 위 · 부캐</p><h3>줄기와 잎은 프로젝트예요</h3><p class="l3-body">가설·질문·관찰·결정이 쌓여 프로젝트가 자라요. 새 프로젝트를 심으면 새 줄기가 올라와요. 근거는 옮겨 심지 않아요.</p>
+<ol class="l3-leaves"><li>가설 정리</li><li>현장 확인</li><li>반복 검토</li><li>의사결정 반영</li></ol></div>
+</div></div>
+<div class="l3-ab-below"><div class="l3-shell l3-ab-grid">
+<svg class="l3-ab-roots" viewBox="0 0 200 260" aria-hidden="true"><path d="M100 0C100 60 92 110 98 170S90 230 94 258"/><path d="M99 40c-20 14-46 18-70 44"/><path d="M100 70c24 10 44 30 58 58"/><path d="M98 120c-26 16-36 40-50 70"/><path d="M99 150c20 12 34 34 42 62"/><path d="M96 200c-14 10-22 26-28 44"/></svg>
+<div><p class="l3-ab-tag">땅속 · 본캐</p><h3>뿌리는 나의 학습이에요</h3><p class="l3-body">이해하고 새 상황에 적용한 개념은 뿌리처럼 남아요. 다른 프로젝트를 심어도 이미 뻗은 뿌리는 그대로예요.</p>
+<ol class="l3-rootlets"><li>이해 확인</li><li>새 상황 적용</li><li>다시 확인</li></ol>
+<p class="l3-hint">뿌리의 깊이는 알아보고 판단한 과정이에요. 사업이 잘될 가능성을 숫자로 약속하지 않아요.</p></div>
+</div></div>
+</section>
+<section id="honest" class="l3-honest" data-spec="L3S-09" aria-labelledby="honest-title"><div class="l3-shell l3-honest-grid">
+<div><h2 id="honest-title" tabindex="-1">지금은 여기까지 자랐어요.</h2><ol class="l3-status"><li data-status="in_progress"><span class="l3-mono">S1</span><div><strong>프로토타입</strong><p>학습 길, 개념·문제·응용, 내 프로젝트 결과물, 실행 1개. 실제 AI·로그인 없이 브라우저에서 체험</p></div><em>진행 중</em></li><li data-status="not_started"><span class="l3-mono">S2</span><div><strong>MVP</strong><p>계정과 서버 저장, 실제 AI 인터뷰, 근거·결정 기록, Android 테스트</p></div><em>준비 중</em></li><li data-status="not_started"><span class="l3-mono">S3</span><div><strong>고도화</strong><p>개인화된 학습 경로, 알림, 두 번째 프로젝트로의 학습 이전</p></div><em>예정</em></li></ol></div>
+<div><h3 class="l3-faq-title">자주 묻는 질문</h3><div class="l3-faq"><details open><summary>이름표에 쓴 문장은 어디에 저장되나요?</summary><p>이 브라우저에만 저장돼요. 서버로 보내지 않고, “처음부터”를 누르면 지워져요. 앱으로 넘어가면 문장만 첫 입력칸에 미리 채워지고, 퀴즈·관찰·결정은 앱에서 직접 해야 기록돼요.</p></details><details><summary>AI가 사업 방향을 정해주나요?</summary><p>아니요. AI는 질문하고 정리하고 선택지를 설명하는 역할이에요. 방향은 언제나 직접 확정해요. 이 페이지의 질문과 선택지는 AI가 아니라 정해진 템플릿이에요.</p></details><details><summary>들은 답 예시는 실제 인터뷰인가요?</summary><p>아니요, 가상 예시예요. 실제로는 직접 만난 사람의 답을 기록하고, 그 기록이 근거가 돼요.</p></details><details><summary>뿌리가 깊으면 사업이 준비된 건가요?</summary><p>아니요. 뿌리는 첫 한 바퀴를 돈 기록이에요. 다음 갈래로 넘어가며 같은 방식이 반복돼요.</p></details><details><summary>매일 해야 하나요?</summary><p>아니요. 벌점이나 순위 경쟁이 없어요. 할 수 있을 때 한 층씩 내려가면 돼요.</p></details></div></div>
+</div></section>
+<section id="harvest" class="l3-harvest" data-spec="L3S-10" aria-labelledby="harvest-title"><div class="l3-shell l3-harvest-grid">
+<div class="l3-harvest-scene"><svg class="l3-sprout l3-harvest-sprout" viewBox="0 0 220 240" role="img" aria-label="뿌리내린 만큼 자란 새싹">
+<g class="m-sprout"><path class="m-stem" d="M108 98C111 60 102 47 91 31"/><path class="m-leaf-a" d="M104 64C64 63 60 28 64 20c37 1 51 16 40 44Z"/><path class="m-leaf-b" d="M106 73c2-41 41-52 55-48-1 39-23 54-55 48Z"/><path class="m-vein" d="M110 62c15-14 25-22 38-26"/></g>
+<g class="m-body"><path class="m-arm" d="M69 98c-8 8-28 17-32 35-5 24 13 35 34 24"/><path class="m-arm" d="M153 106c14-12 29-10 34 2 5 11-1 26-18 33"/><path class="m-feet" d="M75 187c-5 14-8 25 3 28 13 4 18-13 22-22M128 192c4 14 9 23 20 21 12-3 5-22 0-28"/><path class="m-torso" d="M56 124c0-37 23-50 55-50 32 0 59 21 59 64 0 44-23 63-58 63-35 0-56-24-56-77Z"/><path class="m-shine" d="M65 122c3-29 16-39 34-41"/><ellipse class="m-eye" cx="87" cy="136" rx="5" ry="7"/><ellipse class="m-eye" cx="136" cy="136" rx="5" ry="7"/><ellipse class="m-cheek" cx="78" cy="150" rx="10" ry="5"/><ellipse class="m-cheek" cx="145" cy="150" rx="10" ry="5"/><path class="m-mouth" d="M104 151q8 10 16 0"/><path class="m-gem" d="m114 174 5-6 5 6-5 6Z"/></g>
+<g class="m-spark"><path d="m185 70 2-7 2 7 7 2-7 2-2 7-2-7-7-2Z"/><circle cx="44" cy="82" r="3"/></g>
+</svg><div class="l3-mini-tag"><span class="l3-tag-label">이름표</span><p class="l3-pen" data-bind="idea"></p></div><div class="l3-stake small" aria-hidden="true"></div></div>
+<div><p class="l3-eyebrow">다시 지상으로</p>
+<h2 id="harvest-title" tabindex="-1" data-bind="harvest-title" data-done="뿌리가 다 내렸어요. 이제 진짜로 심어 볼까요?" data-partial="뿌리가 {n}층까지 내렸어요." data-none="예시 뿌리를 따라 끝까지 내려왔어요.">예시 뿌리를 따라 끝까지 내려왔어요.</h2>
+<p class="l3-body">같은 이름표로 앱에서 시작해요. 첫 프로젝트 입력칸에 이 문장이 미리 채워져요. 퀴즈·관찰·결정은 앱에서 직접 해야 기록으로 남아요.</p>
+<div class="l3-row"><a class="l3-btn big" href="../../app/?from=v3" data-cta="prototype">이 이름표로 앱에서 심기 <span aria-hidden="true">→</span></a><button type="button" class="l3-btn ghost" data-action="reset">다른 아이디어 심기</button></div></div>
+</div></section>
+</main>
+<footer class="l3-footer" data-spec="L3S-11"><div class="l3-shell">
+<a class="l3-brand" href="#surface"><svg class="l3-mark" viewBox="0 0 32 35" fill="none" aria-hidden="true"><path d="M4 9 16 30 28 9M16 24V4" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M16 14C7 14 8 4 8 4c7 0 8 5 8 10ZM17 13c0-8 9-9 9-9s0 9-9 9Z" fill="currentColor"/></svg><span>vencubator</span></a>
+<p>Vencubator는 현재 프로토타입 단계예요. 이 페이지의 들은 답·선택지는 가상 예시와 정해진 템플릿이며, 적은 내용은 이 브라우저에만 저장돼요.</p>
+<ul><li><a href="../../docs/product/PRODUCT-BRIEF.md">제품 기획서</a></li><li><a href=".././docs/SPEC-010-landing-v3.md">랜딩 v3 명세</a></li></ul>
+<small>© 2026 Vencubator</small></div></footer>
+</div>
+<noscript><p style="padding:100px 24px;max-width:720px;margin:auto;line-height:1.8">이 페이지는 아이디어 한 문장을 이름표에 적어 심어 보는 체험형 페이지라 스크립트가 필요해요. Vencubator는 오늘 배울 것 하나, 해볼 것 하나를 안내하는 창업 학습 코파일럿이며 현재 프로토타입 단계입니다.</p></noscript>
+<script type="module">
+// SPEC-009 §4 공통 이벤트 — 원본은 site/shared/track.mjs. landing/src, landing-v2/src, prototype 에 같은 내용으로 복사해 쓴다.
+// 네트워크 전송 없음: 브라우저 저장소 버퍼에만 기록한다. 전송 어댑터는 DR-G02 결정 후 이 파일에만 추가한다.
+const EXP_KEY = 'vencubator.exp.v1';
+const EVENTS_KEY = 'vencubator.events.v1';
+const UTM_KEY = 'vencubator.utm.v1';
+const MAX_EVENTS = 500;
+const VARIANTS = ['v1', 'v2', 'v3'];
+
+const SAFE_VALUE = /^[A-Za-z0-9_.-]{0,32}$/;
+const SAFE_UTM = /^[\p{L}\p{N}_.-]{1,40}$/u;
+const store = s => s ?? (typeof localStorage !== 'undefined' ? localStorage : null);
+const session = s => s ?? (typeof sessionStorage !== 'undefined' ? sessionStorage : null);
+const readJSON = (st, key, fallback) => { try { const raw = st?.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch { return fallback; } };
+const writeJSON = (st, key, value) => { try { st?.setItem(key, JSON.stringify(value)); return true; } catch { return false; } };
+const uuid = () => (globalThis.crypto?.randomUUID ? crypto.randomUUID() : 'v-' + Math.random().toString(36).slice(2) + Date.now().toString(36));
+
+/** 허용 값만 남긴다: 숫자·불리언·짧은 식별자 문자열. 자유 텍스트는 버린다. */
+function cleanProps(props = {}) {
+  const out = {};
+  for (const [k, v] of Object.entries(props)) {
+    if (!/^[a-z][a-z0-9_]{0,23}$/.test(k)) continue;
+    if (typeof v === 'number' && Number.isFinite(v)) out[k] = v;
+    else if (typeof v === 'boolean') out[k] = v;
+    else if (typeof v === 'string' && SAFE_VALUE.test(v)) out[k] = v;
+  }
+  return out;
+}
+
+/** 저장된 배정. 형식이 틀리면 null */
+function readAssignment(storage) {
+  const a = readJSON(store(storage), EXP_KEY, null);
+  return a && a.v === 1 && VARIANTS.includes(a.variant) && typeof a.visitor === 'string' ? a : null;
+}
+function writeAssignment(storage, a) { return writeJSON(store(storage), EXP_KEY, a); }
+
+/** 랜딩에 직접 들어온 경우 보고 있는 변형으로 배정을 기록 (SPEC-009 §3) */
+function ensureAssignment(page, storage) {
+  const cur = readAssignment(storage);
+  if (cur) return cur;
+  const a = { v: 1, visitor: uuid(), variant: VARIANTS.includes(page) ? page : 'none', source: 'direct', at: Date.now() };
+  if (VARIANTS.includes(page)) writeAssignment(storage, a);
+  return a;
+}
+
+/** 주소의 UTM을 이번 세션에 보관(허용 문자만) */
+function captureUtm(search = '', sessionStore) {
+  const q = new URLSearchParams(search), utm = {};
+  for (const k of ['source', 'medium', 'campaign', 'content']) { const v = q.get('utm_' + k); if (v && SAFE_UTM.test(v)) utm[k] = v; }
+  if (Object.keys(utm).length) writeJSON(session(sessionStore), UTM_KEY, utm);
+  return readJSON(session(sessionStore), UTM_KEY, {});
+}
+
+function track(name, props = {}, env = {}) {
+  if (!/^[a-z][a-z0-9_]{1,31}$/.test(name)) return null;
+  const st = store(env.storage), a = readAssignment(st);
+  const ev = { t: Date.now(), name, page: env.page || 'unknown', visitor: a?.visitor || null, variant: a?.variant || null, utm: readJSON(session(env.session), UTM_KEY, {}), props: cleanProps(props) };
+  const list = readJSON(st, EVENTS_KEY, []);
+  const next = (Array.isArray(list) ? list : []).concat(ev).slice(-MAX_EVENTS);
+  writeJSON(st, EVENTS_KEY, next);
+  return ev;
+}
+const readEvents = storage => { const l = readJSON(store(storage), EVENTS_KEY, []); return Array.isArray(l) ? l : []; };
+
+// SPEC-010 §2: 모든 카피·예시·템플릿·링크의 단일 출처. 마크업·로직 없음.
+// 섹션 id(L3S-xx)는 SPEC-010 §3 표와 1:1, 배열 순서 = 페이지 순서.
+// 퀴즈·질문·관찰·결정·7영역은 v2(SPEC-007)와 같은 내용 — prototype과의 일치는 테스트가 검사한다.
+
+const SITE = {
+  lang: 'ko',
+  title: 'Vencubator · 아이디어를 심으면 근거가 뿌리내려요',
+  description: '아이디어 한 문장을 이름표에 적어 심어 보세요. 땅속으로 내려갈수록 오늘 배울 것, 물어볼 질문, 들은 답, 내린 결정이 뿌리가 되어 자라요. 1인 빌더를 위한 창업 학습 코파일럿 Vencubator(프로토타입).',
+  brand: 'vencubator',
+  variant: 'v3',
+  storageKey: 'vencubator.landing.v3',
+  limits: { idea: 120, customer: 60 },
+  links: {
+    // 같은 사이트의 서비스 (SPEC-009). 문장은 같은 출처 저장소로 인계된다.
+    prototype: '../app/?from=v3',
+    brief: '../docs/product/PRODUCT-BRIEF.md',
+    spec: './docs/SPEC-010-landing-v3.md'
+  }
+};
+
+// SPEC-006/007/010 공통 금지 표현
+const CLAIM_BANNED = ['성공률', 'PMF', '% 완성', '보장', 'AI가 결정', 'AI가 대신', '검증 완료', '1위', '누적 사용자'];
+const REQUIRED_NOTICES = ['프로토타입', '가상 예시', '이 브라우저에만'];
+
+const SAMPLES = [
+  { key: 'teamup', label: '팀플 동료 찾기', idea: '시간과 역할이 맞는 대학생 팀플 동료를 찾아주는 서비스', customer: '첫 전공 수업에서 팀원을 구하는 대학 신입생' },
+  { key: 'banchan', label: '동네 반찬 구독', idea: '퇴근길에 동네 반찬을 조금씩 나눠 사는 구독 서비스', customer: '평일 저녁을 혼자 해결하는 1인 가구 직장인' },
+  { key: 'plant', label: '반려식물 케어', idea: '초보 식물 집사에게 물 주기 시점을 알려주는 앱', customer: '식물을 두 번 이상 말려 본 초보 집사' }
+];
+
+// 지층 5개 (이름표 + 4개 층). example = 조작하지 않은 방문자에게 보여 줄 “다 쓴 예시 기록” (DP-12)
+const SLOTS = [
+  { key: 'idea', label: '이름표', chapter: 'surface', depth: '지상', example: '시간과 역할이 맞는 팀플 동료 찾기' },
+  { key: 'learn', label: '배운 것', chapter: 'learn', depth: '0–15cm', example: '좋다는 말보다 지난 행동을 묻는다' },
+  { key: 'ask', label: '물어볼 질문', chapter: 'ask', depth: '15–40cm', example: '신입생 3명에게 지난 학기 팀원 구한 방법' },
+  { key: 'observe', label: '들은 답', chapter: 'observe', depth: '40–70cm', example: '모집보다 시간 맞추기가 더 불편했다' },
+  { key: 'decide', label: '결정', chapter: 'decide', depth: '70–100cm', example: '대상을 좁혀 다시 묻기로 했다' }
+];
+const STAMPS = { example: '예시 기록', mine: '내 기록', refuted: '방향 전환' };
+
+// prototype/content.mjs LESSONS.customer 와 같은 개념·문항 (AC-L2-07)
+const LESSON = {
+  title: '좋다는 말보다, 지난 행동',
+  summary: '고객에게 아이디어가 괜찮은지 묻기보다, 최근에 실제로 어떻게 했는지를 물어보세요. 칭찬은 쉽게 나오지만 지난 행동은 거짓말을 잘 하지 않아요.',
+  source: 'NSF I-Corps 고객 발견 방식',
+  variants: [
+    { question: '고객의 실제 문제를 알아보기에 더 좋은 질문은?', options: ['이 앱이 있으면 쓰고 싶으세요?', '최근 팀원을 찾았을 때 어떻게 하셨나요?', '제 아이디어가 괜찮지 않나요?'], answer: 1, why: '최근 행동을 물으면 현재 대안과 불편을 구체적으로 알 수 있어요.' },
+    { question: '“좋은 아이디어네요”라는 답 다음에 무엇을 물을까요?', options: ['마지막으로 이 문제를 겪었던 상황을 알려주세요.', '그럼 고객 검증이 끝났다고 봐도 될까요?', '친구도 다 좋아하겠죠?'], answer: 0, why: '구체적인 과거 사례를 확인해야 호의적인 말과 실제 필요를 구별해요.' }
+  ],
+  feedback: {
+    first: '정답이에요. 한 번에 맞혔어요.',
+    retry: '정답이에요. 다시 풀어서 이해했어요.',
+    wrong: '아쉬워요. 다른 문항으로 한 번 더 해볼게요.',
+    helped: '괜찮아요, 정답을 함께 볼게요. 학습은 여기서 막히지 않아요.'
+  },
+  cardValue: { first: '좋다는 말보다, 지난 행동 · 한 번에 이해', retry: '좋다는 말보다, 지난 행동 · 다시 풀어 이해', helped: '좋다는 말보다, 지난 행동 · 설명과 함께 확인' }
+};
+
+// prototype/guided.mjs QUESTS.customer 의 “최근 행동·현재 해결 방법” 질문 틀
+const QUESTION_TEMPLATES = [
+  '마지막으로 이 문제를 겪은 건 언제였나요? 그때 상황을 들려주세요.',
+  '그때는 어떻게 해결하셨어요? 지금도 그 방법을 쓰세요?',
+  '그 방법에서 가장 번거롭거나 아쉬웠던 점은 무엇이었나요?'
+];
+const AVOID_QUESTION = '이런 서비스가 있으면 쓰실 건가요?';
+
+const OBSERVATION = {
+  label: '가상 예시',
+  setup: '같은 질문을 세 명에게 물어봤다고 해볼게요. 이런 답을 들었어요.',
+  quotes: [
+    '“지난달에도 겪었어요. 그때는 아는 사람한테 물어서 겨우 해결했죠.”',
+    '“불편하긴 한데, 지금 방법으로도 그럭저럭 돼요.”',
+    '“저는 사실 다른 게 더 급해요. 시간 맞추는 게 제일 힘들어요.”'
+  ],
+  ask: '당신의 예상과 비교하면 어땠나요?',
+  choices: [
+    { key: 'supported', label: '예상과 같았어요', card: '예상한 불편이 실제로 있었어요' },
+    { key: 'refuted', label: '예상과 달랐어요', card: '예상과 다른 불편이 더 컸어요' }
+  ],
+  note: {
+    supported: '지지하는 단서가 생겼어요. 그래도 세 명은 시작일 뿐이에요.',
+    refuted: '가설은 “다시 살펴보기”로 바뀌지만, 알아보고 판단한 경험은 그대로 쌓여요. 반박도 성장이에요.'
+  }
+};
+
+const DECISIONS = {
+  supported: [
+    { key: 'keep', t: '가설을 유지하고 다음 칸으로', d: '불편이 확인됐어요. 가장 작은 첫 버전을 생각해 볼 차례예요.' },
+    { key: 'more', t: '두 명 더 들어보기', d: '세 명은 아직 적어요. 같은 질문으로 조금 더 확인해요.' },
+    { key: 'narrow', t: '고객을 더 좁히기', d: '가장 크게 불편해한 사람의 공통점으로 대상을 좁혀요.' }
+  ],
+  refuted: [
+    { key: 'narrow', t: '대상을 좁혀 다시 묻기', d: '불편을 크게 느낀 한 사람의 조건으로 대상을 다시 정해요.' },
+    { key: 'reframe', t: '문제를 다시 정의하기', d: '사람들이 실제로 말한 더 큰 불편을 새 가설로 세워요.' },
+    { key: 'criteria', t: '바꿀 기준부터 정하기', d: '어떤 결과가 나오면 방향을 바꿀지, 전략 학습으로 먼저 정해요.' }
+  ]
+};
+
+// SPEC-005 기본 경로. 이름·색은 prototype/content.mjs STATS 와 일치 (AC-L2-07)
+const AREAS = [
+  { key: 'customer', name: '고객 이해', icon: '◎', q: '누가, 언제, 무엇 때문에 불편할까?' },
+  { key: 'product', name: '제품 가치', icon: '◇', q: '쓰고 나면 무엇이 더 좋아질까?' },
+  { key: 'market', name: '시장 기회', icon: '◈', q: '이 문제를 어디서 먼저 해결할까?' },
+  { key: 'gtm', name: '고객 확보·판매', icon: '↗', q: '어떻게 만나서 쓰거나 사게 할까?' },
+  { key: 'finance', name: '수익·재무', icon: '₩', q: '돈이 어떻게 들어오고 얼마나 남을까?' },
+  { key: 'operations', name: '실행·운영', icon: '▦', q: '약속한 가치를 계속 전달할 수 있을까?' },
+  { key: 'strategy', name: '전략·학습', icon: '✧', q: '지금 무엇을 확인하고 어떤 결정을 할까?' }
+];
+
+const SECTIONS = [
+  { id: 'L3S-00', type: 'topbar', anchor: 'top',
+    reset: '처음부터', cta: { label: '앱 열기', href: 'prototype' } },
+
+  { id: 'L3S-01', type: 'surface', anchor: 'surface',
+    eyebrow: '1인 빌더를 위한 창업 학습 코파일럿 · 프로토타입',
+    lines: ['아이디어를 심으면,', '근거가 뿌리내려요.'],
+    lead: '떠오른 아이디어를 이름표에 한 문장으로 적어 심어 보세요. 아래로 내려갈수록 오늘 배울 것, 물어볼 질문, 들은 답, 내린 결정이 뿌리가 되어 자라요.',
+    tagLabel: '이름표에 적을 아이디어 한 문장',
+    placeholder: '예: 시간과 역할이 맞는 팀플 동료를 찾아주는 서비스',
+    submit: '심기',
+    empty: '이름표에 한 문장을 적거나 아래 예시를 골라 주세요.',
+    samplesLabel: '예시로 심어 보기',
+    privacy: '적은 내용은 서버로 보내지 않고 이 브라우저에만 저장돼요.',
+    down: '땅속으로 내려가 보기',
+    typing: ['동네 반찬을 조금씩 나눠 사는 구독', '초보 식물 집사에게 물 주기 알림', '시간과 역할이 맞는 팀플 동료 찾기'] },
+
+  { id: 'L3S-02', type: 'gauge', anchor: 'gauge',
+    label: '깊이', unit: 'cm', ground: '지상',
+    legendMine: '실선 · 내가 채운 뿌리', legendExample: '점선 · 예시 기록' },
+
+  { id: 'L3S-03', type: 'layerLearn', anchor: 'learn', depth: '0–15cm', stratum: '겉흙', meaning: '오늘 배울 것',
+    title: '뿌리가 처음 닿는 곳에는\n개념이 하나 있어요.',
+    body: '지금 아이디어에 가장 먼저 필요한 개념 한 가지. 읽고 끝내지 않고 한 문항으로 바로 확인해요.' },
+
+  { id: 'L3S-04', type: 'layerAsk', anchor: 'ask', depth: '15–40cm', stratum: '속흙', meaning: '물어볼 질문',
+    title: '배운 걸 내 아이디어에 대면\n질문이 생겨요.',
+    body: '누구에게 물어볼지만 정하면, 방금 배운 방식으로 질문 세 개가 준비돼요.',
+    inputLabel: '누구에게 물어볼까요?',
+    inputHint: '모든 사람보다, 이번 주에 만날 수 있는 한 사람.',
+    listLabel: '물어볼 질문',
+    avoidLabel: '이런 질문은 피해요',
+    save: '이 질문으로 기록',
+    saved: '뿌리에 기록했어요' },
+
+  { id: 'L3S-05', type: 'layerObserve', anchor: 'observe', depth: '40–70cm', stratum: '깊은 흙', meaning: '들은 답',
+    title: '예상과 다른 답을 만나면,\n뿌리는 방향을 틀어요.',
+    body: '좋은 답만 골라 적지 않아요. 막힌 쪽으로 뻗었던 뿌리도 기록으로 남고, 다음 방향을 정하는 근거가 돼요.',
+    turnNote: '뿌리가 방향을 틀었어요. 막힌 쪽 뿌리도 그대로 남아요.' },
+
+  { id: 'L3S-06', type: 'layerDecide', anchor: 'decide', depth: '70–100cm', stratum: '깊은 흙', meaning: '결정',
+    title: '어디로 뻗을지는\n당신이 정해요.',
+    body: 'AI는 선택지를 정리해 줄 뿐이에요. 들은 답을 근거로 다음 방향을 직접 골라요.',
+    waiting: '먼저 바로 위 층에서 들은 답을 해석해 주세요. 결과에 따라 갈 수 있는 방향이 달라져요.' },
+
+  { id: 'L3S-07', type: 'rootMap', anchor: 'roots', depth: '100cm 아래', stratum: '부엽토', meaning: '앞으로 자랄 영역',
+    title: '일곱 갈래 중,\n지금 자라는 건 한 갈래.',
+    body: '창업에 필요한 일곱 가지 질문이 뿌리 갈래처럼 뻗어 있어요. 한 번에 다 키우지 않고, 지금 필요한 갈래 하나만 자라요.',
+    nowLabel: '지금 자라는 갈래', nextLabel: '다음 갈래',
+    ruleDefault: '기본 순서는 고객 이해에서 시작해 전략·학습으로 이어져요.',
+    ruleRefuted: '들은 답이 예상과 달라서, 방향을 바꿀 기준을 세우는 전략·학습 갈래가 다음으로 당겨졌어요.',
+    ruleNote: '순서가 바뀌는 건 정해진 규칙이에요. AI 개인화라고 부르지 않아요.',
+    areas: AREAS },
+
+  { id: 'L3S-08', type: 'aboveBelow', anchor: 'grow',
+    title: '위로는 아이디어가, 아래로는 내가 자라요.',
+    above: { tag: '땅 위 · 부캐', t: '줄기와 잎은 프로젝트예요', d: '가설·질문·관찰·결정이 쌓여 프로젝트가 자라요. 새 프로젝트를 심으면 새 줄기가 올라와요. 근거는 옮겨 심지 않아요.', stages: ['가설 정리', '현장 확인', '반복 검토', '의사결정 반영'] },
+    below: { tag: '땅속 · 본캐', t: '뿌리는 나의 학습이에요', d: '이해하고 새 상황에 적용한 개념은 뿌리처럼 남아요. 다른 프로젝트를 심어도 이미 뻗은 뿌리는 그대로예요.', stages: ['이해 확인', '새 상황 적용', '다시 확인'] },
+    note: '뿌리의 깊이는 알아보고 판단한 과정이에요. 사업이 잘될 가능성을 숫자로 약속하지 않아요.' },
+
+  { id: 'L3S-09', type: 'honest', anchor: 'honest',
+    title: '지금은 여기까지 자랐어요.',
+    rows: [
+      { stage: 'S1', name: '프로토타입', status: 'in_progress', label: '진행 중', d: '학습 길, 개념·문제·응용, 내 프로젝트 결과물, 실행 1개. 실제 AI·로그인 없이 브라우저에서 체험' },
+      { stage: 'S2', name: 'MVP', status: 'not_started', label: '준비 중', d: '계정과 서버 저장, 실제 AI 인터뷰, 근거·결정 기록, Android 테스트' },
+      { stage: 'S3', name: '고도화', status: 'not_started', label: '예정', d: '개인화된 학습 경로, 알림, 두 번째 프로젝트로의 학습 이전' }
+    ],
+    faqTitle: '자주 묻는 질문',
+    faq: [
+      { q: '이름표에 쓴 문장은 어디에 저장되나요?', a: '이 브라우저에만 저장돼요. 서버로 보내지 않고, “처음부터”를 누르면 지워져요. 앱으로 넘어가면 문장만 첫 입력칸에 미리 채워지고, 퀴즈·관찰·결정은 앱에서 직접 해야 기록돼요.' },
+      { q: 'AI가 사업 방향을 정해주나요?', a: '아니요. AI는 질문하고 정리하고 선택지를 설명하는 역할이에요. 방향은 언제나 직접 확정해요. 이 페이지의 질문과 선택지는 AI가 아니라 정해진 템플릿이에요.' },
+      { q: '들은 답 예시는 실제 인터뷰인가요?', a: '아니요, 가상 예시예요. 실제로는 직접 만난 사람의 답을 기록하고, 그 기록이 근거가 돼요.' },
+      { q: '뿌리가 깊으면 사업이 준비된 건가요?', a: '아니요. 뿌리는 첫 한 바퀴를 돈 기록이에요. 다음 갈래로 넘어가며 같은 방식이 반복돼요.' },
+      { q: '매일 해야 하나요?', a: '아니요. 벌점이나 순위 경쟁이 없어요. 할 수 있을 때 한 층씩 내려가면 돼요.' }
+    ] },
+
+  { id: 'L3S-10', type: 'harvest', anchor: 'harvest',
+    eyebrow: '다시 지상으로',
+    titleDone: '뿌리가 다 내렸어요. 이제 진짜로 심어 볼까요?',
+    titlePartial: '뿌리가 {n}층까지 내렸어요.',
+    titleNone: '예시 뿌리를 따라 끝까지 내려왔어요.',
+    body: '같은 이름표로 앱에서 시작해요. 첫 프로젝트 입력칸에 이 문장이 미리 채워져요. 퀴즈·관찰·결정은 앱에서 직접 해야 기록으로 남아요.',
+    cta: '이 이름표로 앱에서 심기',
+    again: '다른 아이디어 심기' },
+
+  { id: 'L3S-11', type: 'footer', anchor: 'footer',
+    notice: 'Vencubator는 현재 프로토타입 단계예요. 이 페이지의 들은 답·선택지는 가상 예시와 정해진 템플릿이며, 적은 내용은 이 브라우저에만 저장돼요.',
+    links: [ { label: '제품 기획서', href: 'brief' }, { label: '랜딩 v3 명세', href: 'spec' } ],
+    copy: '© 2026 Vencubator' }
+];
+
+// SPEC-010 §4: 순수 상태 모델. DOM·저장소 접근 없음 (테스트 대상).
+// v2(SPEC-007 §4)의 액션·규칙을 계승. 차이: 칸 이름(ask), 예시 값은 “다 쓴 예시 기록”(DP-12), rootState 추가.
+
+const CHAPTERS = SLOTS.map(s => s.chapter); // ['surface','learn','ask','observe','decide']
+const clean = (v, max) => String(v ?? '').replace(/\s+/g, ' ').trim().slice(0, max);
+
+function initialState() {
+  const s = SAMPLES[0];
+  return {
+    v: 1,
+    idea: { text: s.idea, source: 'example', sample: s.key },
+    learn: { variant: 0, tries: 0, result: null, last: null },
+    ask: { customer: s.customer, source: 'example', saved: false },
+    observe: null,
+    decision: null,
+    reached: []
+  };
+}
+
+function reduce(state, action) {
+  const s = structuredClone(state);
+  switch (action.type) {
+    case 'SET_IDEA': {
+      const text = clean(action.text, SITE.limits.idea);
+      if (!text) return state;
+      const sample = SAMPLES.find(x => x.key === action.sample);
+      s.idea = { text, source: action.source === 'mine' ? 'mine' : 'example', sample: sample?.key ?? null };
+      if (sample && s.ask.source !== 'mine') s.ask = { customer: sample.customer, source: 'example', saved: false };
+      return s;
+    }
+    case 'ANSWER': {
+      if (s.learn.result) return state; // 이미 끝난 문항은 다시 보상하지 않음
+      const v = LESSON.variants[s.learn.variant];
+      if (action.choice === v.answer) { s.learn.result = s.learn.tries === 0 ? 'first' : 'retry'; s.learn.last = 'right'; return s; }
+      s.learn.tries += 1;
+      s.learn.last = 'wrong';
+      if (s.learn.tries >= LESSON.variants.length) { s.learn.result = 'helped'; s.learn.last = 'helped'; }
+      else s.learn.variant = s.learn.tries % LESSON.variants.length;
+      return s;
+    }
+    case 'SET_CUSTOMER': {
+      const text = clean(action.text, SITE.limits.customer);
+      if (!text) return state;
+      s.ask = { customer: text, source: 'mine', saved: false };
+      return s;
+    }
+    case 'SAVE_QUESTIONS':
+      if (s.ask.saved) return state;
+      s.ask.saved = true;
+      return s;
+    case 'OBSERVE':
+      if (!['supported', 'refuted'].includes(action.result) || s.observe === action.result) return state;
+      s.decision = null;
+      s.observe = action.result;
+      return s;
+    case 'DECIDE':
+      if (!s.observe || !DECISIONS[s.observe].some(d => d.key === action.key) || s.decision === action.key) return state;
+      s.decision = action.key;
+      return s;
+    case 'REACH':
+      if (!CHAPTERS.includes(action.chapter) || s.reached.includes(action.chapter)) return state;
+      s.reached.push(action.chapter);
+      return s;
+    case 'RESET':
+      return initialState();
+    default:
+      return state;
+  }
+}
+
+const questionsFor = () => QUESTION_TEMPLATES.slice();
+
+/**
+ * 층 5개 계산. status: example | mine (빈 칸 없음 — DP-12 가만히 있어도 완성).
+ * example 값은 SLOTS[i].example 의 다 쓴 예시 문장. 이름표·질문은 고른 예시에 맞춰진다.
+ */
+function deriveCard(state) {
+  const obs = OBSERVATION.choices.find(c => c.key === state.observe);
+  const dec = state.observe ? DECISIONS[state.observe].find(d => d.key === state.decision) : null;
+  const sampleCustomer = state.ask.source === 'example' ? state.ask.customer : null;
+  const values = [
+    { mine: state.idea.source === 'mine', value: state.idea.text, example: state.idea.text },
+    { mine: !!state.learn.result, value: LESSON.cardValue[state.learn.result], example: SLOTS[1].example },
+    { mine: state.ask.saved, value: `${state.ask.customer}에게 · 지난 행동을 묻는 질문 ${QUESTION_TEMPLATES.length}개`, example: sampleCustomer ? `${sampleCustomer}에게 지난 행동 묻기` : SLOTS[2].example },
+    { mine: !!obs, value: obs?.card, example: SLOTS[3].example, flag: state.observe === 'refuted' ? 'refuted' : null },
+    { mine: !!dec, value: dec?.t, example: SLOTS[4].example }
+  ];
+  const slots = SLOTS.map((def, i) => {
+    const v = values[i];
+    const out = { ...def, status: v.mine ? 'mine' : 'example', value: v.mine ? v.value : v.example };
+    if (v.mine && v.flag) out.flag = v.flag;
+    return out;
+  });
+  const filled = slots.filter(x => x.status === 'mine').length;
+  return { slots, filled, total: slots.length, grow: filled / slots.length, complete: filled === slots.length };
+}
+
+/** 뿌리 상태: 층별 실선(mine)/점선(example), 방향 전환 여부. 그리기 규칙은 interact.mjs L3M-03·04 */
+function rootState(state) {
+  const c = deriveCard(state);
+  const layers = c.slots.slice(1).map(s => ({ key: s.key, chapter: s.chapter, status: s.status }));
+  let depth = 0;
+  for (const l of layers) { if (l.status === 'mine') depth += 1; else break; }
+  return { layers, depth, mine: layers.filter(l => l.status === 'mine').length, turned: state.observe === 'refuted', idea: c.slots[0].status };
+}
+
+/** 7영역 경로: 반박되면 전략을 2번째로 (SPEC-005 nextConcept 규칙) */
+function pathOrder(state) {
+  const keys = AREAS.map(a => a.key);
+  if (state.observe === 'refuted') { keys.splice(keys.indexOf('strategy'), 1); keys.splice(1, 0, 'strategy'); }
+  return { order: keys, current: keys[0], next: keys[1] };
+}
+
+const serialize = state => JSON.stringify(state);
+/** 손상·다른 버전 데이터는 기본 상태로 */
+function deserialize(raw) {
+  try {
+    const d = JSON.parse(raw);
+    if (!d || d.v !== 1 || typeof d.idea?.text !== 'string' || !Array.isArray(d.reached)) return initialState();
+    const base = initialState();
+    const obs = ['supported', 'refuted'].includes(d.observe) ? d.observe : null;
+    return {
+      ...base,
+      idea: { ...base.idea, ...d.idea, text: clean(d.idea.text, SITE.limits.idea) || base.idea.text, source: d.idea.source === 'mine' ? 'mine' : 'example' },
+      ask: { ...base.ask, ...d.ask, customer: clean(d.ask?.customer, SITE.limits.customer) || base.ask.customer, saved: d.ask?.saved === true },
+      learn: { ...base.learn, ...d.learn },
+      observe: obs,
+      decision: obs && DECISIONS[obs].some(x => x.key === d.decision) ? d.decision : null,
+      reached: d.reached.filter(c => CHAPTERS.includes(c))
+    };
+  } catch { return initialState(); }
+}
+
+// SPEC-010 §5·§6: 이벤트 → reduce → 화면 반영, 스크롤 → 뿌리·깊이. 스크롤은 그림만 바꾸고 상태를 바꾸지 않는다(REACH 제외).
+// L3I-01~09, L3M-01~07. 방문자 입력은 textContent·value로만 넣는다(마크업 주입 없음).
+
+
+
+const SVG = 'http://www.w3.org/2000/svg';
+// 층 경계의 깊이(cm). SPEC-010 §3 지층 표와 같음
+const DEPTH_STOPS = [['learn', 0], ['ask', 15], ['observe', 40], ['decide', 70], ['roots', 100]];
+
+function bindLanding(win = window) {
+  const doc = win.document, root = doc.documentElement;
+  const reduced = !!win.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const TRACK_ENV = { page: SITE.variant };
+  captureUtm(win.location.search);
+  ensureAssignment(TRACK_ENV.page);
+  track('landing_view', {}, TRACK_ENV);
+  root.classList.add('js');
+  root.classList.toggle('reduced', reduced);
+  const $ = (s, el = doc) => el.querySelector(s), $$ = (s, el = doc) => [...el.querySelectorAll(s)];
+  const binds = k => $$(`[data-bind="${k}"]`);
+  const setText = (k, v) => binds(k).forEach(el => { if (el.textContent !== v) el.textContent = v; });
+  const gauge = SECTIONS.find(s => s.type === 'gauge');
+  const byAnchor = Object.fromEntries(SECTIONS.map(s => [s.anchor, s]));
+
+  // L3I-09 로컬 저장 (실패해도 동작)
+  const store = {
+    load() { try { const raw = win.localStorage.getItem(SITE.storageKey); return raw ? deserialize(raw) : initialState(); } catch { return initialState(); } },
+    save(s) { try { win.localStorage.setItem(SITE.storageKey, serialize(s)); } catch { /* 저장 불가 환경 */ } },
+    clear() { try { win.localStorage.removeItem(SITE.storageKey); } catch { /* noop */ } }
+  };
+
+  let state = store.load();
+  let prev = null;
+  const ideaInput = $('#idea-input'), customerInput = $('#customer-input');
+
+  function dispatch(action) {
+    const next = reduce(state, action);
+    if (next === state) return;
+    // SPEC-009 §4 계측: 자유 텍스트 없이 구간·개수만
+    if (action.type === 'SET_IDEA') { const n = next.idea.text.length; track('idea_submit', { source: next.idea.source, len: n >= 30 ? 30 : n >= 10 ? 10 : 0 }, TRACK_ENV); }
+    const before = deriveCard(state).filled, after = deriveCard(next).filled;
+    if (after > before) track('card_progress', { filled: after }, TRACK_ENV);
+    state = next;
+    store.save(state);
+    paint();
+  }
+
+  // ── 화면 반영 ──
+  function paintIdea() {
+    setText('idea', state.idea.text);
+    // 내 문장만 입력칸에 되살린다. 예시 상태의 빈 칸에서는 손글씨 자동 쓰기가 돈다 (L3M-05)
+    if (ideaInput && doc.activeElement !== ideaInput && state.idea.source === 'mine') ideaInput.value = state.idea.text;
+    $$('.l3-chip').forEach(b => b.setAttribute('aria-pressed', String(state.idea.source === 'example' && state.idea.sample === b.dataset.sample)));
+    typing.sync();
+  }
+
+  function paintNotes(c) {
+    c.slots.forEach((s, i) => {
+      const el = $(`.l3-note[data-slot="${s.key}"]`);
+      if (!el) return;
+      const stamp = s.flag === 'refuted' ? STAMPS.refuted : STAMPS[s.status];
+      $('[data-value]', el).textContent = s.value;
+      $('[data-stamp]', el).textContent = stamp;
+      el.dataset.status = s.status;
+      if (s.flag) el.dataset.flag = s.flag; else delete el.dataset.flag;
+      const changed = prev && (prev.slots[i].value !== s.value || prev.slots[i].status !== s.status);
+      if (changed && !reduced) { el.classList.remove('is-writing'); void el.offsetWidth; el.classList.add('is-writing'); }
+    });
+  }
+
+  function paintLearn() {
+    const L = state.learn, v = LESSON.variants[L.variant];
+    const q = $('[data-bind="quiz-q"]'), box = $('[data-options]'), fb = $('[data-bind="quiz-feedback"]');
+    if (!q || !box) return;
+    setText('quiz-no', String(L.variant + 1));
+    if (q.textContent !== v.question) {
+      q.textContent = v.question;
+      box.replaceChildren(...v.options.map((o, i) => { const b = doc.createElement('button'); b.type = 'button'; b.className = 'l3-option'; b.dataset.choice = String(i); b.textContent = o; return b; }));
+    }
+    const done = !!L.result;
+    $$('.l3-option', box).forEach(b => { const i = Number(b.dataset.choice); b.disabled = done; b.classList.toggle('is-right', done && i === v.answer); });
+    fb.textContent = L.result ? `${LESSON.feedback[L.result]} ${v.why}` : L.last === 'wrong' ? LESSON.feedback.wrong : '';
+    fb.dataset.tone = L.result ? (L.result === 'helped' ? 'soft' : 'good') : L.last === 'wrong' ? 'retry' : '';
+  }
+
+  function paintAsk() {
+    setText('customer', state.ask.customer);
+    if (customerInput && doc.activeElement !== customerInput) customerInput.value = state.ask.customer;
+    const m = $('[data-bind="ask-msg"]');
+    if (m) m.textContent = state.ask.saved ? m.dataset.saved : '';
+    $('[data-action="save-questions"]')?.setAttribute('aria-pressed', String(state.ask.saved));
+  }
+
+  function paintObserve() {
+    $$('[data-observe]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.observe === state.observe)));
+    const note = $('[data-bind="observe-note"]');
+    if (note) { note.textContent = state.observe ? OBSERVATION.note[state.observe] + (state.observe === 'refuted' ? ' ' + note.dataset.turn : '') : ''; note.dataset.tone = state.observe || ''; }
+    const wrap = $('[data-decisions]'), wait = $('[data-bind="decide-waiting"]');
+    if (!wrap) return;
+    wait.hidden = !!state.observe;
+    const list = state.observe ? DECISIONS[state.observe] : [];
+    const sig = list.map(d => d.key).join();
+    if (wrap.dataset.sig !== sig) {
+      wrap.dataset.sig = sig;
+      wrap.replaceChildren(...list.map(d => {
+        const b = doc.createElement('button'); b.type = 'button'; b.className = 'l3-decision'; b.dataset.decide = d.key;
+        const t = doc.createElement('strong'); t.textContent = d.t; const p = doc.createElement('span'); p.textContent = d.d;
+        b.append(t, p); return b;
+      }));
+    }
+    $$('[data-decide]', wrap).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.decide === state.decision)));
+  }
+
+  function paintMap() {
+    const ol = $('[data-path]'); if (!ol) return;
+    const { current, next } = pathOrder(state);
+    $$('.l3-area', ol).forEach(n => {
+      const k = n.dataset.key;
+      n.classList.toggle('is-current', k === current);
+      n.classList.toggle('is-next', k === next);
+      n.classList.toggle('is-moved', state.observe === 'refuted' && k === 'strategy');
+      $('[data-badge]', n).textContent = k === current ? ol.dataset.current : k === next ? ol.dataset.next : '';
+    });
+    $$('[data-branch]').forEach(p => { p.classList.toggle('is-current', p.dataset.branch === current); p.classList.toggle('is-next', p.dataset.branch === next); });
+    const rule = $('[data-bind="path-rule"]');
+    if (rule) rule.textContent = state.observe === 'refuted' ? rule.dataset.refuted : rule.dataset.default;
+  }
+
+  function paintHarvest(c) {
+    const rs = rootState(state), h = $('[data-bind="harvest-title"]');
+    if (h) h.textContent = c.complete ? h.dataset.done : rs.mine > 0 ? h.dataset.partial.replace('{n}', rs.mine) : h.dataset.none;
+    // L3M-07 새싹: 채운 만큼 자람 (예시 상태에서도 완성된 모습 — DP-12)
+    const grow = String(0.35 + 0.65 * c.grow);
+    $$('.l3-sprout').forEach(el => el.style.setProperty('--grow', grow));
+  }
+
+  function paint() {
+    const c = deriveCard(state);
+    paintIdea(); paintNotes(c); paintLearn(); paintAsk(); paintObserve(); paintMap(); paintHarvest(c);
+    rootDraw.sync(prev, c);
+    prev = c;
+  }
+
+  // ── L3M-05 이름표 손글씨 자동 쓰기 ──
+  const typing = (() => {
+    const el = $('.l3-typing');
+    const lines = el ? JSON.parse(el.dataset.typing || '[]') : [];
+    const ph = ideaInput?.getAttribute('placeholder') || '';
+    let timer = 0, line = 0, pos = 0, dir = 1, on = false;
+    const active = () => !reduced && el && lines.length && ideaInput && !ideaInput.value && doc.activeElement !== ideaInput;
+    function tick() {
+      const t = lines[line];
+      pos += dir;
+      el.textContent = t.slice(0, pos);
+      let wait = dir > 0 ? 90 : 28;
+      if (dir > 0 && pos >= t.length) { dir = -1; wait = 1700; }
+      else if (dir < 0 && pos <= 0) { dir = 1; line = (line + 1) % lines.length; wait = 420; }
+      timer = win.setTimeout(tick, wait);
+    }
+    return {
+      sync() {
+        const want = !!active();
+        if (want === on) return;
+        on = want;
+        el?.classList.toggle('is-on', on);
+        if (on) { ideaInput.setAttribute('placeholder', ''); pos = 0; dir = 1; timer = win.setTimeout(tick, 500); }
+        else { win.clearTimeout(timer); if (el) el.textContent = ''; ideaInput?.setAttribute('placeholder', ph); }
+      }
+    };
+  })();
+
+  // ── L3M-01~04 뿌리와 깊이 ──
+  const rootDraw = (() => {
+    const soil = $('[data-soil]'), rail = $('.l3-rail'), svg = $('.l3-root');
+    if (!soil || !svg) return { sync() {}, layout() {}, scroll() {} };
+    const main = $('[data-root-main]', svg), mainEdge = $('[data-root-main-edge]', svg), stub = $('[data-root-stub]', svg);
+    const sidesG = $('[data-root-sides]', svg), hairsG = $('[data-root-hairs]', svg);
+    const ticks = $('[data-ticks]', rail), tip = $('[data-tip]', rail);
+    let L = null; // 레이아웃 캐시
+    const sideEls = new Map();
+    const wiggle = y => Math.sin(y / 140) * 6 + Math.sin(y / 53) * 2;
+    const ease = t => (1 - Math.cos(Math.PI * Math.min(1, Math.max(0, t)))) / 2;
+
+    function layout() {
+      const sr = soil.getBoundingClientRect();
+      const W = soil.clientWidth, H = soil.offsetHeight;
+      const grid = $('.l3-layer-grid', soil);
+      const railX = (grid ? grid.getBoundingClientRect().left - sr.left : 0) + (parseFloat(win.getComputedStyle(rail).getPropertyValue('--rail-x')) || 40);
+      const top = id => { const el = doc.getElementById(id); return el ? el.getBoundingClientRect().top - sr.top : 0; };
+      const stops = DEPTH_STOPS.map(([id, cm]) => ({ id, cm, y: top(id) }));
+      const end = stops[stops.length - 1].y + 90;
+      const obs = $('.l3-note[data-slot="observe"]', soil);
+      const turnY = obs ? obs.getBoundingClientRect().top - sr.top + 26 : top('observe') + 120;
+      const notes = $$('.l3-note', soil).map(n => { const r = n.getBoundingClientRect(); return { key: n.dataset.slot, x: r.left - sr.left - 6, y: r.top - sr.top + 24 }; });
+      const turn = parseFloat(win.getComputedStyle(rail).getPropertyValue('--rail-turn')) || 34;
+      L = { W, H, railX, turn, stops, end, turnY, notes, top: sr.top + win.scrollY };
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svg.setAttribute('width', W); svg.setAttribute('height', H);
+      ticks.replaceChildren(...stops.map(s => { const t = doc.createElement('span'); t.className = 'l3-tick'; t.style.top = s.y + 'px'; t.style.left = railX + 'px'; t.textContent = `${s.cm}${gauge.unit}`; return t; }));
+      // 뿌리털 (장식): 줄기 양옆 짧은 선
+      hairsG.replaceChildren(...Array.from({ length: Math.floor(end / 170) }, (_, i) => {
+        const y = 60 + i * 170, x = railX + wiggle(y), s = i % 2 ? 1 : -1;
+        const p = doc.createElementNS(SVG, 'path'); p.setAttribute('d', `M${x} ${y}q${s * 10} 6 ${s * 18} 22`); p.dataset.y = y; return p;
+      }));
+      build();
+      scroll();
+    }
+
+    const mainX = (y, turned) => L.railX + wiggle(y) + (turned ? L.turn * ease((y - L.turnY) / 90) : 0);
+
+    function build() {
+      if (!L) return;
+      const rs = rootState(state);
+      const pts = [];
+      for (let y = 0; y <= L.end; y += 24) pts.push(`${mainX(y, rs.turned).toFixed(1)} ${y}`);
+      const d = 'M' + pts.join('L');
+      main.setAttribute('d', d); mainEdge.setAttribute('d', d);
+      mainEdge.setAttribute('pathLength', '1');
+      // L3M-04 막힌 쪽 뿌리: 원래 방향으로 조금 뻗다 멈춘 흔적
+      if (rs.turned) {
+        const x = mainX(L.turnY, false), y2 = L.turnY + 84;
+        stub.setAttribute('d', `M${x.toFixed(1)} ${L.turnY}C${x - 2} ${L.turnY + 30} ${L.railX + wiggle(y2) - 4} ${y2 - 20} ${L.railX + wiggle(y2) - 4} ${y2}m-6 0a6 6 0 1 0 12 0a6 6 0 1 0-12 0`);
+      } else stub.setAttribute('d', '');
+      soil.classList.toggle('is-turned', rs.turned);
+      // L3M-03 곁뿌리: 층 기록(메모)까지
+      const layers = new Map(rs.layers.map(l => [l.key, l]));
+      L.sides = L.notes.filter(n => layers.has(n.key)).map(n => {
+        const y0 = Math.max(0, n.y - 56), x0 = mainX(y0, rs.turned && y0 > L.turnY);
+        const d2 = `M${x0.toFixed(1)} ${y0}C${(x0 + (n.x - x0) * 0.25).toFixed(1)} ${y0 + 34} ${(n.x - 28).toFixed(1)} ${n.y - 6} ${n.x.toFixed(1)} ${n.y}`;
+        // 곁뿌리 = 테두리(흙색) + 속(연두) 두 겹
+        let pair = sideEls.get(n.key);
+        if (!pair) {
+          pair = ['is-edge', 'is-top'].map(() => { const e = doc.createElementNS(SVG, 'path'); e.setAttribute('pathLength', '1'); sidesG.append(e); return e; });
+          sideEls.set(n.key, pair);
+        }
+        const l = layers.get(n.key);
+        pair.forEach((p, i) => {
+          p.setAttribute('d', d2);
+          p.setAttribute('class', `l3-side ${i ? 'is-top' : 'is-edge'} is-${l.status}${n.key === 'observe' && rs.turned ? ' is-turn' : ''}${p.classList.contains('is-drawn') ? ' is-drawn' : ''}`);
+        });
+        return { pair, y0 };
+      });
+    }
+
+    // L3M-01·02 스크롤 진행 → 줄기 길이, 깊이 눈금
+    function scroll() {
+      if (!L) return;
+      const vh = win.innerHeight;
+      const tipY = reduced ? L.end : Math.min(L.end, Math.max(0, win.scrollY + vh * 0.6 - L.top));
+      const p = tipY / L.end;
+      const off = String(1 - p);
+      main.style.strokeDashoffset = off; mainEdge.style.strokeDashoffset = off;
+      stub.classList.toggle('is-drawn', tipY > L.turnY + 20);
+      (L.sides || []).forEach(s => s.pair.forEach(p => p.classList.toggle('is-drawn', tipY > s.y0 + 20)));
+      $$('path', hairsG).forEach(h => h.classList.toggle('is-drawn', tipY > Number(h.dataset.y)));
+      // 깊이: 층 경계 사이를 선형 보간
+      const st = L.stops;
+      let cm = 0, name = gauge.ground;
+      if (tipY <= 2) { cm = 0; }
+      else if (tipY >= st[st.length - 1].y) { cm = 100; const s = byAnchor.roots; name = `${s.stratum} · ${s.meaning}`; }
+      else for (let i = 0; i < st.length - 1; i++) {
+        if (tipY >= st[i].y && tipY < st[i + 1].y) {
+          cm = Math.round(st[i].cm + (st[i + 1].cm - st[i].cm) * (tipY - st[i].y) / Math.max(1, st[i + 1].y - st[i].y));
+          const s = byAnchor[st[i].id]; name = `${s.stratum} · ${s.meaning}`;
+        }
+      }
+      $('[data-tip-depth]', tip).textContent = `${cm}${cm >= 100 && tipY >= L.end - 1 ? '+' : ''}${gauge.unit}`;
+      $('[data-tip-name]', tip).textContent = name;
+      const tx = mainX(tipY, rootState(state).turned && tipY > L.turnY);
+      tip.style.transform = `translate(${tx.toFixed(1)}px, ${tipY.toFixed(1)}px)`;
+      tip.classList.toggle('is-visible', !reduced && tipY > 4 && tipY < L.end - 4);
+      // 상단바: 짙은 흙 위에서는 어두운 톤
+      const probe = 40 + win.scrollY - L.top;
+      const dark = probe > (st.find(s => s.id === 'observe')?.y ?? Infinity) && probe < L.H;
+      $('.l3-top')?.classList.toggle('is-dark', dark);
+    }
+
+    return {
+      layout,
+      scroll,
+      sync(before, c) {
+        if (!L) return;
+        // 내가 채운 층이 새로 생기면 곁뿌리를 다시 그린다 (600ms)
+        build();
+        if (before) c.slots.forEach((s, i) => {
+          if (s.status === 'mine' && before.slots[i].status !== 'mine') {
+            const pair = sideEls.get(s.key);
+            if (pair && !reduced) { pair.forEach(p => p.classList.remove('is-drawn')); void pair[0].getBoundingClientRect(); }
+          }
+        });
+        scroll();
+      }
+    };
+  })();
+
+  const goTo = (id, focus = true) => {
+    const el = doc.getElementById(id); if (!el) return;
+    el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    if (focus) $('h2', el)?.focus({ preventScroll: true });
+  };
+
+  // ── 이벤트 ──
+  // L3I-01 이름표 심기
+  $('[data-form="idea"]')?.addEventListener('submit', e => {
+    e.preventDefault();
+    const text = ideaInput.value.trim(), msg = $('#idea-msg');
+    if (!text) { msg.textContent = msg.dataset.empty; ideaInput.focus(); return; }
+    msg.textContent = '';
+    const sample = SAMPLES.find(x => x.idea === text);
+    dispatch(sample ? { type: 'SET_IDEA', text, source: 'example', sample: sample.key } : { type: 'SET_IDEA', text, source: 'mine' });
+    dispatch({ type: 'REACH', chapter: 'surface' });
+    const tag = e.currentTarget;
+    if (!reduced) { tag.classList.remove('is-planted'); void tag.offsetWidth; tag.classList.add('is-planted'); }
+    win.setTimeout(() => goTo('learn'), reduced ? 0 : 520);
+  });
+  ideaInput?.addEventListener('focus', () => typing.sync());
+  ideaInput?.addEventListener('blur', () => typing.sync());
+  ideaInput?.addEventListener('input', () => typing.sync());
+
+  doc.addEventListener('click', e => {
+    const t = e.target.closest('button, a'); if (!t) return;
+    if (t.dataset.sample) { // L3I-02
+      const s = SAMPLES.find(x => x.key === t.dataset.sample);
+      if (ideaInput) ideaInput.value = s.idea;
+      dispatch({ type: 'SET_IDEA', text: s.idea, source: 'example', sample: s.key });
+    } else if (t.dataset.choice !== undefined && t.classList.contains('l3-option')) { // L3I-03
+      dispatch({ type: 'ANSWER', choice: Number(t.dataset.choice) });
+    } else if (t.dataset.action === 'save-questions') { // L3I-04
+      dispatch({ type: 'SAVE_QUESTIONS' });
+    } else if (t.dataset.observe) { // L3I-05
+      dispatch({ type: 'OBSERVE', result: t.dataset.observe });
+    } else if (t.dataset.decide) { // L3I-06
+      dispatch({ type: 'DECIDE', key: t.dataset.decide });
+    } else if (t.dataset.action === 'reset') { // L3I-07
+      store.clear(); state = initialState(); prev = null;
+      if (ideaInput) ideaInput.value = '';
+      paint();
+      win.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+      ideaInput?.focus({ preventScroll: true });
+    } else if (t.dataset.cta === 'prototype') { // L3I-08 같은 사이트 /app/ 로 이동, 문장은 저장소로 인계
+      track('cta_click', { placement: (t.closest('[data-spec]')?.dataset.spec || 'page').toLowerCase(), filled: deriveCard(state).filled }, TRACK_ENV);
+    }
+  });
+
+  customerInput?.addEventListener('input', () => dispatch({ type: 'SET_CUSTOMER', text: customerInput.value }));
+
+  // ── 관찰자: L3M-06 진입, 도달(REACH) ──
+  const rise = $$('.l3-rise, .l3-layer h2, .l3-note, .l3-panel');
+  if (!('IntersectionObserver' in win) || reduced) {
+    rise.forEach(el => el.classList.add('is-in'));
+  } else {
+    const io = new win.IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('is-in');
+      io.unobserve(e.target);
+    }), { threshold: 0.2 });
+    rise.forEach(el => io.observe(el));
+    const reach = new win.IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting && e.target.dataset.chapter) dispatch({ type: 'REACH', chapter: e.target.dataset.chapter });
+    }), { threshold: 0.25 });
+    $$('.l3-layer[data-chapter]').forEach(el => reach.observe(el));
+  }
+
+  // 스크롤·크기 변화 (rAF 1회 스로틀)
+  let raf = 0;
+  const onScroll = () => { if (!raf) raf = win.requestAnimationFrame(() => { raf = 0; rootDraw.scroll(); }); };
+  let lraf = 0;
+  const onLayout = () => { if (!lraf) lraf = win.requestAnimationFrame(() => { lraf = 0; rootDraw.layout(); }); };
+  win.addEventListener('scroll', onScroll, { passive: true });
+  win.addEventListener('resize', onLayout);
+  if ('ResizeObserver' in win) { const soil = $('[data-soil]'); if (soil) new win.ResizeObserver(onLayout).observe(soil); }
+  doc.fonts?.ready?.then(onLayout);
+
+  paint();
+  rootDraw.layout();
+  return { get state() { return state; }, dispatch };
+}
+
+bindLanding(window);
+</script>
+</body>
+</html>

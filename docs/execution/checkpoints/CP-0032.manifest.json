@@ -1,0 +1,8 @@
+{
+  "checkpoint_id": "CP-0032",
+  "target_state_revision": 32,
+  "algorithm": "SHA256",
+  "reconstructed": true,
+  "note": "원본 manifest 소실(다른 세션 덮어쓰기). 해시 복원 불가. 이후 CP-0033 manifest가 해당 시점 직후 상태를 기록함.",
+  "files": []
+}

@@ -1,0 +1,33 @@
+// AC-L2-09: 사전 렌더 + CSS/JS 인라인 → landing-v2/dist/index.html (웹폰트 CDN 제외 외부 의존 없음)
+// 사용: node landing-v2/scripts/build.mjs
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { renderPage } from '../src/render.mjs';
+
+const DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const read = p => readFile(resolve(DIR, p), 'utf8');
+// 모듈 간 import/export를 제거하고 의존 순서대로 이어 붙인다 (외부 번들러 없이)
+const strip = src => src.replace(/^import[\s\S]*?from\s+['"][^'"]+['"];?\s*$/gm, '').replace(/^export\s+(?=(const|function|let|class)\b)/gm, '');
+
+/** opts.public: 사이트 공개 빌드(SPEC-009) — 내부 문서 링크 제외, 링크 보정 없음. opts.outFile: 출력 경로 */
+export async function build(opts = {}) {
+  const [html, tokens, css, track, content, state, interact] = await Promise.all(['index.html', 'src/tokens.css', 'src/landing.css', 'src/track.mjs', 'src/content.mjs', 'src/state.mjs', 'src/interact.mjs'].map(read));
+  const body = renderPage(opts.public ? { public: true } : { linkPrefix: '../' });
+  const js = [track, content, state, interact].map(strip).join('\n') + '\nbindLanding(window);';
+  const out = html
+    .replace(/<!--LP:DEV-->[\s\S]*?<!--\/LP:DEV-->/, '')
+    .replace('<!--LP:HEAD-->', '<meta name="generator" content="landing-v2/scripts/build.mjs · SPEC-007">')
+    .replace(/<!--LP:CSS-->[\s\S]*?<!--\/LP:CSS-->/, () => `<style>\n${tokens}\n${css}\n</style>`)
+    .replace('<div id="app"><!--LP:BODY--></div>', () => `<div id="app" data-prerendered="1">\n${body}\n</div>`)
+    .replace(/<!--LP:JS-->[\s\S]*?<!--\/LP:JS-->/, () => `<script type="module">\n${js}\n</script>`);
+  const outFile = opts.outFile || resolve(DIR, 'dist/index.html');
+  await mkdir(dirname(outFile), { recursive: true });
+  await writeFile(outFile, out);
+  return out;
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const out = await build();
+  console.log(`dist/index.html ${(out.length / 1024).toFixed(1)} KB`);
+}

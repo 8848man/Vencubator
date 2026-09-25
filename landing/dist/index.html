@@ -1,0 +1,921 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vencubator · 아이디어에 다음 한 걸음</title>
+<meta name="description" content="막연한 아이디어를 나만의 창업 부캐로. 오늘 배울 것 하나, 해볼 것 하나로 아이디어를 한 단계 더 분명하게 만드는 창업 학습 코파일럿.">
+<meta name="theme-color" content="#f8f9f5">
+<meta name="generator" content="landing/scripts/build.mjs · SPEC-006">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23274f41'/%3E%3Cpath d='M16 21l16 27 16-27M32 36V14' stroke='%23d6ecbd' stroke-width='6' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap">
+<style>
+/* SPEC-006 §5 디자인 토큰 — 원시 색상 값은 이 파일에만 둔다. (AC-LP07)
+   출처: prototype/style.css, prototype/content.mjs STATS, 새싹 부캐 SVG */
+:root {
+  /* 기본 (prototype 계승) */
+  --ink: #243b32;
+  --ink-soft: #3e5448;
+  --muted: #6f7c73;
+  --eyebrow: #71826c;
+  --paper: #ffffff;
+  --bg: #f8f9f5;
+  --soft: #eef3eb;
+  --line: #e2e7de;
+  --line-strong: #d4dfca;
+  --green: #2e5e47;
+  --green-deep: #234c38;
+  --green-3d: #1d3f2e;
+  --lime: #d9ebbd;
+  --lime-soft: #edf3e5;
+  --sprout: #8faa69;
+  --leaf: #b0c98a;
+  --sprout-muted: #a9b89c;
+  --warm: #ca8f63;
+  --warm-soft: #f8efe5;
+  --warm-line: #ebd8bf;
+  --spark: #d0b878;
+
+  /* 신규: 몰입 구간(TTJ 검정 스테이지의 숲색 치환) */
+  --forest: #12211a;
+  --forest-2: #1b2e24;
+  --forest-line: rgba(238, 243, 230, .14);
+  --on-forest: #eef3e6;
+  --on-forest-muted: rgba(238, 243, 230, .62);
+  --glow-lime: rgba(185, 214, 140, .22);
+  --glow-warm: rgba(208, 184, 120, .14);
+  --shadow-ink: 36, 59, 50; /* rgb 채널: rgba(var(--shadow-ink), a) */
+
+  /* 7개 영역 (prototype/content.mjs STATS) */
+  --c-customer: #347a63;
+  --c-market: #568abb;
+  --c-product: #b58b45;
+  --c-gtm: #a47283;
+  --c-finance: #8a79a5;
+  --c-operations: #668d8f;
+  --c-strategy: #bb825b;
+
+  /* 새싹 부캐 */
+  --m-shadow: #bccbab;
+  --m-stem: #79965a;
+  --m-leaf-a: #b0c98a;
+  --m-leaf-b: #8faa69;
+  --m-vein: #a8c385;
+  --m-arm: #c7da9e;
+  --m-arm-line: #a4bc7b;
+  --m-feet: #9eb880;
+  --m-torso: #c9dca7;
+  --m-torso-line: #a5be82;
+  --m-shine: #e1ecc9;
+  --m-eye: #3b553b;
+  --m-cheek: #e8bba3;
+  --m-mouth: #526a43;
+  --m-gem: #eff4d9;
+  --m-spark: #d0b878;
+  --m-dot: #b6c796;
+
+  /* 타이포·모션 */
+  --font: 'Pretendard Variable', Pretendard, Inter, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ease: cubic-bezier(.2, .65, .2, 1);
+  --nav-h: 64px;
+  --radius: 18px;
+}
+
+/* SPEC-006 컴포넌트·섹션 스타일. 색은 tokens.css 변수만 사용 (AC-LP07).
+   .motion-on  = JS 로드 + 모션 허용 → sticky 스테이지/스크롤 연동 활성
+   그 외(JS 없음, prefers-reduced-motion) = 모든 콘텐츠를 일반 흐름으로 정적 표시 */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--nav-h) + 24px); }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-synthesis: none; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+h1, h2, h3, p, figure, ol, ul { margin: 0; }
+ol, ul { padding: 0; list-style: none; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--sprout); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3, p, li, summary { word-break: keep-all; overflow-wrap: break-word; }
+.lp-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.lp-shell { width: min(1180px, calc(100% - 64px)); margin-inline: auto; }
+.lp-mono { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--eyebrow); }
+.lp-eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--eyebrow); margin-bottom: 18px; }
+.lp-eyebrow.on-dark { color: var(--on-forest-muted); }
+.lp-section { position: relative; padding: 140px 0; }
+.lp-section h2 { font-size: clamp(32px, 4.4vw, 58px); line-height: 1.2; letter-spacing: -.045em; font-weight: 750; }
+.lp-head { max-width: 760px; margin-bottom: 56px; }
+.lp-head.split { max-width: none; display: grid; grid-template-columns: 1.2fr .8fr; column-gap: 60px; align-items: end; }
+.lp-head.split .lp-eyebrow { grid-column: 1 / -1; }
+.lp-head.split p { color: var(--muted); font-size: 16px; line-height: 1.85; }
+.lp-note { color: var(--muted); font-size: 13px; line-height: 1.8; margin-top: 24px; }
+.lp-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 6px 11px; border-radius: 30px; background: var(--lime-soft); color: var(--green); border: 1px solid var(--line-strong); }
+.lp-textlink { display: inline-flex; gap: 8px; align-items: center; font-weight: 650; font-size: 15px; color: var(--green); text-decoration: none; border-bottom: 1.5px solid currentColor; padding-bottom: 3px; margin-top: 36px; }
+.lp-textlink:hover span { transform: translate(2px, -2px); }
+.lp-textlink span { transition: transform .3s var(--ease); }
+
+/* ── 버튼: 프로토타입의 입체 버튼(0 4px 0) 계승 ── */
+.lp-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border-radius: 12px; font-weight: 650; text-decoration: none; line-height: 1.3; white-space: nowrap; transition: transform .15s ease, box-shadow .15s ease, background .2s ease; }
+.lp-btn.primary { background: var(--green); color: var(--paper); box-shadow: 0 4px 0 var(--green-3d); }
+.lp-btn.primary:hover { background: var(--green-deep); }
+.lp-btn.primary:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--green-3d); }
+.lp-btn.ghost { background: var(--paper); color: var(--ink); border: 1px solid var(--line-strong); box-shadow: 0 4px 0 var(--line); }
+.lp-btn.ghost:hover { background: var(--lime-soft); }
+.lp-btn.large { font-size: 16px; padding: 17px 26px; }
+.lp-btn.small { font-size: 13px; padding: 10px 15px; box-shadow: 0 3px 0 var(--green-3d); }
+.lp-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+
+/* ── LS-00 내비 + LM-01 ── */
+.lp-skip { position: fixed; left: 12px; top: -80px; z-index: 100; background: var(--paper); padding: 12px 16px; border-radius: 8px; }
+.lp-skip:focus { top: 12px; }
+.lp-nav { position: fixed; inset: 0 0 auto; z-index: 50; background: color-mix(in srgb, var(--bg) 84%, transparent); backdrop-filter: saturate(1.4) blur(14px); -webkit-backdrop-filter: saturate(1.4) blur(14px); border-bottom: 1px solid var(--line); }
+.lp-nav-row { height: var(--nav-h); display: flex; align-items: center; gap: 28px; }
+.lp-brand { display: inline-flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 750; letter-spacing: -.04em; text-decoration: none; color: var(--ink); }
+.lp-brand i { font-style: normal; color: var(--sprout); }
+.lp-brandmark { width: 26px; height: 28px; color: var(--green); }
+.lp-local { flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 18px; min-width: 0; }
+.lp-chapter { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .1em; white-space: nowrap; }
+.lp-chapter b { color: var(--green); font-weight: 700; }
+.lp-local-links { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.lp-local-links::-webkit-scrollbar { display: none; }
+.lp-local-links a { font-size: 13px; color: var(--muted); text-decoration: none; padding: 8px 11px; border-radius: 8px; white-space: nowrap; transition: color .2s, background .2s; }
+.lp-local-links a:hover { color: var(--ink); background: var(--soft); }
+.lp-local-links a[aria-current] { color: var(--green); background: var(--lime-soft); font-weight: 650; }
+.lp-progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; }
+.lp-progress span { display: block; height: 100%; background: linear-gradient(90deg, var(--sprout), var(--green)); transform-origin: left; transform: scaleX(var(--page-progress, 0)); }
+
+/* ── LS-01 히어로 + LM-02 ── */
+.s-hero { padding: calc(var(--nav-h) + 96px) 0 120px; text-align: center; overflow: clip; }
+.s-hero::before { content: ''; position: absolute; inset: 0 0 auto; height: 900px; z-index: -1; background: radial-gradient(60% 50% at 50% 0%, var(--lime-soft), transparent 70%); }
+.lp-hero-copy { position: relative; z-index: 1; }
+.lp-hero-title { display: grid; gap: 4px; font-size: clamp(46px, 8.2vw, 108px); line-height: 1.06; letter-spacing: -.055em; font-weight: 800; margin-bottom: 30px; }
+.lp-hero-line { display: block; transform: translate3d(0, var(--y, 0), 0) scale(var(--s, 1)); transform-origin: 50% 50%; will-change: transform; }
+.lp-hero-line.one { opacity: var(--o, 1); color: var(--ink-soft); }
+.lp-hero-line.two { color: var(--green); }
+.lp-hero-line.two::after { content: ''; display: block; width: min(420px, 60%); height: .14em; margin: -.1em auto 0; border-radius: 99px; background: var(--lime); z-index: -1; position: relative; }
+.lp-hero-lead { max-width: 560px; margin: 0 auto 36px; font-size: 18px; line-height: 1.85; color: var(--muted); }
+.lp-fade { opacity: var(--o, 1); transform: translate3d(0, var(--y, 0), 0); }
+.lp-assurance { margin-top: 22px; font-size: 13px; color: var(--eyebrow); }
+.lp-hero-media { position: relative; z-index: 2; margin: 72px auto 0; max-width: 1080px; padding: clamp(18px, 3vw, 40px); border-radius: var(--m-radius, 26px); background: linear-gradient(150deg, var(--lime-soft), var(--lime) 55%, var(--leaf)); box-shadow: 0 40px 90px rgba(var(--shadow-ink), var(--m-shadow, .08)); transform: translate3d(0, var(--m-y, 0), 0) scale(var(--m-scale, 1)); transform-origin: 50% 0; will-change: transform; }
+.motion-on .lp-hero-copy { position: sticky; top: calc(var(--nav-h) + 56px); }
+.lp-hero-caption { position: absolute; left: 0; right: 0; bottom: -34px; font-size: 12px; color: var(--eyebrow); opacity: var(--cap, 1); }
+.lp-app { background: var(--paper); border-radius: 16px; border: 1px solid var(--line); overflow: hidden; text-align: left; box-shadow: 0 1px 0 var(--line); }
+.lp-app-bar { display: flex; align-items: center; gap: 6px; height: 40px; padding: 0 16px; border-bottom: 1px solid var(--line); background: var(--bg); }
+.lp-app-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line-strong); }
+.lp-app-bar span { margin-left: 10px; font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: -.02em; }
+.lp-app-body { display: grid; grid-template-columns: 1.35fr .65fr; gap: 28px; padding: clamp(20px, 3.4vw, 44px); align-items: center; }
+.lp-app-one { font-size: clamp(18px, 2vw, 24px); font-weight: 700; letter-spacing: -.03em; margin: 14px 0 22px; line-height: 1.45; }
+.lp-app-card { display: grid; gap: 8px; padding: 22px; border-radius: 16px; border: 1px solid var(--line-strong); box-shadow: 0 6px 0 var(--soft); }
+.lp-mini-eyebrow { font-size: 11px; color: var(--eyebrow); letter-spacing: .08em; }
+.lp-app-card strong { font-size: clamp(16px, 1.6vw, 20px); letter-spacing: -.03em; line-height: 1.5; }
+.lp-app-meta { font-size: 12px; color: var(--muted); }
+.lp-app-btn { margin-top: 8px; display: block; text-align: center; padding: 13px; border-radius: 10px; background: var(--green); color: var(--paper); font-weight: 650; font-size: 14px; box-shadow: 0 4px 0 var(--green-3d); }
+.lp-app-path { display: flex; justify-content: space-between; gap: 6px; margin-top: 28px; }
+.lp-app-path li { display: grid; justify-items: center; gap: 7px; font-size: 11px; color: var(--muted); flex: 1; }
+.lp-app-path i { width: 30px; height: 30px; border-radius: 50%; background: var(--soft); border: 3px solid var(--line-strong); box-shadow: 0 3px 0 var(--line-strong); }
+.lp-app-path li.current { color: var(--green); font-weight: 700; }
+.lp-app-path li.current i { background: var(--sprout); border-color: var(--green); outline: 4px solid var(--lime-soft); outline-offset: 2px; }
+.lp-app-side { position: relative; display: grid; place-items: center; min-height: 240px; border-radius: 16px; background: var(--lime-soft); }
+.lp-app-side .lp-sprout { width: min(200px, 90%); }
+.lp-orbit { position: absolute; top: 18px; right: 12px; background: var(--paper); border-radius: 30px; padding: 8px 12px; font-size: 12px; box-shadow: 0 6px 20px rgba(var(--shadow-ink), .08); }
+
+/* ── 새싹 부캐 ── */
+.lp-sprout { display: block; height: auto; overflow: visible; }
+.lp-sprout .m-shadow { fill: var(--m-shadow); opacity: .35; }
+.lp-sprout .m-stem { fill: none; stroke: var(--m-stem); stroke-width: 8; stroke-linecap: round; }
+.lp-sprout .m-leaf-a { fill: var(--m-leaf-a); }
+.lp-sprout .m-leaf-b { fill: var(--m-leaf-b); }
+.lp-sprout .m-vein { fill: none; stroke: var(--m-vein); stroke-width: 2; }
+.lp-sprout .m-arm { fill: var(--m-arm); stroke: var(--m-arm-line); stroke-width: 2; }
+.lp-sprout .m-feet { fill: var(--m-feet); }
+.lp-sprout .m-torso { fill: var(--m-torso); stroke: var(--m-torso-line); stroke-width: 2; }
+.lp-sprout .m-shine { fill: none; stroke: var(--m-shine); stroke-width: 6; stroke-linecap: round; }
+.lp-sprout .m-eye { fill: var(--m-eye); }
+.lp-sprout .m-cheek { fill: var(--m-cheek); opacity: .7; }
+.lp-sprout .m-mouth { fill: none; stroke: var(--m-mouth); stroke-width: 3; stroke-linecap: round; }
+.lp-sprout .m-gem { fill: var(--m-gem); }
+.lp-sprout .m-spark path { fill: var(--m-spark); }
+.lp-sprout .m-spark circle { fill: var(--m-dot); }
+.lp-sprout.floating { animation: lp-bob 5s ease-in-out infinite; }
+.lp-sprout.floating .m-sprout { transform-box: view-box; transform-origin: 108px 98px; animation: lp-sway 4s ease-in-out infinite; }
+@keyframes lp-bob { 50% { transform: translateY(-9px); } }
+@keyframes lp-sway { 50% { transform: rotate(-5deg); } }
+/* 시그니처: --grow(0~1)로 자라는 새싹 (LM-03) */
+.lp-sprout.is-growing .m-sprout { transform-box: view-box; transform-origin: 108px 100px; transform: scale(clamp(0, calc((var(--grow, 1) - .3) * 1.45), 1)); }
+.lp-sprout.is-growing .m-body { transform-box: view-box; transform-origin: 111px 219px; transform: scale(calc(.18 + .82 * clamp(0, calc(var(--grow, 1) * 1.4), 1))); }
+.lp-sprout.is-growing .m-spark { opacity: clamp(0, calc((var(--grow, 1) - .8) * 5), 1); }
+.lp-sprout.is-growing .m-shadow { transform-box: view-box; transform-origin: 111px 219px; transform: scaleX(calc(.3 + .7 * var(--grow, 1))); }
+
+/* ── LS-02 타입 스토리 + LM-03 ── */
+.lp-dark { background: var(--forest); color: var(--on-forest); }
+.s-typeStory { padding: 0; }
+.lp-type-stage { position: relative; overflow: hidden; isolation: isolate; min-height: 620px; padding: 120px 0 160px; display: grid; justify-items: center; gap: 12px; background: radial-gradient(50% 45% at 50% 78%, var(--glow-lime), transparent 70%), radial-gradient(40% 40% at 85% 15%, var(--glow-warm), transparent 70%), var(--forest); }
+.lp-type-eyebrow { text-align: center; }
+.lp-type-line { font-size: clamp(48px, 10vw, 150px); font-weight: 800; letter-spacing: -.06em; line-height: 1.05; white-space: nowrap; text-shadow: 0 8px 40px rgba(0, 0, 0, .35); }
+.lp-type-line[data-line="2"] { background: linear-gradient(90deg, var(--lime), var(--spark)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lp-type-sprout { width: min(260px, 50vw); order: 10; margin-top: 30px; }
+.lp-soil { display: block; height: 14px; margin: -8px auto 0; width: 70%; border-radius: 50%; background: var(--forest-2); box-shadow: 0 0 0 1px var(--forest-line); }
+.lp-type-note { order: 11; max-width: 420px; text-align: center; color: var(--on-forest-muted); font-size: 15px; line-height: 1.8; }
+.lp-type-foot { position: absolute; left: 50%; bottom: 36px; width: min(1180px, calc(100% - 64px)); transform: translateX(-50%); display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--on-forest-muted); }
+.lp-type-foot i { height: 1px; background: var(--forest-line); }
+.lp-type-foot i b { display: block; height: 1px; background: var(--lime); transform-origin: left; transform: scaleX(var(--type-p, 1)); }
+.lp-type-foot span b { color: var(--on-forest); }
+.motion-on .s-typeStory { height: 320svh; }
+.motion-on .lp-type-stage { position: sticky; top: 0; height: 100svh; padding: 0; display: block; }
+.motion-on .lp-type-eyebrow { position: absolute; top: calc(var(--nav-h) + 40px); left: 0; right: 0; margin: 0; }
+.motion-on .lp-type-line { position: absolute; left: 50%; top: 42%; margin: 0; opacity: var(--o, 0); transform: translate(-50%, -50%) translate3d(0, var(--y, 0), 0) scale(var(--s, 1)); will-change: transform, opacity; }
+.motion-on .lp-type-sprout { position: absolute; left: 50%; bottom: 13vh; transform: translateX(-50%); width: min(230px, 42vw); margin: 0; z-index: -1; }
+.motion-on .lp-type-note { position: absolute; left: 50%; bottom: 96px; width: min(420px, calc(100% - 48px)); transform: translate3d(-50%, calc((1 - var(--note, 0)) * 16px), 0); opacity: var(--note, 0); }
+
+/* ── Reveal (LM-04 / LM-05) ── */
+.motion-on .lp-reveal { opacity: 0; transform: translate3d(0, 24px, 0); transition: opacity .75s var(--ease), transform .75s var(--ease); }
+.motion-on .lp-reveal.is-visible { opacity: 1; transform: none; }
+.motion-on :is(.lp-proof-grid, .lp-route-list, .lp-growth-grid, .lp-faq-list).lp-reveal { opacity: 1; transform: none; }
+.motion-on :is(.lp-proof-grid, .lp-route-list, .lp-growth-grid, .lp-faq-list).lp-reveal > * { opacity: 0; transform: translate3d(0, 28px, 0); transition: opacity .6s var(--ease), transform .75s var(--ease), box-shadow .3s; transition-delay: calc(var(--i, 0) * 70ms); }
+.motion-on :is(.lp-proof-grid, .lp-route-list, .lp-growth-grid, .lp-faq-list).lp-reveal.is-visible > * { opacity: 1; transform: none; }
+.motion-on .lp-card-reveal { opacity: 0; transform: translate3d(0, 30px, 0); transition: opacity .6s var(--ease), transform .75s var(--ease), box-shadow .3s; transition-delay: calc(var(--i, 0) * 70ms); }
+.motion-on .lp-card-reveal.is-visible { opacity: 1; transform: none; }
+
+/* ── LS-03 원칙 ── */
+.lp-proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
+.lp-proof-intro { padding: 36px 36px 36px 0; }
+.lp-proof-intro h2 { font-size: clamp(26px, 2.8vw, 36px); }
+.lp-proof-item { padding: 36px; border-left: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.lp-proof-item:nth-child(4) { border-left: 0; padding-left: 0; }
+.lp-proof-intro { border-bottom: 1px solid var(--line); }
+.lp-proof-item h3 { font-size: 21px; letter-spacing: -.03em; margin: 22px 0 10px; }
+.lp-proof-item p { font-size: 14px; line-height: 1.8; color: var(--muted); }
+
+/* ── LS-04 연결 경로 ── */
+.s-route { background: var(--soft); }
+ol.lp-route-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+ol.lp-route-list li { position: relative; display: grid; gap: 12px; align-content: start; padding: 28px 26px 32px; border-radius: var(--radius); background: var(--paper); border: 1px solid var(--line); min-height: 220px; }
+ol.lp-route-list li strong { font-size: 26px; letter-spacing: -.04em; }
+ol.lp-route-list li p { font-size: 14px; line-height: 1.75; color: var(--muted); }
+ol.lp-route-list li:nth-child(1) { border-top: 4px solid var(--leaf); }
+ol.lp-route-list li:nth-child(2) { border-top: 4px solid var(--sprout); }
+ol.lp-route-list li:nth-child(3) { border-top: 4px solid var(--c-customer); }
+ol.lp-route-list li:nth-child(4) { border-top: 4px solid var(--green); }
+.lp-route-arrow { position: absolute; right: -24px; top: 50%; z-index: 2; width: 28px; height: 28px; margin-top: -14px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 14px; background: var(--green); color: var(--paper); }
+
+/* ── LS-05 7개 영역 ── */
+.lp-areas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.lp-area { position: relative; display: grid; align-content: start; gap: 12px; padding: 26px 24px 28px; border-radius: var(--radius); background: var(--paper); border: 1px solid var(--line); border-top: 4px solid var(--area); min-height: 250px; }
+.motion-on .lp-area.is-visible:hover, .lp-area:hover { transform: translateY(-6px); box-shadow: 0 22px 50px rgba(var(--shadow-ink), .1); }
+.lp-area-top { display: flex; justify-content: space-between; align-items: center; }
+.lp-area-top b { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-size: 20px; color: var(--area); background: color-mix(in srgb, var(--area) 12%, var(--paper)); }
+.lp-area h3 { font-size: 21px; letter-spacing: -.035em; margin-top: 8px; }
+.lp-area p { font-size: 14px; line-height: 1.7; color: var(--muted); }
+.lp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.lp-tags li { font-size: 11px; padding: 4px 8px; border-radius: 6px; background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+.lp-area-arrow { position: absolute; right: 22px; bottom: 20px; font-style: normal; color: var(--area); transition: transform .3s var(--ease); }
+.lp-area:hover .lp-area-arrow { transform: translate(3px, -3px); }
+.lp-area.filler { border: 1.5px dashed var(--line-strong); background: var(--lime-soft); align-content: space-between; }
+.lp-area.filler h3 { font-size: 22px; line-height: 1.45; color: var(--green); }
+.lp-area.filler .lp-textlink { margin-top: 0; justify-self: start; }
+
+/* ── LS-06 브리지 7 → 1 + LM-06 ── */
+.s-bridge { padding: 0; }
+.lp-bridge-stage { position: relative; overflow: hidden; isolation: isolate; padding: 110px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.lp-bridge-stage::before { content: ''; position: absolute; z-index: -1; left: 50%; top: 10%; width: min(920px, 84vw); height: min(620px, 66vh); transform: translateX(-50%); border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--lime) calc(var(--arrive, 1) * 70%), transparent), transparent 68%); }
+.lp-bridge-inner { display: grid; grid-template-rows: auto 1fr auto; height: 100%; gap: 20px; }
+.lp-bridge-labels { display: flex; justify-content: space-between; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.lp-bridge-nums { display: flex; align-items: center; justify-content: center; gap: clamp(24px, 5vw, 80px); font-weight: 800; font-size: clamp(150px, 25vw, 360px); line-height: .9; letter-spacing: -.08em; }
+.lp-bridge-nums b { display: block; }
+.lp-bridge-nums .from { color: var(--sprout-muted); opacity: var(--from-o, 1); transform: translate3d(var(--from-x, 0), 0, 0) scale(var(--from-s, 1)); }
+.lp-bridge-nums .to { color: var(--green); opacity: var(--to-o, 1); transform: translate3d(var(--to-x, 0), 0, 0) scale(var(--to-s, 1)); }
+.lp-bridge-nums .arrow { font-style: normal; flex: none; width: clamp(56px, 6vw, 84px); height: clamp(56px, 6vw, 84px); border-radius: 50%; border: 1.5px solid var(--line-strong); display: grid; place-items: center; font-size: clamp(22px, 2.4vw, 32px); font-weight: 400; letter-spacing: 0; color: var(--green); background: var(--paper); opacity: var(--arrow-o, 1); transform: rotate(var(--arrow-r, 0deg)) scale(var(--arrow-s, 1)); }
+.lp-bridge-copy { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: end; }
+.lp-bridge-copy h2 span { display: block; }
+.lp-bridge-copy h2 .accent { color: var(--green); }
+.lp-bridge-copy p { font-size: 16px; line-height: 1.85; color: var(--muted); max-width: 440px; }
+.motion-on .s-bridge { height: 230svh; }
+.motion-on .lp-bridge-stage { position: sticky; top: 0; height: 100svh; min-height: 620px; padding: calc(var(--nav-h) + 36px) 0 48px; border: 0; }
+
+/* ── LS-07 스토리 + LM-07 ── */
+.s-story { padding: 0; }
+.lp-story-stage { position: relative; overflow: hidden; isolation: isolate; padding: 120px 0 80px; background: radial-gradient(45% 50% at 75% 55%, var(--glow-lime), transparent 70%), var(--forest); }
+.lp-story-stage::after { content: attr(data-index); position: absolute; z-index: -1; right: -.03em; bottom: -.18em; font: 800 min(40vw, 560px)/.8 var(--font); letter-spacing: -.1em; color: var(--on-forest); opacity: .04; pointer-events: none; }
+.lp-story-top { display: flex; align-items: baseline; gap: 20px; }
+.lp-story-top .lp-eyebrow { margin: 0; }
+.lp-story-intro { font-size: 13px !important; font-weight: 500 !important; letter-spacing: 0 !important; color: var(--on-forest-muted); padding-left: 20px; border-left: 1px solid var(--forest-line); }
+.lp-story-count { margin-left: auto; color: var(--on-forest-muted); }
+.lp-story-count b { color: var(--on-forest); }
+.lp-story-frame { padding: 60px 0; border-bottom: 1px solid var(--forest-line); }
+.lp-story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: center; }
+.lp-story-step .lp-mono { color: var(--lime); }
+.lp-story-step h3 { font-size: clamp(38px, 5.4vw, 76px); line-height: 1.12; letter-spacing: -.055em; font-weight: 800; margin: 20px 0 24px; }
+.lp-story-step p { max-width: 460px; font-size: 16px; line-height: 1.85; color: var(--on-forest-muted); }
+.lp-story-dots { display: none; }
+.motion-on .s-story { height: calc(var(--frames, 5) * 100svh); }
+.motion-on .lp-story-stage { position: sticky; top: 0; height: 100svh; min-height: 640px; padding: 0; }
+.motion-on .lp-story-top { position: absolute; top: calc(var(--nav-h) + 32px); left: 0; right: 0; z-index: 20; }
+.motion-on .lp-story-frame { position: absolute; inset: 0; padding: 0; border: 0; display: grid; align-items: center; opacity: var(--panel, 0); pointer-events: none; }
+.motion-on .lp-story-frame.is-active { pointer-events: auto; }
+.motion-on .lp-story-step .lp-mono, .motion-on .lp-story-step h3 { opacity: var(--title, 0); transform: translate3d(0, var(--step-y, 0), 0) scale(var(--title-s, 1)); transform-origin: 0 50%; filter: blur(var(--blur, 0)); }
+.motion-on .lp-story-step p { opacity: var(--detail, 0); transform: translate3d(0, var(--detail-y, 0), 0); }
+.motion-on .lp-story-visual { transform: translate3d(0, var(--vis-y, 0), 0) scale(var(--vis-s, 1)); }
+.motion-on .lp-story-dots { position: absolute; z-index: 20; left: 50%; bottom: 40px; transform: translateX(-50%); width: min(1180px, calc(100% - 64px)); display: grid; grid-template-columns: repeat(var(--frames, 5), 1fr); gap: 10px; }
+.lp-story-dots li { display: grid; gap: 10px; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--on-forest-muted); transition: color .3s; }
+.lp-story-dots i { height: 2px; border-radius: 2px; background: var(--forest-line); transition: background .4s; }
+.lp-story-dots li.is-active { color: var(--on-forest); }
+.lp-story-dots li.is-active i { background: var(--lime); }
+.lp-mock { position: relative; padding: clamp(22px, 3vw, 34px); border-radius: 22px; background: var(--paper); color: var(--ink); box-shadow: 0 40px 90px rgba(0, 0, 0, .35); }
+.lp-mock-label { display: inline-block; font-size: 11px; font-weight: 650; padding: 5px 10px; border-radius: 6px; background: var(--lime-soft); color: var(--green); margin-bottom: 18px; }
+.lp-mock > p, .lp-mock-main { font-size: clamp(17px, 1.7vw, 21px); font-weight: 650; line-height: 1.6; letter-spacing: -.03em; }
+.lp-mock-meta { margin-top: 14px; font-size: 13px; color: var(--muted); padding-top: 14px; border-top: 1px dashed var(--line-strong); }
+.lp-mock-row { display: flex; align-items: center; gap: 14px; }
+.lp-mock-row .lp-sprout { width: 96px; flex: none; }
+.lp-bubble { font-size: 15px; line-height: 1.75; padding: 18px; border-radius: 18px 18px 18px 0; background: var(--soft); }
+.lp-mock.quiz ul { display: grid; gap: 10px; margin-top: 18px; }
+.lp-mock.quiz li { padding: 14px 16px; border-radius: 10px; border: 1px solid var(--line); font-size: 14px; }
+.lp-mock.quiz li.right { border-color: var(--sprout); background: var(--lime-soft); color: var(--green); font-weight: 650; }
+.lp-mock-input { display: flex; align-items: center; margin-top: 18px; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--bg); font-size: 14px; color: var(--ink-soft); }
+.lp-mock-input i { width: 2px; height: 18px; margin-left: 2px; background: var(--green); animation: lp-caret 1s steps(1) infinite; }
+@keyframes lp-caret { 50% { opacity: 0; } }
+.lp-mock.artifact { border-left: 6px solid var(--c-customer); }
+.lp-mock.field { background: linear-gradient(160deg, var(--paper), var(--warm-soft)); }
+.lp-mock.field .lp-mock-label { background: var(--warm-soft); color: var(--warm); border: 1px solid var(--warm-line); }
+
+/* ── LS-08 성장 ── */
+.lp-growth-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.lp-growth-card { display: grid; align-content: start; gap: 16px; padding: 32px 30px; border-radius: 22px; border: 1px solid var(--line); min-height: 340px; }
+.lp-growth-card.g1 { background: var(--lime-soft); }
+.lp-growth-card.g2 { background: var(--paper); }
+.lp-growth-card.g3 { background: var(--warm-soft); border-color: var(--warm-line); }
+.lp-growth-card.g3 .lp-chip { background: var(--paper); color: var(--warm); border-color: var(--warm-line); }
+.motion-on .lp-growth-grid.is-visible > .lp-growth-card:hover, .lp-growth-card:hover { transform: translateY(-8px); box-shadow: 0 26px 60px rgba(var(--shadow-ink), .1); }
+.lp-growth-card .lp-chip { justify-self: start; }
+.lp-growth-card h3 { font-size: 26px; letter-spacing: -.04em; margin-top: 10px; }
+.lp-growth-card p { font-size: 15px; line-height: 1.8; color: var(--muted); }
+.lp-stages { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 12px; }
+.lp-stages li { font-size: 12px; padding: 6px 10px; border-radius: 30px; background: var(--paper); border: 1px solid var(--line); }
+.lp-stages li + li::before { content: '→ '; color: var(--sprout); }
+
+/* ── LS-09 진행 상황 + LM-08 ── */
+.s-status { background: var(--soft); }
+.lp-status-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 60px; align-items: start; }
+.lp-status-grid .lp-head { position: sticky; top: calc(var(--nav-h) + 48px); margin: 0; }
+.lp-status-rows { border-top: 1px solid var(--line-strong); }
+.lp-status-row { position: relative; display: grid; grid-template-columns: 64px 1fr auto; gap: 20px; align-items: start; padding: 34px 22px; border-bottom: 1px solid var(--line-strong); border-radius: 14px; opacity: calc(.55 + .45 * var(--focus, 1)); transform: translateX(calc((1 - var(--focus, 1)) * 10px)); transition: background .35s; }
+.lp-status-row.is-current { background: var(--paper); }
+.lp-status-row.is-current::before { content: ''; position: absolute; left: 0; top: 22px; bottom: 22px; width: 3px; border-radius: 3px; background: var(--green); }
+.lp-status-row .lp-mono { font-size: 14px; padding-top: 4px; }
+.lp-status-row strong { font-size: 24px; letter-spacing: -.035em; }
+.lp-status-row p { margin-top: 8px; font-size: 14px; line-height: 1.75; color: var(--muted); }
+.lp-status-row em { font-style: normal; font-size: 12px; font-weight: 650; white-space: nowrap; padding: 6px 11px; border-radius: 30px; border: 1px solid var(--line-strong); color: var(--muted); background: var(--paper); }
+.lp-status-row[data-status="in_progress"] em { background: var(--lime); border-color: var(--sprout); color: var(--green); }
+.lp-status-row[data-status="in_progress"] em::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-right: 6px; border-radius: 50%; background: var(--green); vertical-align: 2px; animation: lp-pulse 1.6s ease-in-out infinite; }
+@keyframes lp-pulse { 50% { opacity: .25; } }
+
+/* ── LS-10 FAQ ── */
+.lp-faq-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 60px; }
+.lp-faq-list details { border-bottom: 1px solid var(--line); }
+.lp-faq-list summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 20px; padding: 26px 0; font-size: 18px; font-weight: 650; letter-spacing: -.03em; }
+.lp-faq-list summary::-webkit-details-marker { display: none; }
+.lp-faq-list summary::after { content: '+'; flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 400; background: var(--soft); color: var(--green); transition: transform .3s var(--ease); }
+.lp-faq-list details[open] summary::after { transform: rotate(45deg); background: var(--lime); }
+.lp-faq-list details p { padding: 0 48px 26px 0; font-size: 15px; line-height: 1.85; color: var(--muted); }
+
+/* ── LS-11 마지막 CTA ── */
+.s-final { padding-top: 60px; }
+.lp-final-card { display: grid; grid-template-columns: 1.3fr .7fr; gap: 40px; align-items: center; padding: clamp(40px, 6vw, 80px); border-radius: 32px; background: radial-gradient(60% 80% at 90% 100%, var(--leaf), transparent 70%), linear-gradient(150deg, var(--lime-soft), var(--lime)); overflow: hidden; }
+.lp-final-card h2 span { display: block; }
+.lp-final-card h2 span + span { color: var(--green); }
+.lp-final-card p { font-size: 17px; line-height: 1.8; color: var(--ink-soft); margin: 22px 0 32px; }
+.lp-final-card .lp-actions { justify-content: flex-start; }
+.lp-final-card .lp-sprout { width: min(280px, 100%); justify-self: center; }
+
+/* ── LS-12 스티키 CTA + LM-09 ── */
+.lp-sticky { position: fixed; z-index: 40; left: 50%; bottom: 20px; width: min(620px, calc(100% - 32px)); display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 12px 12px 22px; border-radius: 16px; background: var(--forest); color: var(--on-forest); box-shadow: 0 18px 50px rgba(0, 0, 0, .25); transform: translate3d(-50%, 150%, 0); opacity: 0; transition: transform .45s var(--ease), opacity .3s; }
+.lp-sticky.is-visible { transform: translate3d(-50%, 0, 0); opacity: 1; }
+.lp-sticky > div { min-width: 0; }
+.lp-sticky strong { display: block; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lp-sticky span { display: block; font-size: 12px; color: var(--on-forest-muted); margin-top: 3px; }
+.lp-sticky .lp-btn.primary { background: var(--lime); color: var(--green-3d); box-shadow: 0 3px 0 var(--sprout); }
+
+/* ── LS-13 푸터 ── */
+.lp-footer { padding: 70px 0 120px; border-top: 1px solid var(--line); }
+.lp-footer .lp-shell { display: grid; grid-template-columns: auto 1fr auto; gap: 18px 40px; align-items: start; }
+.lp-footer-notice { font-size: 13px; line-height: 1.8; color: var(--muted); max-width: 560px; }
+.lp-footer ul { display: flex; gap: 18px; font-size: 13px; }
+.lp-footer ul a { color: var(--muted); }
+.lp-footer small { grid-column: 1 / -1; font-size: 12px; color: var(--eyebrow); }
+
+/* ── 반응형 ── */
+@media (max-width: 1000px) {
+  :root { --nav-h: 108px; }
+  .lp-nav-row { height: auto; flex-wrap: wrap; gap: 0 12px; padding-top: 10px; }
+  .lp-nav-row > .lp-brand { height: 48px; }
+  .lp-nav-row > .lp-btn { margin-left: auto; }
+  .lp-local { order: 3; flex: 1 0 100%; justify-content: flex-start; height: 48px; border-top: 1px solid var(--line); }
+  .lp-areas { grid-template-columns: repeat(2, 1fr); }
+  ol.lp-route-list { grid-template-columns: repeat(2, 1fr); }
+  ol.lp-route-list li:nth-child(2) .lp-route-arrow { display: none; }
+  .lp-proof-grid { grid-template-columns: repeat(2, 1fr); }
+  .lp-proof-item:nth-child(4) { border-left: 1px solid var(--line); padding-left: 36px; }
+  .lp-proof-item:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .lp-growth-grid { grid-template-columns: 1fr; }
+  .lp-growth-card { min-height: 0; }
+  .lp-status-grid, .lp-faq-grid, .lp-head.split, .lp-bridge-copy { grid-template-columns: 1fr; gap: 24px; }
+  .lp-status-grid .lp-head { position: static; }
+}
+@media (max-width: 720px) {
+  .lp-shell { width: calc(100% - 32px); }
+  .lp-section { padding: 96px 0; }
+  .lp-head { margin-bottom: 36px; }
+  .s-hero { padding: calc(var(--nav-h) + 56px) 0 90px; }
+  .lp-hero-lead { font-size: 16px; }
+  .lp-actions { flex-direction: column; align-items: stretch; }
+  .lp-btn.large { width: 100%; }
+  .lp-local-links a { padding: 8px 9px; }
+  .lp-app-body { grid-template-columns: 1fr; }
+  .lp-app-side { display: none; }
+  .lp-app-path li { font-size: 10px; }
+  .lp-app-path i { width: 22px; height: 22px; }
+  .lp-proof-grid, .lp-areas, ol.lp-route-list { grid-template-columns: 1fr; }
+  .lp-proof-item, .lp-proof-item:nth-child(4), .lp-proof-intro { border-left: 0; padding: 28px 0; }
+  .lp-route-arrow { display: none; }
+  ol.lp-route-list li { min-height: 0; }
+  .lp-area { min-height: 0; }
+  .lp-type-line { font-size: clamp(40px, 13vw, 64px); }
+  .motion-on .lp-type-line { top: 38%; }
+  .lp-type-foot { width: calc(100% - 32px); gap: 12px; font-size: 10px; }
+  .lp-bridge-labels { font-size: 9px; }
+  .lp-story-top { flex-wrap: wrap; gap: 8px 16px; }
+  .lp-story-intro { display: none; }
+  .lp-story-grid { grid-template-columns: 1fr; gap: 24px; }
+  .motion-on .lp-story-grid { align-content: center; padding-top: 40px; }
+  .lp-story-step h3 { font-size: clamp(30px, 8.6vw, 40px); margin: 12px 0 12px; }
+  .lp-story-step p { font-size: 14px; line-height: 1.7; }
+  .lp-mock { padding: 18px; border-radius: 16px; }
+  .lp-mock-row .lp-sprout { width: 64px; }
+  .lp-bubble { font-size: 13px; padding: 12px; }
+  .lp-mock.quiz li { padding: 10px 12px; font-size: 13px; }
+  .motion-on .lp-story-dots { bottom: 22px; width: calc(100% - 32px); gap: 6px; }
+  .lp-story-dots span { display: none; }
+  .lp-status-row { grid-template-columns: 40px 1fr; padding: 26px 12px; }
+  .lp-status-row em { grid-column: 2; justify-self: start; }
+  .lp-final-card { grid-template-columns: 1fr; border-radius: 24px; }
+  .lp-final-card .lp-sprout { width: 160px; grid-row: 1; justify-self: start; }
+  .lp-footer .lp-shell { grid-template-columns: 1fr; }
+  .lp-footer ul { flex-wrap: wrap; }
+  .lp-sticky { padding: 10px 10px 10px 16px; }
+  .lp-sticky span { display: none; }
+}
+
+/* ── 모션 감소: 애니메이션 전부 정지 (LM 공통) ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+</style>
+</head>
+<body>
+<div id="app" data-prerendered="1">
+<header class="lp-nav" data-spec="LS-00">
+<a class="lp-skip" href="#main">본문으로 이동</a>
+<div class="lp-shell lp-nav-row">
+<a class="lp-brand" href="#top" aria-label="vencubator 처음으로"><svg class="lp-brandmark" viewBox="0 0 32 35" fill="none" aria-hidden="true"><path d="M4 9 16 30 28 9M16 24V4" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M16 14C7 14 8 4 8 4c7 0 8 5 8 10ZM17 13c0-8 9-9 9-9s0 9-9 9Z" fill="currentColor"/></svg><span>vencubator<i>.</i></span></a>
+<nav class="lp-local" aria-label="페이지 목차"><span class="lp-chapter" aria-hidden="true"><b id="lp-chapter">00</b> / 07</span><div class="lp-local-links"><a href="#grow" data-target="grow">성장 방식</a><a href="#route" data-target="route">학습 루프</a><a href="#areas" data-target="areas">7개 영역</a><a href="#story" data-target="story">세션 흐름</a><a href="#growth" data-target="growth">성장 기록</a><a href="#status" data-target="status">진행 상황</a><a href="#faq" data-target="faq">자주 묻는 질문</a></div></nav>
+<a class="lp-btn primary small" href="../../app/?from=v1" data-cta="prototype">체험하기 <span aria-hidden="true">↗</span></a>
+</div>
+<div class="lp-progress" aria-hidden="true"><span></span></div>
+</header>
+<main id="main">
+<section id="hero" class="lp-section s-hero " data-spec="LS-01" aria-labelledby="hero-title">
+<div class="lp-shell lp-hero-copy">
+<p class="lp-eyebrow">A SMALL IDEA · A NEXT STEP</p>
+<h1 id="hero-title" class="lp-hero-title"><span class="lp-hero-line one">당신의 아이디어에,</span><span class="lp-hero-line two">다음 한 걸음.</span></h1>
+<p class="lp-hero-lead lp-fade">막연했던 생각을 나만의 창업 부캐로. 오늘 배울 것 하나, 해볼 것 하나로 아이디어를 한 단계 더 분명하게 만들어요.</p>
+<div class="lp-actions lp-fade"><a class="lp-btn primary large" href="../../app/?from=v1" data-cta="prototype">프로토타입 체험하기 <span aria-hidden="true">↗</span></a><a class="lp-btn ghost large" href="#route" data-cta="howItWorks">어떻게 자라는지 보기 <span aria-hidden="true">↓</span></a></div>
+<p class="lp-assurance lp-fade">가입 없이 체험 · 한 문장이면 시작 · 결정은 언제나 내가</p>
+</div>
+<div class="lp-shell"><figure class="lp-hero-media">
+<div class="lp-app" aria-label="학습 홈 화면 예시" role="img">
+<div class="lp-app-bar" aria-hidden="true"><i></i><i></i><i></i><span>vencubator</span></div>
+<div class="lp-app-body">
+<div class="lp-app-main">
+<span class="lp-chip">내 프로젝트 · TeamUp</span>
+<p class="lp-app-one">첫 전공 수업에서 팀원을 구하는 대학 신입생</p>
+<div class="lp-app-card"><span class="lp-mini-eyebrow">오늘의 한 걸음</span><strong>좋다는 말보다, 지난 행동을 물어보기</strong><span class="lp-app-meta">◷ 약 3분 · 고객 이해</span><span class="lp-app-btn">이어서 배우기 →</span></div>
+<ol class="lp-app-path"><li class="current"><i></i>고객</li><li class=""><i></i>제품</li><li class=""><i></i>시장</li><li class=""><i></i>확보</li><li class=""><i></i>재무</li><li class=""><i></i>운영</li><li class=""><i></i>전략</li></ol>
+</div>
+<div class="lp-app-side"><svg class="lp-sprout is-grown floating" viewBox="0 0 220 240" role="img" aria-label="학습을 함께하는 새싹 부캐">
+<ellipse class="m-shadow" cx="111" cy="219" rx="65" ry="10"/>
+<g class="m-sprout"><path class="m-stem" d="M108 98C111 60 102 47 91 31"/><path class="m-leaf-a" d="M104 64C64 63 60 28 64 20c37 1 51 16 40 44Z"/><path class="m-leaf-b" d="M106 73c2-41 41-52 55-48-1 39-23 54-55 48Z"/><path class="m-vein" d="M110 62c15-14 25-22 38-26"/></g>
+<g class="m-body"><path class="m-arm" d="M69 98c-8 8-28 17-32 35-5 24 13 35 34 24"/><path class="m-arm" d="M153 106c14-12 29-10 34 2 5 11-1 26-18 33"/><path class="m-feet" d="M75 187c-5 14-8 25 3 28 13 4 18-13 22-22M128 192c4 14 9 23 20 21 12-3 5-22 0-28"/><path class="m-torso" d="M56 124c0-37 23-50 55-50 32 0 59 21 59 64 0 44-23 63-58 63-35 0-56-24-56-77Z"/><path class="m-shine" d="M65 122c3-29 16-39 34-41"/><ellipse class="m-eye" cx="87" cy="136" rx="5" ry="7"/><ellipse class="m-eye" cx="136" cy="136" rx="5" ry="7"/><ellipse class="m-cheek" cx="78" cy="150" rx="10" ry="5"/><ellipse class="m-cheek" cx="145" cy="150" rx="10" ry="5"/><path class="m-mouth" d="M104 151q8 10 16 0"/><path class="m-gem" d="m114 174 5-6 5 6-5 6Z"/></g>
+<g class="m-spark"><path d="m185 70 2-7 2 7 7 2-7 2-2 7-2-7-7-2Z"/><circle cx="44" cy="82" r="3"/></g>
+</svg><span class="lp-orbit">✧ 나의 첫 가설</span></div>
+</div></div>
+<figcaption class="lp-hero-caption">프로토타입 화면을 재구성한 예시예요.</figcaption>
+</figure></div>
+</section>
+<section id="grow" class="lp-section s-typeStory lp-dark" data-spec="LS-02" aria-labelledby="grow-title">
+<h2 id="grow-title" class="lp-sr">작게 배우고, 직접 확인하고, 더 분명하게</h2>
+<div class="lp-type-stage lp-stage">
+<p class="lp-eyebrow on-dark lp-type-eyebrow">ONE IDEA · ONE STEP · ONE DECISION</p>
+<div class="lp-type-sprout" aria-hidden="true"><svg class="lp-sprout is-growing" viewBox="0 0 220 240" role="img" aria-label="">
+<ellipse class="m-shadow" cx="111" cy="219" rx="65" ry="10"/>
+<g class="m-sprout"><path class="m-stem" d="M108 98C111 60 102 47 91 31"/><path class="m-leaf-a" d="M104 64C64 63 60 28 64 20c37 1 51 16 40 44Z"/><path class="m-leaf-b" d="M106 73c2-41 41-52 55-48-1 39-23 54-55 48Z"/><path class="m-vein" d="M110 62c15-14 25-22 38-26"/></g>
+<g class="m-body"><path class="m-arm" d="M69 98c-8 8-28 17-32 35-5 24 13 35 34 24"/><path class="m-arm" d="M153 106c14-12 29-10 34 2 5 11-1 26-18 33"/><path class="m-feet" d="M75 187c-5 14-8 25 3 28 13 4 18-13 22-22M128 192c4 14 9 23 20 21 12-3 5-22 0-28"/><path class="m-torso" d="M56 124c0-37 23-50 55-50 32 0 59 21 59 64 0 44-23 63-58 63-35 0-56-24-56-77Z"/><path class="m-shine" d="M65 122c3-29 16-39 34-41"/><ellipse class="m-eye" cx="87" cy="136" rx="5" ry="7"/><ellipse class="m-eye" cx="136" cy="136" rx="5" ry="7"/><ellipse class="m-cheek" cx="78" cy="150" rx="10" ry="5"/><ellipse class="m-cheek" cx="145" cy="150" rx="10" ry="5"/><path class="m-mouth" d="M104 151q8 10 16 0"/><path class="m-gem" d="m114 174 5-6 5 6-5 6Z"/></g>
+<g class="m-spark"><path d="m185 70 2-7 2 7 7 2-7 2-2 7-2-7-7-2Z"/><circle cx="44" cy="82" r="3"/></g>
+</svg><span class="lp-soil"></span></div>
+<p class="lp-type-line" data-line="0" aria-hidden="true">작게 배우고</p><p class="lp-type-line" data-line="1" aria-hidden="true">직접 확인하고</p><p class="lp-type-line" data-line="2" aria-hidden="true">더 분명하게</p>
+<p class="lp-type-note">스크롤할수록 새싹이 자라요. 아이디어도 이렇게, 한 번에 하나씩 자랍니다.</p>
+<div class="lp-type-foot" aria-hidden="true"><span>SCROLL TO GROW</span><i><b></b></i><span><b id="lp-type-index">01</b> / 03</span></div>
+</div>
+</section>
+<section id="principles" class="lp-section s-proof " data-spec="LS-03" aria-labelledby="principles-title">
+<div class="lp-shell lp-proof-grid lp-reveal">
+<div class="lp-proof-intro"><p class="lp-eyebrow">OUR PRINCIPLES</p><h2 id="principles-title">거창한 계획 대신,<br>오늘 할 수 있는 것부터.</h2></div>
+<article class="lp-proof-item" style="--i:1"><span class="lp-mono">01</span><h3>한 문장으로 시작</h3><p>이름도 수익모델도 몰라도 괜찮아요. 떠오른 한 문장이면 학습 길이 열려요.</p></article><article class="lp-proof-item" style="--i:2"><span class="lp-mono">02</span><h3>하루 한 단계</h3><p>홈에는 다음 학습 하나만. 무엇부터 할지 고민하는 시간을 줄여요.</p></article><article class="lp-proof-item" style="--i:3"><span class="lp-mono">03</span><h3>배운 걸 내 프로젝트에</h3><p>개념을 익히면 바로 내 아이디어에 적용한 결과물이 남아요.</p></article><article class="lp-proof-item" style="--i:4"><span class="lp-mono">04</span><h3>행동은 근거로</h3><p>실제로 물어보고 관찰한 결과를 기록해 다음 결정의 근거로 삼아요.</p></article><article class="lp-proof-item" style="--i:5"><span class="lp-mono">05</span><h3>점수보다 바뀐 결정</h3><p>성장은 “무엇을 새로 알고 무엇을 바꿨는지”로 보여줘요.</p></article>
+</div>
+</section>
+<section id="route" class="lp-section s-route " data-spec="LS-04" aria-labelledby="route-title">
+<div class="lp-shell">
+<header class="lp-head lp-reveal"><p class="lp-eyebrow">ONE CONNECTED LOOP · VENCUBATOR</p><h2 id="route-title">배우고, 풀어보고,<br>내 아이디어에 쓰고, 해본다.</h2></header>
+<ol class="lp-route-list lp-reveal"><li style="--i:0"><span class="lp-mono">01 · LEARN</span><strong>개념</strong><p>상황 예시와 짧은 설명으로 지금 필요한 개념 하나</p><i class="lp-route-arrow" aria-hidden="true">→</i></li><li style="--i:1"><span class="lp-mono">02 · PRACTICE</span><strong>문제·응용</strong><p>정답과 이유를 고르고, 새로운 상황에 적용</p><i class="lp-route-arrow" aria-hidden="true">→</i></li><li style="--i:2"><span class="lp-mono">03 · APPLY</span><strong>내 프로젝트</strong><p>대상과 확인 기준을 내 말로 적어 결과물로 저장</p><i class="lp-route-arrow" aria-hidden="true">→</i></li><li style="--i:3"><span class="lp-mono">04 · ACT</span><strong>실행·회고</strong><p>작은 실행 하나, 결과는 근거로 남기고 다음 결정</p></li></ol>
+<p class="lp-reveal"><a class="lp-textlink" href="#story">세션 흐름 자세히 보기 <span aria-hidden="true">↓</span></a></p>
+</div>
+</section>
+<section id="areas" class="lp-section s-areas " data-spec="LS-05" aria-labelledby="areas-title">
+<div class="lp-shell">
+<header class="lp-head split lp-reveal"><p class="lp-eyebrow">7 AREAS OF A VENTURE</p><h2 id="areas-title">창업에 필요한 일곱 가지 질문,<br>필요한 순간에 하나씩.</h2><p>고객부터 전략까지. 모든 걸 한 번에 배우지 않아요. 내 프로젝트의 지금 단계에 맞는 영역이 먼저 열려요.</p></header>
+<ul class="lp-areas"><li class="lp-area lp-card-reveal" style="--area:var(--c-customer);--i:0"><span class="lp-area-top"><b aria-hidden="true">◎</b><span class="lp-mono">01</span></span><h3>고객 이해</h3><p>누가, 언제, 무엇 때문에 불편할까?</p><ul class="lp-tags"><li>세분화</li><li>문제 상황</li><li>인터뷰</li><li>현재 대안</li></ul><i class="lp-area-arrow" aria-hidden="true">↗</i></li><li class="lp-area lp-card-reveal" style="--area:var(--c-product);--i:1"><span class="lp-area-top"><b aria-hidden="true">◇</b><span class="lp-mono">02</span></span><h3>제품 가치</h3><p>쓰고 나면 무엇이 더 좋아질까?</p><ul class="lp-tags"><li>가치제안</li><li>MVP</li><li>사용성</li><li>반복사용</li></ul><i class="lp-area-arrow" aria-hidden="true">↗</i></li><li class="lp-area lp-card-reveal" style="--area:var(--c-market);--i:2"><span class="lp-area-top"><b aria-hidden="true">◈</b><span class="lp-mono">03</span></span><h3>시장 기회</h3><p>이 문제를 어디서 먼저 해결할까?</p><ul class="lp-tags"><li>경쟁·대체재</li><li>시장 범위</li><li>접근성</li><li>차별 기회</li></ul><i class="lp-area-arrow" aria-hidden="true">↗</i></li><li class="lp-area lp-card-reveal" style="--area:var(--c-gtm);--i:3"><span class="lp-area-top"><b aria-hidden="true">↗</b><span class="lp-mono">04</span></span><h3>고객 확보·판매</h3><p>어떻게 만나서 쓰거나 사게 할까?</p><ul class="lp-tags"><li>포지셔닝</li><li>메시지</li><li>채널</li><li>전환·유지</li></ul><i class="lp-area-arrow" aria-hidden="true">↗</i></li><li class="lp-area lp-card-reveal" style="--area:var(--c-finance);--i:0"><span class="lp-area-top"><b aria-hidden="true">₩</b><span class="lp-mono">05</span></span><h3>수익·재무</h3><p>돈이 어떻게 들어오고 얼마나 남을까?</p><ul class="lp-tags"><li>가격</li><li>수익모델</li><li>원가</li><li>단위경제</li></ul><i class="lp-area-arrow" aria-hidden="true">↗</i></li><li class="lp-area lp-card-reveal" style="--area:var(--c-operations);--i:1"><span class="lp-area-top"><b aria-hidden="true">▦</b><span class="lp-mono">06</span></span><h3>실행·운영</h3><p>약속한 가치를 계속 전달할 수 있을까?</p><ul class="lp-tags"><li>일정·역할</li><li>파트너</li><li>품질</li><li>계약·개인정보</li></ul><i class="lp-area-arrow" aria-hidden="true">↗</i></li><li class="lp-area lp-card-reveal" style="--area:var(--c-strategy);--i:2"><span class="lp-area-top"><b aria-hidden="true">✧</b><span class="lp-mono">07</span></span><h3>전략·학습</h3><p>지금 무엇을 확인하고 어떤 결정을 할까?</p><ul class="lp-tags"><li>병목</li><li>실험 기준</li><li>회고</li><li>피벗</li></ul><i class="lp-area-arrow" aria-hidden="true">↗</i></li><li class="lp-area filler lp-card-reveal" style="--i:3"><h3>그리고 여덟 번째 칸은,<br>당신의 아이디어</h3><a class="lp-textlink" href="../../app/?from=v1">한 문장으로 시작하기 <span aria-hidden="true">↗</span></a></li></ul>
+</div>
+</section>
+<section id="bridge" class="lp-section s-bridge " data-spec="LS-06" aria-labelledby="bridge-title">
+<div class="lp-bridge-stage lp-stage">
+<div class="lp-shell lp-bridge-inner">
+<div class="lp-bridge-labels lp-mono" aria-hidden="true"><span>7 AREAS TO LEARN</span><span>1 STEP FOR TODAY</span></div>
+<div class="lp-bridge-nums" aria-hidden="true"><b class="from">7</b><i class="arrow">→</i><b class="to">1</b></div>
+<div class="lp-bridge-copy"><h2 id="bridge-title"><span>알아야 할 건 일곱,</span><span class="accent">오늘 할 일은 하나.</span></h2><p>전부 알아야 시작할 수 있는 건 아니에요. Vencubator는 지금 내 아이디어에 가장 필요한 한 걸음만 안내해요.</p></div>
+</div></div>
+</section>
+<section id="story" class="lp-section s-story lp-dark" data-spec="LS-07" aria-labelledby="story-title" style="--frames:5">
+<div class="lp-story-stage lp-stage" data-index="01">
+<div class="lp-shell lp-story-top"><p class="lp-eyebrow on-dark">ONE SESSION · FIVE MOMENTS</p><h2 id="story-title" class="lp-story-intro">한 번의 세션, 다섯 개의 순간</h2><span class="lp-story-count lp-mono" aria-hidden="true"><b id="lp-story-index">01</b> / 05</span></div>
+<article class="lp-story-frame is-active" data-frame="0">
+<div class="lp-shell lp-story-grid">
+<div class="lp-story-step"><span class="lp-mono">01 · CONCEPT</span><h3>필요한 개념을<br>짧게 만나고</h3><p>“좋다는 말보다, 지난 행동을 물어보세요.” 상황 예시와 함께 왜 지금 배우는지 알려줘요.</p></div>
+<div class="lp-story-visual"><div class="lp-mock speech"><span class="lp-mock-label">개념</span><div class="lp-mock-row"><svg class="lp-sprout is-grown" viewBox="0 0 220 240" role="img" aria-label="">
+<ellipse class="m-shadow" cx="111" cy="219" rx="65" ry="10"/>
+<g class="m-sprout"><path class="m-stem" d="M108 98C111 60 102 47 91 31"/><path class="m-leaf-a" d="M104 64C64 63 60 28 64 20c37 1 51 16 40 44Z"/><path class="m-leaf-b" d="M106 73c2-41 41-52 55-48-1 39-23 54-55 48Z"/><path class="m-vein" d="M110 62c15-14 25-22 38-26"/></g>
+<g class="m-body"><path class="m-arm" d="M69 98c-8 8-28 17-32 35-5 24 13 35 34 24"/><path class="m-arm" d="M153 106c14-12 29-10 34 2 5 11-1 26-18 33"/><path class="m-feet" d="M75 187c-5 14-8 25 3 28 13 4 18-13 22-22M128 192c4 14 9 23 20 21 12-3 5-22 0-28"/><path class="m-torso" d="M56 124c0-37 23-50 55-50 32 0 59 21 59 64 0 44-23 63-58 63-35 0-56-24-56-77Z"/><path class="m-shine" d="M65 122c3-29 16-39 34-41"/><ellipse class="m-eye" cx="87" cy="136" rx="5" ry="7"/><ellipse class="m-eye" cx="136" cy="136" rx="5" ry="7"/><ellipse class="m-cheek" cx="78" cy="150" rx="10" ry="5"/><ellipse class="m-cheek" cx="145" cy="150" rx="10" ry="5"/><path class="m-mouth" d="M104 151q8 10 16 0"/><path class="m-gem" d="m114 174 5-6 5 6-5 6Z"/></g>
+<g class="m-spark"><path d="m185 70 2-7 2 7 7 2-7 2-2 7-2-7-7-2Z"/><circle cx="44" cy="82" r="3"/></g>
+</svg><p class="lp-bubble">“이 앱 쓰실 거예요?”보다 “지난번엔 팀원을 어떻게 구하셨어요?”가 더 많은 걸 알려줘요.</p></div></div></div>
+</div></article><article class="lp-story-frame" data-frame="1">
+<div class="lp-shell lp-story-grid">
+<div class="lp-story-step"><span class="lp-mono">02 · QUESTION</span><h3>문제로<br>이해를 확인하고</h3><p>정답과 이유를 함께 골라요. 틀려도 다른 문항으로 다시, 학습이 막히지 않아요.</p></div>
+<div class="lp-story-visual"><div class="lp-mock quiz"><span class="lp-mock-label">문제</span><p>고객의 실제 불편을 확인하기 좋은 질문은?</p><ul><li class="">○ 앱이 있으면 쓰실 건가요?</li><li class="right">✓ 지난 학기엔 어떻게 해결하셨어요?</li></ul></div></div>
+</div></article><article class="lp-story-frame" data-frame="2">
+<div class="lp-shell lp-story-grid">
+<div class="lp-story-step"><span class="lp-mono">03 · TRANSFER</span><h3>새로운 상황에<br>응용해 보고</h3><p>비슷하지만 다른 상황에서 스스로 판단해요. 이미 아는 개념은 바로 여기서 시작할 수 있어요.</p></div>
+<div class="lp-story-visual"><div class="lp-mock transfer"><span class="lp-mock-label">응용</span><p class="lp-mock-main">카페 예약 앱이라면, 어떤 “지난 행동”을 물어볼까요?</p><span class="lp-mock-input" aria-hidden="true">지난번 예약은 어떻게 하셨어요?<i></i></span></div></div>
+</div></article><article class="lp-story-frame" data-frame="3">
+<div class="lp-shell lp-story-grid">
+<div class="lp-story-step"><span class="lp-mono">04 · APPLY</span><h3>내 프로젝트의<br>결과물로 남기고</h3><p>누구에게, 무엇을, 어떻게 확인할지 내 말로 적어요. AI 제안은 참고일 뿐, 확정은 내가 해요.</p></div>
+<div class="lp-story-visual"><div class="lp-mock artifact"><span class="lp-mock-label">내 프로젝트</span><p class="lp-mock-main">신입생 3명에게 “지난 학기 팀원을 구한 방법”을 묻는다</p><p class="lp-mock-meta">확인 기준 · 2명 이상이 단톡방 외 방법을 썼는지</p></div></div>
+</div></article><article class="lp-story-frame" data-frame="4">
+<div class="lp-shell lp-story-grid">
+<div class="lp-story-step"><span class="lp-mono">05 · FIELD</span><h3>작게 해보고<br>다음을 결정해요</h3><p>실행 과제는 하나만. 결과를 관찰로 기록하면 근거가 되고, 그 근거로 다음 방향을 직접 선택해요.</p></div>
+<div class="lp-story-visual"><div class="lp-mock field"><span class="lp-mock-label">실행·회고</span><p class="lp-mock-main">관찰 2건 기록 · 가설 일부 반박</p><p class="lp-mock-meta">다음 결정 · 대상을 “복학생”으로 좁혀 다시 확인</p></div></div>
+</div></article>
+<ol class="lp-story-dots" aria-hidden="true"><li class="is-active"><i></i><span>CONCEPT</span></li><li class=""><i></i><span>QUESTION</span></li><li class=""><i></i><span>TRANSFER</span></li><li class=""><i></i><span>APPLY</span></li><li class=""><i></i><span>FIELD</span></li></ol>
+</div>
+</section>
+<section id="growth" class="lp-section s-growth " data-spec="LS-08" aria-labelledby="growth-title">
+<div class="lp-shell">
+<header class="lp-head lp-reveal"><p class="lp-eyebrow">WHAT GROWS</p><h2 id="growth-title">자라는 건 점수가 아니라<br>나와 내 아이디어예요.</h2></header>
+<div class="lp-growth-grid lp-reveal"><article class="lp-growth-card g1" style="--i:0"><span class="lp-chip">부캐 · 내 프로젝트</span><h3>아이디어가 자라요</h3><p>모호한 생각이 확인 가능한 가설이 되고, 실제 관찰과 결정이 쌓여요. 프로젝트마다 따로 자라요.</p><ol class="lp-stages"><li>가설 정리</li><li>현장 확인</li><li>반복 검토</li><li>의사결정 반영</li></ol></article><article class="lp-growth-card g2" style="--i:1"><span class="lp-chip">본캐 · 나의 학습</span><h3>내가 자라요</h3><p>개념을 이해하고 새 상황에 적용한 경험은 프로젝트가 바뀌어도 남아요. 아는 내용은 건너뛸 수 있어요.</p><ol class="lp-stages"><li>이해 확인</li><li>적용</li><li>재확인</li></ol></article><article class="lp-growth-card g3" style="--i:2"><span class="lp-chip">반박도 성장</span><h3>틀린 가설도 배움이에요</h3><p>예상과 다른 답을 들었다면 탐구 경험은 쌓이고, 가설은 “다시 살펴보기”로 정직하게 표시돼요.</p><ol class="lp-stages"><li>기존 가설</li><li>반박된 단서</li><li>방향 전환</li></ol></article></div>
+<p class="lp-note lp-reveal">탐구 단계는 알아보고 판단한 과정이에요. 사업 성공 가능성이나 시장 반응을 숫자로 약속하지 않아요.</p>
+</div>
+</section>
+<section id="status" class="lp-section s-status " data-spec="LS-09" aria-labelledby="status-title">
+<div class="lp-shell lp-status-grid">
+<header class="lp-head lp-reveal"><p class="lp-eyebrow">WHERE WE ARE</p><h2 id="status-title">지금 어디까지 왔는지,<br>있는 그대로 알려드려요.</h2><p class="lp-note">일정은 사용자 연구 결과에 따라 바뀔 수 있어요.</p></header>
+<ol class="lp-status-rows"><li class="lp-status-row" data-status="in_progress"><span class="lp-mono">S1</span><div><strong>프로토타입</strong><p>학습 길 · 개념/문제/응용 · 내 프로젝트 결과물 · 실행 1개. 실제 AI·로그인 없이 브라우저에서 체험</p></div><em>진행 중</em></li><li class="lp-status-row" data-status="not_started"><span class="lp-mono">S2</span><div><strong>MVP</strong><p>계정과 서버 저장, 실제 AI 인터뷰, 근거·결정 기록, Android 테스트</p></div><em>준비 중</em></li><li class="lp-status-row" data-status="not_started"><span class="lp-mono">S3</span><div><strong>고도화</strong><p>개인화된 학습 경로, 알림, 두 번째 프로젝트로의 학습 이전</p></div><em>예정</em></li></ol>
+</div>
+</section>
+<section id="faq" class="lp-section s-faq " data-spec="LS-10" aria-labelledby="faq-title">
+<div class="lp-shell lp-faq-grid">
+<header class="lp-head lp-reveal"><p class="lp-eyebrow">FAQ</p><h2 id="faq-title">시작 전에 궁금한 것들</h2></header>
+<div class="lp-faq-list lp-reveal"><details style="--i:0" open><summary>AI가 사업 방향을 정해주나요?</summary><p>아니요. AI는 질문하고 정리하고 선택지를 설명하는 역할이에요. 무엇을 믿고 어떤 방향으로 갈지는 언제나 직접 확정해요.</p></details><details style="--i:1"><summary>스탯이 높으면 사업이 잘된다는 뜻인가요?</summary><p>아니요. 탐구 단계는 얼마나 체계적으로 알아보고 판단했는지를 보여줄 뿐, 성공 가능성을 뜻하지 않아요.</p></details><details style="--i:2"><summary>지금 바로 쓸 수 있나요?</summary><p>현재는 프로토타입 단계예요. 로컬에서 흐름을 체험할 수 있고, AI 대화와 고객 관찰은 가상 예시예요. 기록은 이 브라우저에만 저장돼요.</p></details><details style="--i:3"><summary>아이디어가 아직 막연해도 괜찮나요?</summary><p>네. 한 문장이면 충분해요. 이름이나 수익모델이 없어도 학습 길이 바로 열려요.</p></details><details style="--i:4"><summary>매일 해야 하나요?</summary><p>아니요. 생명 소모나 벌점, 순위 경쟁이 없어요. 할 수 있을 때 한 단계씩 이어가면 돼요.</p></details></div>
+</div>
+</section>
+<section id="start" class="lp-section s-final " data-spec="LS-11" aria-labelledby="start-title">
+<div class="lp-shell lp-final-card lp-reveal">
+<div><p class="lp-eyebrow">YOUR NEXT SMALL STEP</p><h2 id="start-title"><span>생각만 하던 아이디어,</span><span>오늘은 한 걸음만.</span></h2><p>작게 배우고, 직접 확인하며, 아이디어와 함께 자라보세요.</p><div class="lp-actions"><a class="lp-btn primary large" href="../../app/?from=v1" data-cta="prototype">프로토타입 체험하기 <span aria-hidden="true">↗</span></a></div></div>
+<svg class="lp-sprout is-grown floating" viewBox="0 0 220 240" role="img" aria-label="함께 자랄 새싹 부캐">
+<ellipse class="m-shadow" cx="111" cy="219" rx="65" ry="10"/>
+<g class="m-sprout"><path class="m-stem" d="M108 98C111 60 102 47 91 31"/><path class="m-leaf-a" d="M104 64C64 63 60 28 64 20c37 1 51 16 40 44Z"/><path class="m-leaf-b" d="M106 73c2-41 41-52 55-48-1 39-23 54-55 48Z"/><path class="m-vein" d="M110 62c15-14 25-22 38-26"/></g>
+<g class="m-body"><path class="m-arm" d="M69 98c-8 8-28 17-32 35-5 24 13 35 34 24"/><path class="m-arm" d="M153 106c14-12 29-10 34 2 5 11-1 26-18 33"/><path class="m-feet" d="M75 187c-5 14-8 25 3 28 13 4 18-13 22-22M128 192c4 14 9 23 20 21 12-3 5-22 0-28"/><path class="m-torso" d="M56 124c0-37 23-50 55-50 32 0 59 21 59 64 0 44-23 63-58 63-35 0-56-24-56-77Z"/><path class="m-shine" d="M65 122c3-29 16-39 34-41"/><ellipse class="m-eye" cx="87" cy="136" rx="5" ry="7"/><ellipse class="m-eye" cx="136" cy="136" rx="5" ry="7"/><ellipse class="m-cheek" cx="78" cy="150" rx="10" ry="5"/><ellipse class="m-cheek" cx="145" cy="150" rx="10" ry="5"/><path class="m-mouth" d="M104 151q8 10 16 0"/><path class="m-gem" d="m114 174 5-6 5 6-5 6Z"/></g>
+<g class="m-spark"><path d="m185 70 2-7 2 7 7 2-7 2-2 7-2-7-7-2Z"/><circle cx="44" cy="82" r="3"/></g>
+</svg>
+</div>
+</section>
+</main>
+<aside class="lp-sticky" data-spec="LS-12" aria-label="빠른 시작" inert>
+<div><strong>아이디어 한 문장이면 시작</strong><span>프로토타입 · 가입 없이 브라우저에서 체험</span></div><a class="lp-btn primary small" href="../../app/?from=v1" data-cta="prototype">프로토타입 체험하기 <span aria-hidden="true">↗</span></a>
+</aside>
+<footer class="lp-footer" data-spec="LS-13"><div class="lp-shell">
+<a class="lp-brand" href="#top"><svg class="lp-brandmark" viewBox="0 0 32 35" fill="none" aria-hidden="true"><path d="M4 9 16 30 28 9M16 24V4" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M16 14C7 14 8 4 8 4c7 0 8 5 8 10ZM17 13c0-8 9-9 9-9s0 9-9 9Z" fill="currentColor"/></svg><span>vencubator<i>.</i></span></a>
+<p class="lp-footer-notice">현재 Vencubator는 프로토타입 단계입니다. 화면 속 AI 대화·고객 관찰·프로젝트는 가상 예시이며, 실제 성과를 뜻하지 않습니다.</p>
+<ul><li><a href="../../docs/product/PRODUCT-BRIEF.md">제품 기획서</a></li><li><a href="../../docs/plans/IMPLEMENTATION-ROADMAP.md">구현 로드맵</a></li><li><a href=".././docs/SPEC-006-landing.md">랜딩 명세</a></li></ul>
+<small>© 2026 Vencubator</small>
+</div></footer>
+</div>
+<noscript><p style="padding:120px 24px;max-width:720px;margin:auto;line-height:1.8">Vencubator는 아이디어를 가진 사람이 오늘 배울 것 하나, 해볼 것 하나를 찾도록 돕는 창업 학습 코파일럿입니다. 현재 프로토타입 단계이며, 화면 속 AI 대화와 고객 관찰은 가상 예시입니다.</p></noscript>
+<script type="module">
+// SPEC-009 §4 공통 이벤트 — 원본은 site/shared/track.mjs. landing/src, landing-v2/src, prototype 에 같은 내용으로 복사해 쓴다.
+// 네트워크 전송 없음: 브라우저 저장소 버퍼에만 기록한다. 전송 어댑터는 DR-G02 결정 후 이 파일에만 추가한다.
+const EXP_KEY = 'vencubator.exp.v1';
+const EVENTS_KEY = 'vencubator.events.v1';
+const UTM_KEY = 'vencubator.utm.v1';
+const MAX_EVENTS = 500;
+const VARIANTS = ['v1', 'v2', 'v3'];
+
+const SAFE_VALUE = /^[A-Za-z0-9_.-]{0,32}$/;
+const SAFE_UTM = /^[\p{L}\p{N}_.-]{1,40}$/u;
+const store = s => s ?? (typeof localStorage !== 'undefined' ? localStorage : null);
+const session = s => s ?? (typeof sessionStorage !== 'undefined' ? sessionStorage : null);
+const readJSON = (st, key, fallback) => { try { const raw = st?.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch { return fallback; } };
+const writeJSON = (st, key, value) => { try { st?.setItem(key, JSON.stringify(value)); return true; } catch { return false; } };
+const uuid = () => (globalThis.crypto?.randomUUID ? crypto.randomUUID() : 'v-' + Math.random().toString(36).slice(2) + Date.now().toString(36));
+
+/** 허용 값만 남긴다: 숫자·불리언·짧은 식별자 문자열. 자유 텍스트는 버린다. */
+function cleanProps(props = {}) {
+  const out = {};
+  for (const [k, v] of Object.entries(props)) {
+    if (!/^[a-z][a-z0-9_]{0,23}$/.test(k)) continue;
+    if (typeof v === 'number' && Number.isFinite(v)) out[k] = v;
+    else if (typeof v === 'boolean') out[k] = v;
+    else if (typeof v === 'string' && SAFE_VALUE.test(v)) out[k] = v;
+  }
+  return out;
+}
+
+/** 저장된 배정. 형식이 틀리면 null */
+function readAssignment(storage) {
+  const a = readJSON(store(storage), EXP_KEY, null);
+  return a && a.v === 1 && VARIANTS.includes(a.variant) && typeof a.visitor === 'string' ? a : null;
+}
+function writeAssignment(storage, a) { return writeJSON(store(storage), EXP_KEY, a); }
+
+/** 랜딩에 직접 들어온 경우 보고 있는 변형으로 배정을 기록 (SPEC-009 §3) */
+function ensureAssignment(page, storage) {
+  const cur = readAssignment(storage);
+  if (cur) return cur;
+  const a = { v: 1, visitor: uuid(), variant: VARIANTS.includes(page) ? page : 'none', source: 'direct', at: Date.now() };
+  if (VARIANTS.includes(page)) writeAssignment(storage, a);
+  return a;
+}
+
+/** 주소의 UTM을 이번 세션에 보관(허용 문자만) */
+function captureUtm(search = '', sessionStore) {
+  const q = new URLSearchParams(search), utm = {};
+  for (const k of ['source', 'medium', 'campaign', 'content']) { const v = q.get('utm_' + k); if (v && SAFE_UTM.test(v)) utm[k] = v; }
+  if (Object.keys(utm).length) writeJSON(session(sessionStore), UTM_KEY, utm);
+  return readJSON(session(sessionStore), UTM_KEY, {});
+}
+
+function track(name, props = {}, env = {}) {
+  if (!/^[a-z][a-z0-9_]{1,31}$/.test(name)) return null;
+  const st = store(env.storage), a = readAssignment(st);
+  const ev = { t: Date.now(), name, page: env.page || 'unknown', visitor: a?.visitor || null, variant: a?.variant || null, utm: readJSON(session(env.session), UTM_KEY, {}), props: cleanProps(props) };
+  const list = readJSON(st, EVENTS_KEY, []);
+  const next = (Array.isArray(list) ? list : []).concat(ev).slice(-MAX_EVENTS);
+  writeJSON(st, EVENTS_KEY, next);
+  return ev;
+}
+const readEvents = storage => { const l = readJSON(store(storage), EVENTS_KEY, []); return Array.isArray(l) ? l : []; };
+
+// SPEC-006 §4: 모션 계약 LM-01~LM-09.
+// 위쪽 = 순수 수식(테스트 대상), 아래 bindMotion = DOM 바인딩(수식 결과를 CSS 변수/클래스로만 반영).
+
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+/** smoothstep: v²(3−2v) */
+const smooth = v => { v = clamp(v); return v * v * (3 - 2 * v); };
+const r3 = v => Math.round(v * 1000) / 1000;
+
+/** sticky 스테이지를 가진 섹션 내부 진행률 */
+const sectionProgress = (scrollY, top, height, vh) => clamp((scrollY - top) / Math.max(1, height - vh));
+/** LM-02 히어로 진행률 */
+const heroProgress = (scrollY, top, height) => clamp((scrollY - top) / Math.max(1, height * 0.62));
+/** 뷰포트 안에서 요소가 지나간 비율(패럴랙스용) */
+const viewProgress = (rectTop, rectHeight, vh) => clamp((vh - rectTop) / (vh + rectHeight));
+
+/** LM-02 */
+function heroFrame(p, mobile = false) {
+  const support = smooth((p - 0.02) / 0.34);
+  return {
+    one: { opacity: r3(1 - p * 0.45), y: r3(-p * (mobile ? 8 : 18)), scale: r3(1 - p * (mobile ? 0.12 : 0.2)) },
+    two: { y: r3(p * (mobile ? 4 : 10)), scale: r3((mobile ? 0.97 : 0.94) + p * (mobile ? 0.08 : 0.16)) },
+    support: { opacity: r3(1 - support), y: r3(-support * 18), interactive: support < 0.95 },
+    media: { scale: r3(1 + p * 0.06), y: r3(-p * 24), radius: r3(Math.max(mobile ? 10 : 8, (mobile ? 18 : 26) - p * 16)), shadow: r3(0.08 + p * 0.1) },
+    caption: r3(1 - p)
+  };
+}
+
+/** LM-03: 3문장 교차 + 새싹 성장 */
+function typeFrame(p) {
+  const o1 = smooth((p - 0.04) / 0.28), f1 = smooth((p - 0.2) / 0.14);
+  const i2 = smooth((p - 0.18) / 0.24), o2 = smooth((p - 0.54) / 0.19);
+  const i3 = smooth((p - 0.62) / 0.22), s3 = smooth((p - 0.9) / 0.1);
+  return {
+    lines: [
+      { opacity: r3(1 - f1), y: r3(-24 * o1), scale: r3(1.5 - 0.8 * o1) },
+      { opacity: r3(i2 * (1 - o2)), y: r3(40 * (1 - i2) - 24 * o2), scale: r3(0.55 + 0.65 * i2 - 0.35 * o2) },
+      { opacity: r3(i3), y: r3(40 * (1 - i3)), scale: r3(0.55 + 0.55 * i3 - 0.05 * s3) }
+    ],
+    note: r3(smooth((p - 0.76) / 0.17)),
+    grow: r3(smooth(p / 0.92)),
+    index: p < 0.31 ? 1 : p < 0.68 ? 2 : 3
+  };
+}
+
+/** LM-06: 7 → 1 */
+function bridgeFrame(p) {
+  const a = smooth((p - 0.08) / 0.7);
+  return {
+    from: { opacity: r3(1 - p * 0.42), scale: r3(1 - p * 0.18), x: r3(-p * 2.5) },
+    to: { opacity: r3(0.28 + a * 0.72), scale: r3(0.74 + a * 0.26), x: r3((1 - a) * 3) },
+    arrow: { opacity: r3(0.35 + a * 0.65), scale: r3(0.7 + a * 0.3), rotate: r3(-12 + a * 12) },
+    arrive: r3(a)
+  };
+}
+
+const ACTIVE = { panel: 1, title: 1, titleScale: 1, blur: 0, stepY: 0, detail: 1, detailY: 0, visualScale: 1, visualY: 0 };
+const HIDDEN = { panel: 0, title: 0, titleScale: 1.12, blur: 12, stepY: 24, detail: 0, detailY: 14, visualScale: 1.06, visualY: 16 };
+
+/** LM-07: n개 프레임 교차. shown = 현재 활성 프레임(전환점 .56) */
+function storyFrame(p, n) {
+  const pos = clamp(p) * (n - 1);
+  const base = Math.min(n - 1, Math.floor(pos));
+  const next = Math.min(n - 1, base + 1);
+  const local = pos - base;
+  const shown = base === next ? base : (local < 0.56 ? base : next);
+  const frames = Array.from({ length: n }, (_, i) => {
+    if (base === next) return i === base ? { ...ACTIVE, z: n + 1 } : { ...HIDDEN, z: i + 1 };
+    if (i === base) {
+      const focus = smooth((local - 0.34) / 0.3), det = smooth((local - 0.28) / 0.2), vis = smooth((local - 0.3) / 0.6);
+      return { panel: r3(1 - smooth((local - 0.4) / 0.36)), title: r3(1 - focus), titleScale: r3(1 - 0.05 * focus), blur: r3(10 * focus), stepY: r3(-16 * focus), detail: r3(1 - det), detailY: r3(-8 * det), visualScale: r3(1 + 0.03 * vis), visualY: r3(-8 * vis), z: n + base };
+    }
+    if (i === next) {
+      const ti = smooth((local - 0.4) / 0.36), di = smooth((local - 0.6) / 0.24), vi = smooth((local - 0.34) / 0.5);
+      return { panel: r3(smooth((local - 0.34) / 0.4)), title: r3(ti), titleScale: r3(1.12 - 0.12 * ti), blur: r3(12 * (1 - ti)), stepY: r3(24 * (1 - ti)), detail: r3(di), detailY: r3(14 * (1 - di)), visualScale: r3(1.06 - 0.06 * vi), visualY: r3(16 * (1 - vi)), z: n + base + 1 };
+    }
+    return { ...HIDDEN, z: i + 1 };
+  });
+  return { shown, frames };
+}
+
+/** LM-08: 뷰포트 기준선(.54vh)과 가까울수록 1 */
+const focusValue = (center, vh) => r3(1 - clamp(Math.abs(center - vh * 0.54) / (vh * 0.58)));
+
+/** LM-01: marker 이하로 지나간 마지막 타깃 index, 없으면 -1 */
+const navIndex = (tops, marker) => tops.reduce((acc, t, i) => (t <= marker ? i : acc), -1);
+
+/** LM-09: 히어로 통과 후 ~ 마지막 CTA 전, 단 고정 스테이지(LS-02/06/07)가 화면을 차지하는 동안은 숨김 */
+const stickyVisible = (scrollY, heroBottom, finalTop, vh, inStage = false) => scrollY >= heroBottom && finalTop > vh * 0.78 && !inStage;
+/** 고정 스테이지 섹션 [top, bottom] 구간 안에 있는가 */
+const inRanges = (scrollY, ranges) => ranges.some(([t, b]) => scrollY >= t - 1 && scrollY <= b);
+
+const pad2 = n => String(n).padStart(2, '0');
+
+// ────────────────────────────── DOM 바인딩 ──────────────────────────────
+function bindMotion(win = window) {
+  const doc = win.document, root = doc.documentElement;
+  const reduce = win.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  root.classList.toggle('is-reduced', !!reduce);
+  root.classList.add('is-motion-ready');
+  root.classList.toggle('motion-on', !reduce);
+  const $ = s => doc.querySelector(s), $$ = s => [...doc.querySelectorAll(s)];
+  const setVars = (el, vars) => { if (!el) return; for (const [k, v] of Object.entries(vars)) el.style.setProperty(k, String(v)); };
+
+  const hero = $('#hero'), heroCopy = $('.lp-hero-copy'), heroMedia = $('.lp-hero-media');
+  const lineOne = $('.lp-hero-line.one'), lineTwo = $('.lp-hero-line.two'), fades = $$('.s-hero .lp-fade');
+  const type = $('#grow'), typeStage = $('.lp-type-stage'), typeLines = $$('.lp-type-line'), typeIndex = $('#lp-type-index');
+  const bridge = $('#bridge'), bridgeStage = $('.lp-bridge-stage');
+  const story = $('#story'), storyStage = $('.lp-story-stage'), frames = $$('.lp-story-frame'), dots = $$('.lp-story-dots li'), storyIndex = $('#lp-story-index');
+  const statusRows = $$('.lp-status-row');
+  const sticky = $('.lp-sticky'), finalSec = $('#start');
+  const progress = $('.lp-progress span'), chapter = $('#lp-chapter');
+  const links = $$('.lp-local-links a'), linkWrap = $('.lp-local-links');
+  const targets = links.map(a => doc.getElementById(a.dataset.target));
+  let current = -1, currentNav = -2, ticking = false;
+
+  function updateHero() {
+    if (reduce || !hero) return;
+    const f = heroFrame(heroProgress(win.scrollY, hero.offsetTop, hero.offsetHeight), win.innerWidth <= 640);
+    setVars(lineOne, { '--o': f.one.opacity, '--y': f.one.y + 'px', '--s': f.one.scale });
+    setVars(lineTwo, { '--y': f.two.y + 'px', '--s': f.two.scale });
+    fades.forEach(el => { setVars(el, { '--o': f.support.opacity, '--y': f.support.y + 'px' }); el.style.pointerEvents = f.support.interactive ? '' : 'none'; });
+    setVars(heroMedia, { '--m-scale': f.media.scale, '--m-y': f.media.y + 'px', '--m-radius': f.media.radius + 'px', '--m-shadow': f.media.shadow, '--cap': f.caption });
+  }
+  function updateType() {
+    if (reduce || !type) return;
+    const f = typeFrame(sectionProgress(win.scrollY, type.offsetTop, type.offsetHeight, win.innerHeight));
+    typeLines.forEach((el, i) => setVars(el, { '--o': f.lines[i].opacity, '--y': f.lines[i].y + 'px', '--s': f.lines[i].scale }));
+    setVars(typeStage, { '--grow': f.grow, '--note': f.note, '--type-p': f.grow });
+    if (typeIndex) typeIndex.textContent = pad2(f.index);
+  }
+  function updateBridge() {
+    if (reduce || !bridge) return;
+    const f = bridgeFrame(sectionProgress(win.scrollY, bridge.offsetTop, bridge.offsetHeight, win.innerHeight));
+    setVars(bridgeStage, {
+      '--from-o': f.from.opacity, '--from-s': f.from.scale, '--from-x': f.from.x + 'vw',
+      '--to-o': f.to.opacity, '--to-s': f.to.scale, '--to-x': f.to.x + 'vw',
+      '--arrow-o': f.arrow.opacity, '--arrow-s': f.arrow.scale, '--arrow-r': f.arrow.rotate + 'deg', '--arrive': f.arrive
+    });
+  }
+  function setScene(i) {
+    if (i === current) return; current = i;
+    frames.forEach((el, k) => { el.classList.toggle('is-active', k === i); el.setAttribute('aria-hidden', k === i ? 'false' : 'true'); });
+    dots.forEach((el, k) => el.classList.toggle('is-active', k === i));
+    if (storyIndex) storyIndex.textContent = pad2(i + 1);
+    storyStage?.setAttribute('data-index', pad2(i + 1));
+  }
+  function updateStory() {
+    if (!story || !frames.length) return;
+    if (reduce) return;
+    const p = sectionProgress(win.scrollY, story.offsetTop, story.offsetHeight, win.innerHeight);
+    const f = storyFrame(p, frames.length);
+    setScene(f.shown);
+    setVars(storyStage, { '--story-p': p });
+    frames.forEach((el, i) => {
+      const v = f.frames[i];
+      el.style.zIndex = String(v.z);
+      setVars(el, { '--panel': v.panel, '--title': v.title, '--title-s': v.titleScale, '--blur': v.blur + 'px', '--step-y': v.stepY + 'px', '--detail': v.detail, '--detail-y': v.detailY + 'px', '--vis-s': v.visualScale, '--vis-y': v.visualY + 'px' });
+    });
+  }
+  function updateStatus() {
+    if (!statusRows.length) return;
+    let best = -1, bestF = 0;
+    statusRows.forEach((row, i) => {
+      const r = row.getBoundingClientRect(), f = reduce ? 1 : focusValue(r.top + r.height / 2, win.innerHeight);
+      setVars(row, { '--focus': f });
+      if (f > bestF) { bestF = f; best = i; }
+    });
+    statusRows.forEach((row, i) => row.classList.toggle('is-current', !reduce && i === best && bestF > 0.28));
+  }
+  function updateWayfinding() {
+    const max = Math.max(1, root.scrollHeight - win.innerHeight);
+    setVars(progress, { '--page-progress': clamp(win.scrollY / max) });
+    const next = navIndex(targets.map(t => (t ? t.offsetTop : Infinity)), win.scrollY + 160);
+    if (next === currentNav) return; currentNav = next;
+    if (chapter) chapter.textContent = next < 0 ? '00' : pad2(next + 1);
+    links.forEach((a, i) => { if (i === next) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+    if (next >= 0 && linkWrap && linkWrap.scrollWidth > linkWrap.clientWidth) {
+      const a = links[next];
+      linkWrap.scrollTo({ left: Math.max(0, a.offsetLeft - (linkWrap.clientWidth - a.offsetWidth) / 2), behavior: reduce ? 'auto' : 'smooth' });
+    }
+  }
+  function updateSticky() {
+    if (!sticky || !hero) return;
+    const ranges = reduce ? [] : [type, bridge, story].filter(Boolean).map(s => [s.offsetTop - win.innerHeight * 0.5, s.offsetTop + s.offsetHeight - win.innerHeight * 0.5]);
+    const vis = stickyVisible(win.scrollY, hero.offsetTop + hero.offsetHeight, finalSec ? finalSec.getBoundingClientRect().top : Infinity, win.innerHeight, inRanges(win.scrollY, ranges));
+    sticky.classList.toggle('is-visible', vis);
+    sticky.inert = !vis;
+  }
+  function update() { updateHero(); updateType(); updateBridge(); updateStory(); updateStatus(); updateWayfinding(); updateSticky(); ticking = false; }
+  const request = () => { if (!ticking) { ticking = true; win.requestAnimationFrame(update); } };
+  win.addEventListener('scroll', request, { passive: true });
+  let rt; win.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(request, 120); });
+
+  // LM-04 / LM-05: reveal
+  const reveals = $$('.lp-reveal, .lp-card-reveal');
+  if (reduce || !('IntersectionObserver' in win)) reveals.forEach(el => el.classList.add('is-visible'));
+  else {
+    const io = new win.IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } }), { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => io.observe(el));
+  }
+  if (reduce) { frames.forEach(el => { el.classList.add('is-active'); el.setAttribute('aria-hidden', 'false'); }); }
+  else setScene(0);
+  update();
+  return { update };
+}
+
+// SPEC-009 §4 v1 계측: 방문과 서비스 진입 클릭만 기록 (네트워크 전송 없음)
+
+function bindAnalytics(win = window) {
+  const env = { page: 'v1' };
+  captureUtm(win.location.search);
+  ensureAssignment('v1');
+  track('landing_view', {}, env);
+  win.document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[data-cta="prototype"]');
+    if (!a) return;
+    const place = (a.closest('[data-spec]')?.dataset.spec || 'page').toLowerCase();
+    track('cta_click', { placement: place }, env);
+  });
+}
+
+bindMotion(window);
+bindAnalytics(window);
+</script>
+</body>
+</html>

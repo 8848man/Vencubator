@@ -1,0 +1,71 @@
+/* SPEC-006 §5 디자인 토큰 — 원시 색상 값은 이 파일에만 둔다. (AC-LP07)
+   출처: prototype/style.css, prototype/content.mjs STATS, 새싹 부캐 SVG */
+:root {
+  /* 기본 (prototype 계승) */
+  --ink: #243b32;
+  --ink-soft: #3e5448;
+  --muted: #6f7c73;
+  --eyebrow: #71826c;
+  --paper: #ffffff;
+  --bg: #f8f9f5;
+  --soft: #eef3eb;
+  --line: #e2e7de;
+  --line-strong: #d4dfca;
+  --green: #2e5e47;
+  --green-deep: #234c38;
+  --green-3d: #1d3f2e;
+  --lime: #d9ebbd;
+  --lime-soft: #edf3e5;
+  --sprout: #8faa69;
+  --leaf: #b0c98a;
+  --sprout-muted: #a9b89c;
+  --warm: #ca8f63;
+  --warm-soft: #f8efe5;
+  --warm-line: #ebd8bf;
+  --spark: #d0b878;
+
+  /* 신규: 몰입 구간(TTJ 검정 스테이지의 숲색 치환) */
+  --forest: #12211a;
+  --forest-2: #1b2e24;
+  --forest-line: rgba(238, 243, 230, .14);
+  --on-forest: #eef3e6;
+  --on-forest-muted: rgba(238, 243, 230, .62);
+  --glow-lime: rgba(185, 214, 140, .22);
+  --glow-warm: rgba(208, 184, 120, .14);
+  --shadow-ink: 36, 59, 50; /* rgb 채널: rgba(var(--shadow-ink), a) */
+
+  /* 7개 영역 (prototype/content.mjs STATS) */
+  --c-customer: #347a63;
+  --c-market: #568abb;
+  --c-product: #b58b45;
+  --c-gtm: #a47283;
+  --c-finance: #8a79a5;
+  --c-operations: #668d8f;
+  --c-strategy: #bb825b;
+
+  /* 새싹 부캐 */
+  --m-shadow: #bccbab;
+  --m-stem: #79965a;
+  --m-leaf-a: #b0c98a;
+  --m-leaf-b: #8faa69;
+  --m-vein: #a8c385;
+  --m-arm: #c7da9e;
+  --m-arm-line: #a4bc7b;
+  --m-feet: #9eb880;
+  --m-torso: #c9dca7;
+  --m-torso-line: #a5be82;
+  --m-shine: #e1ecc9;
+  --m-eye: #3b553b;
+  --m-cheek: #e8bba3;
+  --m-mouth: #526a43;
+  --m-gem: #eff4d9;
+  --m-spark: #d0b878;
+  --m-dot: #b6c796;
+
+  /* 타이포·모션 */
+  --font: 'Pretendard Variable', Pretendard, Inter, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ease: cubic-bezier(.2, .65, .2, 1);
+  --nav-h: 64px;
+  --radius: 18px;
+}
