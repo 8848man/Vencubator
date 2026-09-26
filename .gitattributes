@@ -1,0 +1,10 @@
+# SPEC-014 §7 줄바꿈·바이너리 규칙
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.png binary
+*.jpg binary
+*.gif binary
+*.pdf binary
+*.zip binary
+*.woff2 binary

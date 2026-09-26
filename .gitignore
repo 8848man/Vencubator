@@ -1,0 +1,11 @@
+# SPEC-014 §7
+node_modules/
+**/qa-shots/
+**/_to_delete/
+_handoff/
+*.stale-*
+.DS_Store
+Thumbs.db
+.env
+.env.*
+*.log
