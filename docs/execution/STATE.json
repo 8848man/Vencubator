@@ -1,33 +1,42 @@
 {
   "schema_version": 1,
-  "revision": 53,
-  "updated_at": "2026-09-26T13:22:35.752Z",
+  "revision": 64,
+  "updated_at": "2026-09-26T23:08:55.000Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "stage": "S1",
-    "phase": "P05",
-    "work_item": "P05-W04",
-    "owner": "dialog-session",
-    "run_state": "in_progress"
+    "stage": null,
+    "phase": null,
+    "work_item": null,
+    "owner": null,
+    "run_state": "idle"
   },
   "next": {
     "stage": "S1",
     "phase": "P05",
-    "work_item": "P05-W03",
-    "condition": "해당 W 승인 범위, 외부 연구는 실제 참가자 필요",
-    "action": "L04-W01·W02 완료: v3 공개 랜딩 고정, site/dist(/ 랜딩, /app/ 앱) 배포 준비 끝. 공개 업로드·도메인은 사용자 수행(site/DEPLOY.md, DR-G01). SPEC-008 r0.1 적용 완료. 38개 검사 통과, 브라우저 순차진입/결과만 등장/스켈레톤 정상·지연·실패/앱 모션 감소/390px 확인. VAL-005 참조. 물리 터치·OS 설정 실검사는 미실행. 다음 P05-W03은 VAL-004 미마감 검증을 실제 파일과 대조해 정리; P04 연구 대기 유지."
+    "work_item": "P05-W04",
+    "condition": "기존 paused 검증 마감, 연구는 실제 참가자 필요",
+    "action": "P07(태스크) 완료. 다음은 보류된 P05-W04 검증 마감. 태스크 UX 개선 제안 3건(카드·경로 중복, 데스크톱 FAB 가림, 상세 밖 기기 뒤로가기)은 VAL-011 참조, 사용자 결정 대기."
   },
   "checkpoint": {
-    "id": "CP-0053",
-    "path": "docs/execution/checkpoints/CP-0053.md",
-    "manifest": "docs/execution/checkpoints/CP-0053.manifest.json"
+    "id": "CP-0064",
+    "path": "docs/execution/checkpoints/CP-0064.md",
+    "manifest": "docs/execution/checkpoints/CP-0064.manifest.json"
   },
   "git": {
-    "branch": "main",
-    "head": "1d600fce583790764cd122851f923a41a4bf916b",
+    "branch": "sync/20260927-backlog",
+    "base": "872ad40910c3ec484c6ef9eb4ed311d7d6646eb9",
+    "head": null,
+    "dirty": true,
     "committed": false,
-    "note": "후속 checkpoint 기록 로컬"
+    "pr": null,
+    "merged_sha": null,
+    "deploy": {
+      "target": "vercel-production",
+      "status": "not_started",
+      "checked_at": null
+    },
+    "note": "커밋은 bundle로 준비, push·PR은 사용자 PC(scripts/open-pr.cmd)"
   },
   "stages": {
     "S1": {
@@ -41,7 +50,8 @@
         "P03",
         "P04",
         "P05",
-        "P06"
+        "P06",
+        "P07"
       ]
     },
     "S2": {
@@ -419,6 +429,20 @@
       "validation_refs": [],
       "completed_checkpoint": null,
       "note": "랜딩 v3 — 감정적 원리 보강, 독창적 표현"
+    },
+    "P07": {
+      "stage": "S1",
+      "status": "in_progress",
+      "depends_on": [
+        "P05"
+      ],
+      "work_item_ids": [
+        "P07-W01",
+        "P07-W02",
+        "P07-W03"
+      ],
+      "validation_status": "not_run",
+      "gate_status": "not_evaluated"
     }
   },
   "work_items": {
@@ -975,14 +999,59 @@
     },
     "P05-W04": {
       "phase": "P05",
-      "status": "in_progress",
+      "status": "paused",
       "authorization_ref": "AUTH-016",
       "definition_path": "docs/execution/work-items/P05-W04.md",
       "validation_status": "not_run",
       "validation_refs": [
         "docs/validation/VAL-010-dialog.md"
       ],
-      "completed_checkpoint": null
+      "completed_checkpoint": null,
+      "note": "사용자 계획 우선 요청, 이전 구현 검증 마감 대기"
+    },
+    "P07-W01": {
+      "phase": "P07",
+      "status": "completed",
+      "authorization_ref": "AUTH-017",
+      "definition_path": "docs/execution/work-items/P07-W01.md",
+      "validation_status": "not_applicable",
+      "validation_refs": [
+        "docs/validation/VAL-011-tasks.md"
+      ],
+      "completed_checkpoint": "CP-0055"
+    },
+    "P07-W02": {
+      "phase": "P07",
+      "status": "completed",
+      "authorization_ref": "AUTH-017",
+      "definition_path": "docs/execution/work-items/P07-W02.md",
+      "validation_status": "passed",
+      "validation_refs": [
+        "docs/validation/VAL-011-tasks.md"
+      ],
+      "completed_checkpoint": "CP-0057"
+    },
+    "P07-W03": {
+      "phase": "P07",
+      "status": "completed",
+      "authorization_ref": "AUTH-017",
+      "definition_path": "docs/execution/work-items/P07-W03.md",
+      "validation_status": "passed",
+      "validation_refs": [
+        "docs/validation/VAL-011-tasks.md"
+      ],
+      "completed_checkpoint": "CP-0061"
+    },
+    "P05-W05": {
+      "phase": "P05",
+      "status": "completed",
+      "authorization_ref": "USER-2026-09-27",
+      "definition_path": "docs/execution/work-items/P05-W05.md",
+      "validation_status": "passed",
+      "validation_refs": [
+        "site/scripts/qa-locked-path.mjs"
+      ],
+      "completed_checkpoint": "CP-0062"
     }
   }
 }
