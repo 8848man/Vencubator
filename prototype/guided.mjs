@@ -23,7 +23,7 @@ export function nextConcept(p){
 export function startLesson(s,id,concept=nextConcept(projectById(s,id))){
  if(!PATH.includes(concept))throw Error('학습을 찾을 수 없어요.');
  const p=projectById(s,id);p.learningRuns??={};const key=runKey(p,concept);
- p.learningRuns[key]??={concept,scopeVersion:p.scopeVersion,step:'concept',variant:0,results:{},createdAt:new Date().toISOString()};
+ p.learningRuns[key]??={concept,scopeVersion:p.scopeVersion,originScopeVersion:p.scopeVersion,step:'concept',variant:0,results:{},createdAt:new Date().toISOString()};
  s.route={view:'session',projectId:id,concept};return p.learningRuns[key];
 }
 function activeRun(s,id){const p=projectById(s,id),r=getRun(p,s.route.concept);if(!r)throw Error('학습 길에서 다시 시작해 주세요.');return {p,r};}
@@ -56,14 +56,14 @@ export function completeLesson(s,id,input){const {p,r}=activeRun(s,id);if(r.step
  s.events.push({id:`event-${++s.eventSequence}`,key:`lesson:${artifact.id}`,type:'lesson_completed',projectId:id,concept:r.concept,artifactId:artifact.id,time:artifact.time,policyVersion:'guided-0.1'});
  return artifact;
 }
-export function planFieldTask(s,id,artifactId,{replace=false}={}){
+export function planFieldTask(s,id,artifactId,{replace=false,parallel=false}={}){
  const p=projectById(s,id),a=p.learningArtifacts?.find(a=>a.id===artifactId);if(!a)throw Error('준비물을 먼저 완성해 주세요.');
  if(a.scopeVersion!==p.scopeVersion)throw Error('이전 가설의 준비물이에요. 새 범위에서 다시 확인해 주세요.');
  p.fieldTasks??=[];const old=p.fieldTasks.find(t=>t.artifactId===artifactId);if(old?.status==='completed')return old;
  for(const task of p.fieldTasks)if(task.status==='planned'&&task.scopeVersion!==p.scopeVersion)task.status='deferred';
  const current=p.fieldTasks.find(t=>t.status==='planned');if(current?.artifactId===artifactId)return current;
- if(current&&!replace)throw Error('진행 중인 실행이 있어요. 교체 여부를 확인해 주세요.');
- if(current)current.status='deferred';
+ if(current&&!replace&&!parallel)throw Error('진행 중인 실행이 있어요. 교체 여부를 확인해 주세요.');
+ if(current&&!parallel)current.status='deferred';
  chooseAction(s,id,{title:QUESTS[a.concept].action,criterion:a.criterion});
  if(old){old.status='planned';return old;}
  const task={id:`task:${artifactId}`,artifactId,concept:a.concept,scopeVersion:p.scopeVersion,title:QUESTS[a.concept].action,criterion:a.criterion,status:'planned',createdAt:new Date().toISOString()};
