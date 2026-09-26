@@ -1,5 +1,5 @@
 # HANDOFF
 
-CP-0042 / STATE revision 42
+CP-0045 / STATE revision 45
 
-L04-W04 수정·검증 완료. AUTH-012. 다음: origin main push 및 연결된 Vercel 배포 확인. 기존 P05-W03 paused/연구 대기 보존. 랜딩 v3→앱 site/4180. 실제 상태는 STATE.
+AUTH-014: CP-0044 검증본 배포 승인. L04-W06 진행, 다음 main push 및 Vercel 운영 반영 확인. VAL-008 브라우저 검증 완료. P05-W03/연구 대기 별도 보존.

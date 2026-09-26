@@ -79,3 +79,9 @@
 | 2026-09-25T15:46:30.458Z | CP-0041 / 41 | L04-W03 completed | start.cmd ASCII/CRLF 복구; cmd 진단2회 통과 | P05-W03 |
 
 | 2026-09-25T18:37:45.263Z | CP-0042 | L04-W04 validating | VAL-007 통과, 배포 대기 | L04-W04 |
+
+| 2026-09-25T18:40:14.477Z | CP-0043 | L04-W04 completed | 04dfc73 Production 배포 및 공개 파일 검증 완료 | P05-W03 |
+
+| 2026-09-26T06:22:20.287Z | CP-0044 | L04-W05 completed | 모바일 grid 행 고정, 로컬만, VAL-008 | 사용자 확인 / P05-W03 |
+
+| 2026-09-26T06:23:55.578Z | CP-0045 | L04-W06 validating | AUTH-014 배포 승인 | 운영 검증 |
