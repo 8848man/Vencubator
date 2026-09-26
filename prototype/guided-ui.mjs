@@ -1,4 +1,5 @@
 import {LESSONS} from './content.mjs';
+import {track} from './track.mjs';
 import {PATH,QUESTS,getRun,nextConcept,startLesson,moveLesson,answerLesson,completeLesson,planFieldTask,lessonContent} from './guided.mjs';
 
 export function createGuided({getState,update,go,esc,mascot,field,toast}){
@@ -26,9 +27,9 @@ export function createGuided({getState,update,go,esc,mascot,field,toast}){
   if(action==='home')go('dashboard');
   if(action==='task')go('fieldtask');
   if(action==='journal')go('journal');
-  if(action==='start')update(s=>startLesson(s,p.id,b.dataset.concept||nextConcept(p)));
-  if(action==='next')update(s=>moveLesson(s,p.id));
-  if(action==='plan'){const r=getRun(p,state().route.concept);update(s=>{planFieldTask(s,p.id,r.artifactId,{replace:b.dataset.replace==='true'});s.route.view='fieldtask';});}
+  if(action==='start'){const concept=b.dataset.concept||nextConcept(p);const result=update(s=>startLesson(s,p.id,concept));if(result.ok)track('lesson_start',{concept},{page:'app'});}
+  if(action==='next'){const concept=state().route.concept;const result=update(s=>moveLesson(s,p.id));if(result.ok)track('lesson_step',{concept,step:getRun(project(),concept).step},{page:'app'});}
+  if(action==='plan'){const r=getRun(p,state().route.concept);const result=update(s=>{planFieldTask(s,p.id,r.artifactId,{replace:b.dataset.replace==='true'});s.route.view='fieldtask';});if(result.ok)track('field_task_plan',{concept:r.concept},{page:'app'});}
   if(action==='defer')update(s=>{s.projects.find(x=>x.id===p.id).fieldTasks.find(t=>t.id===actionTask(p).id).status='deferred';s.route.view='dashboard';});
   if(action==='record'){const t=actionTask(p),a=p.learningArtifacts.find(a=>a.id===t.artifactId);update(s=>{const x=s.projects.find(x=>x.id===p.id);x.uiDraft.evidence={...x.uiDraft.evidence,taskId:t.id,kind:'field',stat:t.concept==='strategy'?'customer':t.concept,claim:a.text,method:t.title};s.route.view='evidence';});}
   return true;
@@ -37,8 +38,8 @@ export function createGuided({getState,update,go,esc,mascot,field,toast}){
   return `<div class="narrow"><span class="eyebrow">TRY → REFLECT</span><h1>해보니, 무엇이 달랐나요?</h1><p class="concept-copy">${esc(t.title)}<br>준비한 기준과 결과를 비교해요.</p><div class="warning">체험판이라 가상 결과로 해봐요. 실제 고객의 이름·연락처 같은 개인정보는 적지 마세요.</div><form id="evidence-form" class="panel" data-project-draft="evidence"><input type="hidden" name="taskId" value="${esc(t.id)}"><input type="hidden" name="kind" value="field"><input type="hidden" name="stat" value="${esc(d.stat)}"><input type="hidden" name="claim" value="${esc(d.claim)}"><div class="hint-box">준비물 · ${esc(d.claim)}<br>판단 기준 · ${esc(t.criterion)}</div>${field('누구 또는 어떤 자료에서 확인했나요?','source',d.source,'예: 가상 고객 A','text','required')}${field('어떤 말이나 행동을 관찰했나요?','summary',d.summary,'해석과 구분해서 관찰한 내용을 적어주세요.','textarea','required')}${field('그래서 어떤 생각이 들었나요?','interpretation',d.interpretation,'준비한 기준과 비교해 달라진 생각을 적어주세요.','textarea','required')}<div class="field"><label for="guided-assessment">기존 생각과 비교하면?</label><select id="guided-assessment" name="assessment"><option value="mixed" ${d.assessment==='mixed'?'selected':''}>아직 판단하기 어려워요</option><option value="refuted" ${d.assessment==='refuted'?'selected':''}>다른 방향을 살펴봐야 해요</option><option value="supported" ${d.assessment==='supported'?'selected':''}>같은 방향을 더 확인해볼래요</option></select></div>${field('이번 확인의 한계는?','limitations',d.limitations,'예: 한 사람의 가상 사례여서 일반화할 수 없다.','text','required')}<details class="lesson-hint"><summary>확인 방법과 날짜</summary>${field('확인 방법','method',d.method||t.title,'','text','required')}${field('관찰 날짜','date',d.date||new Date().toISOString().slice(0,10),'','date','required')}</details><button class="btn primary wide" type="submit">기록 확인하기 →</button></form></div>`;
  }
  function submit(form,data){const p=project();
-  if(form.id==='guided-answer'){const result=update(s=>answerLesson(s,p.id,data));if(result.ok){const feedback=document.querySelector('.answer-feedback');feedback.tabIndex=-1;feedback.focus();feedback.scrollIntoView({block:'center'});}return true;}
-  if(form.id==='guided-apply'){const r=update(s=>completeLesson(s,p.id,data));if(r.ok)toast('준비물을 저장했어요. 학습 한 단계 완료!');return true;}
+  if(form.id==='guided-answer'){const result=update(s=>answerLesson(s,p.id,data));if(result.ok){track('lesson_answer',{concept:state().route.concept},{page:'app'});const feedback=document.querySelector('.answer-feedback');feedback.tabIndex=-1;feedback.focus();feedback.scrollIntoView({block:'center'});}return true;}
+  if(form.id==='guided-apply'){const r=update(s=>completeLesson(s,p.id,data));if(r.ok){track('application_save',{concept:state().route.concept},{page:'app'});toast('준비물을 저장했어요. 학습 한 단계 완료!');}return true;}
   return false;
  }
  return {home,session,task,reflection,click,submit};

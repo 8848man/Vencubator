@@ -42,7 +42,7 @@ test('저장소가 막혀도 예외 없음', () => {
   assert.deepEqual(readEvents(broken), []);
 });
 
-test('네트워크 전송 코드 없음, 복사본 3개가 원본과 동일', () => {
+test('직접 네트워크 API 대신 Google tag 어댑터, 복사본 동일', () => {
   const src = readFileSync(new URL('../shared/track.mjs', import.meta.url), 'utf8');
   assert.ok(!/\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource/.test(src));
   const h = s => createHash('sha256').update(s).digest('hex');

@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "revision": 45,
-  "updated_at": "2026-09-26T06:23:55.578Z",
+  "revision": 49,
+  "updated_at": "2026-09-26T11:28:41.547Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
     "stage": "S1",
     "phase": "L04",
-    "work_item": "L04-W06",
-    "owner": "deploy-session",
+    "work_item": "L04-W07",
+    "owner": "analytics-session",
     "run_state": "validating"
   },
   "next": {
@@ -19,15 +19,15 @@
     "action": "L04-W01·W02 완료: v3 공개 랜딩 고정, site/dist(/ 랜딩, /app/ 앱) 배포 준비 끝. 공개 업로드·도메인은 사용자 수행(site/DEPLOY.md, DR-G01). SPEC-008 r0.1 적용 완료. 38개 검사 통과, 브라우저 순차진입/결과만 등장/스켈레톤 정상·지연·실패/앱 모션 감소/390px 확인. VAL-005 참조. 물리 터치·OS 설정 실검사는 미실행. 다음 P05-W03은 VAL-004 미마감 검증을 실제 파일과 대조해 정리; P04 연구 대기 유지."
   },
   "checkpoint": {
-    "id": "CP-0045",
-    "path": "docs/execution/checkpoints/CP-0045.md",
-    "manifest": "docs/execution/checkpoints/CP-0045.manifest.json"
+    "id": "CP-0049",
+    "path": "docs/execution/checkpoints/CP-0049.md",
+    "manifest": "docs/execution/checkpoints/CP-0049.manifest.json"
   },
   "git": {
     "branch": "main",
-    "head": "04dfc73b229b94c9d6f11b4167ef8b5e986d71d0",
+    "head": "43b6b4990b1f0cd55aaee8d51f2b55c17d2405f3",
     "committed": false,
-    "note": "AUTH-013 로컬 수정만. 운영04dfc73 유지"
+    "note": "후속 checkpoint 기록 로컬"
   },
   "stages": {
     "S1": {
@@ -412,7 +412,8 @@
         "L04-W03",
         "L04-W04",
         "L04-W05",
-        "L04-W06"
+        "L04-W06",
+        "L04-W07"
       ],
       "validation_refs": [],
       "completed_checkpoint": null,
@@ -951,10 +952,25 @@
     },
     "L04-W06": {
       "phase": "L04",
-      "status": "validating",
-      "validation_status": "not_run",
+      "status": "completed",
+      "validation_status": "passed",
       "definition_path": "docs/execution/work-items/L04-W06.md",
-      "authorization_ref": "AUTH-014"
+      "authorization_ref": "AUTH-014",
+      "validation_refs": [
+        "docs/validation/VAL-008-mobile-rows.md"
+      ],
+      "completed_checkpoint": "CP-0046"
+    },
+    "L04-W07": {
+      "phase": "L04",
+      "status": "validating",
+      "authorization_ref": "AUTH-015",
+      "definition_path": "docs/execution/work-items/L04-W07.md",
+      "validation_status": "not_run",
+      "validation_refs": [
+        "docs/validation/VAL-009-analytics.md"
+      ],
+      "completed_checkpoint": null
     }
   }
 }

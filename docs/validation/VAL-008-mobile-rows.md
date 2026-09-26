@@ -14,3 +14,7 @@ AUTH-013 · 2026-09-26 · L04-W05
 - 모든 조합 가로 넘침 없음. 프로젝트 짧은 페이지 screenshot 확인. 임시 viewport 복원.
 - node site/scripts/build.mjs 성공. CSS만 변경하여 도메인 테스트 반복하지 않음.
 - 사용자 지시로 commit/push/배포 안 함. 운영은04dfc73 그대로. 로컬4180에서 수정 확인 가능.
+
+## AUTH-014 운영 배포 완료
+
+사용자 로컬 확인 후 배포 승인. 커밋43b6b49 main push 성공. GitHub Vercel status success / Deployment has completed. https://vencubator.vercel.app/app/style.css HTTP200, grid-template-rows:max-content minmax(0,1fr) 포함 확인.

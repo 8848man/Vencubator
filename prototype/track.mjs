@@ -1,5 +1,65 @@
 // SPEC-009 §4 공통 이벤트 — 원본은 site/shared/track.mjs. landing/src, landing-v2/src, prototype 에 같은 내용으로 복사해 쓴다.
-// 네트워크 전송 없음: 브라우저 저장소 버퍼에만 기록한다. 전송 어댑터는 DR-G02 결정 후 이 파일에만 추가한다.
+// SPEC-011: 로컬 버퍼 + 운영 GA4 어댑터. Firebase 연결 웹 스트림, SDK 중복 설치 없음.
+export const MEASUREMENT_ID = 'G-0GFT3M8ZG3';
+const ANALYTICS_HOST = 'vencubator.vercel.app';
+const ANALYTICS_FIELDS = {
+  landing_view: [], idea_submit: ['source','len'], card_progress: ['filled'],
+  cta_click: ['placement','filled'], app_open: ['from'], entry_import: ['from'],
+  project_create: ['from','imported'], lesson_complete: ['count'],
+  lesson_start: ['concept'], lesson_step: ['concept','step'], lesson_answer: ['concept'],
+  application_save: ['concept'], field_task_plan: ['concept'], evidence_save: ['kind']
+};
+const ANALYTICS_ENUMS = {
+  source: ['mine','sample'], from: ['v1','v2','v3','direct'],
+  concept: ['customer','market','product','marketing','sales','finance','operations','strategy'],
+  step: ['concept','question','transfer','apply','application','complete'], kind: ['field','simulation','desk']
+};
+export function analyticsPayload(ev) {
+  if (!Object.hasOwn(ANALYTICS_FIELDS, ev.name)) return null;
+  const props = {};
+  for (const key of ANALYTICS_FIELDS[ev.name]) {
+    const value = ev.props?.[key];
+    if (ANALYTICS_ENUMS[key]?.includes(value) || (key === 'imported' && typeof value === 'boolean') ||
+        (['len','filled','count'].includes(key) && Number.isInteger(value) && value >= 0 && value <= 10000) ||
+        (key === 'placement' && /^(page|hero|footer|l[123]s-\d{1,2}|s\d{1,2})$/.test(value))) props[key] = value;
+  }
+  return {schema_version:1,stage:'prototype',environment:'production',app_version:'analytics-1',page:ev.page==='app'?'app':'v3',...props};
+}
+export function analyticsAllowed(win) {
+  try {
+    if (win?.location?.protocol !== 'https:' || win.location.hostname !== ANALYTICS_HOST) return false;
+    const q = new URLSearchParams(win.location.search);
+    if(q.get('internal')==='1')win.sessionStorage?.setItem('vencubator.analytics.internal','1');
+    if(q.get('internal')==='0')win.sessionStorage?.removeItem('vencubator.analytics.internal');
+    return !q.has('lab') && q.get('internal')!=='1' && win.sessionStorage?.getItem('vencubator.analytics.internal')!=='1' && win.navigator?.doNotTrack!=='1';
+  } catch { return false; }
+}
+export function sendAnalytics(ev, win = globalThis.window) {
+  try {
+    const payload = analyticsPayload(ev);
+    if (!payload || !analyticsAllowed(win)) return false;
+    // One initializer per document. No replay of historical local buffer.
+    if (!win.__vencubatorAnalytics) {
+      const layer = win.dataLayer = win.dataLayer || [];
+      const tag = function(){layer.push(arguments);};
+      const page = win.location.pathname.startsWith('/app') ? '/app/' : '/';
+      const safeUrl = 'https://' + ANALYTICS_HOST + page;
+      tag('js',new Date());
+      tag('config',MEASUREMENT_ID,{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false,
+        page_location:safeUrl,page_referrer:'',page_title:page==='/app/'?'Vencubator App':'Vencubator',ignore_referrer:true});
+      const script = win.document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + MEASUREMENT_ID;
+      script.onerror = () => { win.__vencubatorAnalytics.failed = true; layer.length = 0; };
+      win.__vencubatorAnalytics = {tag,failed:false};
+      win.document.head.appendChild(script);
+      tag('event','page_view',{send_to:MEASUREMENT_ID,page_location:safeUrl,page_referrer:'',page_title:page==='/app/'?'Vencubator App':'Vencubator'});
+    }
+    if (win.__vencubatorAnalytics.failed || win.dataLayer.length > 500) return false;
+    win.__vencubatorAnalytics.tag('event',ev.name,{send_to:MEASUREMENT_ID,...payload});
+    return true;
+  } catch { return false; }
+}
 export const EXP_KEY = 'vencubator.exp.v1';
 export const EVENTS_KEY = 'vencubator.events.v1';
 export const UTM_KEY = 'vencubator.utm.v1';
@@ -57,6 +117,7 @@ export function track(name, props = {}, env = {}) {
   const list = readJSON(st, EVENTS_KEY, []);
   const next = (Array.isArray(list) ? list : []).concat(ev).slice(-MAX_EVENTS);
   writeJSON(st, EVENTS_KEY, next);
+  sendAnalytics(ev);
   return ev;
 }
 export const readEvents = storage => { const l = readJSON(store(storage), EVENTS_KEY, []); return Array.isArray(l) ? l : []; };
