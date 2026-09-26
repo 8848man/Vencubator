@@ -97,3 +97,7 @@
 2026-09-26T11:30:44.576Z CP-0050 L04-W07 validating: 5ef5ac7 운영 배포 및 Firebase landing_view 수신 확인. gtm 허용 목록 수정·7개 검사 통과. 보완 코드 push 후 최종 배포 확인 필요.
 
 2026-09-26T11:31:35.504Z CP-0051 L04-W07 validating: Firebase 실시간 landing_view/app_open/cta_click/lesson_start 수신 확인. gtm 보완 코드·ADR 정리 완료, 마지막 push/배포 확인 남음.
+
+2026-09-26T11:32:15.493Z CP-0052 L04-W07 completed: 1d600fc Vercel 운영 배포 성공·공개 파일 반영 확인. 61개 회귀 및 보완 7개 검사 통과. Firebase 실시간 landing_view/app_open/cta_click/lesson_start 수신 확인. GA4 속성 556036077. 완료 기록은 로컬 후속 저장.
+
+2026-09-26T13:22:35.752Z CP-0053 P05-W04 in_progress: SPEC-012 공통 정책과 SPEC-005 순차 문제 명세 작성. 구현·검증 미실행. CP0052 선행 문서 보존, 배포 없음.

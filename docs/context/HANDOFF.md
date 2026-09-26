@@ -1,7 +1,7 @@
 # HANDOFF
 
-CP-0051 / STATE revision 51
+CP-0053 / STATE revision 53
 
-Firebase 실시간 landing_view/app_open/cta_click/lesson_start 수신 확인. gtm 보완 코드·ADR 정리 완료, 마지막 push/배포 확인 남음.
+SPEC-012 공통 정책과 SPEC-005 순차 문제 명세 작성. 구현·검증 미실행. CP0052 선행 문서 보존, 배포 없음.
 
-AUTH-015 / SPEC-011 r0.1. 콘솔 수신 결과는 VAL-009 참조. 기존 연구 대기, MVP 미착수. 다음 P05-W03 기존 검증 마감.
+AUTH-016 / SPEC-012 r0.1. 로컬 검증 결과는 VAL-010 참조. 기존 연구 대기, MVP 미착수. 다음 P05-W03 기존 검증 마감.

@@ -11,3 +11,4 @@
 운영 검증: 5ef5ac7 main push, Vercel success, 공개 /app/track.mjs HTTP200 및 측정 ID 확인. Edge에서 랜딩/앱 렌더링 성공·콘솔 오류 0. Firebase Realtime 활성 사용자 1, landing_view 수신 확인. 학습 영역 gtm 허용 목록 누락 발견 후 수정, 실제 PATH 전체를 검사하는 회귀 추가. 해당 7개 검사(analytics+build) 통과.
 
 Firebase 실시간에서 app_open, cta_click, lesson_start도 수신 확인. 운영 앱 로그 errors=[] 확인. 콘솔 GA4 속성 ID 556036077. 원격 향상된 측정 설정은 변경하지 않음.
+최종 1d600fc main push 및 Vercel success 확인. 운영 track.mjs HTTP200, gtm 수정 반영 확인. 명세/공통 인터페이스/배포 완료. GA4 자동 향상된 측정 설정 및 실제 사용자 전환율 연구는 미실행.

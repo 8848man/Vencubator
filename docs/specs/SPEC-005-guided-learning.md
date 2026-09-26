@@ -47,3 +47,6 @@ Revision 0.1 · Approved for S1 · AUTH-004 · 2026-09-23
 | AC-L06 | 7개 개념별 산출물/실행 안내, 상세 스탯 접근, 모바일/모션 감소 |
 
 참고: Duolingo의 guided path 및 learn-by-doing 원칙을 창업 학습에 맞게 변형. https://blog.duolingo.com/new-duolingo-home-screen-design/ , https://blog.duolingo.com/duolingo-teaching-method/ . 학습효과와 실제 행동 전환은 새 사용자 연구로 확인한다.
+
+## r0.2 — AUTH-016 집중형 문제 풀이
+문제/새 상황의 답과 이유는 SPEC-012에 따라 순차 표시한다. 힌트·결과는 공통 modal. 기존 성장·재시도 분기 유지. 하위 단계와 선택은 프로젝트 uiDraft에 범위·개념·문항별 보존.

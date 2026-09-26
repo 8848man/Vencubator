@@ -1,0 +1,20 @@
+.question-steps{display:flex;gap:12px;list-style:none;padding:0;margin:0 0 24px;color:var(--muted,#778170);font-size:13px}
+.question-steps li{flex:1;padding:12px 8px;border-bottom:3px solid #dfe5d6;text-align:center}
+.question-steps [aria-current=step]{color:#3c6048;border-color:#6a8958;font-weight:700}
+.answer-summary{padding:16px;border-radius:16px;background:#edf1e6;margin:12px 0 20px;overflow-wrap:anywhere}
+.answer-summary small{display:block;color:#687960;margin-bottom:6px}
+.question-tools{display:flex;justify-content:space-between;gap:8px;margin:12px 0}
+.question-tools button{min-height:44px}
+.focus-dialog{box-sizing:border-box;border:1px solid #dce3d3;border-radius:24px;background:#fafbf6;color:#344334;width:min(560px,calc(100% - 32px));max-height:85vh;max-height:85dvh;padding:0;box-shadow:0 24px 80px #23321d33;overflow:auto;overscroll-behavior:contain}
+.focus-dialog[open]{animation:focus-enter 180ms ease-out}
+.focus-dialog::backdrop{background:#1e2c2359}
+.focus-dialog-head{display:flex;gap:12px;align-items:flex-start;padding:24px 24px 12px}
+.focus-dialog-head h2{flex:1;font-size:23px;line-height:1.45;margin:0;outline:none}
+.focus-dialog-head button{flex:none;min-width:44px;min-height:44px}
+.focus-dialog-body{padding:0 24px 16px;line-height:1.75;overflow-wrap:anywhere}
+.focus-dialog-actions{padding:16px 24px max(24px,env(safe-area-inset-bottom));background:#fafbf6;position:sticky;bottom:0;border-top:1px solid #e6eadf}
+.focus-dialog-actions button{min-height:48px;white-space:normal}
+.feedback-checks{padding:16px;background:#edf1e6;border-radius:16px}.feedback-checks p{margin:4px 0}
+@keyframes focus-enter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.focus-dialog{margin:auto 0 0;width:100%;max-width:none;border-radius:24px 24px 0 0}.focus-dialog-head{padding:20px 20px 12px}.focus-dialog-body{padding:0 20px 16px}.focus-dialog-actions{padding-left:20px;padding-right:20px}}
+@media(prefers-reduced-motion:reduce){.focus-dialog[open]{animation:none}}
