@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {analyticsPayload,analyticsAllowed,sendAnalytics,MEASUREMENT_ID} from '../shared/track.mjs';
+import {PATH} from '../../prototype/guided.mjs';
+test('all shipped learning concepts retain their identifiers',()=>{
+ for(const concept of PATH)assert.equal(analyticsPayload({name:'lesson_start',page:'app',props:{concept}}).concept,concept);
+});
 function browser(host='vencubator.vercel.app',search=''){
  const m=new Map(),scripts=[];
  return {location:{protocol:'https:',hostname:host,pathname:'/app/',search},navigator:{},sessionStorage:{getItem:k=>m.get(k),setItem:(k,v)=>m.set(k,v),removeItem:k=>m.delete(k)},document:{createElement:()=>({}),head:{appendChild:s=>scripts.push(s)}},scripts};

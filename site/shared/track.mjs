@@ -11,7 +11,7 @@ const ANALYTICS_FIELDS = {
 };
 const ANALYTICS_ENUMS = {
   source: ['mine','sample'], from: ['v1','v2','v3','direct'],
-  concept: ['customer','market','product','marketing','sales','finance','operations','strategy'],
+  concept: ['customer','market','product','gtm','finance','operations','strategy'],
   step: ['concept','question','transfer','apply','application','complete'], kind: ['field','simulation','desk']
 };
 export function analyticsPayload(ev) {

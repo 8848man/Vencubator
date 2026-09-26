@@ -93,3 +93,7 @@
 2026-09-26T11:28:14.098Z CP-0048 L04-W07 validating: 61개 검사와 빌드·구문 검사 통과. 운영 배포와 브라우저/콘솔 확인 남음.
 
 2026-09-26T11:28:41.547Z CP-0049 L04-W07 validating: 61개 검사·빌드·구문 검사 통과. diff 공백 경고 수정. Firebase 콘솔 접근 가능. 배포 준비.
+
+2026-09-26T11:30:44.576Z CP-0050 L04-W07 validating: 5ef5ac7 운영 배포 및 Firebase landing_view 수신 확인. gtm 허용 목록 수정·7개 검사 통과. 보완 코드 push 후 최종 배포 확인 필요.
+
+2026-09-26T11:31:35.504Z CP-0051 L04-W07 validating: Firebase 실시간 landing_view/app_open/cta_click/lesson_start 수신 확인. gtm 보완 코드·ADR 정리 완료, 마지막 push/배포 확인 남음.
