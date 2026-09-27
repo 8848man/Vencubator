@@ -27,6 +27,15 @@ node site/scripts/serve.mjs        # http://127.0.0.1:4180/ 에서 마지막 확
 - 휴대폰에서 가로 스크롤이 없는지
 - `/app/?lab=1` 은 점검용 주소입니다. 공유하지 마세요.
 
+## 3-1. 피드백 저장소(Firestore) 설정 — SPEC-015 · ADR-006
+
+앱의 가치 카드·‘의견 보내기’ 응답은 운영 주소(https://vencubator.vercel.app)에서만 Cloud Firestore `feedback` 컬렉션으로 보냅니다. 설정 전에는 방문자 브라우저에만 쌓입니다.
+
+1. **보안 규칙 교체(필수)**: Firebase 콘솔 → Firestore Database → 규칙 탭 → 저장소 루트의 `firestore.rules` 내용을 전부 붙여넣고 [게시]. 테스트 모드 규칙은 누구나 읽고 지울 수 있으므로 그대로 두면 안 됩니다.
+2. **설정값**: 콘솔 → 프로젝트 설정 → 내 앱(웹)의 `firebaseConfig`에서 `projectId`·`apiKey`를 `prototype/feedback-send.mjs`의 `FIREBASE_CONFIG`에 넣습니다(웹에 공개되는 값).
+3. **실측**: `node scripts/feedback-rules-check.mjs` → 생성 200·중복 409·읽기/목록/수정/삭제/잘못된 문서/다른 컬렉션 403이 모두 PASS여야 합니다. 이때 `env='qa'` 문서가 1건 생기며, 분석 때 제외합니다.
+4. **응답 보기**: 콘솔 → Firestore Database → 데이터 → `feedback`. `env`가 `qa`인 문서는 무시합니다. 효용 곡선 내보내기 도구는 후속 작업(P08-W05)입니다.
+
 ## 4. 공개 전에 정할 것
 
 - 주소(도메인) — DR-G01
