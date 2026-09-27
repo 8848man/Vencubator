@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "revision": 85,
-  "updated_at": "2026-09-27T13:07:06.159Z",
+  "revision": 86,
+  "updated_at": "2026-09-27T20:17:56.601Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "stage": "S1",
-    "phase": "P08",
-    "work_item": "P08-W04",
-    "owner": "cowork-claude",
-    "run_state": "blocked"
+    "stage": null,
+    "phase": null,
+    "work_item": null,
+    "owner": null,
+    "run_state": "idle"
   },
   "next": {
     "stage": "S1",
     "phase": "P08",
     "work_item": "P08-W04",
-    "condition": "AUTH-024",
-    "action": "사용자가 콘솔에서 firestore.rules 게시(필수, W04 병합 전)·키 사용 제한(권장) → 사용자 PC에서 node scripts/feedback-rules-check.mjs 10/10 → 체크리스트 8번 완료·완료 CP"
+    "condition": "사용자 firestore.rules 게시 후",
+    "action": "앱 브라우저로 목록 읽기 403 확인, feedback-rules-check 10/10, 운영에서 의견 1건 저장 확인 → P08-W04 체크리스트 8·10번"
   },
   "checkpoint": {
-    "id": "CP-0085",
-    "path": "docs/execution/checkpoints/CP-0085.md",
-    "manifest": "docs/execution/checkpoints/CP-0085.manifest.json"
+    "id": "CP-0086",
+    "path": "docs/execution/checkpoints/CP-0086.md",
+    "manifest": "docs/execution/checkpoints/CP-0086.manifest.json"
   },
   "git": {
-    "branch": "w/P08-W04-feedback-send",
-    "base": "3d2f4d723f7308edff27daa773447e7e82c7efae",
-    "head": "43fdd77d9a7152d63ae3a7056216ca19410cf6af",
+    "branch": "w/L04-W08-search-console-verify",
+    "base": "fb4df29c19268f91ea64b562d938cae9930029ae",
+    "head": "664df98eeb1b4a2e7cfaf1e63cb64b71023dddf8",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -425,7 +425,8 @@
         "L04-W04",
         "L04-W05",
         "L04-W06",
-        "L04-W07"
+        "L04-W07",
+        "L04-W08"
       ],
       "validation_refs": [],
       "completed_checkpoint": null,
@@ -1190,6 +1191,18 @@
       "validation_refs": [],
       "completed_checkpoint": "CP-0078",
       "checklist": "8/9"
+    },
+    "L04-W08": {
+      "phase": "L04",
+      "status": "completed",
+      "authorization_ref": "AUTH-025",
+      "definition_path": "docs/execution/work-items/L04-W08.md",
+      "validation_status": "passed",
+      "validation_refs": [
+        "site/tests/build.test.mjs"
+      ],
+      "completed_checkpoint": "CP-0086",
+      "checklist": "기록만(계획 선행 대상 아님)"
     }
   }
 }

@@ -111,3 +111,7 @@
 
 2026-09-27 사용자: PR #6·#7 병합 후 “이제 피드백 구현을 진행하자.” DR-FB-01 4종 확정, DR-FB-02 문구 위임(앱 컨셉에 맞게), DR-FB-03 Firestore 활성화·기존 Analytics 웹 앱 설정값 사용·규칙은 테스트 모드 게시, DR-FB-04 스팸 방지 불필요, DR-FB-05 안내 문구 포함. 범위: SPEC-015 r0.2 구현(P08-W02~W04), 각 W 브랜치·커밋·PR. W04 운영 전송은 projectId·apiKey 전달과 생성 전용 규칙 교체 후. main 병합·배포는 사용자.
 
+## AUTH-025 — Google Search Console 소유권 확인
+
+2026-09-28 사용자: URL 접두어 속성 `https://vencubator.vercel.app` 등록 후 HTML 태그(`google-site-verification`) 삽입 가능 여부 문의. 범위: 루트 랜딩(landing-v3) head에 확인 메타 태그 1개와 빌드 계약 검사, L04-W08 브랜치·PR. 사이트맵·robots·색인 정책 변경은 제외. main 병합·배포는 사용자.
+
