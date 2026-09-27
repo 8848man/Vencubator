@@ -152,3 +152,5 @@ CP-0058 P07-W03 in_progress: 모바일 작업 목록 시트·상세·본문 이�
 | 2026-09-27T10:57:38.337Z | CP-0082 / 82 | P08-W03 completed (체크리스트 8/9) | 가치 카드·의견 보내기 UI 완료. qa-feedback 85/85, 회귀 tasks 83·nav 26·review 35·locked 30, prototype 66. 응답은 로컬 outbox에만 저장(전송은 W04). | P08-W04 |
 
 | 2026-09-27T11:00:00.152Z | CP-0083 / 83 | P08-W04 in_progress (체크리스트 3/10) | 계획·체크리스트, SPEC-015 r0.4 커밋. 전송 코드 미착수. projectId·apiKey 미수신. | P08-W04 |
+
+| 2026-09-27T13:00:27.996Z | CP-0084 / 84 | P08-W04 blocked (체크리스트 8/10 중 9번까지(8번 막힘)) | 전송 어댑터·GA 4종·생성 전용 규칙·실측 스크립트 구현. feedback-send 8/8, prototype 74, site 18, landing-v3 41, qa-feedback 87, 회귀 tasks 83·nav 26. 막힘: 설정값 미수신(전송 꺼짐, 로컬 보관만), 규칙 실측 미실행, 사용자 콘솔에서 테스트 모드 규칙 교체 필요. | P08-W04 |

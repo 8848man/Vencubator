@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 83,
-  "updated_at": "2026-09-27T11:00:00.152Z",
+  "revision": 84,
+  "updated_at": "2026-09-27T13:00:27.996Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -9,24 +9,24 @@
     "phase": "P08",
     "work_item": "P08-W04",
     "owner": "cowork-claude",
-    "run_state": "in_progress"
+    "run_state": "blocked"
   },
   "next": {
     "stage": "S1",
     "phase": "P08",
     "work_item": "P08-W04",
     "condition": "AUTH-024",
-    "action": "prototype/feedback-send.mjs 전송 어댑터 — 체크리스트 4번"
+    "action": "사용자에게 projectId·apiKey 받기 → prototype/feedback-send.mjs FIREBASE_CONFIG 입력 → 사용자 PC에서 node scripts/feedback-rules-check.mjs 10/10 확인(체크리스트 8번) → 완료 CP"
   },
   "checkpoint": {
-    "id": "CP-0083",
-    "path": "docs/execution/checkpoints/CP-0083.md",
-    "manifest": "docs/execution/checkpoints/CP-0083.manifest.json"
+    "id": "CP-0084",
+    "path": "docs/execution/checkpoints/CP-0084.md",
+    "manifest": "docs/execution/checkpoints/CP-0084.manifest.json"
   },
   "git": {
     "branch": "w/P08-W04-feedback-send",
     "base": "3d2f4d723f7308edff27daa773447e7e82c7efae",
-    "head": "a79f0c28ba7cc0e5e7653275dea1a5fae677f96d",
+    "head": "a676eaeca4d3f8219040233681042af174a0824f",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -1159,16 +1159,18 @@
     },
     "P08-W04": {
       "phase": "P08",
-      "status": "in_progress",
+      "status": "blocked",
       "depends_on": [
         "P08-W02"
       ],
       "validation_status": "not_run",
       "authorization_ref": "AUTH-024",
       "definition_path": "docs/execution/work-items/P08-W04.md",
-      "validation_refs": [],
+      "validation_refs": [
+        "docs/validation/VAL-016-feedback-send.md"
+      ],
       "completed_checkpoint": null,
-      "checklist": "3/10"
+      "checklist": "8/10 중 9번까지(8번 막힘)"
     },
     "P08-W05": {
       "phase": "P08",
