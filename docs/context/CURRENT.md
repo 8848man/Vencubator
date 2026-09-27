@@ -1,7 +1,7 @@
 # CURRENT
 
-CP-0075 / STATE revision 75
+CP-0076 / STATE revision 76
 
-P07-W05 completed: 카드 상단 한 행(뱃지·컴팩트 5단계·분야) 구현·검증 완료(VAL-013). qa-tasks 83/83(T09 포함), nav 26/26, review 35/35, locked 30/30, prototype 54. Windows 글꼴 카드 재현 확인. 다음: gitflow finish, push 불가 시 _handoff/open-pr.cmd로 push·PR. main 병합·운영 배포 없음.
+P08-W01 completed: 가치 순간 피드백 명세(SPEC-015 r0.1)·저장소 결정 제안(ADR-006)·P08 계획(W02~W05) 작성. 제품 코드 변경 없음, 제품 테스트 대상 아님. 구현은 DR-FB 확인 후.
 
-AUTH-021 / SPEC-013 r0.4. 브랜치 w/P07-W05-compact-task-progress (기반 P07-W04, PR #3 미병합). main 병합·운영 배포 없음. 다음 P05-W04. 사용자 선행 미추적 파일 보존.
+AUTH-022 / SPEC-015 r0.1 / ADR-006 제안. 브랜치 w/P08-W01-value-feedback-spec. 다음 P08-W02 — 사용자 DR-FB-01~05 확인 후. P05-W04 보류 검증과 실제 사용자 연구는 별도. main 병합·운영 배포·Firestore 콘솔 작업 없음. 사용자 선행 미추적 파일 보존.
