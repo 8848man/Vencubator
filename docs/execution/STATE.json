@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "revision": 76,
-  "updated_at": "2026-09-27T10:21:49.085Z",
+  "revision": 77,
+  "updated_at": "2026-09-27T10:28:11.503Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
     "stage": null,
-    "phase": null,
-    "work_item": null,
-    "owner": null,
-    "run_state": "idle"
+    "phase": "OPS",
+    "work_item": "OPS-W02",
+    "owner": "cowork-claude",
+    "run_state": "in_progress"
   },
   "next": {
-    "stage": "S1",
-    "phase": "P08",
-    "work_item": "P08-W02",
-    "condition": "사용자 DR-FB-01~05 확인(카테고리·문구·Firestore 준비·스팸·보존)",
-    "action": "슬롯 계산·도메인 이벤트 projection·로컬 보관함 구현과 단위 테스트"
+    "stage": null,
+    "phase": "OPS",
+    "work_item": "OPS-W02",
+    "condition": "AUTH-023",
+    "action": "CHECKPOINT-PROTOCOL.md §3 뒤에 §3-1(규모 판단·체크리스트 선행) 신설 — 체크리스트 4번"
   },
   "checkpoint": {
-    "id": "CP-0076",
-    "path": "docs/execution/checkpoints/CP-0076.md",
-    "manifest": "docs/execution/checkpoints/CP-0076.manifest.json"
+    "id": "CP-0077",
+    "path": "docs/execution/checkpoints/CP-0077.md",
+    "manifest": "docs/execution/checkpoints/CP-0077.manifest.json"
   },
   "git": {
-    "branch": "w/P08-W01-value-feedback-spec",
-    "base": "5528f2a99fc3b6d5156bb76c6a6767e5ac02b431",
-    "head": "96c8ab933dc29ed22db4e25c61beafdee5c372a6",
+    "branch": "w/OPS-W02-plan-first-checklist",
+    "base": "baddc24db46d86f9813bbda79115bbdbc24c1474",
+    "head": "5690752e2000825ebab718d9b61e3fe4f82475c8",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -36,7 +36,7 @@
       "status": "not_started",
       "checked_at": null
     },
-    "note": "P07-W04·OPS-W01·P07-W05는 PR #3·#4·#5로 main 병합(5528f2a). P08-W01은 origin/main에서 시작. main 병합·배포 없음."
+    "note": "OPS-W02는 P08-W01(미병합) 위에 쌓음. main 병합·배포 없음."
   },
   "stages": {
     "S1": {
@@ -1158,6 +1158,16 @@
         "P08-W04"
       ],
       "validation_status": "not_run"
+    },
+    "OPS-W02": {
+      "phase": "OPS",
+      "status": "in_progress",
+      "authorization_ref": "AUTH-023",
+      "definition_path": "docs/execution/work-items/OPS-W02.md",
+      "validation_status": "not_run",
+      "validation_refs": [],
+      "completed_checkpoint": null,
+      "checklist": "3/9"
     }
   }
 }
