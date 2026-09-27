@@ -119,6 +119,7 @@ test('AC-G11 handoff: bundle·끝 SHA·PR base 순서·CRLF·UTF-16 클립보드
   assert.equal(r.pushed, false); assert.ok(r.handoff);
   const dir = join(work, '_handoff'), cmd = readFileSync(join(dir, 'open-pr.cmd'), 'utf8');
   assert.ok(cmd.includes('\r\n') && !/[^\r]\n/.test(cmd), 'CRLF');
+  assert.ok(cmd.includes('.git\\gitflow-probe-*'), '탐침 흔적 정리');
   assert.ok(cmd.includes('git fetch _handoff\\gitflow.bundle w/OPS-W01-one:w/OPS-W01-one w/OPS-W02-two:w/OPS-W02-two'));
   assert.ok(cmd.includes(sh(work, 'rev-parse', 'w/OPS-W02-two')) && cmd.includes(sh(work, 'rev-parse', 'w/OPS-W01-one')));
   assert.ok(cmd.includes('gh pr create --base main --head w/OPS-W01-one') && cmd.includes('gh pr create --base w/OPS-W01-one --head w/OPS-W02-two'));

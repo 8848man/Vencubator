@@ -221,7 +221,7 @@ export function handoff(git, { stack, outDir, log = console.log } = {}) {
     'cd /d "%~dp0\\.."',
     'where git >nul 2>nul || (echo [중단] git이 필요합니다. & pause & exit /b 1)',
     'if exist .git\\index.lock (echo [중단] .git\\index.lock 이 있어요. 다른 git 작업이 끝났는지 확인한 뒤 지우고 다시 실행해 주세요. & pause & exit /b 1)',
-    'for %%f in (.git\\index.lock.stale-*) do del "%%f"',
+    'for %%f in (.git\\index.lock.stale-* .git\\gitflow-probe-*) do del "%%f"',
     'echo [1/4] 커밋 묶음 확인',
     `git bundle verify _handoff\\${bundle} || (echo [중단] 묶음 파일이 올바르지 않아요. & pause & exit /b 1)`,
     `git fetch _handoff\\${bundle} ${items.map(i => `${i.branch}:${i.branch}`).join(' ')} || (echo [중단] 가져오기 실패. 이미 같은 이름의 브랜치가 있으면 확인해 주세요. & pause & exit /b 1)`);
