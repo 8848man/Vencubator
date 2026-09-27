@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "revision": 71,
-  "updated_at": "2026-09-27T08:06:47.428Z",
+  "revision": 72,
+  "updated_at": "2026-09-27T08:10:23.984Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "stage": "S1",
-    "phase": "P07",
-    "work_item": "P07-W04",
-    "owner": "Codex",
-    "run_state": "validating"
+    "stage": null,
+    "phase": null,
+    "work_item": null,
+    "owner": null,
+    "run_state": "idle"
   },
   "next": {
     "stage": "S1",
-    "phase": "P07",
-    "work_item": "P07-W04",
-    "condition": "AUTH-020",
-    "action": "UI·명세 구현 및 브라우저 검증 완료(VAL-012). 초기50/50, 보강53/55 뒤 입력 정정 재검증26/26, 이동26/26. 필수 자동 검사와 PR 마감 남음."
+    "phase": "P05",
+    "work_item": "P05-W04",
+    "condition": "기존 paused 검증 마감 별도",
+    "action": "집중형 다이얼로그 검증 마감과 실제 사용자 연구 필요"
   },
   "checkpoint": {
-    "id": "CP-0071",
-    "path": "docs/execution/checkpoints/CP-0071.md",
-    "manifest": "docs/execution/checkpoints/CP-0071.manifest.json"
+    "id": "CP-0072",
+    "path": "docs/execution/checkpoints/CP-0072.md",
+    "manifest": "docs/execution/checkpoints/CP-0072.manifest.json"
   },
   "git": {
     "branch": "w/P07-W04-roadmap-task-progress",
     "base": "6cd78c2f74d1f5aac8eb71fafa50812498dfba50",
-    "head": "e6a5e2f0818e4739f6f22b691676fe328348eeeb",
+    "head": "7a95e9e8509bfe05a49d023d36cb7cd95872b89a",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -1078,12 +1078,14 @@
     },
     "P07-W04": {
       "phase": "P07",
-      "status": "validating",
+      "status": "completed",
       "authorization_ref": "AUTH-020",
       "definition_path": "docs/execution/work-items/P07-W04.md",
-      "validation_status": "not_run",
-      "validation_refs": [],
-      "completed_checkpoint": null
+      "validation_status": "passed",
+      "validation_refs": [
+        "docs/validation/VAL-012-task-roadmap.md"
+      ],
+      "completed_checkpoint": "CP-0072"
     }
   }
 }
