@@ -1,10 +1,10 @@
 // SPEC-012: shared, single modal surface; never mutates product state.
 let active=null;
 export function closeFocusDialog(){active?.close();}
-export function openFocusDialog({title,body,actionLabel,onAction,returnFocus}){
- if(active)return false;
+export function openFocusDialog({title,body,actionLabel,onAction,returnFocus,className=''}){
+ if(active||document.querySelector('dialog[open]'))return false;
  const origin=document.activeElement, previousOverflow=document.body.style.overflow;
- const dialog=document.createElement('dialog');dialog.className='focus-dialog';
+ const dialog=document.createElement('dialog');dialog.className='focus-dialog '+className;
  dialog.setAttribute('aria-labelledby','focus-dialog-title');
  dialog.innerHTML='<header class="focus-dialog-head"><h2 id="focus-dialog-title" tabindex="-1"></h2><button type="button" class="iconbtn" aria-label="닫기">×</button></header><div class="focus-dialog-body"></div><footer class="focus-dialog-actions"><button type="button" class="btn primary wide"></button></footer>';
  dialog.querySelector('h2').textContent=title;

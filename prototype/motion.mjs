@@ -3,7 +3,8 @@ export const MOTION = Object.freeze({enter:260, stagger:50, maxDelay:200, distan
 export function screenMotionKey(state,{variant=0,application=false,preview=false}={}){
  const p=state.projects.find(p=>p.id===state.route.projectId),r=state.route;
  const run=p?.learningRuns?.[`${p.scopeVersion}:${r.concept}`];
- return JSON.stringify([!!state.user,r.view,r.projectId,r.concept,run?.step,run?.variant,
+ return JSON.stringify([!!state.user,r.view,r.projectId,r.concept,run?.step,run?.variant,r.taskId,r.fieldTaskId,
+  run?p?.uiDraft?.[`question:${run.scopeVersion}:${run.concept}:${run.step}:${run.variant}`]?.panel:null,
   r.view==='interview'?p?.step:null,r.view==='quiz'?[variant,application]:null,r.view==='evidence'?preview:null]);
 }
 export function orderedMotionGroups(items){

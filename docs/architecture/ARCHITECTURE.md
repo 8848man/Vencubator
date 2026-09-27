@@ -141,3 +141,6 @@ requestId로 사용자 화면 오류→API→DB/AI/푸시를 연결한다. auth/
 ## S1 학습 경로 확장 — AUTH-004
 
 SPEC-005 적용. Project에 선택 필드 learningRuns(scopeVersion:concept 키), learningArtifacts(사용자 확정 준비물), fieldTasks(진행 과제 최대1)를 추가한다. 기존 schemaVersion1 데이터는 유지하며 필드는 사용 시 초기화한다. 숙달은 기존 사용자 mastery를 재사용하고 실행근거는 taskId로 연결한다. 준비물 확정과 Evidence 저장은 다른 명령이다. 새 프로젝트의 첫 적용은 최소 Context를 사용자 확인 후 생성하고 학습 범위 키를 새 scopeVersion으로 이동한다. 기존 확정 Context는 덮어쓰지 않는다. 서버용 schema/권한 설계는 S2에서 별도로 한다.
+
+## AUTH-017 태스크/평가 계약
+ADR-005와 SPEC-013이 프로토타입 태스크 연결의 권위. 부캐 미래 계약은 VENTURE-EVALUATION-CONTRACT.md(설계만).

@@ -171,3 +171,6 @@ GrowthEvent 원장: eventId, actorId, projectId(optional), sourceActionId, prima
 | AC-G08 | 7개 축에서 각각 단계 1~4의 적격/부적격 예가 구별됨 | 고정 예제 28개와 경계 사례 검수 |
 
 Analytics: growth_committed, learning_attempt_completed, mastery_updated, reward_presented, evidence_state_changed. 학습 피드백 열기와 정답/적용 통과를 별개로 기록한다. 계획한 테스트이며 이번 문서 작업에서 앱 테스트를 실행한 것은 아니다.
+
+## AUTH-017 후속 설계 범위
+부캐6축 평가 계약: ../architecture/VENTURE-EVALUATION-CONTRACT.md. 설계만 승인, 현행7축/보상 정책 변경 아님. 태스크 완료와 사업 상태 평가 분리.
