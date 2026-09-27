@@ -135,13 +135,13 @@ try {
     const snap = await page.locator('.task-sheet .task-progress').first().ariaSnapshot();
     check('T09', `${w}px 표시는 탭 순서 밖·보조 기술 이름에 단계명과 상태`, tabStops === 0 && STEP_NAMES.every(n => snap.includes(n)) && /현재/.test(snap) && /미완/.test(snap), snap.replace(/\n/g, ' ').slice(0, 260));
     // 긴 분야명: 실제 가장 긴 분야 + 강제 확장 문자열로 줄바꿈·겹침·넘침 확인
-    for (const text of ['고객 확보·판매', '고객 확보·판매와 장기 파트너십 운영 전략']) {
+    for (const text of ['고객 확보·판매', '고객 확보·판매와 장기 파트너십 운영 전략', '띄어쓰기없는아주긴분야이름테스트']) {
       await page.$$eval('.task-sheet .task-card-top.has-progress .task-area', (es, v) => es.forEach(e => { e.textContent = v; }), text);
       const long = await topRow(page);
       const ok = long.every(c => [c.badge, c.prog, c.area].every(b => b.l >= c.inner.l && b.r <= c.inner.r) && apart(c.badge, c.prog) && apart(c.prog, c.area) && apart(c.badge, c.area) && c.areaFont >= 12);
       const sheetOver = await page.evaluate(() => { const b = document.querySelector('.task-sheet .focus-dialog-body'); return b.scrollWidth - b.clientWidth; });
       check('T09', `${w}px 긴 분야명 “${text}” 줄바꿈·겹침/넘침 없음`, ok && sheetOver <= 0 && (await overflow(page)) <= 0, JSON.stringify(long.map(c => ({ lines: c.areaLines, row: Math.round(c.row.h), areaW: Math.round(c.area.w) }))));
-      if (shots) for (const [k, el] of (await page.locator('.task-sheet .task-card:has(.task-progress)').all()).entries()) await el.screenshot({ path: join(SHOTS, `t09-${w}-${text.length > 10 ? 'long' : 'sales'}-${k}.png`) });
+      if (shots) for (const [k, el] of (await page.locator('.task-sheet .task-card:has(.task-progress)').all()).entries()) await el.screenshot({ path: join(SHOTS, `t09-${w}-${text === '고객 확보·판매' ? 'sales' : text.includes(' ') ? 'long' : 'word'}-${k}.png`) });
     }
     check('T09', `${w}px JS 오류 없음`, errors.length === 0, errors.join(' | '));
     await ctx.close();
