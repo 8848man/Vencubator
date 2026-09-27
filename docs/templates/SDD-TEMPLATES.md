@@ -101,6 +101,20 @@
 - 수용 기준 / 실제 실행 가능한 검증 절차
 - 저장 경계 / 외부 side effect 확인 절차
 - 실시간 status: STATE 참조, 결과: CP/VAL 링크
+- 규모 판단: 계획 선행 대상 여부와 근거 한 줄(CHECKPOINT-PROTOCOL §3-1)
+- 대상이면 `## 실행 계획·체크리스트` (구현 전에 작성·커밋·시작 CP)
+
+```
+| # | 상태 | 할 일 | 파일 | 확인 방법 | 커밋 |
+|---|---|---|---|---|---|
+| 1 | [x] | 브랜치 시작, 계획·체크리스트 작성 | work-items/<W>.md | 파일 존재 | docs |
+| 2 | [ ] | 명세 revision 기록 | docs/specs/... | AC 번호 | spec |
+| 3 | [ ] | 구현 한 묶음 | ... | 단위 테스트 | feat |
+| … | [ ] | 검증 기록(VAL) | docs/validation/... | 실행 결과 | docs |
+| N-1 | [ ] | 완료 CP·STATE·요약 | checkpoints, STATE | verify-checkpoint | cp |
+| N | [ ] | finish(push 또는 handoff), 연결 폴더 반영 | _handoff | 해시 일치 | — |
+```
+상태: `[ ]` 대기 · `[~]` 진행 중(1개) · `[x]` 완료 · `[!]` 막힘(사유). 항목 12개 초과·독립 산출물 2개 이상이면 W 분할.
 
 ## Checkpoint 양식
 
@@ -111,6 +125,7 @@
 - changed_paths / 사용자 선행 변경 / manifest 경로
 - branch·HEAD(없으면 null) / migration·배포·외부 job 상태
 - 다음 첫 행동: 구체 파일·섹션·case와 확인/수정 내용
+- 체크리스트 위치: `k/N 완료`, 다음 항목 번호(있는 W만)
 - blocker 또는 waiting 조건 / 다음 확인 시점 / 저장하지 않은 변경
 
 manifest: checkpoint_id, target_state_revision, algorithm=SHA256, files[{path, exists, sha256}]. 경로는 프로젝트 상대 경로. missing 파일은 exists=false, sha256=null. 비밀·개인정보 원문은 기록하지 않는다.
