@@ -3,7 +3,6 @@ import {projectTasks,sortTasks,findTask,resumeTask,saveTaskMeta,TASK_STATES} fro
 import {openFocusDialog,closeFocusDialog} from './focus-dialog.mjs';
 
 const TASK_STEPS=['개념 배우기','문제와 이유 확인','내 프로젝트 준비','실행 결과 기록','회고·방향 확인'];
-const STEP_SHORT=['개념','문제','준비','실행','회고'];
 
 export function createTaskUI({getState,update,esc,toast}){
  const project=()=>getState().projects.find(p=>p.id===getState().route.projectId);
@@ -18,8 +17,12 @@ export function createTaskUI({getState,update,esc,toast}){
  const control=(text,action,id,cls='primary')=>`<button type="button" class="btn ${cls}" data-task="${action}" data-task-id="${esc(id)}">${text}</button>`;
  const area=t=>STATS.find(s=>s.id===t.concept)?.name||'이전 학습';
  const badge=t=>`<span class="task-state">${TASK_STATES[t.status]}</span>`;
- function progress(t){const current=t.stages.indexOf(false);return `<div class="task-progress"><ol class="task-progress-track" aria-label="작업 진행 단계">${TASK_STEPS.map((name,i)=>`<li class="${t.stages[i]?'done':i===current?'current':'upcoming'}" ${i===current?'aria-current="step"':''}><span class="task-progress-node" aria-hidden="true">${t.stages[i]?'✓':i+1}</span><span class="task-progress-name">${STEP_SHORT[i]}</span><span class="task-progress-status">${t.stages[i]?'완료':i===current?'현재':'예정'}</span></li>`).join('')}</ol>${t.skippedQuestion?'<p class="task-progress-note">문제 단계는 기존 이해를 활용했어요.</p>':''}</div>`;}
- function card(t,featured=false){return `<article class="task-card ${featured?'featured':''}"><div class="task-card-top">${badge(t)}<span>${esc(area(t))}</span></div>${t.status==='active'?progress(t):''}<h3>${esc(t.title)}</h3><p class="task-stage">${esc(t.label)}</p><p>${esc(t.next)}</p><div class="task-meta"><span>다음 행동 약 ${t.minutes}분</span>${t.dueAt?`<span>목표 ${esc(t.dueAt)}</span>`:''}${t.priority==='high'?'<span>중요도 높음</span>':''}</div>${control(t.status==='ready'?'작업 살펴보기':'이어서 할 일 보기','detail',t.id,'soft wide')}</article>`;}
+ // SPEC-013 r0.4: 카드 상단 한 행의 컴팩트 단계 표시. 단계명·상태는 보조 기술에만 제공하고, 화면에서는 체크/중심 점/빈 원 형태로 구분한다.
+ const CHECK='<svg viewBox="0 0 12 12" focusable="false"><path d="M2.6 6.3l2.2 2.2 4.6-4.9"/></svg>';
+ function progress(t){const current=t.stages.indexOf(false),state=i=>t.stages[i]?'done':i===current?'current':'upcoming';
+  const label=current<0?'작업 진행 단계, 5단계 모두 완료':`작업 진행 단계, 5단계 중 ${current+1}단계 진행 중`;
+  return `<ol class="task-progress task-progress-track" aria-label="${label}">${TASK_STEPS.map((name,i)=>`<li class="${state(i)}" ${i===current?'aria-current="step"':''}><span class="task-progress-node" aria-hidden="true">${t.stages[i]?CHECK:''}</span><span class="task-progress-sr">${i+1}단계 ${name} · ${({done:'완료',current:'현재',upcoming:'미완'})[state(i)]}</span></li>`).join('')}</ol>`;}
+ function card(t,featured=false){const active=t.status==='active';return `<article class="task-card ${featured?'featured':''}"><div class="task-card-top${active?' has-progress':''}">${badge(t)}${active?progress(t):''}<span class="task-area">${esc(area(t))}</span></div><h3>${esc(t.title)}</h3><p class="task-stage">${esc(t.label)}</p>${active&&t.skippedQuestion?'<p class="task-progress-note">문제 단계는 기존 이해를 활용했어요.</p>':''}<p>${esc(t.next)}</p><div class="task-meta"><span>다음 행동 약 ${t.minutes}분</span>${t.dueAt?`<span>목표 ${esc(t.dueAt)}</span>`:''}${t.priority==='high'?'<span>중요도 높음</span>':''}</div>${control(t.status==='ready'?'작업 살펴보기':'이어서 할 일 보기','detail',t.id,'soft wide')}</article>`;}
  function list(){const p=project();if(!p)return '<p>프로젝트를 먼저 선택해 주세요.</p>';const tasks=sortTasks(projectTasks(p),sort);
   return `<p class="task-project">${esc(p.name)}의 작업 · 기록은 이 브라우저에 저장돼요.</p><label class="task-sort">정렬<select data-task-sort aria-label="작업 정렬"><option value="recommended" ${sort==='recommended'?'selected':''}>추천순</option><option value="deadline" ${sort==='deadline'?'selected':''}>마감순</option><option value="short" ${sort==='short'?'selected':''}>짧은 시간순</option></select></label><div class="task-list">${tasks.map((t,i)=>`${i===0||tasks[i-1].status!==t.status?`<h3 class="task-group-title">${({active:'이어서 할 일',ready:'새로 시작할 일',waiting:'외부 결과를 기다리는 일',paused:'잠시 보류한 일',completed:'완료한 일',cancelled:'취소한 일',archived:'이전 가설의 기록'})[t.status]}</h3>`:''}${card(t)}`).join('')||'<p>남아 있는 작업이 없어요. 학습 로드맵에서 다음 배움을 선택해 주세요.</p>'}</div>`;
  }
