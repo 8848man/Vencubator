@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "revision": 79,
-  "updated_at": "2026-09-27T10:43:09.681Z",
+  "revision": 80,
+  "updated_at": "2026-09-27T10:45:34.052Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "stage": "S1",
-    "phase": "P08",
-    "work_item": "P08-W02",
-    "owner": "cowork-claude",
-    "run_state": "in_progress"
+    "stage": null,
+    "phase": null,
+    "work_item": null,
+    "owner": null,
+    "run_state": "idle"
   },
   "next": {
     "stage": "S1",
     "phase": "P08",
-    "work_item": "P08-W02",
-    "condition": "AUTH-024",
-    "action": "prototype/feedback.mjs 작성 시작 — 체크리스트 4번(슬롯 수학·발생 횟수 projection·기준선)"
+    "work_item": "P08-W03",
+    "condition": "계획·체크리스트 먼저(§3-1). 문구 확정됨",
+    "action": "가치 카드 4개 도착 화면·의견 보내기 페이지 UI와 브라우저 검증(F03~F05)"
   },
   "checkpoint": {
-    "id": "CP-0079",
-    "path": "docs/execution/checkpoints/CP-0079.md",
-    "manifest": "docs/execution/checkpoints/CP-0079.manifest.json"
+    "id": "CP-0080",
+    "path": "docs/execution/checkpoints/CP-0080.md",
+    "manifest": "docs/execution/checkpoints/CP-0080.manifest.json"
   },
   "git": {
     "branch": "w/P08-W02-feedback-schedule",
     "base": "3d2f4d723f7308edff27daa773447e7e82c7efae",
-    "head": "7ab029170515aa170c3ae5fd22fb87801de34f12",
+    "head": "a7e117b027b8676f68e95824ef7682fcfa15f268",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -1129,16 +1129,18 @@
     },
     "P08-W02": {
       "phase": "P08",
-      "status": "in_progress",
+      "status": "completed",
       "depends_on": [
         "P08-W01"
       ],
-      "validation_status": "not_run",
+      "validation_status": "passed",
       "authorization_ref": "AUTH-024",
       "definition_path": "docs/execution/work-items/P08-W02.md",
-      "validation_refs": [],
-      "completed_checkpoint": null,
-      "checklist": "3/9"
+      "validation_refs": [
+        "docs/validation/VAL-014-feedback.md"
+      ],
+      "completed_checkpoint": "CP-0080",
+      "checklist": "8/9"
     },
     "P08-W03": {
       "phase": "P08",
