@@ -10,6 +10,13 @@ const REPO = resolve(SITE, '..');
 const DIST = resolve(SITE, 'dist');
 // 배포에 넣지 않는 개발용 파일
 const APP_EXCLUDE = new Set(['tests', 'server.mjs', 'README.md', 'dist']);
+// L04-W09: 검색엔진 제출용. 운영 주소 기준 절대 URL(사이트맵 규칙).
+export const SITE_ORIGIN = 'https://vencubator.vercel.app';
+/** 공개 첫 진입 페이지만 싣는다. /app/은 브라우저 저장 기반 체험 화면이라 제외(색인 차단은 하지 않음). */
+export function sitemapXml(date = new Date().toISOString().slice(0, 10)) {
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>${SITE_ORIGIN}/</loc>\n    <lastmod>${date}</lastmod>\n  </url>\n</urlset>\n`;
+}
+export const robotsTxt = () => `User-agent: *\nAllow: /\n\nSitemap: ${SITE_ORIGIN}/sitemap.xml\n`;
 
 async function copyDir(from, to) {
   await mkdir(to, { recursive: true });
@@ -27,8 +34,10 @@ export async function buildSite() {
   const index = await buildLanding({ public: true, outFile: resolve(DIST, 'index.html') });
   await copyDir(resolve(REPO, 'prototype'), resolve(DIST, 'app'));
   // 정적 호스팅(Netlify·Cloudflare Pages)용 기본 보안 헤더. 다른 호스트는 무시한다.
+  await writeFile(resolve(DIST, 'sitemap.xml'), sitemapXml());
+  await writeFile(resolve(DIST, 'robots.txt'), robotsTxt());
   await writeFile(resolve(DIST, '_headers'), '/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: DENY\n');
-  const leftovers = (await readdir(DIST)).filter(n => !['index.html', 'app', '_headers'].includes(n));
+  const leftovers = (await readdir(DIST)).filter(n => !['index.html', 'app', '_headers', 'sitemap.xml', 'robots.txt'].includes(n));
   return { index, leftovers };
 }
 
