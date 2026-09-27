@@ -19,7 +19,7 @@
 .vf-chips{margin-top:18px}
 .vf-card legend small,.vf-open legend small{font-weight:500;color:#6a7963;font-size:12px}
 .vf-chip-list{display:flex;flex-wrap:wrap;gap:8px}
-.vf-chip{position:relative;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:8px 14px;border:1px solid #cfd9c3;border-radius:999px;background:#fff;font-size:13px;line-height:1.4;cursor:pointer;color:#3d523c}
+.vf-chip{position:relative;display:inline-flex;align-items:center;gap:6px;min-height:46px;padding:8px 14px;border:1px solid #cfd9c3;border-radius:999px;background:#fff;font-size:13px;line-height:1.4;cursor:pointer;color:#3d523c}
 .vf-chip span::before{content:'';display:inline-block;width:0;transition:width .15s}
 .vf-chip:has(input:checked){border-color:#476d51;background:#e9f1df;color:#1f3b2b;font-weight:700}
 .vf-chip:has(input:checked) span::before{content:'✓ ';width:auto}

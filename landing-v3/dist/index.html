@@ -593,12 +593,15 @@ const ANALYTICS_FIELDS = {
   cta_click: ['placement','filled'], app_open: ['from'], entry_import: ['from'],
   project_create: ['from','imported'], lesson_complete: ['count'],
   lesson_start: ['concept'], lesson_step: ['concept','step'], lesson_answer: ['concept'],
-  application_save: ['concept'], field_task_plan: ['concept'], evidence_save: ['kind']
+  application_save: ['concept'], field_task_plan: ['concept'], evidence_save: ['kind'],
+  // SPEC-015 §7: 가치 피드백 퍼널 집계만. 자유 입력·칩·respondent는 보내지 않는다.
+  feedback_prompt: ['category','slot'], feedback_answer: ['category','slot','rating'], feedback_skip: ['category','slot'], feedback_open: ['open_type']
 };
 const ANALYTICS_ENUMS = {
   source: ['mine','sample'], from: ['v1','v2','v3','direct'],
   concept: ['customer','market','product','gtm','finance','operations','strategy'],
-  step: ['concept','question','transfer','apply','application','complete'], kind: ['field','simulation','desk']
+  step: ['concept','question','transfer','apply','application','complete'], kind: ['field','simulation','desk'],
+  category: ['idea','learning','evidence','decision'], open_type: ['helpful','friction','idea','bug']
 };
 function analyticsPayload(ev) {
   if (!Object.hasOwn(ANALYTICS_FIELDS, ev.name)) return null;
@@ -607,6 +610,7 @@ function analyticsPayload(ev) {
     const value = ev.props?.[key];
     if (ANALYTICS_ENUMS[key]?.includes(value) || (key === 'imported' && typeof value === 'boolean') ||
         (['len','filled','count'].includes(key) && Number.isInteger(value) && value >= 0 && value <= 10000) ||
+        (key === 'slot' && Number.isInteger(value) && value >= 1 && value <= 100) || (key === 'rating' && Number.isInteger(value) && value >= 1 && value <= 5) ||
         (key === 'placement' && /^(page|hero|footer|l[123]s-\d{1,2}|s\d{1,2})$/.test(value))) props[key] = value;
   }
   return {schema_version:1,stage:'prototype',environment:'production',app_version:'analytics-1',page:ev.page==='app'?'app':'v3',...props};

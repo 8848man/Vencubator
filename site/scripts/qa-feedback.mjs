@@ -53,6 +53,7 @@ async function open(width, store, height = 844) {
   const page = await ctx.newPage();
   await page.route(/fonts\.googleapis|jsdelivr|googletagmanager/, r => r.fulfill({ contentType: 'text/css', body: '' }));
   const errors = []; page.on('pageerror', e => errors.push(e.message));
+  page.firestore = 0; page.on('request', r => { if (r.url().includes('firestore.googleapis.com')) page.firestore++; });
   await page.goto(BASE + 'index.html?seed'); await page.evaluate(([k, v]) => { localStorage.clear(); localStorage.setItem(k, v); }, [KEY, JSON.stringify(store)]);
   await page.goto(BASE); await page.waitForTimeout(450);
   return { ctx, page, errors };
@@ -208,7 +209,8 @@ try {
     const before = JSON.parse(await project(page));
     await page.click('#vf-open [type=submit]'); await W(page, 400);
     const st = await fbState(page), d = st.outbox.at(-1)?.doc, after = JSON.parse(await project(page));
-    check('F04', `${w}px 보내면 토스트·들어온 화면(학습 로드맵) 복귀·문서·초안 삭제`, (await page.textContent('#toast')).includes('의견을 받았어요') && (await page.textContent('.breadcrumb strong')) === '학습 로드맵' && d?.kind === 'open' && d.openType === 'friction' && d.view === 'dashboard' && st.openDraft === null, JSON.stringify(d));
+    check('F04', `${w}px 보내면 대기 안내 토스트(운영 주소 아님 → 전송 안 함)·들어온 화면 복귀·문서·초안 삭제`, (await page.textContent('#toast')) === '의견을 받았어요. 연결되면 보낼게요.' && (await page.textContent('.breadcrumb strong')) === '학습 로드맵' && d?.kind === 'open' && d.openType === 'friction' && d.view === 'dashboard' && st.openDraft === null, JSON.stringify(d));
+    check('F06', `${w}px 운영 주소가 아니면 Firestore 요청 0건`, page.firestore === 0, page.firestore);
     delete before.route; delete after.route;
     check('F02', `${w}px 의견 보내기는 프로젝트 기록을 바꾸지 않음(화면 위치 제외)`, JSON.stringify(before) === JSON.stringify(after));
     await page.click('[data-view="settings"]'); await W(page);
