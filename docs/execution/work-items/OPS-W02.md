@@ -21,6 +21,8 @@ AUTH-023 · OPS(작업 방식) · CHECKPOINT-PROTOCOL r0.2 §3-1, SDD r0.3, AGEN
 | 6 | [x] | Plan 상태·완료 정의에 체크리스트 반영 | docs/process/SDD.md | 상태 전이 문구 일치 | spec |
 | 7 | [x] | Work Item·Checkpoint 양식에 체크리스트 칸 추가 | docs/templates/SDD-TEMPLATES.md | 양식이 §3-1과 같은 열 구성 | docs |
 | 8 | [x] | 교차 검토: 용어·버전·링크, gitflow 필수 검사. (계획 보완: README 재개 프롬프트도 §9와 같은 문장이라 함께 수정) | 위 파일, README.md | 검사 통과, 문서 간 모순 없음 | docs |
-| 9 | [~] | 완료 CP·STATE·요약, finish(push 불가 시 handoff), 연결 폴더 반영 | checkpoints 등 | verify-checkpoint, 반영 파일 해시 일치 | cp |
+| 9 | [x] | 완료 CP·STATE·요약, finish(push 불가 시 handoff), 연결 폴더 반영 | checkpoints 등 | verify-checkpoint, 반영 파일 해시 일치 | cp |
 
 범위 밖: gitflow/verify-checkpoint 도구의 체크리스트 자동 검사(필요 시 별도 W).
+
+완료 메모: 필수 검사 통과(prototype 54·site 18·landing-v3 41·gitflow 7·CP 무결성). push 권한 없음 → handoff(P08-W01 → OPS-W02 두 PR) 생성, 이 커밋 직후 연결 폴더에 반영.
