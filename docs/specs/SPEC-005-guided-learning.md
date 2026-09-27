@@ -43,7 +43,7 @@ Revision 0.3 · Approved for S1 · AUTH-004 (r0.2 AUTH-016, r0.3 사용자 요�
 - 학습 진행은 프로젝트+scopeVersion+concept, 숙달/XP는 사용자+concept 기준이다. 프로젝트 전환 시 산출물/진도는 별도, 기존 지식은 재사용한다.
 - 외부 실행은 학습 완료 조건이 아니다. 진행 중 실행 과제는 하나만 유지하며 새 산출물은 보관한다. 다음 학습을 막지 않는다. 교체 시 이전 과제는 보류 이력으로 보존한다.
 - 결과 기록은 학습 산출물의 개념/가설과 연결한다. source/date/method/observation/interpretation/limits를 보존한다. 전략 학습의 실행 결과는 Decision으로 이어지며 관찰만으로 전략 보상하지 않는다.
-- schemaVersion1에 선택 필드 learningRuns/learningArtifacts/fieldTasks를 추가하며 기존 프로젝트·이벤트·XP·draft를 삭제하지 않는다. 기존 세션은 기존 화면에서 재개할 수 있지만 홈은 새 학습 로드맵로 진입한다.
+- schemaVersion1에 선택 필드 learningRuns/learningArtifacts/fieldTasks를 추가하며 기존 프로젝트·이벤트·XP·draft를 삭제하지 않는다. 기존 세션은 기존 화면에서 재개할 수 있지만 홈은 새 학습 로드맵으로 진입한다.
 - 생명 소모/리더보드/실패 벌점/매일 외부 실행 강제 없음. 기존 모션 감소, 로컬 오류 처리 유지.
 
 ## 수용 기준
