@@ -26,7 +26,7 @@ export function startLesson(s,id,concept=nextConcept(projectById(s,id))){
  p.learningRuns[key]??={concept,scopeVersion:p.scopeVersion,originScopeVersion:p.scopeVersion,step:'concept',variant:0,results:{},createdAt:new Date().toISOString()};
  s.route={view:'session',projectId:id,concept};return p.learningRuns[key];
 }
-function activeRun(s,id){const p=projectById(s,id),r=getRun(p,s.route.concept);if(!r)throw Error('학습 길에서 다시 시작해 주세요.');return {p,r};}
+function activeRun(s,id){const p=projectById(s,id),r=getRun(p,s.route.concept);if(!r)throw Error('학습 로드맵에서 다시 시작해 주세요.');return {p,r};}
 export function moveLesson(s,id){const {r}=activeRun(s,id);
  if(r.step==='concept')r.step=s.mastery[r.concept]?.understood?'transfer':'question';
  else if(r.step==='question'){

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 67,
-  "updated_at": "2026-09-27T00:53:36.000Z",
+  "revision": 73,
+  "updated_at": "2026-09-27T08:13:21.112Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -15,28 +15,28 @@
     "stage": "S1",
     "phase": "P05",
     "work_item": "P05-W04",
-    "condition": "기존 paused 검증 마감, 연구는 실제 참가자 필요",
-    "action": "P07(태스크) 완료. 다음은 보류된 P05-W04 검증 마감. 태스크 UX 개선 제안 3건(카드·경로 중복, 데스크톱 FAB 가림, 상세 밖 기기 뒤로가기)은 VAL-011 참조, 사용자 결정 대기."
+    "condition": "기존 paused 검증 마감 별도",
+    "action": "집중형 다이얼로그 검증 마감과 실제 사용자 연구 필요"
   },
   "checkpoint": {
-    "id": "CP-0067",
-    "path": "docs/execution/checkpoints/CP-0067.md",
-    "manifest": "docs/execution/checkpoints/CP-0067.manifest.json"
+    "id": "CP-0073",
+    "path": "docs/execution/checkpoints/CP-0073.md",
+    "manifest": "docs/execution/checkpoints/CP-0073.manifest.json"
   },
   "git": {
-    "branch": "w/OPS-W01-gitflow-automation",
-    "base": "872ad40910c3ec484c6ef9eb4ed311d7d6646eb9",
-    "head": null,
+    "branch": "w/P07-W04-roadmap-task-progress",
+    "base": "6cd78c2f74d1f5aac8eb71fafa50812498dfba50",
+    "head": "4e03fdde24d88f2fe05c2fe26af54f1976bb022e",
     "dirty": true,
     "committed": false,
-    "pr": null,
+    "pr": "https://github.com/8848man/Vencubator/pull/3",
     "merged_sha": null,
     "deploy": {
       "target": "vercel-production",
       "status": "not_started",
       "checked_at": null
     },
-    "note": "쌓인 브랜치: sync/20260927-backlog → w/P05-W06-review-focus → w/OPS-W01-gitflow-automation. push·PR은 사용자 PC(_handoff/open-pr.cmd)"
+    "note": "P07-W04 브랜치 push 및 PR 생성 완료. CP 직후 cp commit/push. main 병합·운영 배포 없음."
   },
   "stages": {
     "S1": {
@@ -439,7 +439,8 @@
       "work_item_ids": [
         "P07-W01",
         "P07-W02",
-        "P07-W03"
+        "P07-W03",
+        "P07-W04"
       ],
       "validation_status": "not_run",
       "gate_status": "not_evaluated"
@@ -1074,6 +1075,17 @@
         "scripts/tests/gitflow.test.mjs"
       ],
       "completed_checkpoint": "CP-0066"
+    },
+    "P07-W04": {
+      "phase": "P07",
+      "status": "completed",
+      "authorization_ref": "AUTH-020",
+      "definition_path": "docs/execution/work-items/P07-W04.md",
+      "validation_status": "passed",
+      "validation_refs": [
+        "docs/validation/VAL-012-task-roadmap.md"
+      ],
+      "completed_checkpoint": "CP-0073"
     }
   }
 }
