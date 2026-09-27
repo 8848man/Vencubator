@@ -13,6 +13,11 @@
 
 브라우저: 번들 Playwright Chromium. NODE_PATH는 로컬 Codex 런타임 패키지 경로 사용. 전체 raw 로그는 `_handoff/p07-w04-browser.log`, 재검증은 `_handoff/p07-w04-focused.log` (로컬).
 
-## 남은 경계
+## 필수 자동 검사 및 마감
 
-gitflow 필수 자동 검사·최종 CP 무결성은 마감 시 추가 기록한다. 물리 모바일·실제 스크린리더·다른 브라우저 엔진 사용자 연구 미실행. native scrollbar 표현은 OS 설정에 따라 다르며 강제로 숨기지 않는다. main 병합·배포 미실행.
+- gitflow 검사: prototype 54/54, site 18/18, landing-v3 41/41 통과. site 빌드도 포함.
+- 첫 gitflow 도구 검사 5/7: `status.showUntrackedFiles=no` 환경 설정이 임시 테스트 저장소에도 전달돼 untracked 감지 테스트 2개가 실패. 제품 결함 없음. 설정 없이 `node --test scripts/tests/gitflow.test.mjs` 재검증 7/7 통과. finish는 현재 저장소의 `.git/info/exclude`에 사용자 선행 파일 두 경로만 잠시 추가하고 finally로 원복하는 방식을 사용한다. 파일 이동·삭제·커밋 없음.
+- 첫 CP 검사는 검수 중 tasks.css 수정 때문에 stale을 검출. 새 CP로 해당 변경을 기록하고 최종 finish에서 재확인.
+- Windows 스크롤바 화살표를 제거한 최종 CSS에 `--roadmap-only --shots` 재실행 26/26. 직접 시각 검수 완료. 로그 `_handoff/p07-w04-final-browser.log`.
+
+물리 모바일·실제 스크린리더·다른 브라우저 엔진 사용자 연구 미실행. native scrollbar 표현은 OS 설정에 따라 다르며 강제로 숨기지 않는다. main 병합·배포 미실행.
