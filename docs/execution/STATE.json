@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "revision": 80,
-  "updated_at": "2026-09-27T10:45:34.052Z",
+  "revision": 81,
+  "updated_at": "2026-09-27T10:47:44.630Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "stage": null,
-    "phase": null,
-    "work_item": null,
-    "owner": null,
-    "run_state": "idle"
+    "stage": "S1",
+    "phase": "P08",
+    "work_item": "P08-W03",
+    "owner": "cowork-claude",
+    "run_state": "in_progress"
   },
   "next": {
     "stage": "S1",
     "phase": "P08",
     "work_item": "P08-W03",
-    "condition": "계획·체크리스트 먼저(§3-1). 문구 확정됨",
-    "action": "가치 카드 4개 도착 화면·의견 보내기 페이지 UI와 브라우저 검증(F03~F05)"
+    "condition": "AUTH-024",
+    "action": "prototype/feedback-ui.mjs 가치 카드 모듈 작성 — 체크리스트 4번"
   },
   "checkpoint": {
-    "id": "CP-0080",
-    "path": "docs/execution/checkpoints/CP-0080.md",
-    "manifest": "docs/execution/checkpoints/CP-0080.manifest.json"
+    "id": "CP-0081",
+    "path": "docs/execution/checkpoints/CP-0081.md",
+    "manifest": "docs/execution/checkpoints/CP-0081.manifest.json"
   },
   "git": {
-    "branch": "w/P08-W02-feedback-schedule",
+    "branch": "w/P08-W03-feedback-ui",
     "base": "3d2f4d723f7308edff27daa773447e7e82c7efae",
-    "head": "a7e117b027b8676f68e95824ef7682fcfa15f268",
+    "head": "7704859879a1ccc27cac1824ea176f6c8e9d1bc6",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -1144,11 +1144,16 @@
     },
     "P08-W03": {
       "phase": "P08",
-      "status": "not_started",
+      "status": "in_progress",
       "depends_on": [
         "P08-W02"
       ],
-      "validation_status": "not_run"
+      "validation_status": "not_run",
+      "authorization_ref": "AUTH-024",
+      "definition_path": "docs/execution/work-items/P08-W03.md",
+      "validation_refs": [],
+      "completed_checkpoint": null,
+      "checklist": "3/9"
     },
     "P08-W04": {
       "phase": "P08",
