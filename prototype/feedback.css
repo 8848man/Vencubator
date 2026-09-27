@@ -1,0 +1,59 @@
+/* SPEC-015 r0.3 — 가치 카드(비모달)·의견 보내기 */
+.vf-card{box-sizing:border-box;max-width:760px;margin:0 0 24px;padding:18px 20px 16px;border:1px solid #cfdcc0;border-radius:20px;background:#f6f9f0;color:#2f4331;text-align:left;overflow-wrap:anywhere;animation:vf-in .28s ease-out}
+.lesson-finish .vf-card,.born .vf-card{margin:22px auto}
+@keyframes vf-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.vf-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.vf-kicker{font-size:12px;font-weight:700;color:#58714a;letter-spacing:.01em}
+.vf-close{flex:none;width:44px;height:44px;margin:-10px -12px -10px 0;border:0;border-radius:50%;background:none;color:#607058;font-size:22px;line-height:1;cursor:pointer}
+.vf-close:hover{background:#e7eedd}
+.vf-card fieldset{border:0;margin:0;padding:0;min-width:0}
+.vf-card legend{padding:0;font-size:16px;font-weight:700;line-height:1.5;color:#264632;margin:4px 0 12px}
+.vf-scale-options{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.vf-opt{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:64px;padding:8px 4px;border:1px solid #d3ddc7;border-radius:14px;background:#fff;text-align:center;cursor:pointer;font-size:12px;line-height:1.35;color:#3d523c}
+.vf-opt input,.vf-chip input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.vf-num{display:grid;place-items:center;width:26px;height:26px;border:1.5px solid #b7c6a8;border-radius:50%;font-weight:700;font-size:13px;background:#fff}
+.vf-opt:hover{border-color:#8faa74}
+.vf-opt:has(input:checked){border:2px solid #476d51;background:#e9f1df;color:#1f3b2b;font-weight:700}
+.vf-opt:has(input:checked) .vf-num{background:#476d51;border-color:#476d51;color:#fff}
+.vf-opt:has(input:focus-visible),.vf-chip:has(input:focus-visible){outline:3px solid #82a564;outline-offset:2px}
+.vf-chips{margin-top:18px}
+.vf-card legend small,.vf-open legend small{font-weight:500;color:#6a7963;font-size:12px}
+.vf-chip-list{display:flex;flex-wrap:wrap;gap:8px}
+.vf-chip{position:relative;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:8px 14px;border:1px solid #cfd9c3;border-radius:999px;background:#fff;font-size:13px;line-height:1.4;cursor:pointer;color:#3d523c}
+.vf-chip span::before{content:'';display:inline-block;width:0;transition:width .15s}
+.vf-chip:has(input:checked){border-color:#476d51;background:#e9f1df;color:#1f3b2b;font-weight:700}
+.vf-chip:has(input:checked) span::before{content:'✓ ';width:auto}
+.vf-text-label{display:block;margin:16px 0 6px;font-size:13px;font-weight:700;color:#3d523c}
+.vf-text{box-sizing:border-box;width:100%;min-height:48px;font-size:16px;padding:10px 12px;border:1px solid #cad5bd;border-radius:12px;background:#fff}
+.vf-privacy{margin:8px 0 0;font-size:12px;line-height:1.6;color:#667360}
+.vf-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-top:14px}
+.vf-actions .btn{min-height:48px}
+.vf-actions .btn.primary{padding-left:26px;padding-right:26px;font-size:14px}
+.vf-actions .btn.link{min-width:44px;font-size:13px;color:#52604d}
+.vf-done{display:flex;align-items:center;gap:12px;padding:16px 20px}
+.vf-done p{margin:0;font-size:14px;line-height:1.6}
+.vf-done-mark{display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:50%;background:#476d51;color:#fff;font-weight:700}
+/* 진입점 */
+.side-feedback{display:flex;min-height:44px;margin:0 0 14px;padding:0 5px;font-size:12px;color:#5b6c55;text-decoration:underline;text-underline-offset:3px}
+.footer-feedback{min-height:44px;padding:0 0 0 8px!important;font-size:10px!important;color:#76856d!important;text-decoration:underline;text-underline-offset:3px;vertical-align:middle}
+.footer-note span:last-child{display:inline-flex;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.settings-feedback{min-height:48px}
+/* 의견 보내기 페이지 */
+.vf-open .panel{display:grid;gap:14px}
+.vf-open fieldset{border:0;margin:0;padding:0;min-width:0}
+.vf-open legend{font-size:14px;font-weight:700;margin-bottom:10px;color:#264632}
+.vf-open textarea{font-size:16px;min-height:140px}
+.vf-count{margin:6px 0 0;font-size:12px;color:#667360;text-align:right}
+.vf-context{display:flex;align-items:flex-start;gap:10px;min-height:44px;font-size:13px;line-height:1.6;cursor:pointer}
+.vf-context input{width:20px;height:20px;flex:none;margin:2px 0;accent-color:#2d5947}
+.vf-context small{color:#6a7963}
+.vf-open .button-row .btn{min-height:48px}
+@media(max-width:600px){
+  .vf-card{padding:16px}
+  .vf-scale-options{grid-template-columns:1fr;gap:6px}
+  .vf-opt{flex-direction:row;justify-content:flex-start;gap:12px;min-height:48px;padding:8px 14px;font-size:14px}
+  .vf-actions .btn.primary{flex:1}
+}
+@media(prefers-reduced-motion:reduce){.vf-card{animation:none}.vf-chip span::before{transition:none}}
+body.reduce-motion .vf-card{animation:none}
+@media(forced-colors:active){.vf-opt:has(input:checked),.vf-chip:has(input:checked){outline:2px solid Highlight}}
