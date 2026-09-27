@@ -29,6 +29,7 @@ body.has-task-fab .main{padding-bottom:120px}.task-sheet{width:min(640px,calc(10
 .task-sheet .focus-dialog-body::-webkit-scrollbar-track{background:#edf1e6;border-radius:999px}
 .task-sheet .focus-dialog-body::-webkit-scrollbar-thumb{background:#789367;border-radius:999px}
 .task-sheet .focus-dialog-body::-webkit-scrollbar-thumb:hover{background:#476d51}
+@supports selector(::-webkit-scrollbar){.task-sheet .focus-dialog-body{scrollbar-width:auto;scrollbar-color:auto}.task-sheet .focus-dialog-body::-webkit-scrollbar-button{display:none;width:0;height:0}}
 .task-progress{max-width:360px;margin:20px auto 18px;padding:16px 6px 12px;border:1px solid #e1e8d8;border-radius:16px;background:#f6f8f1}
 .task-progress-track{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));list-style:none;padding:0;margin:0}
 .task-progress-track li{position:relative;display:flex;flex-direction:column;align-items:center;min-width:0;text-align:center;color:#68745e;font-size:12px;line-height:1.5}
