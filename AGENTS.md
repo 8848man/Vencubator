@@ -8,6 +8,7 @@
 2. `docs/process/APPROVALS.md`와 해당 Stage/Phase 계획에서 대상 W와 승인 범위를 확인한다. 실시간 진행 상태는 STATE만 권위로 삼는다.
 3. 해당 W의 Spec/ADR/검증 기록만 우선 읽고 실제 파일·`git status`·신규 untracked 파일·checkpoint manifest를 대조한다. 모든 과거 문서를 매번 읽지 않는다.
 4. 현재 단계, 관련 ID, 미확정 사항을 파악한 후 사용자가 요청한 범위에서 진행한다. 요약만으로 명세를 대체하지 않는다.
+5. **파일을 바꾸기 전에 규모를 판단한다.** 중단될 수 있는 규모(변경 파일 4개 이상, 명세→구현→검증→PR 연쇄, 새 모듈·데이터 계약·외부 연동, 긴 검증, 묶인 요청 등)이면 `gitflow start` 직후 W 정의 파일에 `## 실행 계획·체크리스트`를 먼저 쓰고 커밋·시작 CP를 남긴 뒤, 그 순서대로 구현한다. 항목을 끝낼 때마다 체크하고, CP에 `체크리스트 k/N`을 적는다. 재개는 첫 미완료 항목부터. 기준·형식은 `docs/execution/CHECKPOINT-PROTOCOL.md` §3-1.
 
 ## 작업 규칙
 
@@ -20,7 +21,7 @@
 - 스탯 정책의 권위 문서는 SPEC-002, 화면은 SPEC-003, 데이터 계약은 ARCHITECTURE이다. 충돌 시 임의 선택하지 말고 원문과 승인 revision을 확인한다.
 - 구현 순서는 프로토타입(S1) → MVP(S2) → 고도화(S3). 프로토타입의 대역/실제 연동 경계는 SPEC-004, 단계 순서와 범위는 IMPLEMENTATION-ROADMAP을 따른다.
 - 한 번에 W 하나를 active로 둔다. 큰 W는 착수 전 분할한다. 토큰/문맥 경고 시 새 작업을 시작하지 말고 미완료·다음 행동을 저장한다.
-- `docs/execution/CHECKPOINT-PROTOCOL.md`를 따른다. 남은 토큰을 정확히 알 수 있다고 가정하지 말고 파일 수정 묶음·검증 결과 경계마다 checkpoint를 남긴다.
+- `docs/execution/CHECKPOINT-PROTOCOL.md`를 따른다. 남은 토큰을 정확히 알 수 있다고 가정하지 말고 파일 수정 묶음·검증 결과 경계마다 checkpoint를 남긴다. 계획과 다르게 가야 하면 코드보다 체크리스트를 먼저 고친다.
 
 ## Git 흐름 (SPEC-014 §12)
 
