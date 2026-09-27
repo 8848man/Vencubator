@@ -18,3 +18,27 @@ body.has-task-fab .main{padding-bottom:120px}.task-sheet{width:min(640px,calc(10
 @media(max-width:600px){.task-preview{padding:18px;border-radius:20px}.task-fab{right:16px;bottom:calc(16px + env(safe-area-inset-bottom));max-width:calc(100% - 32px)}.task-sheet{width:100%}.task-card{padding:16px}.task-next-box{padding:18px}.task-detail-head{gap:6px}.task-detail-head .btn{padding-left:0}.task-preview-head .btn{padding-right:0}}
 @media(prefers-reduced-motion:reduce){.task-fab:active{transform:none;scale:none}.task-preview-kicker i{animation:none}}
 @media(max-width:600px){.task-detail{padding-bottom:92px}.task-detail .task-next-box>.btn{position:fixed;left:16px;bottom:calc(12px + env(safe-area-inset-bottom));width:calc(100% - 32px);z-index:20;box-shadow:0 0 0 8px #fafbf6,0 4px 20px #263c2333}.task-detail:has(.task-settings[open]) .task-next-box>.btn{position:static;width:100%;box-shadow:none}}
+
+/* SPEC-013 r0.3: one scrolling body inside the rounded task sheet. */
+.task-sheet{overflow:hidden}
+.task-sheet[open]{display:flex;flex-direction:column}
+.task-sheet .focus-dialog-head,.task-sheet .focus-dialog-actions{position:static;flex:none}
+.task-sheet .focus-dialog-head{margin-bottom:0;padding-bottom:16px}
+.task-sheet .focus-dialog-body{min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#789367 #edf1e6;scrollbar-gutter:stable;padding-top:16px;scroll-padding-block:16px;margin:6px 8px 6px 0}
+.task-sheet .focus-dialog-body::-webkit-scrollbar{width:6px}
+.task-sheet .focus-dialog-body::-webkit-scrollbar-track{background:#edf1e6;border-radius:999px}
+.task-sheet .focus-dialog-body::-webkit-scrollbar-thumb{background:#789367;border-radius:999px}
+.task-sheet .focus-dialog-body::-webkit-scrollbar-thumb:hover{background:#476d51}
+.task-progress{max-width:360px;margin:20px auto 18px;padding:16px 6px 12px;border:1px solid #e1e8d8;border-radius:16px;background:#f6f8f1}
+.task-progress-track{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));list-style:none;padding:0;margin:0}
+.task-progress-track li{position:relative;display:flex;flex-direction:column;align-items:center;min-width:0;text-align:center;color:#68745e;font-size:12px;line-height:1.5}
+.task-progress-track li:not(:last-child)::after{content:'';position:absolute;left:calc(50% + 16px);right:calc(-50% + 16px);top:15px;height:2px;background:#d9e2ce}
+.task-progress-track li.done::after{background:#789367}
+.task-progress-node{display:grid;place-items:center;width:30px;height:30px;box-sizing:border-box;border:1px solid #b6c4a9;border-radius:50%;background:#fff;font-size:13px;font-weight:700}
+.task-progress-track .done .task-progress-node{background:#476d51;border-color:#476d51;color:#fff}
+.task-progress-track .current .task-progress-node{background:#e5efda;border:2px solid #476d51;box-shadow:0 0 0 3px #f6f8f1,0 0 0 5px #a3b888;color:#264632}
+.task-progress-name{margin-top:10px;font-weight:700}
+.task-progress-status{font-size:11px;margin-top:2px}
+.task-progress-track .current{color:#264632;font-weight:800}
+.task-card .task-progress-note{font-size:11px;text-align:center;color:#52604d;margin:10px 0 0}
+@media(forced-colors:active){.task-progress-track .current .task-progress-node{outline:2px solid Highlight;outline-offset:3px}.task-progress-track li::after{background:CanvasText}}
