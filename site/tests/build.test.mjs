@@ -15,6 +15,8 @@ test('dist: 루트 랜딩 + 앱, 개발용 파일 제외', async () => {
   assert.ok(!/http:\/\/127\.0\.0\.1/.test(index), '로컬 주소가 남음');
   assert.ok(!/^\s*import\s/m.test(index) && !/^export\s/m.test(index));
   assert.ok(!index.includes('generator'), '생성기 표기');
+  // L04-W08: Google Search Console URL 접두어 속성(https://vencubator.vercel.app) 소유권 확인. 삭제하면 확인이 풀린다.
+  assert.match(index.slice(0, index.indexOf('</head>')), /<meta name="google-site-verification" content="jwvBptKaMeO5PcMdZK0uI49if4qb5t_4OxF00X-FMJ8">/, '루트 head에 Search Console 확인 태그');
   const app = readFileSync(D('app/index.html'), 'utf8');
   assert.ok(!/(href|src)="\/(?!\/)/.test(app), '앱에 루트 기준 경로');
 });
