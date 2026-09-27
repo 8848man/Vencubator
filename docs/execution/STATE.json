@@ -1,42 +1,42 @@
 {
   "schema_version": 1,
-  "revision": 73,
-  "updated_at": "2026-09-27T08:13:21.112Z",
+  "revision": 74,
+  "updated_at": "2026-09-27T08:41:10.275Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "stage": null,
-    "phase": null,
-    "work_item": null,
-    "owner": null,
-    "run_state": "idle"
+    "stage": "S1",
+    "phase": "P07",
+    "work_item": "P07-W05",
+    "owner": "cowork-claude",
+    "run_state": "in_progress"
   },
   "next": {
     "stage": "S1",
-    "phase": "P05",
-    "work_item": "P05-W04",
-    "condition": "기존 paused 검증 마감 별도",
-    "action": "집중형 다이얼로그 검증 마감과 실제 사용자 연구 필요"
+    "phase": "P07",
+    "work_item": "P07-W05",
+    "condition": "AUTH-021 범위",
+    "action": "SPEC-013 r0.4·AUTH-021·W 정의 커밋 완료. UI 구현·브라우저 검증 미실행."
   },
   "checkpoint": {
-    "id": "CP-0073",
-    "path": "docs/execution/checkpoints/CP-0073.md",
-    "manifest": "docs/execution/checkpoints/CP-0073.manifest.json"
+    "id": "CP-0074",
+    "path": "docs/execution/checkpoints/CP-0074.md",
+    "manifest": "docs/execution/checkpoints/CP-0074.manifest.json"
   },
   "git": {
-    "branch": "w/P07-W04-roadmap-task-progress",
-    "base": "6cd78c2f74d1f5aac8eb71fafa50812498dfba50",
-    "head": "4e03fdde24d88f2fe05c2fe26af54f1976bb022e",
+    "branch": "w/P07-W05-compact-task-progress",
+    "base": "3cd9e9c5a6a60529e871226e1060b3bdfbb8919e",
+    "head": "5d85e3eb85467bc5bdfaf63e8f576bbb83099330",
     "dirty": true,
     "committed": false,
-    "pr": "https://github.com/8848man/Vencubator/pull/3",
+    "pr": null,
     "merged_sha": null,
     "deploy": {
       "target": "vercel-production",
       "status": "not_started",
       "checked_at": null
     },
-    "note": "P07-W04 브랜치 push 및 PR 생성 완료. CP 직후 cp commit/push. main 병합·운영 배포 없음."
+    "note": "P07-W05는 P07-W04(PR #3) 위에 쌓음. CP 직후 cp commit. main 병합·운영 배포 없음."
   },
   "stages": {
     "S1": {
@@ -440,7 +440,8 @@
         "P07-W01",
         "P07-W02",
         "P07-W03",
-        "P07-W04"
+        "P07-W04",
+        "P07-W05"
       ],
       "validation_status": "not_run",
       "gate_status": "not_evaluated"
@@ -1086,6 +1087,17 @@
         "docs/validation/VAL-012-task-roadmap.md"
       ],
       "completed_checkpoint": "CP-0073"
+    },
+    "P07-W05": {
+      "phase": "P07",
+      "authorization_ref": "AUTH-021",
+      "definition_path": "docs/execution/work-items/P07-W05.md",
+      "validation_refs": [
+        "docs/validation/VAL-013-compact-progress.md"
+      ],
+      "status": "in_progress",
+      "validation_status": "not_run",
+      "completed_checkpoint": null
     }
   }
 }
