@@ -1,8 +1,10 @@
 // SPEC-015 r0.4 §7 · ADR-006 — outbox를 Cloud Firestore `feedback` 컬렉션으로 보낸다(REST, SDK 없음).
 // 설정값이 비어 있거나 운영 호스트가 아니면 요청하지 않고 로컬 보관만 한다.
 
-// Firebase 콘솔 → 프로젝트 설정 → 내 앱(웹)의 firebaseConfig 값. 웹 페이지에 공개되는 값이며 접근 통제는 firestore.rules가 한다.
-export const FIREBASE_CONFIG = { projectId: '', apiKey: '' };
+// Firebase 콘솔 → 프로젝트 설정 → 내 앱(웹)의 firebaseConfig 중 전송에 필요한 두 값만 둔다(2026-09-27 사용자 제공).
+// 웹 API 키는 비밀번호가 아니라 프로젝트 식별자라 배포된 JS에 공개된다. 접근 통제는 firestore.rules(생성만 허용)와
+// Google Cloud 콘솔의 키 사용 제한(HTTP 리퍼러·API 제한, site/DEPLOY.md §3-1)이 맡는다. 서비스 계정 키 등 비밀 값은 저장소에 두지 않는다.
+export const FIREBASE_CONFIG = { projectId: 'vencubator-18a95', apiKey: 'AIzaSyB78dtuhAi793h8mRiXhL2YrjLEV8Qztjk' };
 export const FEEDBACK_HOST = 'vencubator.vercel.app';
 export const COLLECTION = 'feedback';
 export const MAX_TRIES = { rejected: 3, transient: 5 };
