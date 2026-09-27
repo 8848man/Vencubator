@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 68,
-  "updated_at": "2026-09-27T07:54:32.125Z",
+  "revision": 69,
+  "updated_at": "2026-09-27T07:57:50.333Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -9,24 +9,24 @@
     "phase": "P07",
     "work_item": "P07-W04",
     "owner": "Codex",
-    "run_state": "in_progress"
+    "run_state": "validating"
   },
   "next": {
     "stage": "S1",
     "phase": "P07",
     "work_item": "P07-W04",
     "condition": "AUTH-020",
-    "action": "명세·W 정의 커밋 완료. UI 구현과 브라우저 검증 미실행."
+    "action": "UI 구현 커밋 완료. 본문 스크롤과 카드 그래프 연결. 브라우저 검증 진행 중이며 완료 결과 없음."
   },
   "checkpoint": {
-    "id": "CP-0068",
-    "path": "docs/execution/checkpoints/CP-0068.md",
-    "manifest": "docs/execution/checkpoints/CP-0068.manifest.json"
+    "id": "CP-0069",
+    "path": "docs/execution/checkpoints/CP-0069.md",
+    "manifest": "docs/execution/checkpoints/CP-0069.manifest.json"
   },
   "git": {
     "branch": "w/P07-W04-roadmap-task-progress",
     "base": "6cd78c2f74d1f5aac8eb71fafa50812498dfba50",
-    "head": "d1025bb38c03af2d02ef8560062413dfa947ab9f",
+    "head": "1f65817dce88d476dc8d6bf86f706c187b9faa80",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -1078,7 +1078,7 @@
     },
     "P07-W04": {
       "phase": "P07",
-      "status": "in_progress",
+      "status": "validating",
       "authorization_ref": "AUTH-020",
       "definition_path": "docs/execution/work-items/P07-W04.md",
       "validation_status": "not_run",
