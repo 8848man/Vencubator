@@ -11,6 +11,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const APP = process.env.ROOT || resolve(HERE, '../../prototype');
 const SHOTS = resolve(HERE, '../qa-shots/tasks');
 const shots = process.argv.includes('--shots');
+const roadmapOnly = process.argv.includes('--roadmap-only');
 let chromium;
 try { chromium = (await import('playwright')).chromium; } catch { try { chromium = createRequire(execSync('npm root -g').toString().trim() + '/')('playwright').chromium; } catch { console.log('SKIP: playwright 없음'); process.exit(0); } }
 const imp = f => import(pathToFileURL(join(APP, f)).href);
@@ -41,7 +42,7 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.mjs': 'text/javascript; c
 const server = createServer(async (q, r) => { let p = new URL(q.url, 'http://x').pathname; if (p.endsWith('/')) p += 'index.html'; try { const b = await readFile(join(APP, p)); r.writeHead(200, { 'content-type': TYPES[extname(p)] || 'application/octet-stream' }); r.end(b); } catch { r.writeHead(404); r.end(); } });
 await new Promise(ok => server.listen(4305, '127.0.0.1', ok));
 const BASE = 'http://127.0.0.1:4305/';
-const browser = await chromium.launch();
+const browser = await chromium.launch({ignoreDefaultArgs:['--hide-scrollbars']});
 const results = [];
 const check = (id, name, ok, info = '') => results.push({ id, name, ok: !!ok, info: String(info ?? '') });
 const KEY = 'vencubator.prototype.v1';
@@ -86,7 +87,7 @@ try {
     }), JSON.stringify(cards));
     const measure=()=>page.evaluate(()=>{const d=document.querySelector('.task-sheet'),b=d.querySelector('.focus-dialog-body');return {head:d.querySelector('header').getBoundingClientRect().top,foot:d.querySelector('footer').getBoundingClientRect().top,top:b.scrollTop,max:b.scrollHeight-b.clientHeight,outer:d.scrollTop};});
     const initial=await measure();
-    await page.locator('.task-sort').hover();await page.mouse.wheel(0,600);await W(page,180);
+    await page.locator('.task-project').hover();await page.mouse.wheel(0,600);await W(page,400);
     const scrolled=await measure();
     check('T08', `${w}px 휠로 본문만 스크롤·헤더/버튼 고정`, initial.max>0 && scrolled.top>0 && scrolled.outer===0 && Math.abs(scrolled.head-initial.head)<1 && Math.abs(scrolled.foot-initial.foot)<1,JSON.stringify(scrolled));
     await page.locator('.task-sheet .task-card [data-task="detail"]').last().focus();
@@ -111,6 +112,7 @@ try {
     await ctx.close();
   }
 
+  if(!roadmapOnly){
   // ── T02 터치 크기·입력 글꼴·FAB 여백 ──
   {
     const { ctx, page } = await open(390);
@@ -266,6 +268,7 @@ try {
     check('T06', '작업 재개는 보상·이벤트를 만들지 않음', !rewardOpen && (await saved(page)).events.length === evBefore, `events ${evBefore}→${(await saved(page)).events.length}`);
     await ctx.close();
   }
+  }
   // T08: touch scrolling and reduced motion use the same body and modal contract.
   {
     const ctx=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,reducedMotion:'reduce'});
@@ -273,9 +276,16 @@ try {
     await page.locator('.task-fab').tap();await W(page,100);
     const body=page.locator('.task-sheet .focus-dialog-body'),box=await body.boundingBox();
     const cdp=await ctx.newCDPSession(page);
-    await cdp.send('Input.synthesizeScrollGesture',{x:Math.round(box.x+box.width/2),y:Math.round(box.y+box.height-35),yDistance:-240,gestureSourceType:'touch'});
+    const x=Math.round(box.x+box.width/2),y=Math.round(box.y+box.height-45);
+    await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y}]});
+    for(let i=1;i<=10;i++){
+      await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x,y:y-i*24}]});
+      await W(page,20);
+    }
+    await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
     await W(page,200);
-    check('T08','터치 스크롤 및 모션 감소',await body.evaluate(b=>b.scrollTop>0) && await page.locator('.task-sheet').evaluate(d=>getComputedStyle(d).animationName==='none'));
+    const touch=await body.evaluate(b=>({top:b.scrollTop,max:b.scrollHeight-b.clientHeight,animation:getComputedStyle(b.closest('dialog')).animationName}));
+    check('T08','터치 스크롤 및 모션 감소',touch.top>0 && touch.animation==='none',JSON.stringify(touch));
     await ctx.close();
   }
 } finally {
