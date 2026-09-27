@@ -1,0 +1,10 @@
+{
+  "note": "SPEC-014 §12.3 finish 필수 검사. 경로의 /*.test.mjs 는 스크립트가 펼친다.",
+  "checks": [
+    { "name": "prototype 단위", "run": ["node", "--test", "prototype/tests/*.test.mjs"] },
+    { "name": "site 단위·빌드 계약", "run": ["node", "--test", "site/tests/*.test.mjs"] },
+    { "name": "landing-v3 단위", "run": ["node", "--test", "landing-v3/tests/*.test.mjs"] },
+    { "name": "gitflow 도구", "run": ["node", "--test", "scripts/tests/*.test.mjs"] },
+    { "name": "체크포인트 무결성", "run": ["node", "scripts/verify-checkpoint.mjs"] }
+  ]
+}

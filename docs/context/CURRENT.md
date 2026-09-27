@@ -1,7 +1,7 @@
 # CURRENT
 
-CP-0064 / STATE revision 64
+CP-0073 / STATE revision 73
 
-모바일 작업 목록 시트·상세·본문 이어하기·플로팅 버튼 연결 착수. 부캐 평가 구현 없음.
+P07-W04 completed: 최종 gitflow 필수 검사120개 및 CP 무결성 통과, 브랜치 push 완료. PR #3: https://github.com/8848man/Vencubator/pull/3 (기반 w/OPS-W01-gitflow-automation). 제품 코드는 CP-0072와 동일. GitHub에 자동 브랜치 배포 표시가 있으나 미리보기는 별도 미검증. main 병합·운영 배포 미실행. 이번 CP는 PR 인계 정보만 추가.
 
-AUTH-017: 태스크 구현, 부캐 평가 구조/명세만. 배포 없음. P07 완료(CP-0061). 다음 P05-W04. 기존 P05-W04 paused 마감 검사, 연구 대기 유지.
+AUTH-020 / SPEC-013 r0.3. 배포 없음. 다음 P05-W04. 사용자 선행 미추적 파일 보존.

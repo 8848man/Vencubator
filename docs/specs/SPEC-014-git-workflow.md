@@ -1,6 +1,8 @@
 # SPEC-014 — Git·배포 작업 흐름
 
-Revision 0.1 · **Approved (AUTH-018, PR 단계까지)** · 2026-09-27 · 작성: landing-site-session
+Revision 0.2 · **Approved (AUTH-018, r0.2 AUTH-019)** · 2026-09-27 · 작성: landing-site-session
+
+r0.2 변경: 사용자 요청 “스펙 변경이나 코드 구현에 대해서도 git flow를 적용하자. 명령 스텝이 실행되면 새로운 브랜치를 파고, 변경이나 구현이 실행되면 각 작업 의미별로 commit을 생성, 작업이 끝나면 해당 브랜치를 push하도록 워크플로우를 개선”에 따라 §12 **작업 단위 자동 흐름**과 도구 `scripts/gitflow.mjs`를 추가하고 DR-GIT-02를 확정한다.
 
 사용자 요청: “git 작업에 대한 Spec 명세 부탁해.” 이 문서는 저장소 `origin = https://github.com/8848man/Vencubator.git`의 브랜치·커밋·병합·배포 규칙과 SDD 체크포인트(STATE/CP)와의 연결을 정한다. AUTH-018로 이번 정리 PR에 적용한다. main 병합·배포는 계속 사용자 승인 대상이다.
 
@@ -135,7 +137,7 @@ PR은 W 하나. 제목 = 커밋 제목 형식. 본문(`.github/pull_request_temp
 | ID | 질문 | 제안 |
 |---|---|---|
 | DR-GIT-01 | main 병합 방식 | Squash(정리 PR만 예외) |
-| DR-GIT-02 | 에이전트의 권한 | 브랜치 push·PR 생성까지 허용, main 병합은 사용자 |
+| DR-GIT-02 | 에이전트의 권한 | **결정(r0.2)**: 브랜치 생성·의미별 커밋·작업 끝 push·PR 생성까지 에이전트가 수행. main 병합·배포는 사용자 |
 | DR-GIT-03 | GitHub 브랜치 보호 | main: PR 필수, force push 금지, 병합 후 브랜치 자동 삭제(사용자가 GitHub에서 설정) |
 | DR-GIT-04 | `output/`·`tmp/`·`Claude outputs/` 추적 | 추적 해제(파일은 로컬에 유지). 과거 이력 재작성은 하지 않음 |
 | DR-GIT-05 | 커밋 작성자 | 사람 계정으로 커밋하고 본문 `Agent:`로 세션 표기 |
@@ -155,3 +157,75 @@ PR은 W 하나. 제목 = 커밋 제목 형식. 본문(`.github/pull_request_temp
 ## 11. 실행 기록
 
 - 2026-09-27 AUTH-018: 에이전트 환경 두 곳 모두 GitHub push 자격 증명이 없다(클라우드: 저장소 미허용, Cowork VM: 인증 없음). 그래서 커밋은 클라우드의 깨끗한 클론에서 만들고 git bundle로 전달, **push와 PR 생성은 사용자 PC에서 `scripts\\open-pr.cmd` 한 번 실행**으로 한다. 스크립트는 push 후 로컬 작업 트리를 파일 변경 없이 새 브랜치로 옮긴다(`symbolic-ref` + `reset`).
+
+## 12. 작업 단위 자동 흐름 (r0.2)
+
+사용자 요청 하나(명령 스텝)는 W 하나이고, W 하나는 브랜치 하나다. 스펙 변경만 있는 요청도, 코드 구현도 같은 흐름을 따른다.
+
+```
+요청 접수 ─ gitflow start <W-ID> <slug>     새 브랜치 w/<W-ID>-<slug> (파일을 바꾸기 전에)
+   │
+   ├─ 명세 변경  → gitflow commit spec  "<요약>" <파일…>
+   ├─ 구현       → gitflow commit feat|fix "<요약>" <파일…>   (의미 단위마다 반복)
+   ├─ 검사 추가  → gitflow commit test  "<요약>" <파일…>
+   ├─ 문서·안내  → gitflow commit docs  "<요약>" <파일…>
+   └─ CP 게시    → gitflow commit cp    "<요약>" <CP·STATE·WORKLOG·CURRENT·HANDOFF>
+   │
+작업 끝 ─ gitflow finish                      필수 검사 → push → (가능하면) PR
+```
+
+### 12.1 시작 (`start`)
+
+- 파일을 하나라도 바꾸기 전에 실행한다. 이름 `w/<W-ID>-<slug>`: W-ID는 `P05-W06`·`OPS-W01` 형식, slug는 영문 소문자·숫자·하이픈 2~40자.
+- 기반(base): 현재 브랜치가 아직 main에 병합되지 않은 작업 브랜치(`w/*`, `sync/*`, `fix/*`)면 **그 위에 쌓는다**(stack). 아니면 `origin/main`(없으면 `main`). `--base`로 직접 지정 가능.
+- 기반과 제목은 로컬 git 설정(`branch.<이름>.vencubatorBase`, `…vencubatorW`, `…vencubatorTitle`)에 기록해 finish·handoff가 PR base를 안다.
+- 작업 트리에 커밋되지 않은 변경이 있으면 멈춘다. 사용자가 미리 고친 파일을 이번 작업에 포함하려면 `--carry`.
+
+### 12.2 의미별 커밋 (`commit`)
+
+| 종류 | 담는 것 | 제목 예 |
+|---|---|---|
+| `spec` | Spec·ADR·승인 기록 | `[P05-W06] spec: SPEC-012 r0.2 작은 배움 집중형` |
+| `feat` | 새 동작 구현 | `[P05-W06] feat: review-ui 집중형 흐름` |
+| `fix` | 결함 수정 | `[P07-W03] fix: 작업 상세 돌아가기` |
+| `test` | 자동 검사·QA 스크립트 | `[P05-W06] test: qa-review 35건` |
+| `docs` | README·안내·검증 기록(VAL) | `[OPS-W01] docs: AGENTS.md git 흐름` |
+| `chore` | 빌드 산출물·설정·정리 | `[OPS-W01] chore: dist 재빌드` |
+| `cp` | 체크포인트 게시 파일 | `[P05-W06] cp: CP-0065 완료` |
+
+- 한 커밋 = 한 의미. 파일은 **명시한 경로만** 넣는다(`git add -A` 금지). 다른 W의 파일이 섞이면 멈춘다.
+- 본문 줄: `Kind`, `Spec`, `Auth`, `Validation`, `Not-run`, `CP`, `Agent`와 도구가 요구하는 attribution 줄.
+- `main`(및 `master`)에서는 커밋하지 않는다. 이미 커밋된 CP 파일을 바꾸는 커밋은 거부한다(§3 체크포인트 불변).
+- CP는 기존 규칙대로 “파일 수정 묶음·검증 결과 경계”마다 게시하고, 게시 직후 `cp` 커밋으로 남긴다. CP 본문과 STATE.git에는 브랜치 이름을 적는다.
+
+### 12.3 종료 (`finish`)
+
+1. 작업 트리가 깨끗한지 확인(커밋 안 된 변경이 있으면 멈춤).
+2. 필수 검사(`scripts/gitflow.config.json`): 폴더별 `node --test`, `verify-checkpoint`, 사이트 빌드. 검사가 추적 파일을 바꾸면(예: dist 재생성) 멈추고 목록을 보여 준다 → `chore` 커밋 후 다시 finish.
+3. 결과를 `.git/gitflow/checks-<브랜치>.json`에 저장(PR 본문에 사용).
+4. `git push -u origin <브랜치>`. 쌓인 기반 브랜치가 원격에 없으면 함께 push.
+5. push가 인증 문제로 실패하면 **handoff**를 자동 생성한다(아래). `--pr`이면 `gh pr create`(base = 기록된 기반).
+
+### 12.4 push할 수 없는 환경 (`handoff`)
+
+- `_handoff/`에 git bundle(쌓인 브랜치 전체), PR 제목·본문(커밋 목록·검사 결과·병합 순서), Windows용 `open-pr.cmd`를 만든다. 사용자는 한 번 실행으로 fetch → 브랜치 끝 검증 → push → 작업 폴더를 파일 변경 없이 마지막 브랜치로 이동 → PR 생성(`gh` 없으면 클립보드+브라우저)까지 한다.
+- 에이전트가 GitHub에 직접 push하게 하려면: 로컬 PC에서 작업하는 도구는 사용자 git 로그인 그대로, Claude 클라우드 세션은 **세션 소스(연결된 저장소)에 `8848man/Vencubator`를 추가**하면 된다. 그 경우 handoff는 쓰이지 않는다.
+
+### 12.5 환경별 실행 위치
+
+| 환경 | 파일 수정 | git 실행 |
+|---|---|---|
+| 사용자 PC의 에이전트(Codex·Claude Code 등) | 작업 폴더 | 작업 폴더에서 `node scripts/gitflow.mjs …` |
+| Claude Cowork(클라우드+폴더 연결) | 연결된 폴더 | **클라우드의 깨끗한 클론**에서 실행하고, 같은 파일을 폴더에 반영. 끝에 handoff 또는 직접 push |
+| 파일 삭제가 막힌 VM | — | git 쓰기 금지. `gitflow`가 시작 시 삭제 가능 여부를 검사해 막는다. 읽기는 `GIT_OPTIONAL_LOCKS=0` |
+
+### 12.6 수용 기준 (r0.2)
+
+| AC | 기준 | 검사 |
+|---|---|---|
+| AC-G08 | start: 이름 검증, 기반 자동 선택(병합 안 된 작업 브랜치 위 stack / origin/main), 더러운 트리 거부(`--carry` 예외), 기반 기록 | `scripts/tests/gitflow.test.mjs` |
+| AC-G09 | commit: 종류·제목 형식, 명시 경로만, main 거부, 빈 커밋 거부, 커밋된 CP 수정 거부, 본문 줄 | 같은 파일 |
+| AC-G10 | finish: 더러운 트리 거부, 검사 실패 시 push 안 함, 검사 뒤 추적 파일 변경 감지, push(쌓인 기반 포함) | 같은 파일(로컬 bare 원격) |
+| AC-G11 | handoff: 쌓인 브랜치 bundle·끝 SHA 검증 스크립트·PR base 순서·본문 생성, CRLF·UTF-16 클립보드 | 같은 파일 |
+| AC-G12 | guard: 파일 삭제가 막힌 환경에서 쓰기 명령 거부, 잠금 파일을 남기지 않음 | 같은 파일(모의) + 세션 기록 |
+

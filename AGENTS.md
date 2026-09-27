@@ -22,6 +22,17 @@
 - 한 번에 W 하나를 active로 둔다. 큰 W는 착수 전 분할한다. 토큰/문맥 경고 시 새 작업을 시작하지 말고 미완료·다음 행동을 저장한다.
 - `docs/execution/CHECKPOINT-PROTOCOL.md`를 따른다. 남은 토큰을 정확히 알 수 있다고 가정하지 말고 파일 수정 묶음·검증 결과 경계마다 checkpoint를 남긴다.
 
+## Git 흐름 (SPEC-014 §12)
+
+사용자 요청 하나 = W 하나 = 브랜치 하나. 스펙만 바꾸는 요청도 같다. 도구: `node scripts/gitflow.mjs`.
+
+1. **요청을 받으면 파일을 바꾸기 전에** `gitflow start <W-ID> <slug> [--title "..."]`. 병합 안 된 앞 작업 브랜치 위에 있으면 자동으로 쌓고, 아니면 `origin/main`에서 시작한다.
+2. **의미 단위마다 커밋**: `gitflow commit <spec|feat|fix|test|docs|chore|cp> "<요약>" <파일…> [--spec ..] [--auth ..] [--validation ..] [--cp CP-00NN]`. 명시한 파일만 들어간다. 스펙 → 구현 → 검사 → 문서 → CP 순서를 권장한다. CP를 게시하면 곧바로 `cp` 커밋.
+3. **작업 끝**: `gitflow finish [--pr]` — 필수 검사(`scripts/gitflow.config.json`) → push(쌓인 기반 포함) → PR. push할 수 없으면 `_handoff/open-pr.cmd`를 만들어 사용자가 한 번 실행하게 한다.
+4. main 병합·배포는 사용자가 한다. main에 직접 커밋하지 않는다.
+5. 파일 삭제가 막힌 환경(Cowork VM)에서는 git 쓰기를 하지 않는다(`gitflow`가 막는다). 읽기는 `GIT_OPTIONAL_LOCKS=0 git status`. Claude Cowork는 클라우드의 깨끗한 클론에서 gitflow를 실행하고 같은 파일을 연결 폴더에 반영한다.
+6. attribution 줄은 `GITFLOW_TRAILERS`, 작업 세션 이름은 `GITFLOW_AGENT` 환경 변수로 넣는다.
+
 ## 종료·중단 전
 
-작업 파일/검증 → 새 checkpoint와 manifest → STATE revision 및 checkpoint 포인터 → WORKLOG/CURRENT/HANDOFF 순서로 저장한다. 완료 근거·실패·미실행 검사·변경 파일·구체적인 다음 행동을 남긴다. CP 생성은 작업 완료가 아니다. 강제 중단 뒤에는 tracked/untracked 변경과 외부 job 상태를 대조해 recovery CP로 복구한다. 대화 기억을 유일한 저장소로 사용하지 않는다.
+작업 파일/검증 → 새 checkpoint와 manifest → STATE revision 및 checkpoint 포인터 → WORKLOG/CURRENT/HANDOFF 순서로 저장한 뒤 `gitflow commit cp`, 요청이 끝났으면 `gitflow finish`. 완료 근거·실패·미실행 검사·변경 파일·구체적인 다음 행동을 남긴다. CP 생성은 작업 완료가 아니다. 강제 중단 뒤에는 tracked/untracked 변경과 외부 job 상태를 대조해 recovery CP로 복구한다. 대화 기억을 유일한 저장소로 사용하지 않는다.

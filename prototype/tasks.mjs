@@ -23,7 +23,7 @@ export function projectTasks(p){
   return {id,projectId:p.id,concept:r.concept,run:r,field,artifact,scopeVersion:r.scopeVersion,status,step,title:QUESTS[r.concept]?.name||'이전 학습',label:labels[step]||'이전 흐름',next:next[step]||'기록을 확인해 주세요',stages,skippedQuestion:stages[1]&&!r.results?.question,priority:meta.priority||'normal',dueAt:meta.dueAt||'',minutes:meta.minutes||(field?20:3),reason:meta.priority==='high'?'직접 중요하게 지정했어요':'진행 중인 작업을 마무리할 수 있어요',meta};
  });
  const next=nextConcept(p);
- if(!getRun(p,next))flows.push({id:`new:${next}`,projectId:p.id,concept:next,status:'ready',step:'concept',title:QUESTS[next].name,label:'새로운 학습',next:'개념부터 짧게 시작해요',stages:[false,false,false,false,false],priority:'normal',dueAt:'',minutes:3,reason:'학습 길의 다음 단계예요',meta:{}});
+ if(!getRun(p,next))flows.push({id:`new:${next}`,projectId:p.id,concept:next,status:'ready',step:'concept',title:QUESTS[next].name,label:'새로운 학습',next:'개념부터 짧게 시작해요',stages:[false,false,false,false,false],priority:'normal',dueAt:'',minutes:3,reason:'학습 로드맵의 다음 단계예요',meta:{}});
  return flows;
 }
 export function sortTasks(tasks,sort='recommended'){

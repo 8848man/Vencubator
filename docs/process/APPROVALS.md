@@ -86,3 +86,11 @@
 ## AUTH-018 — SPEC-014 Git 흐름 적용 (PR까지)
 
 2026-09-27 사용자: “방금 한 작업을 깃 플로우에 따라 PR까지 올려줘.” 범위: SPEC-014 r0.1을 이번 정리 PR에 적용 — `sync/20260927-backlog` 브랜치, W별 커밋, 루트 `.gitattributes`·`.gitignore`, 줄바꿈 정규화, PR 생성. DR-GIT-01~05는 문서의 제안값을 잠정 적용(정리 PR은 merge commit, 에이전트는 PR까지, main 병합·배포는 사용자). 제외: main 병합, Vercel 배포, `output/`·`tmp/`·`Claude outputs/` 추적 해제(DR-GIT-04 미결), 사용자 파일(`growth/마케팅 채널 모음.txt`, `thumb/`) 포함.
+
+## AUTH-019 — 작업 단위 git 흐름 자동화
+
+2026-09-27 사용자: “스펙 변경이나 코드 구현에 대해서도 git flow를 적용하자. 명령 스텝이 실행되면 새로운 브랜치를 파고, 변경이나 구현이 실행되면 각 작업 의미별로 commit을 생성, 작업이 끝나면 해당 브랜치를 push하도록 워크플로우를 개선하고싶어.” 범위: SPEC-014 r0.2 §12, `scripts/gitflow.mjs`(start/commit/finish/handoff/guard/status)와 검사, AGENTS.md·CHECKPOINT-PROTOCOL 반영. DR-GIT-02 확정: 에이전트는 브랜치·커밋·push·PR까지, main 병합·배포는 사용자.
+
+## AUTH-020 — 학습 로드맵·작업 목록 UI
+
+2026-09-27 사용자: 명칭 변경·스크롤 개선·이어서 할 일 카드 상단 중앙 단계 그래프를 요청하고 제시된 계획에 “좋아 작업 진행 부탁해”. 범위: SPEC-003/005 명칭 정합성, SPEC-013 r0.3 구현·검증, P07-W04 브랜치·커밋·push·PR. 기존 진행·성장 정책 유지. main 병합·배포는 사용자.

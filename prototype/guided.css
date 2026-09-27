@@ -11,3 +11,7 @@ main h1[tabindex="-1"]{outline:none}.answer-feedback[tabindex="-1"]:focus{outlin
 @keyframes path-tag{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 .reduce-motion .path-stop.current.is-nudge .path-node,.reduce-motion .path-stop.current.is-nudge>div:before{animation:none}
 @media(prefers-reduced-motion:reduce){.path-stop.current.is-nudge .path-node,.path-stop.current.is-nudge>div:before{animation:none}}
+
+/* SPEC-012 r0.2: 나의 성장 ‘작은 배움’ — 오늘의 학습 레이아웃 재사용 */
+.review-session .review-next{margin-top:12px}.review-session .review-next .btn{width:100%;min-height:48px}
+.review-session .review-extra{margin-top:8px;text-align:center}.review-session .review-extra .btn{min-height:44px}

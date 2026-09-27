@@ -26,13 +26,13 @@ for (const vp of [{ n: 'm', width: 390, height: 844 }, { n: 'd', width: 1280, he
   // 1 in-app back from dashboard
   await page.click('.task-fab'); await W(); await page.click('.task-sheet [data-task="detail"]'); await W();
   let r = await route(); check(`${vp.n} 상세 진입 from=dashboard`, r.view === 'taskdetail' && r.from === 'dashboard', JSON.stringify(r));
-  const label = await page.textContent('.task-back'); check(`${vp.n} 뒤로 버튼 이름`, label.includes('학습 길'), label);
+  const label = await page.textContent('.task-back'); check(`${vp.n} 뒤로 버튼 이름`, label.includes('학습 로드맵'), label);
   await page.click('.task-back'); await W();
-  r = await route(); check(`${vp.n} 앱 뒤로 → 학습 길, 다이얼로그 없음`, r.view === 'dashboard' && !(await dlg()), JSON.stringify(r));
+  r = await route(); check(`${vp.n} 앱 뒤로 → 학습 로드맵, 다이얼로그 없음`, r.view === 'dashboard' && !(await dlg()), JSON.stringify(r));
   // 2 browser back
   await page.click('.task-fab'); await W(); await page.click('.task-sheet [data-task="detail"]'); await W();
   await page.goBack(); await W();
-  r = await route(); check(`${vp.n} 브라우저 뒤로 → 학습 길`, r.view === 'dashboard' && page.url().startsWith('http://127.0.0.1:4302/'), JSON.stringify(r) + ' ' + page.url());
+  r = await route(); check(`${vp.n} 브라우저 뒤로 → 학습 로드맵`, r.view === 'dashboard' && page.url().startsWith('http://127.0.0.1:4302/'), JSON.stringify(r) + ' ' + page.url());
   // 3 from details
   await page.evaluate(() => document.querySelector('[data-action="details"]')?.click()); await W();
   r = await route();
@@ -54,12 +54,12 @@ for (const vp of [{ n: 'm', width: 390, height: 844 }, { n: 'd', width: 1280, he
   await page.click('.task-next-box [data-task="resume"]'); await W();
   const rv = (await route()).view;
   await page.goBack(); await W();
-  r = await route(); check(`${vp.n} 상세→시작(${rv})→브라우저 뒤로 → 학습 길`, r.view === 'dashboard', JSON.stringify(r));
+  r = await route(); check(`${vp.n} 상세→시작(${rv})→브라우저 뒤로 → 학습 로드맵`, r.view === 'dashboard', JSON.stringify(r));
   // 6 reload on detail keeps origin
   await page.click('.task-fab'); await W(); await page.click('.task-sheet [data-task="detail"]'); await W();
   await page.reload(); await W(700);
   await page.click('.task-back'); await W();
-  r = await route(); check(`${vp.n} 새로고침 후 앱 뒤로 → 학습 길`, r.view === 'dashboard', JSON.stringify(r));
+  r = await route(); check(`${vp.n} 새로고침 후 앱 뒤로 → 학습 로드맵`, r.view === 'dashboard', JSON.stringify(r));
   const ov = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth); check(`${vp.n} 가로 넘침 없음`, ov <= 0, ov);
   // contrast of preview
   const c = await page.evaluate(() => { const e = document.querySelector('.task-preview'); const s = getComputedStyle(e); return s.backgroundImage.slice(0, 40); });
