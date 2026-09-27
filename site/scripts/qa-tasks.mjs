@@ -71,11 +71,35 @@ try {
     const seen = {};
     seen.dashboard = await overflow(page); await shot(page, `t01-${w}-dashboard`);
     await openSheet(page); seen.sheet = await overflow(page); await shot(page, `t01-${w}-sheet`);
+    const beforeScroll = await saved(page);
+    const expected = projectTasks(beforeScroll.projects.find(p => p.id === 'p1')).filter(t => t.status === 'active');
+    const cards = await page.locator('.task-card:has(.task-progress)').evaluateAll(cards => cards.map(c => ({
+      id:c.querySelector('[data-task-id]').dataset.taskId,
+      current:[...c.querySelectorAll('.task-progress-track li')].findIndex(n=>n.getAttribute('aria-current')==='step'),
+      done:[...c.querySelectorAll('.task-progress-track li')].map(n=>n.classList.contains('done')),
+      overflow:c.scrollWidth>c.clientWidth,
+      focusable:c.querySelectorAll('.task-progress button,.task-progress a,.task-progress [tabindex]').length,
+      label:c.querySelector('.task-stage').textContent
+    })));
+    check('T07', `${w}px 카드 5단계·현재 단계 projection 일치`, cards.length===expected.length && cards.every(c=>{
+      const t=expected.find(t=>t.id===c.id);return t && JSON.stringify(t.stages)===JSON.stringify(c.done) && c.current===t.stages.indexOf(false) && c.label===t.label && !c.overflow && !c.focusable;
+    }), JSON.stringify(cards));
+    const measure=()=>page.evaluate(()=>{const d=document.querySelector('.task-sheet'),b=d.querySelector('.focus-dialog-body');return {head:d.querySelector('header').getBoundingClientRect().top,foot:d.querySelector('footer').getBoundingClientRect().top,top:b.scrollTop,max:b.scrollHeight-b.clientHeight,outer:d.scrollTop};});
+    const initial=await measure();
+    await page.locator('.task-sort').hover();await page.mouse.wheel(0,600);await W(page,180);
+    const scrolled=await measure();
+    check('T08', `${w}px 휠로 본문만 스크롤·헤더/버튼 고정`, initial.max>0 && scrolled.top>0 && scrolled.outer===0 && Math.abs(scrolled.head-initial.head)<1 && Math.abs(scrolled.foot-initial.foot)<1,JSON.stringify(scrolled));
+    await page.locator('.task-sheet .task-card [data-task="detail"]').last().focus();
+    const keyboard=await measure();
+    check('T08', `${w}px 아래 카드 키보드 포커스·저장 불변·명칭`,keyboard.top>0 && JSON.stringify(beforeScroll)===JSON.stringify(await saved(page)) && (await page.locator('.nav').textContent()).includes('학습 로드맵') && !(await page.locator('body').textContent()).includes('학습 길'));
+    await page.locator('.task-sheet .focus-dialog-body').evaluate(b=>b.scrollTop=0);
     await go(page, '.task-sheet .task-card [data-task="detail"]'); seen.detail = await overflow(page);
+    const detailStages=await page.locator('.task-timeline li').evaluateAll(nodes=>nodes.map(n=>({done:n.classList.contains('done'),current:n.getAttribute('aria-current')==='step'})));
+    check('T07', `${w}px 카드와 상세 진행 표시 동일`,JSON.stringify(detailStages.map(n=>n.done))===JSON.stringify(cards[0].done) && detailStages.findIndex(n=>n.current)===cards[0].current);
     await page.click('.task-settings summary'); await W(page, 200); seen.settings = await overflow(page); await shot(page, `t01-${w}-detail`);
     await go(page, '.task-back'); await go(page, '[data-action="details"]'); seen.details = await overflow(page);
     await go(page, '.task-preview [data-task="resume"]'); seen.resume = await overflow(page);
-    check('T01', `${w}px 가로 넘침 없음 (학습 길·시트·상세·설정·프로젝트 상세·이어하기)`, Object.values(seen).every(v => v <= 0), JSON.stringify(seen));
+    check('T01', `${w}px 가로 넘침 없음 (학습 로드맵·시트·상세·설정·프로젝트 상세·이어하기)`, Object.values(seen).every(v => v <= 0), JSON.stringify(seen));
     check('T01', `${w}px JS 오류 없음`, errors.length === 0, errors.join(' | '));
     await ctx.close();
   }
@@ -118,8 +142,8 @@ try {
   for (const w of [390, 1280]) {
     const { ctx, page } = await open(w, w > 800 ? 800 : 844);
     await page.focus('.task-fab'); await page.keyboard.press('Enter'); await W(page);
-    const m = await page.evaluate(() => { const d = document.querySelector('dialog.task-sheet'); const cs = getComputedStyle(d); const head = getComputedStyle(d.querySelector('.focus-dialog-head')).position, foot = getComputedStyle(d.querySelector('.focus-dialog-actions')).position; return { h: d.getBoundingClientRect().height, vh: innerHeight, over: cs.overflowY, head, foot, primary: d.querySelectorAll('.btn.primary').length, dialogs: document.querySelectorAll('dialog[open]').length, focus: document.activeElement?.id }; });
-    check('T03', `${w}px 시트 높이 85% 이하·내부 스크롤·제목/닫기 고정`, m.h <= m.vh * 0.85 + 1 && /auto|scroll/.test(m.over) && m.head === 'sticky' && m.foot === 'sticky', JSON.stringify(m));
+    const m = await page.evaluate(() => { const d = document.querySelector('dialog.task-sheet'); return { h: d.getBoundingClientRect().height, vh: innerHeight, over:getComputedStyle(d.querySelector('.focus-dialog-body')).overflowY, outer:getComputedStyle(d).overflowY, primary: d.querySelectorAll('.btn.primary').length, dialogs: document.querySelectorAll('dialog[open]').length, focus: document.activeElement?.id }; });
+    check('T03', `${w}px 시트 높이 85% 이하·본문 스크롤·외곽 스크롤 없음`, m.h <= m.vh * 0.85 + 1 && /auto|scroll/.test(m.over) && m.outer === 'hidden', JSON.stringify(m));
     check('T03', `${w}px 시트 주 행동 1개·중첩 없음·제목에 포커스`, m.primary === 1 && m.dialogs === 1 && m.focus === 'focus-dialog-title', JSON.stringify(m));
     await page.click('.task-sheet [data-task="list"]').catch(() => {}); // 목록 안에서 다시 열어도 중첩되지 않아야 함
     check('T03', `${w}px 다시 열기 요청에도 시트 1개`, await page.evaluate(() => document.querySelectorAll('dialog[open]').length) === 1);
@@ -132,7 +156,7 @@ try {
     fabOn.dashboard = !!await page.$('.task-fab');
     await firstActiveDetail(page); fabOn.detail = !!await page.$('.task-fab');
     await go(page, '.task-next-box [data-task="resume"]'); fabOn.resumed = !!await page.$('.task-fab'); fabOn.view = (await route(page)).view;
-    check('T03', `${w}px FAB는 학습 길·프로젝트 상세에만 (상세·실행·학습 중 없음)`, fabOn.dashboard && !fabOn.detail && !fabOn.resumed, JSON.stringify(fabOn));
+    check('T03', `${w}px FAB는 학습 로드맵·프로젝트 상세에만 (상세·실행·학습 중 없음)`, fabOn.dashboard && !fabOn.detail && !fabOn.resumed, JSON.stringify(fabOn));
     await ctx.close();
   }
 
@@ -240,6 +264,18 @@ try {
     await go(page, '.task-next-box [data-task="resume"]');
     const rewardOpen = await page.evaluate(() => !!document.querySelector('#reward[open], dialog#reward'));
     check('T06', '작업 재개는 보상·이벤트를 만들지 않음', !rewardOpen && (await saved(page)).events.length === evBefore, `events ${evBefore}→${(await saved(page)).events.length}`);
+    await ctx.close();
+  }
+  // T08: touch scrolling and reduced motion use the same body and modal contract.
+  {
+    const ctx=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,reducedMotion:'reduce'});
+    const {page}=await open(390,844,rich(),'',ctx);
+    await page.locator('.task-fab').tap();await W(page,100);
+    const body=page.locator('.task-sheet .focus-dialog-body'),box=await body.boundingBox();
+    const cdp=await ctx.newCDPSession(page);
+    await cdp.send('Input.synthesizeScrollGesture',{x:Math.round(box.x+box.width/2),y:Math.round(box.y+box.height-35),yDistance:-240,gestureSourceType:'touch'});
+    await W(page,200);
+    check('T08','터치 스크롤 및 모션 감소',await body.evaluate(b=>b.scrollTop>0) && await page.locator('.task-sheet').evaluate(d=>getComputedStyle(d).animationName==='none'));
     await ctx.close();
   }
 } finally {
