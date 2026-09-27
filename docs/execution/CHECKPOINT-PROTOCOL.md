@@ -67,6 +67,10 @@ STATE 손상/부분 기록이면 파일을 보존한 채 가장 최근의 완전
 
 manifest는 현재 W의 관련 소스/테스트/명세와 git 상태에서 식별한 변경 경로를 포함한다. STATE/CURRENT/HANDOFF/WORKLOG처럼 CP 게시 뒤 바뀌는 파일을 스스로 hash하는 순환 구조는 피한다. 이는 백업이 아니므로 실제 코드 유실을 복구해주지는 않는다. Git commit 또는 별도 백업은 독립적으로 관리한다.
 
+## 5-1. git과의 연결 (SPEC-014 §12)
+
+CP 게시(STATE 교체와 WORKLOG·CURRENT·HANDOFF 갱신) 직후 `node scripts/gitflow.mjs commit cp "<요약>" <CP·manifest·STATE·WORKLOG·CURRENT·HANDOFF> --cp CP-NNNN`으로 커밋한다. CP 본문과 STATE.git에는 작업 브랜치 이름을 적는다. 이미 커밋된 CP 파일은 고치지 않는다(도구가 거부). 요청이 끝나면 `gitflow finish`로 검사·push한다.
+
 ## 6. 토큰·문맥 부족 대응
 
 모델마다 실제 남은 문맥/토큰 정보를 읽을 수 있는 것은 아니다. 정확한 잔여량을 안다고 가정하지 않는다. 다음 **작업 경계 기준**을 기본으로 한다.
