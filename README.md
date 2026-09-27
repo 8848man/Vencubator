@@ -41,7 +41,7 @@ Vencubator는 자신의 아이디어를 발전시키며 배우고 행동하는 *
 
 ## 모델을 바꿀 때 그대로 사용할 프롬프트
 
-> AGENTS.md와 docs/context/CURRENT.md, docs/execution/STATE.json 및 해당 checkpoint를 읽어라. 활성 작업과 다음 W를 실제 파일/git 상태에 대조해라. 관련 Phase·Spec·ADR·승인 범위 안에서 다음 한 작업부터 이어라. 종료 전에 체크포인트와 상태를 저장하라. 완료하지 않은 작업을 완료로 추정하지 마라.
+> AGENTS.md와 docs/context/CURRENT.md, docs/execution/STATE.json 및 해당 checkpoint를 읽어라. 활성 작업과 다음 W를 실제 파일/git 상태에 대조해라. 관련 Phase·Spec·ADR·승인 범위 안에서 다음 한 작업부터 이어라. W 정의 파일에 체크리스트가 있으면 첫 번째 미완료 항목부터 이어라. 종료 전에 체크포인트와 상태를 저장하라. 완료하지 않은 작업을 완료로 추정하지 마라.
 
 파일을 읽지 않는 도구까지 컨텍스트 지속을 보장하지는 않습니다. [중단 복구 프로토콜](docs/execution/CHECKPOINT-PROTOCOL.md)과 [검증 기록](docs/validation/VAL-002-staged-plan.md)을 통해 필요한 상태를 복구하도록 설계했습니다. 실제 다른 모델 전환·실행 중 강제 종료 실험은 수행하지 않았습니다. 자동 저장 프로그램을 설치한 것이 아니라 작업자가 경계마다 기록하는 SDD 운영 구조입니다.
 
