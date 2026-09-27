@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 64,
-  "updated_at": "2026-09-26T23:08:55.000Z",
+  "revision": 65,
+  "updated_at": "2026-09-27T00:23:48.000Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -19,12 +19,12 @@
     "action": "P07(태스크) 완료. 다음은 보류된 P05-W04 검증 마감. 태스크 UX 개선 제안 3건(카드·경로 중복, 데스크톱 FAB 가림, 상세 밖 기기 뒤로가기)은 VAL-011 참조, 사용자 결정 대기."
   },
   "checkpoint": {
-    "id": "CP-0064",
-    "path": "docs/execution/checkpoints/CP-0064.md",
-    "manifest": "docs/execution/checkpoints/CP-0064.manifest.json"
+    "id": "CP-0065",
+    "path": "docs/execution/checkpoints/CP-0065.md",
+    "manifest": "docs/execution/checkpoints/CP-0065.manifest.json"
   },
   "git": {
-    "branch": "sync/20260927-backlog",
+    "branch": "w/P05-W06-review-focus",
     "base": "872ad40910c3ec484c6ef9eb4ed311d7d6646eb9",
     "head": null,
     "dirty": true,
@@ -36,7 +36,7 @@
       "status": "not_started",
       "checked_at": null
     },
-    "note": "커밋은 bundle로 준비, push·PR은 사용자 PC(scripts/open-pr.cmd)"
+    "note": "sync/20260927-backlog 위에 쌓은 W 브랜치. push·PR은 사용자 PC(_handoff/open-pr.cmd)"
   },
   "stages": {
     "S1": {
@@ -1052,6 +1052,17 @@
         "site/scripts/qa-locked-path.mjs"
       ],
       "completed_checkpoint": "CP-0062"
+    },
+    "P05-W06": {
+      "phase": "P05",
+      "status": "completed",
+      "authorization_ref": "USER-2026-09-27",
+      "definition_path": "docs/execution/work-items/P05-W06.md",
+      "validation_status": "passed",
+      "validation_refs": [
+        "site/scripts/qa-review.mjs"
+      ],
+      "completed_checkpoint": "CP-0065"
     }
   }
 }

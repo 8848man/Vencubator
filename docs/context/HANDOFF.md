@@ -1,6 +1,6 @@
 # HANDOFF
 
-CP-0064 / STATE revision 64
+CP-0065 / STATE revision 65
 
 모바일 작업 목록 시트·상세·본문 이어하기·플로팅 버튼 연결 착수. 부캐 평가 구현 없음.
 
