@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "revision": 74,
-  "updated_at": "2026-09-27T08:41:10.275Z",
+  "revision": 75,
+  "updated_at": "2026-09-27T09:00:03.535Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "stage": "S1",
-    "phase": "P07",
-    "work_item": "P07-W05",
-    "owner": "cowork-claude",
-    "run_state": "in_progress"
+    "stage": null,
+    "phase": null,
+    "work_item": null,
+    "owner": null,
+    "run_state": "idle"
   },
   "next": {
     "stage": "S1",
-    "phase": "P07",
-    "work_item": "P07-W05",
-    "condition": "AUTH-021 범위",
-    "action": "SPEC-013 r0.4·AUTH-021·W 정의 커밋 완료. UI 구현·브라우저 검증 미실행."
+    "phase": "P05",
+    "work_item": "P05-W04",
+    "condition": "기존 paused 검증 마감 별도",
+    "action": "PR #3 → PR(P07-W05) 순서 검토·병합은 사용자. 이후 집중형 다이얼로그 검증 마감과 실제 사용자 연구"
   },
   "checkpoint": {
-    "id": "CP-0074",
-    "path": "docs/execution/checkpoints/CP-0074.md",
-    "manifest": "docs/execution/checkpoints/CP-0074.manifest.json"
+    "id": "CP-0075",
+    "path": "docs/execution/checkpoints/CP-0075.md",
+    "manifest": "docs/execution/checkpoints/CP-0075.manifest.json"
   },
   "git": {
     "branch": "w/P07-W05-compact-task-progress",
     "base": "3cd9e9c5a6a60529e871226e1060b3bdfbb8919e",
-    "head": "5d85e3eb85467bc5bdfaf63e8f576bbb83099330",
+    "head": "1ec176435301b3c1b9d743b463cee0ff8836c20a",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -1095,9 +1095,9 @@
       "validation_refs": [
         "docs/validation/VAL-013-compact-progress.md"
       ],
-      "status": "in_progress",
-      "validation_status": "not_run",
-      "completed_checkpoint": null
+      "status": "completed",
+      "validation_status": "passed",
+      "completed_checkpoint": "CP-0075"
     }
   }
 }

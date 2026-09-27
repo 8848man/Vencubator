@@ -1,7 +1,7 @@
 # HANDOFF
 
-CP-0074 / STATE revision 74
+CP-0075 / STATE revision 75
 
-P07-W05 in_progress: SPEC-013 r0.4·AUTH-021·W 정의 커밋 완료. UI 구현·브라우저 검증 미실행.
+P07-W05 completed: 카드 상단 한 행(뱃지·컴팩트 5단계·분야) 구현·검증 완료(VAL-013). qa-tasks 83/83(T09 포함), nav 26/26, review 35/35, locked 30/30, prototype 54. Windows 글꼴 카드 재현 확인. 다음: gitflow finish, push 불가 시 _handoff/open-pr.cmd로 push·PR. main 병합·운영 배포 없음.
 
-AUTH-021 / SPEC-013 r0.4. 브랜치 w/P07-W05-compact-task-progress (기반 P07-W04, PR #3 미병합). main 병합·운영 배포 없음. 다음 P07-W05. 사용자 선행 미추적 파일 보존.
+AUTH-021 / SPEC-013 r0.4. 브랜치 w/P07-W05-compact-task-progress (기반 P07-W04, PR #3 미병합). main 병합·운영 배포 없음. 다음 P05-W04. 사용자 선행 미추적 파일 보존.
