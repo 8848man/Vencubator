@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 84,
-  "updated_at": "2026-09-27T13:00:27.996Z",
+  "revision": 85,
+  "updated_at": "2026-09-27T13:07:06.159Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -16,17 +16,17 @@
     "phase": "P08",
     "work_item": "P08-W04",
     "condition": "AUTH-024",
-    "action": "사용자에게 projectId·apiKey 받기 → prototype/feedback-send.mjs FIREBASE_CONFIG 입력 → 사용자 PC에서 node scripts/feedback-rules-check.mjs 10/10 확인(체크리스트 8번) → 완료 CP"
+    "action": "사용자가 콘솔에서 firestore.rules 게시(필수, W04 병합 전)·키 사용 제한(권장) → 사용자 PC에서 node scripts/feedback-rules-check.mjs 10/10 → 체크리스트 8번 완료·완료 CP"
   },
   "checkpoint": {
-    "id": "CP-0084",
-    "path": "docs/execution/checkpoints/CP-0084.md",
-    "manifest": "docs/execution/checkpoints/CP-0084.manifest.json"
+    "id": "CP-0085",
+    "path": "docs/execution/checkpoints/CP-0085.md",
+    "manifest": "docs/execution/checkpoints/CP-0085.manifest.json"
   },
   "git": {
     "branch": "w/P08-W04-feedback-send",
     "base": "3d2f4d723f7308edff27daa773447e7e82c7efae",
-    "head": "a676eaeca4d3f8219040233681042af174a0824f",
+    "head": "43fdd77d9a7152d63ae3a7056216ca19410cf6af",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -1170,7 +1170,7 @@
         "docs/validation/VAL-016-feedback-send.md"
       ],
       "completed_checkpoint": null,
-      "checklist": "8/10 중 9번까지(8번 막힘)"
+      "checklist": "8-1까지(8번 진행 중)"
     },
     "P08-W05": {
       "phase": "P08",
