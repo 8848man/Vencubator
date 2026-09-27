@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 76,
-  "updated_at": "2026-09-27T10:21:49.085Z",
+  "revision": 78,
+  "updated_at": "2026-09-27T10:29:49.907Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -15,18 +15,18 @@
     "stage": "S1",
     "phase": "P08",
     "work_item": "P08-W02",
-    "condition": "사용자 DR-FB-01~05 확인(카테고리·문구·Firestore 준비·스팸·보존)",
+    "condition": "사용자 DR-FB-01~05 확인. 착수 시 CHECKPOINT-PROTOCOL §3-1에 따라 계획·체크리스트 먼저",
     "action": "슬롯 계산·도메인 이벤트 projection·로컬 보관함 구현과 단위 테스트"
   },
   "checkpoint": {
-    "id": "CP-0076",
-    "path": "docs/execution/checkpoints/CP-0076.md",
-    "manifest": "docs/execution/checkpoints/CP-0076.manifest.json"
+    "id": "CP-0078",
+    "path": "docs/execution/checkpoints/CP-0078.md",
+    "manifest": "docs/execution/checkpoints/CP-0078.manifest.json"
   },
   "git": {
-    "branch": "w/P08-W01-value-feedback-spec",
-    "base": "5528f2a99fc3b6d5156bb76c6a6767e5ac02b431",
-    "head": "96c8ab933dc29ed22db4e25c61beafdee5c372a6",
+    "branch": "w/OPS-W02-plan-first-checklist",
+    "base": "baddc24db46d86f9813bbda79115bbdbc24c1474",
+    "head": "5218f61a1e727c8d922c2b61343c7569b5df9cf0",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -36,7 +36,7 @@
       "status": "not_started",
       "checked_at": null
     },
-    "note": "P07-W04·OPS-W01·P07-W05는 PR #3·#4·#5로 main 병합(5528f2a). P08-W01은 origin/main에서 시작. main 병합·배포 없음."
+    "note": "OPS-W02는 P08-W01(미병합) 위에 쌓음. main 병합·배포 없음."
   },
   "stages": {
     "S1": {
@@ -1158,6 +1158,17 @@
         "P08-W04"
       ],
       "validation_status": "not_run"
+    },
+    "OPS-W02": {
+      "phase": "OPS",
+      "status": "completed",
+      "authorization_ref": "AUTH-023",
+      "definition_path": "docs/execution/work-items/OPS-W02.md",
+      "validation_status": "not_applicable",
+      "not_applicable_reason": "작업 방식 문서 개정, 제품 테스트 대상 아님(gitflow 필수 검사·CP 무결성은 통과)",
+      "validation_refs": [],
+      "completed_checkpoint": "CP-0078",
+      "checklist": "8/9"
     }
   }
 }

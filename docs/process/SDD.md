@@ -1,6 +1,6 @@
 # SDD 운영 계약
 
-Version 0.2 · 프로젝트 작업 방식 · 단계별 실행과 체크포인트 운영 반영
+Version 0.3 · 프로젝트 작업 방식 · 단계별 실행과 체크포인트 운영 반영 · r0.3: 중단 대비 계획·체크리스트 선행(AUTH-023)
 
 ## 목적과 범위
 
@@ -36,7 +36,8 @@ Requirement → Draft Spec → Review-ready → Approved → Plan → Implementi
 - Draft/Review-ready: 조사·문서·리뷰 가능. 앱 기능 구현은 아직 승인되지 않은 상태.
 - Approved: 사용자 메시지/명시적 리뷰 결과, 날짜, 대상 ID/revision, 포함·제외 범위를 기록해야 함.
 - Plan: 영향도·파일·데이터/API·테스트·롤백 계획. 승인 전에 초안을 만들 수 있지만 실행 권한이 생기지 않음.
-- Implementing: 승인된 범위만 수행. 작은 구현 단위의 완료를 전체 명세 완료로 표시하지 않음.
+  중단될 수 있는 규모의 W는 Plan을 **W 정의 파일의 실행 계획·체크리스트**로 남기고, 커밋·시작 CP 뒤에 Implementing으로 넘어간다(CHECKPOINT-PROTOCOL §3-1). 체크리스트가 없으면 이런 W를 Implementing으로 표시하지 않는다.
+- Implementing: 승인된 범위만 수행. 체크리스트 순서대로 진행하고 항목마다 상태를 갱신. 작은 구현 단위의 완료를 전체 명세 완료로 표시하지 않음.
 - Validating: 실제 검사 명령·환경·결과 기록. 실패/미실행도 적음.
 - Validated: 모든 필수 AC를 통과하거나 사용자가 수락한 명시적 예외 존재. 예외를 ‘통과’라고 쓰지 않음.
 - Committed/Released: 실제 commit hash·배포 결과가 있어야 함. 현재 repo는 commit이 없으며 문서 생성 자체를 commit으로 표시하지 않음.
@@ -67,7 +68,7 @@ Review Gate는 사용자 확인이 필요한 제품·범위 결정을 구체적�
 
 기획: 요청 항목 대응, 출처·관찰/추론 구분, 명세·정책 일관성, 링크 검증, 미확정 결정, 다음 작업, 인계 기록.
 
-기능: 승인된 AC 충족, 의미 있는 테스트와 회귀, migration/권한/오류 대응, validation 기록, diff 리뷰, docs/current/handoff 동기화.
+기능: 승인된 AC 충족, 의미 있는 테스트와 회귀, migration/권한/오류 대응, validation 기록, diff 리뷰, docs/current/handoff 동기화. 체크리스트가 있는 W는 모든 항목이 `[x]`이거나, 남은 항목의 사유(`[!]`)와 후속 W가 기록되어 있어야 함.
 
 릴리스: 기능 완료 + 실제 build artifact·버전·commit·배포/기기 검증·롤백·관찰성 확인. 외부 공개나 결제 등은 당시 사용자 권한과 환경 정책을 따라 별도로 판단한다.
 
