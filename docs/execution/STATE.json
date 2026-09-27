@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "revision": 77,
-  "updated_at": "2026-09-27T10:28:11.503Z",
+  "revision": 78,
+  "updated_at": "2026-09-27T10:29:49.907Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
     "stage": null,
-    "phase": "OPS",
-    "work_item": "OPS-W02",
-    "owner": "cowork-claude",
-    "run_state": "in_progress"
+    "phase": null,
+    "work_item": null,
+    "owner": null,
+    "run_state": "idle"
   },
   "next": {
-    "stage": null,
-    "phase": "OPS",
-    "work_item": "OPS-W02",
-    "condition": "AUTH-023",
-    "action": "CHECKPOINT-PROTOCOL.md §3 뒤에 §3-1(규모 판단·체크리스트 선행) 신설 — 체크리스트 4번"
+    "stage": "S1",
+    "phase": "P08",
+    "work_item": "P08-W02",
+    "condition": "사용자 DR-FB-01~05 확인. 착수 시 CHECKPOINT-PROTOCOL §3-1에 따라 계획·체크리스트 먼저",
+    "action": "슬롯 계산·도메인 이벤트 projection·로컬 보관함 구현과 단위 테스트"
   },
   "checkpoint": {
-    "id": "CP-0077",
-    "path": "docs/execution/checkpoints/CP-0077.md",
-    "manifest": "docs/execution/checkpoints/CP-0077.manifest.json"
+    "id": "CP-0078",
+    "path": "docs/execution/checkpoints/CP-0078.md",
+    "manifest": "docs/execution/checkpoints/CP-0078.manifest.json"
   },
   "git": {
     "branch": "w/OPS-W02-plan-first-checklist",
     "base": "baddc24db46d86f9813bbda79115bbdbc24c1474",
-    "head": "5690752e2000825ebab718d9b61e3fe4f82475c8",
+    "head": "5218f61a1e727c8d922c2b61343c7569b5df9cf0",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -1161,13 +1161,14 @@
     },
     "OPS-W02": {
       "phase": "OPS",
-      "status": "in_progress",
+      "status": "completed",
       "authorization_ref": "AUTH-023",
       "definition_path": "docs/execution/work-items/OPS-W02.md",
-      "validation_status": "not_run",
+      "validation_status": "not_applicable",
+      "not_applicable_reason": "작업 방식 문서 개정, 제품 테스트 대상 아님(gitflow 필수 검사·CP 무결성은 통과)",
       "validation_refs": [],
-      "completed_checkpoint": null,
-      "checklist": "3/9"
+      "completed_checkpoint": "CP-0078",
+      "checklist": "8/9"
     }
   }
 }
