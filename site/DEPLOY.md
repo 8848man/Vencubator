@@ -27,6 +27,12 @@ node site/scripts/serve.mjs        # http://127.0.0.1:4180/ 에서 마지막 확
 - 휴대폰에서 가로 스크롤이 없는지
 - `/app/?lab=1` 은 점검용 주소입니다. 공유하지 마세요.
 
+## 3-0. 검색 등록 (Google Search Console) — L04-W08·W09
+
+- 소유권 확인: 루트 페이지 `<head>`의 `google-site-verification` 메타 태그(지우지 않기).
+- 빌드가 `site/dist/sitemap.xml`·`robots.txt`를 만들어 `https://vencubator.vercel.app/sitemap.xml`, `/robots.txt`로 제공합니다. 사이트맵에는 공개 첫 페이지 `/`만 있고 `/app/`(체험 앱)은 넣지 않습니다.
+- 제출: Search Console → Sitemaps → `sitemap.xml` 입력 → 제출. 공개 페이지가 늘면 `site/scripts/build.mjs`의 `sitemapXml()`에 추가합니다.
+
 ## 3-1. 피드백 저장소(Firestore) 설정 — SPEC-015 · ADR-006
 
 앱의 가치 카드·‘의견 보내기’ 응답은 운영 주소(https://vencubator.vercel.app)에서만 Cloud Firestore `feedback` 컬렉션으로 보냅니다. 설정 전에는 방문자 브라우저에만 쌓입니다.

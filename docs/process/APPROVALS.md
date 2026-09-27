@@ -115,3 +115,7 @@
 
 2026-09-28 사용자: URL 접두어 속성 `https://vencubator.vercel.app` 등록 후 HTML 태그(`google-site-verification`) 삽입 가능 여부 문의. 범위: 루트 랜딩(landing-v3) head에 확인 메타 태그 1개와 빌드 계약 검사, L04-W08 브랜치·PR. 사이트맵·robots·색인 정책 변경은 제외. main 병합·배포는 사용자.
 
+## AUTH-026 — sitemap.xml·robots.txt
+
+2026-09-28 사용자: “구글 제출용 사이트맵을 https://vencubator.vercel.app/sitemap.xml 이렇게 들어갔을 때 진입할 수 있도록 개선할 수 있나?” 범위: 사이트 빌드에 sitemap.xml(공개 첫 페이지 `/`)·robots.txt(전체 허용+사이트맵 위치) 생성, 빌드 계약 검사, L04-W09 브랜치·PR. `/app/` 색인 차단·메타 robots 변경 제외. main 병합·배포는 사용자.
+

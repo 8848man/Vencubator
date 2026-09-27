@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 86,
-  "updated_at": "2026-09-27T20:17:56.601Z",
+  "revision": 88,
+  "updated_at": "2026-09-27T20:39:46.820Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -15,18 +15,18 @@
     "stage": "S1",
     "phase": "P08",
     "work_item": "P08-W04",
-    "condition": "사용자 firestore.rules 게시 후",
-    "action": "앱 브라우저로 목록 읽기 403 확인, feedback-rules-check 10/10, 운영에서 의견 1건 저장 확인 → P08-W04 체크리스트 8·10번"
+    "condition": "Firestore 생성 전용 규칙 게시 확인됨(목록 읽기 403)",
+    "action": "사용자 PC에서 feedback-rules-check 10/10, 운영에서 의견 1건 저장 확인 → P08-W04 8·10번"
   },
   "checkpoint": {
-    "id": "CP-0086",
-    "path": "docs/execution/checkpoints/CP-0086.md",
-    "manifest": "docs/execution/checkpoints/CP-0086.manifest.json"
+    "id": "CP-0088",
+    "path": "docs/execution/checkpoints/CP-0088.md",
+    "manifest": "docs/execution/checkpoints/CP-0088.manifest.json"
   },
   "git": {
-    "branch": "w/L04-W08-search-console-verify",
-    "base": "fb4df29c19268f91ea64b562d938cae9930029ae",
-    "head": "664df98eeb1b4a2e7cfaf1e63cb64b71023dddf8",
+    "branch": "w/L04-W09-sitemap-robots",
+    "base": "942859084a49da095f5e5f6f6aef2fd7e21866fb",
+    "head": "8027b2a3d2e5dfb28256bbe96101aeedb73a50cc",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -426,7 +426,8 @@
         "L04-W05",
         "L04-W06",
         "L04-W07",
-        "L04-W08"
+        "L04-W08",
+        "L04-W09"
       ],
       "validation_refs": [],
       "completed_checkpoint": null,
@@ -1203,6 +1204,18 @@
       ],
       "completed_checkpoint": "CP-0086",
       "checklist": "기록만(계획 선행 대상 아님)"
+    },
+    "L04-W09": {
+      "phase": "L04",
+      "status": "completed",
+      "authorization_ref": "AUTH-026",
+      "definition_path": "docs/execution/work-items/L04-W09.md",
+      "validation_status": "passed",
+      "validation_refs": [
+        "site/tests/build.test.mjs"
+      ],
+      "completed_checkpoint": "CP-0088",
+      "checklist": "4/5"
     }
   }
 }
