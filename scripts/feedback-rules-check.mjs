@@ -14,7 +14,10 @@ const doc = valueDoc(st, { category: 'learning', slot: 1, occurrence: 3, status:
 const id = `${st.respondent}_learning_1`;
 const base = `https://firestore.googleapis.com/v1/projects/${cfg.projectId}/databases/(default)/documents/feedback`;
 const q = `key=${encodeURIComponent(cfg.apiKey)}`;
-const post = (docId, d) => fetch(createUrl(docId, cfg), { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ fields: toFields(d) }) });
+// API 키에 HTTP 리퍼러 제한을 걸었으면 운영 주소를 리퍼러로 보낸다(브라우저 밖 실행용).
+const REF = { referer: 'https://vencubator.vercel.app/app/' };
+const req = (url, init = {}) => fetch(url, { ...init, headers: { ...REF, ...(init.headers || {}) } });
+const post = (docId, d) => req(createUrl(docId, cfg), { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ fields: toFields(d) }) });
 const results = [];
 async function expect(name, promise, want) {
   let status; try { status = (await promise).status; } catch (e) { status = `오류 ${e.message}`; }
@@ -24,14 +27,14 @@ async function expect(name, promise, want) {
 
 await expect('올바른 qa 문서 생성', post(id, doc), 200);
 await expect('같은 ID 다시 생성 → 이미 있음', post(id, doc), 409);
-await expect('문서 읽기 거부', fetch(`${base}/${id}?${q}`), 403);
-await expect('목록 읽기 거부', fetch(`${base}?${q}`), 403);
-await expect('수정 거부', fetch(`${base}/${id}?${q}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ fields: toFields({ ...doc, rating: 1 }) }) }), 403);
-await expect('삭제 거부', fetch(`${base}/${id}?${q}`, { method: 'DELETE' }), 403);
+await expect('문서 읽기 거부', req(`${base}/${id}?${q}`), 403);
+await expect('목록 읽기 거부', req(`${base}?${q}`), 403);
+await expect('수정 거부', req(`${base}/${id}?${q}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ fields: toFields({ ...doc, rating: 1 }) }) }), 403);
+await expect('삭제 거부', req(`${base}/${id}?${q}`, { method: 'DELETE' }), 403);
 await expect('허용되지 않은 필드 거부', post(`${st.respondent}_bad_1`, { ...doc, projectName: '비밀' }), 403);
 await expect('점수 범위 밖 거부', post(`${st.respondent}_bad_2`, { ...doc, rating: 9 }), 403);
 await expect('의견 5자 미만 거부', post(`${st.respondent}_bad_3`, { ...doc, kind: 'open', category: null, slot: null, occurrence: null, status: null, rating: null, helped: [], openType: 'bug', text: '짧음' }), 403);
-await expect('다른 컬렉션 쓰기 거부', fetch(`https://firestore.googleapis.com/v1/projects/${cfg.projectId}/databases/(default)/documents/other?documentId=x&${q}`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{"fields":{}}' }), 403);
+await expect('다른 컬렉션 쓰기 거부', req(`https://firestore.googleapis.com/v1/projects/${cfg.projectId}/databases/(default)/documents/other?documentId=x&${q}`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{"fields":{}}' }), 403);
 
 const passed = results.filter(r => r.ok).length;
 console.log(`\n${passed}/${results.length} passed · 생성된 qa 문서 ID: ${id}`);

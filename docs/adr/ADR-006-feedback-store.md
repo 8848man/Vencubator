@@ -25,3 +25,9 @@ SPEC-015는 자유 의견(최대 1000자), 칩, 점수를 모으고 같은 브�
 - 사용자 작업: Firestore 데이터베이스 생성(위치는 생성 후 변경 불가, 권장 asia-northeast3), `firestore.rules` 배포, 웹 앱 설정값 제공.
 - 조회: S1은 Firebase 콘솔. 효용 곡선 내보내기·조회 도구는 관리자 자격 증명이 필요하므로 후속 W(P08-W05)에서 분리한다.
 - MVP에서 인증이 생기면 respondent를 계정과 연결할지 별도 ADR로 결정한다.
+
+## 보강 (2026-09-27, P08-W04)
+- 설정값: 사용자 제공 firebaseConfig 중 `projectId`(vencubator-18a95)·`apiKey`만 `prototype/feedback-send.mjs`에 둔다. 나머지 값(authDomain·appId 등)은 REST 전송에 불필요.
+- 웹 API 키는 공개 식별자로 취급한다. 보호 수단은 ① 생성 전용 `firestore.rules` ② Google Cloud 키 제한(웹사이트 리퍼러 `https://vencubator.vercel.app/*`, API는 Cloud Firestore API만)이다. 서비스 계정 키 등 비밀 값은 저장소·클라이언트에 두지 않는다.
+- 점검 결과(같은 날, 사용자 PC 앱 브라우저에서 읽기 요청 1건): 목록 읽기 200(빈 컬렉션) → **테스트 모드 규칙이 아직 게시돼 있음**, 다른 사이트(example.com)에서도 키가 받아들여짐 → **키 사용 제한 없음**. 두 가지 모두 사용자 콘솔 작업 필요.
+
