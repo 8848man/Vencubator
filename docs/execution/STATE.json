@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "revision": 81,
-  "updated_at": "2026-09-27T10:47:44.630Z",
+  "revision": 82,
+  "updated_at": "2026-09-27T10:57:38.337Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "stage": "S1",
-    "phase": "P08",
-    "work_item": "P08-W03",
-    "owner": "cowork-claude",
-    "run_state": "in_progress"
+    "stage": null,
+    "phase": null,
+    "work_item": null,
+    "owner": null,
+    "run_state": "idle"
   },
   "next": {
     "stage": "S1",
     "phase": "P08",
-    "work_item": "P08-W03",
-    "condition": "AUTH-024",
-    "action": "prototype/feedback-ui.mjs 가치 카드 모듈 작성 — 체크리스트 4번"
+    "work_item": "P08-W04",
+    "condition": "사용자 projectId·apiKey 전달, 테스트 모드 규칙을 생성 전용 규칙으로 교체. 착수 시 계획·체크리스트 먼저",
+    "action": "Firestore REST 전송 어댑터·운영 호스트 게이트·재시도·GA 4개 이벤트·firestore.rules"
   },
   "checkpoint": {
-    "id": "CP-0081",
-    "path": "docs/execution/checkpoints/CP-0081.md",
-    "manifest": "docs/execution/checkpoints/CP-0081.manifest.json"
+    "id": "CP-0082",
+    "path": "docs/execution/checkpoints/CP-0082.md",
+    "manifest": "docs/execution/checkpoints/CP-0082.manifest.json"
   },
   "git": {
     "branch": "w/P08-W03-feedback-ui",
     "base": "3d2f4d723f7308edff27daa773447e7e82c7efae",
-    "head": "7704859879a1ccc27cac1824ea176f6c8e9d1bc6",
+    "head": "72e5dfda1154f97fadbe10243b8161f447b45ecb",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -1144,16 +1144,18 @@
     },
     "P08-W03": {
       "phase": "P08",
-      "status": "in_progress",
+      "status": "completed",
       "depends_on": [
         "P08-W02"
       ],
-      "validation_status": "not_run",
+      "validation_status": "passed",
       "authorization_ref": "AUTH-024",
       "definition_path": "docs/execution/work-items/P08-W03.md",
-      "validation_refs": [],
-      "completed_checkpoint": null,
-      "checklist": "3/9"
+      "validation_refs": [
+        "docs/validation/VAL-015-feedback-ui.md"
+      ],
+      "completed_checkpoint": "CP-0082",
+      "checklist": "8/9"
     },
     "P08-W04": {
       "phase": "P08",
