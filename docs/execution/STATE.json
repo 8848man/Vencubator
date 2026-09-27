@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 69,
-  "updated_at": "2026-09-27T07:57:50.333Z",
+  "revision": 70,
+  "updated_at": "2026-09-27T08:04:42.592Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -16,17 +16,17 @@
     "phase": "P07",
     "work_item": "P07-W04",
     "condition": "AUTH-020",
-    "action": "UI 구현 커밋 완료. 본문 스크롤과 카드 그래프 연결. 브라우저 검증 진행 중이며 완료 결과 없음."
+    "action": "브라우저 최초 50/50·이동 26/26. 보강 검사 53/55로 휠 위치와 터치 합성 확인 중. UI 변경 없이 검증 입력 정정 중. 필수 회귀 검사 미실행."
   },
   "checkpoint": {
-    "id": "CP-0069",
-    "path": "docs/execution/checkpoints/CP-0069.md",
-    "manifest": "docs/execution/checkpoints/CP-0069.manifest.json"
+    "id": "CP-0070",
+    "path": "docs/execution/checkpoints/CP-0070.md",
+    "manifest": "docs/execution/checkpoints/CP-0070.manifest.json"
   },
   "git": {
     "branch": "w/P07-W04-roadmap-task-progress",
     "base": "6cd78c2f74d1f5aac8eb71fafa50812498dfba50",
-    "head": "1f65817dce88d476dc8d6bf86f706c187b9faa80",
+    "head": "2fdca3d57336183d5a75a24de4c5eaf9c16779ef",
     "dirty": true,
     "committed": false,
     "pr": null,
