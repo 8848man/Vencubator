@@ -1,9 +1,12 @@
-// SPEC-015 r0.3 — 가치 카드(비모달)와 ‘의견 보내기’ 페이지. 로직은 feedback.mjs, 전송은 W04.
+// SPEC-015 r0.4 — 가치 카드(비모달)와 ‘의견 보내기’ 페이지. 로직은 feedback.mjs, 전송은 feedback-send.mjs.
 import {
   CATEGORIES, QUESTIONS, SCALE, COPY, CHIPS, OPEN_TYPES, TEXT_MAX, OPEN_MIN,
   occurrences, loadFeedbackState, saveFeedbackState, duePrompt, markShown, recordValue, recordOpen
 } from './feedback.mjs';
+import { flushOutbox } from './feedback-send.mjs';
+import { track } from './track.mjs';
 import { getRun } from './guided.mjs';
+const TRACK = { page: 'app' };
 
 // 카테고리별 도착 화면(SPEC-015 §2). 이 화면에서 횟수가 늘었을 때만 판단한다.
 const LANDING = { idea: ['born', 'dashboard'], learning: ['session'], evidence: ['dashboard'], decision: ['journal'] };
@@ -18,6 +21,9 @@ export function createFeedbackUI({ getState, update, esc, toast, win = globalThi
   let sessionPrompted = false, active = null, waitingDialog = false;
 
   function save() { return storage ? saveFeedbackState(storage, fb) : false; }
+  /** outbox 전송(운영 호스트·설정값이 있을 때만). 결과를 저장하고 돌려준다. */
+  function send() { return flushOutbox(fb, { win }).then(r => { if (!r.skipped) save(); return r; }).catch(() => ({ skipped: true, left: fb.outbox.length })); }
+  send();
   const route = () => getState().route || {};
   const screenKey = () => { const r = route(); return `${r.view}:${r.projectId || ''}:${r.concept || ''}`; };
   function landingOk(c) {
@@ -58,6 +64,7 @@ ${chips ? `<fieldset class="vf-chips"><legend>${esc(chips[1])} <small>(여러 �
     const el = holder.firstElementChild; if (!place(el)) return;
     if (!active.shown) {
       markShown(fb, active.prompt); active.shown = true; sessionPrompted = true; save();
+      track('feedback_prompt', { category: active.prompt.category, slot: active.prompt.slot }, TRACK);
     }
   }
   function mountWhenFree() {
@@ -70,11 +77,12 @@ ${chips ? `<fieldset class="vf-chips"><legend>${esc(chips[1])} <small>(여러 �
   }
   function finalize(a) {
     if (!a?.shown || a.done) return;
-    const ans = a.answer, r = route();
+    const ans = a.answer;
     try {
       recordValue(fb, a.prompt, ans.rating ? { rating: ans.rating, helped: [...ans.helped], friction: [...ans.friction], text: ans.text, view: a.view, concept: a.concept } : {});
     } catch { recordValue(fb, a.prompt, ans.rating ? { rating: ans.rating } : {}); }
-    save();
+    if (ans.rating) track('feedback_answer', { category: a.prompt.category, slot: a.prompt.slot, rating: ans.rating }, TRACK);
+    save(); send();
   }
 
   /** app.render() 끝에서 호출 */
@@ -125,7 +133,8 @@ ${chips ? `<fieldset class="vf-chips"><legend>${esc(chips[1])} <small>(여러 �
     e.preventDefault();
     const a = b.dataset.fb;
     if (a === 'skip' && active && !active.done) {
-      recordValue(fb, active.prompt, { skipped: true }); save(); active = null;
+      recordValue(fb, active.prompt, { skipped: true }); save(); send();
+      track('feedback_skip', { category: active.prompt.category, slot: active.prompt.slot }, TRACK); active = null;
       doc.querySelector('.vf-card')?.remove(); doc.querySelector('#main')?.focus({ preventScroll: true });
     }
     if (a === 'open') update(s => { const { back: _drop, ...here } = s.route; s.route = { view: 'feedback', projectId: s.route.projectId, back: here.view === 'feedback' ? s.route.back : here }; });
@@ -150,13 +159,16 @@ ${chips ? `<fieldset class="vf-chips"><legend>${esc(chips[1])} <small>(여러 �
       try { recordValue(fb, active.prompt, { rating: ans.rating, helped: [...ans.helped], friction: [...ans.friction], text: ans.text, view: active.view, concept: active.concept }); }
       catch (err) { toast(err.message); return; }
       save(); active.done = true; rerenderCard('.vf-done');
+      track('feedback_answer', { category: active.prompt.category, slot: active.prompt.slot, rating: ans.rating }, TRACK); send();
     }
     if (f.id === 'vf-open') {
       e.preventDefault();
       const d = openDraftFrom(f), back = route().back || {};
       try { recordOpen(fb, { openType: d.openType, text: d.text, withContext: d.withContext, view: back.view, category: VIEW_CATEGORY[back.view] || null, concept: back.concept || null }); }
       catch (err) { toast(err.message); return; }
-      save(); toast('의견을 받았어요. 고마워요!'); goBack();
+      const id = fb.outbox.at(-1)?.id;
+      save(); track('feedback_open', { open_type: d.openType }, TRACK); goBack();
+      send().then(() => toast(fb.outbox.some(x => x.id === id) ? '의견을 받았어요. 연결되면 보낼게요.' : '의견을 받았어요. 고마워요!'));
     }
   }, true);
   win.addEventListener('pagehide', () => { if (active) { finalize(active); active = null; } });
