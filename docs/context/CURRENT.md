@@ -1,7 +1,7 @@
 # CURRENT
 
-CP-0073 / STATE revision 73
+CP-0075 / STATE revision 75
 
-P07-W04 completed: 최종 gitflow 필수 검사120개 및 CP 무결성 통과, 브랜치 push 완료. PR #3: https://github.com/8848man/Vencubator/pull/3 (기반 w/OPS-W01-gitflow-automation). 제품 코드는 CP-0072와 동일. GitHub에 자동 브랜치 배포 표시가 있으나 미리보기는 별도 미검증. main 병합·운영 배포 미실행. 이번 CP는 PR 인계 정보만 추가.
+P07-W05 completed: 카드 상단 한 행(뱃지·컴팩트 5단계·분야) 구현·검증 완료(VAL-013). qa-tasks 83/83(T09 포함), nav 26/26, review 35/35, locked 30/30, prototype 54. Windows 글꼴 카드 재현 확인. 다음: gitflow finish, push 불가 시 _handoff/open-pr.cmd로 push·PR. main 병합·운영 배포 없음.
 
-AUTH-020 / SPEC-013 r0.3. 배포 없음. 다음 P05-W04. 사용자 선행 미추적 파일 보존.
+AUTH-021 / SPEC-013 r0.4. 브랜치 w/P07-W05-compact-task-progress (기반 P07-W04, PR #3 미병합). main 병합·운영 배포 없음. 다음 P05-W04. 사용자 선행 미추적 파일 보존.

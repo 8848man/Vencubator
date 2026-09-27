@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 73,
-  "updated_at": "2026-09-27T08:13:21.112Z",
+  "revision": 75,
+  "updated_at": "2026-09-27T09:00:03.535Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -16,27 +16,27 @@
     "phase": "P05",
     "work_item": "P05-W04",
     "condition": "기존 paused 검증 마감 별도",
-    "action": "집중형 다이얼로그 검증 마감과 실제 사용자 연구 필요"
+    "action": "PR #3 → PR(P07-W05) 순서 검토·병합은 사용자. 이후 집중형 다이얼로그 검증 마감과 실제 사용자 연구"
   },
   "checkpoint": {
-    "id": "CP-0073",
-    "path": "docs/execution/checkpoints/CP-0073.md",
-    "manifest": "docs/execution/checkpoints/CP-0073.manifest.json"
+    "id": "CP-0075",
+    "path": "docs/execution/checkpoints/CP-0075.md",
+    "manifest": "docs/execution/checkpoints/CP-0075.manifest.json"
   },
   "git": {
-    "branch": "w/P07-W04-roadmap-task-progress",
-    "base": "6cd78c2f74d1f5aac8eb71fafa50812498dfba50",
-    "head": "4e03fdde24d88f2fe05c2fe26af54f1976bb022e",
+    "branch": "w/P07-W05-compact-task-progress",
+    "base": "3cd9e9c5a6a60529e871226e1060b3bdfbb8919e",
+    "head": "1ec176435301b3c1b9d743b463cee0ff8836c20a",
     "dirty": true,
     "committed": false,
-    "pr": "https://github.com/8848man/Vencubator/pull/3",
+    "pr": null,
     "merged_sha": null,
     "deploy": {
       "target": "vercel-production",
       "status": "not_started",
       "checked_at": null
     },
-    "note": "P07-W04 브랜치 push 및 PR 생성 완료. CP 직후 cp commit/push. main 병합·운영 배포 없음."
+    "note": "P07-W05는 P07-W04(PR #3) 위에 쌓음. CP 직후 cp commit. main 병합·운영 배포 없음."
   },
   "stages": {
     "S1": {
@@ -440,7 +440,8 @@
         "P07-W01",
         "P07-W02",
         "P07-W03",
-        "P07-W04"
+        "P07-W04",
+        "P07-W05"
       ],
       "validation_status": "not_run",
       "gate_status": "not_evaluated"
@@ -1086,6 +1087,17 @@
         "docs/validation/VAL-012-task-roadmap.md"
       ],
       "completed_checkpoint": "CP-0073"
+    },
+    "P07-W05": {
+      "phase": "P07",
+      "authorization_ref": "AUTH-021",
+      "definition_path": "docs/execution/work-items/P07-W05.md",
+      "validation_refs": [
+        "docs/validation/VAL-013-compact-progress.md"
+      ],
+      "status": "completed",
+      "validation_status": "passed",
+      "completed_checkpoint": "CP-0075"
     }
   }
 }

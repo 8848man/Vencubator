@@ -132,3 +132,7 @@ CP-0058 P07-W03 in_progress: 모바일 작업 목록 시트·상세·본문 이�
 | 2026-09-27T08:10:23.984Z | CP-0072 / 72 | P07-W04 completed | 명칭·본문 스크롤·단계 그래프 완료. VAL-012: prototype54 site18 landing41 gitflow7, 최종 브라우저26/26·이동26/26. 최종 finish/push·PR 진행 예정. main 병합·배포 없음. | P05-W04 |
 
 | 2026-09-27T08:13:21.112Z | CP-0073 / 73 | P07-W04 completed | 최종 gitflow 필수 검사120개 및 CP 무결성 통과, 브랜치 push 완료. PR #3: https://github.com/8848man/Vencubator/pull/3 (기반 w/OPS-W01-gitflow-automation). 제품 코드는 CP-0072와 동일. GitHub에 자동 브랜치 배포 표시가 있으나 미리보기는 별도 미검증. main 병합·운영 배포 미실행. 이번 CP는 PR 인계 정보만 추가. | P05-W04 |
+
+| 2026-09-27T08:41:10.275Z | CP-0074 / 74 | P07-W05 in_progress | SPEC-013 r0.4·AUTH-021·W 정의 커밋 완료. UI 구현·브라우저 검증 미실행. | P07-W05 |
+
+| 2026-09-27T09:00:03.535Z | CP-0075 / 75 | P07-W05 completed | 카드 상단 한 행(뱃지·컴팩트 5단계·분야) 구현·검증 완료(VAL-013). qa-tasks 83/83(T09 포함), nav 26/26, review 35/35, locked 30/30, prototype 54. Windows 글꼴 카드 재현 확인. 다음: gitflow finish, push 불가 시 _handoff/open-pr.cmd로 push·PR. main 병합·운영 배포 없음. | P05-W04 |

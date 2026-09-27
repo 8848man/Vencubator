@@ -104,6 +104,48 @@ try {
     check('T01', `${w}px JS 오류 없음`, errors.length === 0, errors.join(' | '));
     await ctx.close();
   }
+  // ── T09 (SPEC-013 r0.4) 카드 상단 한 행: 뱃지·컴팩트 단계 표시·분야 ──
+  const STEP_NAMES = ['개념 배우기', '문제와 이유 확인', '내 프로젝트 준비', '실행 결과 기록', '회고·방향 확인'];
+  const topRow = page => page.$$eval('.task-sheet .task-card-top.has-progress', rows => rows.map(r => {
+    const box = e => { const b = e.getBoundingClientRect(); return { l: b.left, r: b.right, t: b.top, b: b.bottom, w: b.width, h: b.height }; };
+    const card = r.closest('.task-card'), cs = getComputedStyle(card), cb = card.getBoundingClientRect();
+    const inner = { l: cb.left + parseFloat(cs.paddingLeft) + parseFloat(cs.borderLeftWidth) - 0.5, r: cb.right - parseFloat(cs.paddingRight) - parseFloat(cs.borderRightWidth) + 0.5 };
+    const badge = r.querySelector('.task-state'), prog = r.querySelector('.task-progress'), area = r.querySelector('.task-area');
+    const items = [...prog.querySelectorAll('li')].map(li => { const n = li.querySelector('.task-progress-node'), dot = getComputedStyle(n, '::after'), sr = li.querySelector('.task-progress-sr'), srb = sr.getBoundingClientRect();
+      return { cls: li.className, current: li.getAttribute('aria-current'), check: !!n.querySelector('svg'), dot: dot.content !== 'none' && dot.content !== 'normal' ? parseFloat(dot.width) : 0, fill: getComputedStyle(n).backgroundColor, border: getComputedStyle(n).borderTopColor, size: n.getBoundingClientRect().width, sr: sr.textContent, srHidden: srb.width <= 1 && srb.height <= 1 }; });
+    return { id: card.querySelector('[data-task-id]').dataset.taskId, row: box(r), badge: box(badge), prog: box(prog), area: box(area), inner, areaFont: parseFloat(getComputedStyle(area).fontSize), areaLines: Math.round(area.getBoundingClientRect().height / parseFloat(getComputedStyle(area).lineHeight)), label: prog.getAttribute('aria-label'), focusable: prog.querySelectorAll('a,button,input,select,textarea,[tabindex]').length, tabindex: prog.getAttribute('tabindex'), role: prog.getAttribute('role'), items, legacy: card.querySelectorAll('.task-progress-name,.task-progress-status').length };
+  }));
+  const apart = (a, b) => a.r + 8 <= b.l || b.r + 8 <= a.l || a.b <= b.t || b.b <= a.t; // 같은 줄이면 8px 이상 간격, 아니면 다른 줄
+  const judge = (rows, expected) => rows.length === expected.length && rows.every(c => {
+    const t = expected.find(t => t.id === c.id); if (!t) return false; const cur = t.stages.indexOf(false);
+    const within = [c.badge, c.prog, c.area].every(b => b.l >= c.inner.l && b.r <= c.inner.r);
+    const shapes = c.items.every((n, i) => t.stages[i] ? n.cls === 'done' && n.check && !n.dot : i === cur ? n.cls === 'current' && n.current === 'step' && !n.check && n.dot >= 4 : n.cls === 'upcoming' && !n.check && !n.dot);
+    const sr = c.items.every((n, i) => n.srHidden && n.sr === `${i + 1}단계 ${STEP_NAMES[i]} · ${t.stages[i] ? '완료' : i === cur ? '현재' : '미완'}`);
+    return within && apart(c.badge, c.prog) && apart(c.prog, c.area) && apart(c.badge, c.area) && c.prog.h <= 24 && c.areaFont >= 12 && shapes && sr && c.items.filter(n => n.current === 'step').length === 1 && c.label === `작업 진행 단계, 5단계 중 ${cur + 1}단계 진행 중` && !c.focusable && c.tabindex === null && !c.role && !c.legacy;
+  });
+  for (const w of [320, 390, 768, 1280]) {
+    const { ctx, page, errors } = await open(w);
+    await openSheet(page);
+    const store = await saved(page), expected = projectTasks(store.projects.find(p => p.id === 'p1')).filter(t => t.status === 'active');
+    const rows = await topRow(page);
+    check('T09', `${w}px 상단 한 행 배치·간격·아이콘 형태·접근성 이름`, judge(rows, expected), JSON.stringify(rows.map(r => ({ row: Math.round(r.row.h), prog: [Math.round(r.prog.l - r.badge.r), Math.round(r.area.l - r.prog.r), Math.round(r.prog.h)], lines: r.areaLines, sizes: r.items.map(n => n.size) }))));
+    const oneLine = rows.every(r => Math.abs((r.badge.t + r.badge.b) / 2 - (r.prog.t + r.prog.b) / 2) < 2 && r.area.t < r.prog.b);
+    check('T09', `${w}px 뱃지·표시·분야가 같은 행`, oneLine, rows.map(r => Math.round(r.row.h)).join(','));
+    const tabStops = await page.evaluate(() => [...document.querySelectorAll('.task-sheet a,.task-sheet button,.task-sheet select,.task-sheet [tabindex]')].filter(e => e.closest('.task-progress')).length);
+    const snap = await page.locator('.task-sheet .task-progress').first().ariaSnapshot();
+    check('T09', `${w}px 표시는 탭 순서 밖·보조 기술 이름에 단계명과 상태`, tabStops === 0 && STEP_NAMES.every(n => snap.includes(n)) && /현재/.test(snap) && /미완/.test(snap), snap.replace(/\n/g, ' ').slice(0, 260));
+    // 긴 분야명: 실제 가장 긴 분야 + 강제 확장 문자열로 줄바꿈·겹침·넘침 확인
+    for (const text of ['고객 확보·판매', '고객 확보·판매와 장기 파트너십 운영 전략', '띄어쓰기없는아주긴분야이름테스트']) {
+      await page.$$eval('.task-sheet .task-card-top.has-progress .task-area', (es, v) => es.forEach(e => { e.textContent = v; }), text);
+      const long = await topRow(page);
+      const ok = long.every(c => [c.badge, c.prog, c.area].every(b => b.l >= c.inner.l && b.r <= c.inner.r) && apart(c.badge, c.prog) && apart(c.prog, c.area) && apart(c.badge, c.area) && c.areaFont >= 12);
+      const sheetOver = await page.evaluate(() => { const b = document.querySelector('.task-sheet .focus-dialog-body'); return b.scrollWidth - b.clientWidth; });
+      check('T09', `${w}px 긴 분야명 “${text}” 줄바꿈·겹침/넘침 없음`, ok && sheetOver <= 0 && (await overflow(page)) <= 0, JSON.stringify(long.map(c => ({ lines: c.areaLines, row: Math.round(c.row.h), areaW: Math.round(c.area.w) }))));
+      if (shots) for (const [k, el] of (await page.locator('.task-sheet .task-card:has(.task-progress)').all()).entries()) await el.screenshot({ path: join(SHOTS, `t09-${w}-${text === '고객 확보·판매' ? 'sales' : text.includes(' ') ? 'long' : 'word'}-${k}.png`) });
+    }
+    check('T09', `${w}px JS 오류 없음`, errors.length === 0, errors.join(' | '));
+    await ctx.close();
+  }
   {
     const { ctx, page } = await open(390);
     await openSheet(page);
