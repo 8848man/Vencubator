@@ -136,3 +136,5 @@ CP-0058 P07-W03 in_progress: 모바일 작업 목록 시트·상세·본문 이�
 | 2026-09-27T08:41:10.275Z | CP-0074 / 74 | P07-W05 in_progress | SPEC-013 r0.4·AUTH-021·W 정의 커밋 완료. UI 구현·브라우저 검증 미실행. | P07-W05 |
 
 | 2026-09-27T09:00:03.535Z | CP-0075 / 75 | P07-W05 completed | 카드 상단 한 행(뱃지·컴팩트 5단계·분야) 구현·검증 완료(VAL-013). qa-tasks 83/83(T09 포함), nav 26/26, review 35/35, locked 30/30, prototype 54. Windows 글꼴 카드 재현 확인. 다음: gitflow finish, push 불가 시 _handoff/open-pr.cmd로 push·PR. main 병합·운영 배포 없음. | P05-W04 |
+
+| 2026-09-27T10:21:49.085Z | CP-0076 / 76 | P08-W01 completed | 가치 순간 피드백 명세(SPEC-015 r0.1)·저장소 결정 제안(ADR-006)·P08 계획(W02~W05) 작성. 제품 코드 변경 없음, 제품 테스트 대상 아님. 구현은 DR-FB 확인 후. | P08-W02 |

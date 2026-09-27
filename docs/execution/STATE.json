@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 75,
-  "updated_at": "2026-09-27T09:00:03.535Z",
+  "revision": 76,
+  "updated_at": "2026-09-27T10:21:49.085Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -13,20 +13,20 @@
   },
   "next": {
     "stage": "S1",
-    "phase": "P05",
-    "work_item": "P05-W04",
-    "condition": "기존 paused 검증 마감 별도",
-    "action": "PR #3 → PR(P07-W05) 순서 검토·병합은 사용자. 이후 집중형 다이얼로그 검증 마감과 실제 사용자 연구"
+    "phase": "P08",
+    "work_item": "P08-W02",
+    "condition": "사용자 DR-FB-01~05 확인(카테고리·문구·Firestore 준비·스팸·보존)",
+    "action": "슬롯 계산·도메인 이벤트 projection·로컬 보관함 구현과 단위 테스트"
   },
   "checkpoint": {
-    "id": "CP-0075",
-    "path": "docs/execution/checkpoints/CP-0075.md",
-    "manifest": "docs/execution/checkpoints/CP-0075.manifest.json"
+    "id": "CP-0076",
+    "path": "docs/execution/checkpoints/CP-0076.md",
+    "manifest": "docs/execution/checkpoints/CP-0076.manifest.json"
   },
   "git": {
-    "branch": "w/P07-W05-compact-task-progress",
-    "base": "3cd9e9c5a6a60529e871226e1060b3bdfbb8919e",
-    "head": "1ec176435301b3c1b9d743b463cee0ff8836c20a",
+    "branch": "w/P08-W01-value-feedback-spec",
+    "base": "5528f2a99fc3b6d5156bb76c6a6767e5ac02b431",
+    "head": "96c8ab933dc29ed22db4e25c61beafdee5c372a6",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -36,7 +36,7 @@
       "status": "not_started",
       "checked_at": null
     },
-    "note": "P07-W05는 P07-W04(PR #3) 위에 쌓음. CP 직후 cp commit. main 병합·운영 배포 없음."
+    "note": "P07-W04·OPS-W01·P07-W05는 PR #3·#4·#5로 main 병합(5528f2a). P08-W01은 origin/main에서 시작. main 병합·배포 없음."
   },
   "stages": {
     "S1": {
@@ -51,7 +51,8 @@
         "P04",
         "P05",
         "P06",
-        "P07"
+        "P07",
+        "P08"
       ]
     },
     "S2": {
@@ -445,6 +446,22 @@
       ],
       "validation_status": "not_run",
       "gate_status": "not_evaluated"
+    },
+    "P08": {
+      "stage": "S1",
+      "status": "in_progress",
+      "depends_on": [
+        "P07"
+      ],
+      "validation_status": "not_run",
+      "gate_status": "not_evaluated",
+      "work_item_ids": [
+        "P08-W01",
+        "P08-W02",
+        "P08-W03",
+        "P08-W04",
+        "P08-W05"
+      ]
     }
   },
   "work_items": {
@@ -1097,7 +1114,50 @@
       ],
       "status": "completed",
       "validation_status": "passed",
-      "completed_checkpoint": "CP-0075"
+      "completed_checkpoint": "CP-0075",
+      "merged": "PR #5 → main 5528f2a"
+    },
+    "P08-W01": {
+      "phase": "P08",
+      "status": "completed",
+      "authorization_ref": "AUTH-022",
+      "definition_path": "docs/execution/work-items/P08-W01.md",
+      "validation_status": "not_applicable",
+      "not_applicable_reason": "명세·계획 문서 작업, 제품 테스트 대상 아님",
+      "validation_refs": [],
+      "completed_checkpoint": "CP-0076"
+    },
+    "P08-W02": {
+      "phase": "P08",
+      "status": "not_started",
+      "depends_on": [
+        "P08-W01"
+      ],
+      "validation_status": "not_run"
+    },
+    "P08-W03": {
+      "phase": "P08",
+      "status": "not_started",
+      "depends_on": [
+        "P08-W02"
+      ],
+      "validation_status": "not_run"
+    },
+    "P08-W04": {
+      "phase": "P08",
+      "status": "not_started",
+      "depends_on": [
+        "P08-W02"
+      ],
+      "validation_status": "not_run"
+    },
+    "P08-W05": {
+      "phase": "P08",
+      "status": "not_started",
+      "depends_on": [
+        "P08-W04"
+      ],
+      "validation_status": "not_run"
     }
   }
 }
