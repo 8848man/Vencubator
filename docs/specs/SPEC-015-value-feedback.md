@@ -1,6 +1,6 @@
 # SPEC-015 — 가치 순간 피드백과 의견 보내기
 
-r0.3 · AUTH-024 (r0.2 결정 반영, r0.1 AUTH-022) · 2026-09-27 · 상태: 구현 승인. DR-FB-01·02·04·05 결정, DR-FB-03 일부(설정값·규칙 교체 대기)
+r0.4 · AUTH-024 (r0.3 UI 보완, r0.2 결정 반영, r0.1 AUTH-022) · 2026-09-27 · 상태: 구현 승인. DR-FB-01·02·04·05 결정, DR-FB-03 일부(설정값·규칙 교체 대기)
 
 ## 1. 목적과 범위
 
@@ -74,8 +74,14 @@ r0.3 · AUTH-024 (r0.2 결정 반영, r0.1 AUTH-022) · 2026-09-27 · 상태: �
   `schema`=1 · `kind` value|open · `category` idea|learning|evidence|decision|null · `slot` k(정수)|null · `occurrence` n|null · `status` answered|skipped|unanswered|missed|null(open) · `rating` 1~5|null · `helped`[칩 ID] · `friction`[칩 ID] · `openType` helpful|friction|idea|bug|null · `text` value 0~300자, open 5~1000자 · `view` 고정 화면 이름|null · `concept` 7개 영역 ID|null · `respondent` · `appVersion` · `env` production · `clientTime` ISO 문자열. 서버 생성 시각은 Firestore 문서 createTime을 사용.
 - 보내지 않는 것: 프로젝트 ID·이름, 아이디어·답안·준비물·기록 원문, GA 클라이언트 ID, URL query/hash.
 - `skipped`·`unanswered`·`missed`도 전송한다(묻는 빈도와 무응답률을 해석하기 위해).
-- GA4(SPEC-011)에는 퍼널 집계용으로 `feedback_prompt`(category, slot), `feedback_answer`(category, slot, rating), `feedback_skip`(category, slot), `feedback_open`(open_type)만 보낸다. 자유 입력·칩은 GA로 보내지 않는다.
+- GA4(SPEC-011)에는 퍼널 집계용으로 `feedback_prompt`(category, slot — 카드 표시), `feedback_answer`(category, slot, rating — 보내기 또는 점수 확정), `feedback_skip`(category, slot — ‘다음에’·닫기), `feedback_open`(open_type — 의견 보내기 제출)만 보낸다. slot 1~100, rating 1~5 정수, category·open_type은 열거값. 자유 입력·칩·respondent는 GA로 보내지 않는다.
 - 실패 시 outbox에 보관하고 다음 앱 로드 때 재시도. 같은 응답의 중복 전송을 막기 위해 문서 ID는 클라이언트 생성 ID(respondent + 카테고리 + 슬롯, 의견은 무작위)를 사용한다.
+- 전송 방식(r0.4): Firestore REST `POST …/databases/(default)/documents/feedback?documentId=<ID>&key=<웹 API 키>`, 한 번에 한 건씩 순서대로. 시점은 앱 로드 직후 1회와 응답·의견을 기록한 직후.
+  - 200 → outbox에서 제거. 409(이미 있음) → 이미 저장된 것으로 보고 제거.
+  - 400·403(규칙 거부) → 3번 시도 뒤 제거. 5xx·네트워크 오류 → 시도 횟수만 올리고 다음 로드에 재시도, 5번 넘으면 제거. 제거는 조용히 하고 앱 사용을 막지 않는다.
+  - 설정값(projectId·apiKey)이 비어 있거나 운영 호스트가 아니면 요청하지 않는다.
+- `env`(r0.4): 앱은 항상 `production`. 규칙 실측 스크립트만 `qa`를 쓴다. 규칙은 두 값만 허용하고, 분석 때 `qa`는 뺀다.
+- 의견 보내기 안내(r0.4): 바로 저장되면 “의견을 받았어요. 고마워요!”, 전송이 꺼져 있거나 실패해 대기 중이면 “의견을 받았어요. 연결되면 보낼게요.”
 
 ## 8. 칩 (확정, ID는 전송 값)
 
