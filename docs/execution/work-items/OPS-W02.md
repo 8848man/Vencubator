@@ -16,8 +16,8 @@ AUTH-023 · OPS(작업 방식) · CHECKPOINT-PROTOCOL r0.2 §3-1, SDD r0.3, AGEN
 | 1 | [x] | 브랜치 시작, 이 계획·체크리스트 작성 | work-items/OPS-W02.md | 파일 존재 | docs |
 | 2 | [x] | 승인 기록 AUTH-023 | docs/process/APPROVALS.md | 요청 원문·범위 | docs |
 | 3 | [x] | 시작 CP 게시(체크리스트 위치 2/9) | checkpoints, STATE, WORKLOG, CURRENT, HANDOFF | verify-checkpoint 통과 | cp |
-| 4 | [~] | 규모 판단 기준·체크리스트 형식·갱신·이탈 규칙 신설 | docs/execution/CHECKPOINT-PROTOCOL.md §3-1, §4, §6 | 기존 §3 분할 규칙과 충돌 없음 | spec |
-| 5 | [ ] | 작업 시작 절차에 계획 선행 단계 추가 | AGENTS.md | 진입 순서 1~5 일관 | spec |
+| 4 | [x] | 규모 판단 기준·체크리스트 형식·갱신·이탈 규칙 신설 | docs/execution/CHECKPOINT-PROTOCOL.md §3-1, §4, §6 | 기존 §3 분할 규칙과 충돌 없음 | spec |
+| 5 | [~] | 작업 시작 절차에 계획 선행 단계 추가 | AGENTS.md | 진입 순서 1~5 일관 | spec |
 | 6 | [ ] | Plan 상태·완료 정의에 체크리스트 반영 | docs/process/SDD.md | 상태 전이 문구 일치 | spec |
 | 7 | [ ] | Work Item·Checkpoint 양식에 체크리스트 칸 추가 | docs/templates/SDD-TEMPLATES.md | 양식이 §3-1과 같은 열 구성 | docs |
 | 8 | [ ] | 교차 검토: 용어·버전·링크, gitflow 필수 검사 | 위 파일 | 검사 통과, 문서 간 모순 없음 | — |
