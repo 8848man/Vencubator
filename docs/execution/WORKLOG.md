@@ -160,3 +160,5 @@ CP-0058 P07-W03 in_progress: 모바일 작업 목록 시트·상세·본문 이�
 | 2026-09-27T20:17:56.601Z | CP-0086 / 86 | L04-W08 completed (체크리스트 기록만(계획 선행 대상 아님)) | 루트 랜딩 head에 Google Search Console 확인 메타 태그 추가. site 18/18, landing-v3 41/41. 배포·확인은 사용자. | P08-W04 |
 
 | 2026-09-27T20:38:50.715Z | CP-0087 / 87 | L04-W09 in_progress (체크리스트 1/5) | 계획·체크리스트 커밋. 구현 미착수. | L04-W09 |
+
+| 2026-09-27T20:39:46.820Z | CP-0088 / 88 | L04-W09 completed (체크리스트 4/5) | sitemap.xml(공개 / 만)·robots.txt(전체 허용+Sitemap 줄) 빌드 생성, site 19/19. Vercel이 site/dist를 제공함 확인(/_headers 200). Firestore 목록 읽기 403으로 생성 전용 규칙 게시 확인. | P08-W04 |
