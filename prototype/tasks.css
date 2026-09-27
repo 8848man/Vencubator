@@ -35,7 +35,7 @@ body.has-task-fab .main{padding-bottom:120px}.task-sheet{width:min(640px,calc(10
 .task-card-top.has-progress{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;column-gap:8px}
 .task-card-top .task-state{white-space:nowrap}
 .task-card-top.has-progress .task-state{justify-self:start}
-.task-area{min-width:0;font-size:12px;line-height:1.45;color:#52604d;text-align:right;word-break:keep-all;overflow-wrap:break-word}
+.task-area{min-width:0;font-size:12px;line-height:1.45;color:#52604d;text-align:right;word-break:keep-all;overflow-wrap:anywhere}
 .task-card-top.has-progress .task-area{justify-self:end}
 .task-progress-track{display:flex;align-items:center;list-style:none;padding:0;margin:0;height:20px}
 .task-progress-track li{position:relative;display:flex;align-items:center}
