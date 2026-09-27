@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "revision": 82,
-  "updated_at": "2026-09-27T10:57:38.337Z",
+  "revision": 83,
+  "updated_at": "2026-09-27T11:00:00.152Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "stage": null,
-    "phase": null,
-    "work_item": null,
-    "owner": null,
-    "run_state": "idle"
+    "stage": "S1",
+    "phase": "P08",
+    "work_item": "P08-W04",
+    "owner": "cowork-claude",
+    "run_state": "in_progress"
   },
   "next": {
     "stage": "S1",
     "phase": "P08",
     "work_item": "P08-W04",
-    "condition": "사용자 projectId·apiKey 전달, 테스트 모드 규칙을 생성 전용 규칙으로 교체. 착수 시 계획·체크리스트 먼저",
-    "action": "Firestore REST 전송 어댑터·운영 호스트 게이트·재시도·GA 4개 이벤트·firestore.rules"
+    "condition": "AUTH-024",
+    "action": "prototype/feedback-send.mjs 전송 어댑터 — 체크리스트 4번"
   },
   "checkpoint": {
-    "id": "CP-0082",
-    "path": "docs/execution/checkpoints/CP-0082.md",
-    "manifest": "docs/execution/checkpoints/CP-0082.manifest.json"
+    "id": "CP-0083",
+    "path": "docs/execution/checkpoints/CP-0083.md",
+    "manifest": "docs/execution/checkpoints/CP-0083.manifest.json"
   },
   "git": {
-    "branch": "w/P08-W03-feedback-ui",
+    "branch": "w/P08-W04-feedback-send",
     "base": "3d2f4d723f7308edff27daa773447e7e82c7efae",
-    "head": "72e5dfda1154f97fadbe10243b8161f447b45ecb",
+    "head": "a79f0c28ba7cc0e5e7653275dea1a5fae677f96d",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -1159,11 +1159,16 @@
     },
     "P08-W04": {
       "phase": "P08",
-      "status": "not_started",
+      "status": "in_progress",
       "depends_on": [
         "P08-W02"
       ],
-      "validation_status": "not_run"
+      "validation_status": "not_run",
+      "authorization_ref": "AUTH-024",
+      "definition_path": "docs/execution/work-items/P08-W04.md",
+      "validation_refs": [],
+      "completed_checkpoint": null,
+      "checklist": "3/10"
     },
     "P08-W05": {
       "phase": "P08",

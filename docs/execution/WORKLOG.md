@@ -150,3 +150,5 @@ CP-0058 P07-W03 in_progress: 모바일 작업 목록 시트·상세·본문 이�
 | 2026-09-27T10:47:44.630Z | CP-0081 / 81 | P08-W03 in_progress (체크리스트 3/9) | 계획·체크리스트, SPEC-015 r0.3 커밋. UI 미착수. | P08-W03 |
 
 | 2026-09-27T10:57:38.337Z | CP-0082 / 82 | P08-W03 completed (체크리스트 8/9) | 가치 카드·의견 보내기 UI 완료. qa-feedback 85/85, 회귀 tasks 83·nav 26·review 35·locked 30, prototype 66. 응답은 로컬 outbox에만 저장(전송은 W04). | P08-W04 |
+
+| 2026-09-27T11:00:00.152Z | CP-0083 / 83 | P08-W04 in_progress (체크리스트 3/10) | 계획·체크리스트, SPEC-015 r0.4 커밋. 전송 코드 미착수. projectId·apiKey 미수신. | P08-W04 |
