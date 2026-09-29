@@ -52,3 +52,15 @@ test('AC-L31-05 상단 CTA 배경 3:1·글자 4.5:1 (두 구간)',()=>{
  assert.match(css,/background:var\(--root\); color:var\(--ink\)/);
  assert.ok(!/\binfinite\b/.test(css));
 });
+
+test('AC-L31-04 확정 예시별 답·과장 인계 없음',()=>{
+ assert.deepEqual(C.SAMPLES.map(s=>s.key),['freelance','review','teamup']);
+ for(const s of C.SAMPLES)assert.equal(C.OBSERVATION.quotesBySample[s.key].length,3);
+ assert.equal(C.OBSERVATION.quotesGeneric.length,3);assert.equal(C.OBSERVATION.quotes,undefined);
+ assert.ok(!/기록이 모두|전부 옮겨/.test(copy));
+ const spec=read('docs/SPEC-016-landing-v3.1.md');
+ for(const p of C.PAIN.options){assert.ok(spec.includes(p.label));assert.ok(spec.includes(p.line));}
+ for(const n of C.NEXT)assert.ok(spec.includes(n.label));
+ for(const s of C.SECTIONS.filter(s=>s.why))assert.ok(spec.includes(s.why));
+ for(const q of Object.values(C.OBSERVATION.quotesBySample).flat().concat(C.OBSERVATION.quotesGeneric))assert.ok(spec.includes(q));
+});

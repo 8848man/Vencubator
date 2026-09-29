@@ -409,3 +409,11 @@ h2:focus { outline: none; }
 @keyframes cta-spark { 0%,100% { opacity:0; transform:scale(.3) rotate(-20deg); } 45% { opacity:1; transform:scale(1.2) rotate(15deg); } }
 @media(max-width:480px) { .l3-progress { display:none; } .l3-app-cta { gap:5px; } .l3-top-actions { gap:2px; } }
 @media(prefers-reduced-motion:reduce) { .l3-app-cta::after, .l3-app-cta .l3-cta-spark { animation:none !important; } }
+
+/* L3I-11 — 선택 사항인 고민과 실제 의미 */
+.l3-hook { font-size:clamp(16px,1.4vw,20px); font-weight:700; color:var(--green); margin:0 0 18px; max-width:32em; }
+.l3-pain { margin-bottom:36px; }
+.l3-pain [role="group"] { display:flex; flex-wrap:wrap; gap:10px; }
+.l3-pain .l3-chip { text-align:left; border-radius:14px; line-height:1.5; }
+.l3-why { font-size:14px; opacity:.9; margin:-6px 0 24px; }
+@media(max-width:480px) { .l3-hook { font-size:16px; margin-bottom:12px; } .l3-pain .l3-chip { width:100%; } }

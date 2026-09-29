@@ -1,6 +1,6 @@
 // SPEC-016 §4: 순수 상태 모델. DOM·저장소 접근 없음 (테스트 대상).
 // v2(SPEC-007 §4)의 액션·규칙을 계승. 차이: 칸 이름(ask), 예시 값은 “다 쓴 예시 기록”(DP-12), rootState 추가.
-import { SITE, SAMPLES, SLOTS, LESSON, QUESTION_TEMPLATES, OBSERVATION, DECISIONS, AREAS } from './content.mjs';
+import { SITE, SAMPLES, SLOTS, LESSON, QUESTION_TEMPLATES, OBSERVATION, DECISIONS, AREAS, PAIN } from './content.mjs';
 
 export const CHAPTERS = SLOTS.map(s => s.chapter); // ['surface','learn','ask','observe','decide']
 const clean = (v, max) => String(v ?? '').replace(/\s+/g, ' ').trim().slice(0, max);
@@ -9,6 +9,7 @@ export function initialState() {
   const s = SAMPLES[0];
   return {
     v: 1,
+    pain: null,
     idea: { text: s.idea, source: 'example', sample: s.key },
     learn: { variant: 0, tries: 0, result: null, last: null },
     ask: { customer: s.customer, source: 'example', saved: false },
@@ -21,6 +22,9 @@ export function initialState() {
 export function reduce(state, action) {
   const s = structuredClone(state);
   switch (action.type) {
+    case 'SET_PAIN':
+      if (!PAIN.options.some(p=>p.key===action.key) || state.pain===action.key) return state;
+      s.pain=action.key; return s;
     case 'SET_IDEA': {
       const text = clean(action.text, SITE.limits.idea);
       if (!text) return state;
@@ -123,6 +127,7 @@ export function deserialize(raw) {
     const obs = ['supported', 'refuted'].includes(d.observe) ? d.observe : null;
     return {
       ...base,
+      pain: PAIN.options.some(p=>p.key===d.pain) ? d.pain : null,
       idea: { ...base.idea, ...d.idea, text: clean(d.idea.text, SITE.limits.idea) || base.idea.text, source: d.idea.source === 'mine' ? 'mine' : 'example' },
       ask: { ...base.ask, ...d.ask, customer: clean(d.ask?.customer, SITE.limits.customer) || base.ask.customer, saved: d.ask?.saved === true },
       learn: { ...base.learn, ...d.learn },
@@ -137,4 +142,10 @@ export function deserialize(raw) {
 export function nextState(state) {
   return {surface:!!state.idea.text && state.reached.includes('surface'),learn:!!state.learn.result,
     ask:!!state.ask.saved,observe:!!state.observe,decide:!!state.decision,roots:true};
+}
+
+// L3I-11: 임의 저장값은 범용 답으로 안전하게 복원한다.
+export function observationFor(state) {
+  return state.idea.source === 'example' && Object.hasOwn(OBSERVATION.quotesBySample,state.idea.sample)
+    ? OBSERVATION.quotesBySample[state.idea.sample] : OBSERVATION.quotesGeneric;
 }

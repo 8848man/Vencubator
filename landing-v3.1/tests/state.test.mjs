@@ -1,8 +1,8 @@
 // AC-L3-02 상태 모델: v2 규칙 동일 + 예시 값은 다 쓴 기록 + rootState
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { initialState, reduce, deriveCard, rootState, pathOrder, serialize, deserialize, CHAPTERS, nextState } from '../src/state.mjs';
-import { SAMPLES, SLOTS, LESSON, SITE } from '../src/content.mjs';
+import { initialState, reduce, deriveCard, rootState, pathOrder, serialize, deserialize, CHAPTERS, nextState, observationFor } from '../src/state.mjs';
+import { SAMPLES, SLOTS, LESSON, SITE, OBSERVATION, PAIN } from '../src/content.mjs';
 
 const run = (...actions) => actions.reduce(reduce, initialState());
 const full = [
@@ -49,11 +49,11 @@ test('빈 문장·잘못된 액션·중복 액션은 상태를 바꾸지 않음,
 });
 
 test('샘플 선택: 고객 기본값도 샘플, 단 직접 쓴 고객은 유지', () => {
-  const s = run({ type: 'SET_IDEA', text: SAMPLES[1].idea, source: 'example', sample: 'banchan' });
+  const s = run({ type: 'SET_IDEA', text: SAMPLES[1].idea, source: 'example', sample: 'review' });
   assert.equal(s.ask.customer, SAMPLES[1].customer);
   assert.equal(deriveCard(s).slots[0].status, 'example');
   assert.equal(deriveCard(s).slots[2].value, `${SAMPLES[1].customer}에게 지난 행동 묻기`);
-  const s2 = run({ type: 'SET_CUSTOMER', text: '내 고객' }, { type: 'SET_IDEA', text: SAMPLES[2].idea, source: 'example', sample: 'plant' });
+  const s2 = run({ type: 'SET_CUSTOMER', text: '내 고객' }, { type: 'SET_IDEA', text: SAMPLES[2].idea, source: 'example', sample: 'teamup' });
   assert.equal(s2.ask.customer, '내 고객');
   assert.equal(deriveCard(s2).slots[2].value, SLOTS[2].example, '저장 전 직접 쓴 고객은 예시 문장 대신 기본 예시');
 });
@@ -125,4 +125,15 @@ test('AC-L31-02 nextState: 완료 조건·복원·무효화',()=>{
  assert.equal(nextState(reduce(done,{type:'OBSERVE',result:'refuted'})).decide,false);
  assert.equal(nextState(reduce(done,{type:'SET_CUSTOMER',text:'바뀐 고객'})).ask,false);
  assert.equal(nextState({...done,idea:{text:''}}).surface,false);
+});
+
+test('AC-L31-02 고민 선택·복원·RESET·알 수 없는 값',()=>{
+ const s=initialState();assert.equal(s.pain,null);assert.equal(reduce(s,{type:'SET_PAIN',key:'unknown'}),s);
+ for(const p of PAIN.options){const n=reduce(s,{type:'SET_PAIN',key:p.key});assert.equal(n.pain,p.key);assert.equal(reduce(n,{type:'SET_PAIN',key:p.key}),n);assert.equal(deserialize(serialize(n)).pain,p.key);assert.equal(reduce(n,{type:'RESET'}).pain,null);}
+ for(const pain of [undefined,'unknown',{},1])assert.equal(deserialize(JSON.stringify({...s,pain})).pain,null);
+});
+test('AC-L31-02 예시별 관찰 답·내 문장·잘못된 샘플',()=>{
+ for(const sample of SAMPLES){const s=reduce(initialState(),{type:'SET_IDEA',text:sample.idea,source:'example',sample:sample.key});assert.deepEqual(observationFor(s),OBSERVATION.quotesBySample[sample.key]);}
+ assert.deepEqual(observationFor(reduce(initialState(),{type:'SET_IDEA',text:'내 문장',source:'mine'})),OBSERVATION.quotesGeneric);
+ assert.deepEqual(observationFor({...initialState(),idea:{source:'example',sample:'bad'}}),OBSERVATION.quotesGeneric);
 });

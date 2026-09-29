@@ -7,8 +7,6 @@ import { SECTIONS, AREAS, LESSON } from '../src/content.mjs';
 import { RENDERERS } from '../src/render.mjs';
 import { read, exists, repoPath } from './_util.mjs';
 
-// TODO 단계 2: I10/M08, 단계 3: I12/M09, 단계 4: I11 해제
-const PLANNED = ['L3I-11'];
 const spec = read('docs/SPEC-016-landing-v3.1.md');
 const table = [...spec.matchAll(/^\| (L3S-\d{2}) \| `(\w+)` \|/gm)].map(m => ({ id: m[1], type: m[2] }));
 
@@ -25,7 +23,7 @@ test('AC-L3-01 명세의 L3I·L3M ID가 코드에 존재', () => {
   assert.equal(ids.size, 21);
   // 머리말의 범위 표기(L3I-01~09, L3M-01~07)도 인정
   const ranged = id => { const [p, n] = id.split('-'); const m = code.match(new RegExp(`${p}-(\\d+)~(\\d+)`)); return m && +n >= +m[1] && +n <= +m[2]; };
-  assert.deepEqual([...ids].filter(id => !code.includes(id) && !ranged(id) && !PLANNED.includes(id)), []);
+  assert.deepEqual([...ids].filter(id => !code.includes(id) && !ranged(id)), []);
 });
 
 test('지층 표의 깊이 = content 깊이', () => {

@@ -1,5 +1,5 @@
 // SPEC-016 §2·§3: 섹션 type → HTML 문자열 (순수). 방문자 입력값은 여기서 넣지 않고 interact.mjs가 textContent로 채운다.
-import { SITE, SECTIONS, SAMPLES, SLOTS, STAMPS, LESSON, QUESTION_TEMPLATES, AVOID_QUESTION, OBSERVATION, NEXT, NEXT_COPY, CTA_COPY } from './content.mjs';
+import { SITE, SECTIONS, SAMPLES, SLOTS, STAMPS, LESSON, QUESTION_TEMPLATES, AVOID_QUESTION, OBSERVATION, NEXT, NEXT_COPY, CTA_COPY, PAIN } from './content.mjs';
 
 export const esc = (v = '') => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const br = v => esc(v).replace(/\n/g, '<br>');
@@ -59,10 +59,11 @@ const nextPanel = (key, opts = {}) => {
   const n = NEXT.find(n => n.layer === key);
   return `<div class="l3-next" data-next="${key}" hidden><svg class="l3-next-root" viewBox="0 0 120 28" aria-hidden="true"><path pathLength="1" d="M0 0C20 22 75 2 120 25"/></svg><button type="button" class="l3-btn" data-goto="${n.to}">${esc(n.label.slice(0,-1))}<span aria-hidden="true">↓</span></button>${key === 'roots' ? '' : `<a class="l3-app-link" data-cta="prototype" href="${esc(href('prototype', opts))}">${esc(NEXT_COPY.app)}</a>`}</div>`;
 };
+const painChoices = () => `<div class="l3-pain"><p class="l3-panel-tag">${esc(PAIN.title)}</p><p class="l3-hint">${esc(PAIN.hint)}</p><div role="group" aria-label="${esc(PAIN.title)}">${PAIN.options.map(p=>`<button type="button" class="l3-chip" data-pain="${p.key}" aria-pressed="false">${esc(p.label)}</button>`).join('')}</div></div>`;
 const layer = (s, key, slotKey, inner) => `<section id="${s.anchor}" class="l3-layer l3-${key}" data-spec="${s.id}" data-chapter="${slotKey || ''}" aria-labelledby="${hid(s)}">
 ${edge(s.anchor)}
 <div class="l3-layer-grid">${strata(s, slotKey)}
-<div class="l3-story">${h2(s)}<p class="l3-body l3-rise">${esc(s.body)}</p>${inner}${nextPanel(s.anchor)}</div>
+<div class="l3-story">${s.anchor === 'learn' ? painChoices() : ''}${h2(s)}<p class="l3-body l3-rise"${s.anchor === 'learn' ? ' data-bind="pain-line" aria-live="polite"' : ''}>${esc(s.body)}</p>${s.why ? `<p class="l3-why">${esc(s.why)}</p>` : ''}${inner}${nextPanel(s.anchor)}</div>
 </div></section>`;
 
 export const RENDERERS = {
@@ -76,6 +77,7 @@ export const RENDERERS = {
   surface: (s, o) => `<section id="${s.anchor}" class="l3-surface" data-spec="${s.id}" aria-labelledby="${hid(s)}">
 <div class="l3-shell l3-surface-grid">
 <div class="l3-surface-copy">
+<p class="l3-hook">${esc(s.hook)}</p>
 <p class="l3-eyebrow">${esc(s.eyebrow)}</p>
 <h1 id="${hid(s)}"><span>${esc(s.lines[0])}</span><span class="l3-h1-root">${esc(s.lines[1])}</span></h1>
 <p class="l3-lead">${esc(s.lead)}</p>
@@ -123,7 +125,7 @@ ${sprout('l3-surface-sprout', '이름표 옆에서 자라는 새싹')}
 
   layerObserve: s => layer(s, 'observe', 'observe', `
 <p class="l3-setup l3-rise"><span class="l3-stamp is-example">${esc(OBSERVATION.label)}</span> ${esc(OBSERVATION.setup)}</p>
-<ul class="l3-quotes">${OBSERVATION.quotes.map((q, i) => `<li class="l3-rise" style="--i:${i}"><span class="l3-who">응답 ${i + 1}</span>${esc(q)}</li>`).join('')}</ul>
+<ul class="l3-quotes">${OBSERVATION.quotesBySample[SAMPLES[0].key].map((q, i) => `<li class="l3-rise" style="--i:${i}"><span class="l3-who">응답 ${i + 1}</span><span data-quote="${i}">${esc(q)}</span></li>`).join('')}</ul>
 <div class="l3-panel l3-observe-panel"><p class="l3-q">${esc(OBSERVATION.ask)}</p>
 <div class="l3-choice-row" role="group" aria-label="${esc(OBSERVATION.ask)}">${OBSERVATION.choices.map(c => `<button type="button" class="l3-choice" data-observe="${c.key}" aria-pressed="false">${esc(c.label)}</button>`).join('')}</div>
 <p class="l3-note-msg" aria-live="polite" data-bind="observe-note" data-turn="${esc(s.turnNote)}"></p></div>`),

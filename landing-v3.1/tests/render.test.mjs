@@ -81,3 +81,11 @@ test('AC-L31-03 앱 CTA·진행 점·말풍선·히어로',()=>{
  assert.ok(out.includes('aria-label="내가 채운 층 0/5"'));
  assert.ok(out.includes('data-cta-bubble aria-live="polite" hidden'));
 });
+
+test('AC-L31-03 고민 4개·hook·why·관찰 바인딩',()=>{
+ const out=renderPage();assert.equal((out.match(/data-pain="[a-z]+" aria-pressed="false"/g)||[]).length,4);
+ assert.equal((out.match(/class="l3-why"/g)||[]).length,4);
+ assert.ok(out.includes('data-bind="pain-line" aria-live="polite"'));
+ assert.ok(out.indexOf('아이디어는 있는데, 뭘 먼저 확인해야 할지 몰라 멈춰 있나요?')<out.indexOf('<h1'));
+ assert.equal((out.match(/data-quote="[0-2]"/g)||[]).length,3);
+});

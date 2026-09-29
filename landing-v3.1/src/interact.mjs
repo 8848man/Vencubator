@@ -1,7 +1,7 @@
 // SPEC-016 §5·§6: 이벤트 → reduce → 화면 반영, 스크롤 → 뿌리·깊이. 스크롤은 그림만 바꾸고 상태를 바꾸지 않는다(REACH 제외).
 // L3I-01~09, L3M-01~07. 방문자 입력은 textContent·value로만 넣는다(마크업 주입 없음).
-import { SITE, SECTIONS, SAMPLES, STAMPS, LESSON, OBSERVATION, DECISIONS, NEXT_COPY, CTA_COPY } from './content.mjs';
-import { initialState, reduce, deriveCard, rootState, pathOrder, serialize, deserialize, nextState } from './state.mjs';
+import { SITE, SECTIONS, SAMPLES, STAMPS, LESSON, OBSERVATION, DECISIONS, NEXT_COPY, CTA_COPY, PAIN } from './content.mjs';
+import { initialState, reduce, deriveCard, rootState, pathOrder, serialize, deserialize, nextState, observationFor } from './state.mjs';
 import { track, captureUtm, ensureAssignment } from './track.mjs';
 
 const SVG = 'http://www.w3.org/2000/svg';
@@ -53,7 +53,7 @@ export function bindLanding(win = window) {
     setText('idea', state.idea.text);
     // 내 문장만 입력칸에 되살린다. 예시 상태의 빈 칸에서는 손글씨 자동 쓰기가 돈다 (L3M-05)
     if (ideaInput && doc.activeElement !== ideaInput && state.idea.source === 'mine') ideaInput.value = state.idea.text;
-    $$('.l3-chip').forEach(b => b.setAttribute('aria-pressed', String(state.idea.source === 'example' && state.idea.sample === b.dataset.sample)));
+    $('[data-sample]').forEach(b => b.setAttribute('aria-pressed', String(state.idea.source === 'example' && state.idea.sample === b.dataset.sample)));
     typing.sync();
   }
 
@@ -96,6 +96,7 @@ export function bindLanding(win = window) {
   }
 
   function paintObserve() {
+    observationFor(state).forEach((quote,i)=>{ const el = $('[data-quote="'+i+'"]'); if (el.textContent !== quote) el.textContent=quote; });
     $$('[data-observe]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.observe === state.observe)));
     const note = $('[data-bind="observe-note"]');
     if (note) { note.textContent = state.observe ? OBSERVATION.note[state.observe] + (state.observe === 'refuted' ? ' ' + note.dataset.turn : '') : ''; note.dataset.tone = state.observe || ''; }
@@ -175,6 +176,8 @@ export function bindLanding(win = window) {
 
   function paint() {
     const c = deriveCard(state);
+    setText('pain-line', PAIN.options.find(p=>p.key===state.pain)?.line || PAIN.lineDefault);
+    $('[data-pain]').forEach(b=>b.setAttribute('aria-pressed',String(state.pain===b.dataset.pain)));
     paintIdea(); paintNotes(c); paintLearn(); paintAsk(); paintObserve(); paintMap(); paintHarvest(c); paintNext(); paintCTA(c);
     rootDraw.sync(prev, c);
     prev = c;
@@ -359,7 +362,9 @@ export function bindLanding(win = window) {
 
   doc.addEventListener('click', e => {
     const t = e.target.closest('button, a'); if (!t) return;
-    if (t.hasAttribute('data-cta-bubble')) { t.hidden = true; win.clearTimeout(bubbleTimer);
+    if (t.dataset.pain) { // L3I-11
+      if (state.pain !== t.dataset.pain) { dispatch({type:'SET_PAIN',key:t.dataset.pain}); track('pain_select',{pain:t.dataset.pain},TRACK_ENV); }
+    } else if (t.hasAttribute('data-cta-bubble')) { t.hidden = true; win.clearTimeout(bubbleTimer);
     } else if (t.dataset.goto) { // L3I-10
       goTo(t.dataset.goto);
       track('next_click', {layer:t.closest('.l3-next').dataset.next}, TRACK_ENV);

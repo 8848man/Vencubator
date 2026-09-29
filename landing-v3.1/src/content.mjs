@@ -21,17 +21,32 @@ export const CLAIM_BANNED = ['성공률', 'PMF', '% 완성', '보장', 'AI가 �
 export const REQUIRED_NOTICES = ['프로토타입', '가상 예시', '이 브라우저에만'];
 
 export const SAMPLES = [
-  { key: 'teamup', label: '팀플 동료 찾기', idea: '시간과 역할이 맞는 대학생 팀플 동료를 찾아주는 서비스', customer: '첫 전공 수업에서 팀원을 구하는 대학 신입생' },
-  { key: 'banchan', label: '동네 반찬 구독', idea: '퇴근길에 동네 반찬을 조금씩 나눠 사는 구독 서비스', customer: '평일 저녁을 혼자 해결하는 1인 가구 직장인' },
-  { key: 'plant', label: '반려식물 케어', idea: '초보 식물 집사에게 물 주기 시점을 알려주는 앱', customer: '식물을 두 번 이상 말려 본 초보 집사' }
+  {
+    "key": "freelance",
+    "label": "프리랜서 정산 도구",
+    "idea": "프리랜서 개발자의 견적·세금계산서·정산을 한곳에서 처리하는 도구",
+    "customer": "외주 3건 이상을 동시에 진행하는 1년 차 프리랜서 개발자"
+  },
+  {
+    "key": "review",
+    "label": "쇼핑몰 리뷰 답글",
+    "idea": "1인 쇼핑몰 사장님의 리뷰 답글 작성을 도와주는 서비스",
+    "customer": "하루 리뷰가 20개 넘게 달리는 1인 스마트스토어 운영자"
+  },
+  {
+    "key": "teamup",
+    "label": "팀플 동료 찾기",
+    "idea": "시간과 역할이 맞는 대학생 팀플 동료를 찾아주는 서비스",
+    "customer": "첫 전공 수업에서 팀원을 구하는 대학 신입생"
+  }
 ];
 
 // 지층 5개 (이름표 + 4개 층). example = 조작하지 않은 방문자에게 보여 줄 “다 쓴 예시 기록” (DP-12)
 export const SLOTS = [
-  { key: 'idea', label: '이름표', chapter: 'surface', depth: '지상', example: '시간과 역할이 맞는 팀플 동료 찾기' },
+  { key: 'idea', label: '이름표', chapter: 'surface', depth: '지상', example: '견적·정산을 한곳에서 끝내는 프리랜서 도구' },
   { key: 'learn', label: '배운 것', chapter: 'learn', depth: '0–15cm', example: '좋다는 말보다 지난 행동을 묻는다' },
-  { key: 'ask', label: '물어볼 질문', chapter: 'ask', depth: '15–40cm', example: '신입생 3명에게 지난 학기 팀원 구한 방법' },
-  { key: 'observe', label: '들은 답', chapter: 'observe', depth: '40–70cm', example: '모집보다 시간 맞추기가 더 불편했다' },
+  { key: 'ask', label: '물어볼 질문', chapter: 'ask', depth: '15–40cm', example: '프리랜서 3명에게 지난달 정산을 어떻게 했는지' },
+  { key: 'observe', label: '들은 답', chapter: 'observe', depth: '40–70cm', example: '정산보다 다음 일감 찾기가 더 급했다' },
   { key: 'decide', label: '결정', chapter: 'decide', depth: '70–100cm', example: '대상을 좁혀 다시 묻기로 했다' }
 ];
 export const STAMPS = { example: '예시 기록', mine: '내 기록', refuted: '방향 전환' };
@@ -65,11 +80,8 @@ export const AVOID_QUESTION = '이런 서비스가 있으면 쓰실 건가요?';
 export const OBSERVATION = {
   label: '가상 예시',
   setup: '같은 질문을 세 명에게 물어봤다고 해볼게요. 이런 답을 들었어요.',
-  quotes: [
-    '“지난달에도 겪었어요. 그때는 아는 사람한테 물어서 겨우 해결했죠.”',
-    '“불편하긴 한데, 지금 방법으로도 그럭저럭 돼요.”',
-    '“저는 사실 다른 게 더 급해요. 시간 맞추는 게 제일 힘들어요.”'
-  ],
+  quotesBySample: {"freelance":["“지난달 정산 때 엑셀 세 개를 오가다 하루를 날렸어요.”","“불편하긴 한데, 세무사한테 한 번에 맡기니까 그럭저럭 돼요.”","“솔직히 정산보다 다음 일감 찾는 게 더 급해요.”"],"review":["“어제도 밤 11시까지 답글 달았어요. 복붙하면 티가 나서요.”","“답글은 그냥 짧게 달고 말아요. 그걸로 문제는 없었어요.”","“답글보다 악성 리뷰 대응이 제일 스트레스예요.”"],"teamup":["“지난달에도 겪었어요. 그때는 아는 사람한테 물어서 겨우 해결했죠.”","“불편하긴 한데, 지금 방법으로도 그럭저럭 돼요.”","“저는 사실 다른 게 더 급해요. 시간 맞추는 게 제일 힘들어요.”"]},
+  quotesGeneric: ["“지난달에도 이 문제를 겪었어요. 그때는 아는 사람한테 물어서 겨우 해결했죠.”","“불편하긴 한데, 지금 방법으로도 그럭저럭 돼요.”","“사실 저한테는 다른 게 더 급해요.”"],
   ask: '당신의 예상과 비교하면 어땠나요?',
   choices: [
     { key: 'supported', label: '예상과 같았어요', card: '예상한 불편이 실제로 있었어요' },
@@ -110,6 +122,7 @@ export const SECTIONS = [
     reset: '처음부터', cta: { label: '앱 시작하기', href: 'prototype' } },
 
   { id: 'L3S-01', type: 'surface', anchor: 'surface',
+    hook: '아이디어는 있는데, 뭘 먼저 확인해야 할지 몰라 멈춰 있나요?',
     eyebrow: '1인 빌더를 위한 창업 학습 코파일럿 · 체험판',
     lines: ['아이디어를 심으면,', '근거가 뿌리내려요.'],
     lead: '떠오른 아이디어를 이름표에 한 문장으로 적어 심어 보세요. 아래로 내려갈수록 오늘 배울 것, 물어볼 질문, 들은 답, 내린 결정이 뿌리가 되어 자라요.',
@@ -121,17 +134,17 @@ export const SECTIONS = [
     appLink: '가입 없이 바로 앱에서 시작하기 →',
     privacy: '적은 내용은 서버로 보내지 않고 이 브라우저에만 저장돼요.',
     down: '땅속으로 내려가 보기',
-    typing: ['동네 반찬을 조금씩 나눠 사는 구독', '초보 식물 집사에게 물 주기 알림', '시간과 역할이 맞는 팀플 동료 찾기'] },
+    typing: ['견적·정산을 한곳에서 끝내는 프리랜서 도구', '리뷰 답글을 도와주는 1인 쇼핑몰 서비스', '시간과 역할이 맞는 팀플 동료 찾기'] },
 
   { id: 'L3S-02', type: 'gauge', anchor: 'gauge',
     label: '깊이', unit: 'cm', ground: '지상',
     legendMine: '실선 · 내가 채운 뿌리', legendExample: '점선 · 예시 기록' },
 
-  { id: 'L3S-03', type: 'layerLearn', anchor: 'learn', depth: '0–15cm', stratum: '겉흙', meaning: '오늘 배울 것',
+  { id: 'L3S-03', type: 'layerLearn', why: "주변에서 “좋다”고 했는데 아무도 쓰지 않았다면, 이 개념 하나로 설명돼요.", anchor: 'learn', depth: '0–15cm', stratum: '겉흙', meaning: '오늘 배울 것',
     title: '뿌리가 처음 닿는 곳에는\n개념이 하나 있어요.',
     body: '지금 아이디어에 가장 먼저 필요한 개념 한 가지. 읽고 끝내지 않고 한 문항으로 바로 확인해요.' },
 
-  { id: 'L3S-04', type: 'layerAsk', anchor: 'ask', depth: '15–40cm', stratum: '속흙', meaning: '물어볼 질문',
+  { id: 'L3S-04', type: 'layerAsk', why: "인터뷰가 막막한 건 용기가 없어서가 아니라, 물어볼 질문이 없어서예요.", anchor: 'ask', depth: '15–40cm', stratum: '속흙', meaning: '물어볼 질문',
     title: '배운 걸 내 아이디어에 대면\n질문이 생겨요.',
     body: '누구에게 물어볼지만 정하면, 방금 배운 방식으로 질문 세 개가 준비돼요.',
     inputLabel: '누구에게 물어볼까요?',
@@ -141,12 +154,12 @@ export const SECTIONS = [
     save: '이 질문으로 기록',
     saved: '뿌리에 기록했어요' },
 
-  { id: 'L3S-05', type: 'layerObserve', anchor: 'observe', depth: '40–70cm', stratum: '깊은 흙', meaning: '들은 답',
+  { id: 'L3S-05', type: 'layerObserve', why: "예상과 다른 답은 실패가 아니라, 헛수고를 줄여 주는 신호예요.", anchor: 'observe', depth: '40–70cm', stratum: '깊은 흙', meaning: '들은 답',
     title: '예상과 다른 답을 만나면,\n뿌리는 방향을 틀어요.',
     body: '좋은 답만 골라 적지 않아요. 막힌 쪽으로 뻗었던 뿌리도 기록으로 남고, 다음 방향을 정하는 근거가 돼요.',
     turnNote: '뿌리가 방향을 틀었어요. 막힌 쪽 뿌리도 그대로 남아요.' },
 
-  { id: 'L3S-06', type: 'layerDecide', anchor: 'decide', depth: '70–100cm', stratum: '깊은 흙', meaning: '결정',
+  { id: 'L3S-06', type: 'layerDecide', why: "틀려도 괜찮아요. 방향을 바꾼 기록도 뿌리로 남아요.", anchor: 'decide', depth: '70–100cm', stratum: '깊은 흙', meaning: '결정',
     title: '어디로 뻗을지는\n당신이 정해요.',
     body: 'AI는 선택지를 정리해 줄 뿐이에요. 들은 답을 근거로 다음 방향을 직접 골라요.',
     waiting: '먼저 바로 위 층에서 들은 답을 해석해 주세요. 결과에 따라 갈 수 있는 방향이 달라져요.' },
@@ -198,7 +211,7 @@ export const SECTIONS = [
     titleDone: '뿌리가 다 내렸어요. 이제 진짜로 심어 볼까요?',
     titlePartial: '뿌리가 {n}층까지 내렸어요.',
     titleNone: '예시 뿌리를 따라 끝까지 내려왔어요.',
-    body: '같은 이름표로 앱에서 시작해요. 첫 프로젝트 입력칸에 이 문장이 미리 채워져요. 퀴즈·관찰·결정은 앱에서 직접 해야 기록으로 남아요.',
+    body: '같은 이름표로 앱에서 시작해요. 첫 프로젝트 입력칸에 이 문장이 미리 채워져요. 앱에서는 가상 예시가 아니라 내 진짜 고객과 한 바퀴를 돌기 때문에, 퀴즈·관찰·결정은 거기서 새로 기록해요.',
     cta: '이 이름표로 앱에서 심기',
     again: '다른 아이디어 심기' },
 
@@ -220,3 +233,26 @@ export const NEXT = [
 export const NEXT_COPY = {app:'여기까지 하고 앱에서 이어하기 →',live:'다음 층이 열렸어요'};
 
 export const CTA_COPY = {first:'언제든 여기서 앱으로 옮겨 심을 수 있어요',complete:'이 이름표로 앱에서 이어갈 수 있어요',progress:'내가 채운 층 {n}/5'};
+
+export const PAIN = {title:'이런 적 있나요?',hint:'가장 가까운 하나를 골라 주세요. 고르지 않아도 계속할 수 있어요.',lineDefault:SECTIONS.find(s=>s.anchor==='learn').body,options:[
+  {
+    "key": "build",
+    "label": "주말마다 기능은 늘었는데, 쓸 사람이 있는지는 모르겠어요",
+    "line": "만들기 전에 “누가, 언제 불편한지”부터 확인하는 방법이에요."
+  },
+  {
+    "key": "praise",
+    "label": "주변에선 다 좋다는데, 막상 쓰는 사람이 없어요",
+    "line": "그 “좋아요”가 왜 믿기 어려운지부터 볼게요."
+  },
+  {
+    "key": "interview",
+    "label": "고객 인터뷰를 하라는데, 뭘 물어야 할지 모르겠어요",
+    "line": "좋은 질문의 기준 하나만 알면, 질문은 금방 만들어져요."
+  },
+  {
+    "key": "late",
+    "label": "다 만들고 나서야 “이거 누가 쓰지?”가 떠올랐어요",
+    "line": "다음 아이디어는 순서를 바꿔, 묻고 나서 만들어 봐요."
+  }
+]};
