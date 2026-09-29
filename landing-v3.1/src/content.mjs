@@ -206,3 +206,14 @@ export const SECTIONS = [
     links: [ { label: '앱 열기', href: 'prototype' } ],
     copy: '© 2026 Vencubator' }
 ];
+
+// SPEC-016 §5.1 — L3I-10
+export const NEXT = [
+  {layer:'surface',to:'learn',label:'이 이름표로 내려가기 · 오늘 배울 것 ↓'},
+  {layer:'learn',to:'ask',label:'더 깊이 뿌리 뻗기 · 물어볼 질문 만들기 ↓'},
+  {layer:'ask',to:'observe',label:'더 깊이 뿌리 뻗기 · 들은 답 해석하기 ↓'},
+  {layer:'observe',to:'decide',label:'더 깊이 뿌리 뻗기 · 다음 방향 정하기 ↓'},
+  {layer:'decide',to:'roots',label:'뿌리 지도 보기 · 앞으로 자랄 영역 ↓'},
+  {layer:'roots',to:'harvest',label:'다시 지상으로 · 앱에서 이어가기 ↓'}
+];
+export const NEXT_COPY = {app:'여기까지 하고 앱에서 이어하기 →',live:'다음 층이 열렸어요'};

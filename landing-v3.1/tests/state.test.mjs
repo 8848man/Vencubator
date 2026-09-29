@@ -1,7 +1,7 @@
 // AC-L3-02 상태 모델: v2 규칙 동일 + 예시 값은 다 쓴 기록 + rootState
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { initialState, reduce, deriveCard, rootState, pathOrder, serialize, deserialize, CHAPTERS } from '../src/state.mjs';
+import { initialState, reduce, deriveCard, rootState, pathOrder, serialize, deserialize, CHAPTERS, nextState } from '../src/state.mjs';
 import { SAMPLES, SLOTS, LESSON, SITE } from '../src/content.mjs';
 
 const run = (...actions) => actions.reduce(reduce, initialState());
@@ -113,4 +113,16 @@ test('직렬화 복원, 손상·다른 버전 데이터는 기본값, 알 수 �
   const d = deserialize(JSON.stringify(bad));
   assert.ok(!d.reached.includes('<script>')); assert.equal(d.idea.text.length, SITE.limits.idea);
   assert.equal(d.observe, null); assert.equal(d.decision, null); assert.equal(d.ask.saved, false);
+});
+
+test('AC-L31-02 nextState: 완료 조건·복원·무효화',()=>{
+ const start=initialState();assert.deepEqual(nextState(start),{surface:false,learn:false,ask:false,observe:false,decide:false,roots:true});
+ let s=reduce(start,{type:'SET_IDEA',text:'내 문장',source:'mine'});assert.equal(nextState(s).surface,false);
+ s=reduce(s,{type:'REACH',chapter:'surface'});assert.equal(nextState(s).surface,true);
+ const sample=reduce(start,{type:'SET_IDEA',text:SAMPLES[0].idea,source:'example',sample:SAMPLES[0].key});assert.equal(nextState(sample).surface,true);
+ const done=full.reduce(reduce,s);assert.ok(Object.values(nextState(done)).every(Boolean));
+ assert.deepEqual(nextState(deserialize(serialize(done))),nextState(done));
+ assert.equal(nextState(reduce(done,{type:'OBSERVE',result:'refuted'})).decide,false);
+ assert.equal(nextState(reduce(done,{type:'SET_CUSTOMER',text:'바뀐 고객'})).ask,false);
+ assert.equal(nextState({...done,idea:{text:''}}).surface,false);
 });

@@ -26,6 +26,7 @@ export function reduce(state, action) {
       if (!text) return state;
       const sample = SAMPLES.find(x => x.key === action.sample);
       s.idea = { text, source: action.source === 'mine' ? 'mine' : 'example', sample: sample?.key ?? null };
+      if (sample && action.source === 'example' && !s.reached.includes('surface')) s.reached.push('surface');
       if (sample && s.ask.source !== 'mine') s.ask = { customer: sample.customer, source: 'example', saved: false };
       return s;
     }
@@ -130,4 +131,10 @@ export function deserialize(raw) {
       reached: d.reached.filter(c => CHAPTERS.includes(c))
     };
   } catch { return initialState(); }
+}
+
+// L3I-10: 표시 여부의 단일 출처. 저장된 reached로 재로드 복원.
+export function nextState(state) {
+  return {surface:!!state.idea.text && state.reached.includes('surface'),learn:!!state.learn.result,
+    ask:!!state.ask.saved,observe:!!state.observe,decide:!!state.decision,roots:true};
 }

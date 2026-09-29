@@ -369,3 +369,22 @@ h2:focus { outline: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* L3M-08: 패널에서 다음 층으로, 복원은 기본 최종 상태 */
+.l3-sr-only { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.l3-next { position:relative; display:flex; flex-wrap:wrap; justify-content:flex-end; align-items:center; gap:16px; margin-top:28px; width:100%; text-align:right; }
+.l3-next .l3-btn { max-width:100%; text-align:left; line-height:1.5; }
+.l3-next .l3-btn span { flex-shrink:0; }
+.l3-next-root { position:absolute; width:120px; height:28px; right:30px; top:-28px; fill:none; stroke:var(--root); stroke-width:3; }
+.l3-next-root path { stroke-dasharray:1; stroke-dashoffset:0; }
+.l3-app-link { text-decoration:underline; text-underline-offset:4px; font-size:14px; }
+.l3-observe .l3-next .l3-btn, .l3-decide .l3-next .l3-btn, .l3-roots .l3-next .l3-btn { background:var(--root); color:var(--ink); }
+.l3-btn.ghost.is-ready { box-shadow:inset 0 0 0 2px var(--green); color:var(--green); }
+.l3-next.is-growing .l3-next-root path { animation:next-root 400ms 500ms var(--ease) both; }
+.l3-next.is-growing .l3-btn { animation:next-open 600ms 900ms var(--ease) both; }
+.l3-next.is-growing .l3-btn span { animation:next-arrow 400ms 1500ms ease-in-out 2; }
+@keyframes next-root { from { stroke-dashoffset:1; } to { stroke-dashoffset:0; } }
+@keyframes next-open { from { clip-path:inset(0 100% 0 0); transform:translateY(12px); opacity:0; } to { clip-path:inset(0); transform:translateY(0); opacity:1; } }
+@keyframes next-arrow { 50% { transform:translateY(4px); } }
+@media(max-width:600px) { .l3-next { flex-direction:column; align-items:flex-end; gap:12px; } }
+@media(prefers-reduced-motion:reduce) { .l3-next.is-growing .l3-next-root path, .l3-next.is-growing .l3-btn, .l3-next.is-growing .l3-btn span { animation:none; } }

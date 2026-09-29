@@ -65,3 +65,12 @@ test('정적 렌더에 방문자 입력 자리는 비어 있음(런타임 textCo
   assert.match(html, /data-bind="idea"><\/p>/);
   assert.equal(esc('<img onerror=x>'), '&lt;img onerror=x&gt;');
 });
+
+test('AC-L31-03 다음 층 버튼 6개, 숨김·위치·접근성',()=>{
+ const out=renderPage();
+ assert.equal((out.match(/class="l3-next" data-next="[a-z]+" hidden/g)||[]).length,6);
+ assert.equal((out.match(/type="button" class="l3-btn" data-goto=/g)||[]).length,6);
+ assert.equal((out.match(/class="l3-app-link" data-cta="prototype"/g)||[]).length,5);
+ assert.ok(out.includes('data-next-live aria-live="polite"'));
+ for(const [layer,to] of [['surface','learn'],['learn','ask'],['ask','observe'],['observe','decide'],['decide','roots'],['roots','harvest']])assert.ok(out.includes('data-next="'+layer+'" hidden')&&out.includes('data-goto="'+to+'"'));
+});

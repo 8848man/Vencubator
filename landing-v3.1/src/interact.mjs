@@ -1,7 +1,7 @@
 // SPEC-016 §5·§6: 이벤트 → reduce → 화면 반영, 스크롤 → 뿌리·깊이. 스크롤은 그림만 바꾸고 상태를 바꾸지 않는다(REACH 제외).
 // L3I-01~09, L3M-01~07. 방문자 입력은 textContent·value로만 넣는다(마크업 주입 없음).
-import { SITE, SECTIONS, SAMPLES, STAMPS, LESSON, OBSERVATION, DECISIONS } from './content.mjs';
-import { initialState, reduce, deriveCard, rootState, pathOrder, serialize, deserialize } from './state.mjs';
+import { SITE, SECTIONS, SAMPLES, STAMPS, LESSON, OBSERVATION, DECISIONS, NEXT_COPY } from './content.mjs';
+import { initialState, reduce, deriveCard, rootState, pathOrder, serialize, deserialize, nextState } from './state.mjs';
 import { track, captureUtm, ensureAssignment } from './track.mjs';
 
 const SVG = 'http://www.w3.org/2000/svg';
@@ -32,6 +32,7 @@ export function bindLanding(win = window) {
 
   let state = store.load();
   let prev = null;
+  let previousNext = null;
   const ideaInput = $('#idea-input'), customerInput = $('#customer-input');
 
   function dispatch(action) {
@@ -89,6 +90,7 @@ export function bindLanding(win = window) {
     if (customerInput && doc.activeElement !== customerInput) customerInput.value = state.ask.customer;
     const m = $('[data-bind="ask-msg"]');
     if (m) m.textContent = state.ask.saved ? m.dataset.saved : '';
+    $('[data-action="save-questions"]')?.classList.toggle('is-ready', state.ask.source === 'mine' && !state.ask.saved);
     $('[data-action="save-questions"]')?.setAttribute('aria-pressed', String(state.ask.saved));
   }
 
@@ -135,9 +137,27 @@ export function bindLanding(win = window) {
     $$('.l3-sprout').forEach(el => el.style.setProperty('--grow', grow));
   }
 
+  // L3I-10 / L3M-08: 최초 paint는 복원, 이후 false→true만 유한 모션.
+  function paintNext() {
+    const visible = nextState(state);
+    let opened = false;
+    $('.l3-next').forEach(el => {
+      const key = el.dataset.next;
+      el.hidden = !visible[key];
+      if (!visible[key] || !previousNext) el.classList.remove('is-growing');
+      if (previousNext && !previousNext[key] && visible[key]) {
+        opened = true;
+        if (!reduced) { el.classList.remove('is-growing'); void el.offsetWidth; el.classList.add('is-growing'); }
+      }
+    });
+    if (opened) $('[data-next-live]').textContent = NEXT_COPY.live;
+    else $('[data-next-live]').textContent = '';
+    previousNext = visible;
+  }
+
   function paint() {
     const c = deriveCard(state);
-    paintIdea(); paintNotes(c); paintLearn(); paintAsk(); paintObserve(); paintMap(); paintHarvest(c);
+    paintIdea(); paintNotes(c); paintLearn(); paintAsk(); paintObserve(); paintMap(); paintHarvest(c); paintNext();
     rootDraw.sync(prev, c);
     prev = c;
   }
@@ -320,7 +340,10 @@ export function bindLanding(win = window) {
 
   doc.addEventListener('click', e => {
     const t = e.target.closest('button, a'); if (!t) return;
-    if (t.dataset.sample) { // L3I-02
+    if (t.dataset.goto) { // L3I-10
+      goTo(t.dataset.goto);
+      track('next_click', {layer:t.closest('.l3-next').dataset.next}, TRACK_ENV);
+    } else if (t.dataset.sample) { // L3I-02
       const s = SAMPLES.find(x => x.key === t.dataset.sample);
       if (ideaInput) ideaInput.value = s.idea;
       dispatch({ type: 'SET_IDEA', text: s.idea, source: 'example', sample: s.key });
@@ -333,7 +356,7 @@ export function bindLanding(win = window) {
     } else if (t.dataset.decide) { // L3I-06
       dispatch({ type: 'DECIDE', key: t.dataset.decide });
     } else if (t.dataset.action === 'reset') { // L3I-07
-      store.clear(); state = initialState(); prev = null;
+      store.clear(); state = initialState(); prev = null; previousNext = null;
       if (ideaInput) ideaInput.value = '';
       paint();
       win.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });

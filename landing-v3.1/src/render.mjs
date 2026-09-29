@@ -1,5 +1,5 @@
 // SPEC-016 §2·§3: 섹션 type → HTML 문자열 (순수). 방문자 입력값은 여기서 넣지 않고 interact.mjs가 textContent로 채운다.
-import { SITE, SECTIONS, SAMPLES, SLOTS, STAMPS, LESSON, QUESTION_TEMPLATES, AVOID_QUESTION, OBSERVATION } from './content.mjs';
+import { SITE, SECTIONS, SAMPLES, SLOTS, STAMPS, LESSON, QUESTION_TEMPLATES, AVOID_QUESTION, OBSERVATION, NEXT, NEXT_COPY } from './content.mjs';
 
 export const esc = (v = '') => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const br = v => esc(v).replace(/\n/g, '<br>');
@@ -55,10 +55,14 @@ function strata(s, slotKey) {
 ${sl ? `<figure class="l3-note" data-slot="${sl.key}" data-status="example"><figcaption>${esc(sl.label)}</figcaption><p class="l3-pen" data-value>${esc(sl.example)}</p><span class="l3-stamp" data-stamp>${esc(STAMPS.example)}</span></figure>` : ''}
 </div>`;
 }
+const nextPanel = (key, opts = {}) => {
+  const n = NEXT.find(n => n.layer === key);
+  return `<div class="l3-next" data-next="${key}" hidden><svg class="l3-next-root" viewBox="0 0 120 28" aria-hidden="true"><path pathLength="1" d="M0 0C20 22 75 2 120 25"/></svg><button type="button" class="l3-btn" data-goto="${n.to}">${esc(n.label.slice(0,-1))}<span aria-hidden="true">↓</span></button>${key === 'roots' ? '' : `<a class="l3-app-link" data-cta="prototype" href="${esc(href('prototype', opts))}">${esc(NEXT_COPY.app)}</a>`}</div>`;
+};
 const layer = (s, key, slotKey, inner) => `<section id="${s.anchor}" class="l3-layer l3-${key}" data-spec="${s.id}" data-chapter="${slotKey || ''}" aria-labelledby="${hid(s)}">
 ${edge(s.anchor)}
 <div class="l3-layer-grid">${strata(s, slotKey)}
-<div class="l3-story">${h2(s)}<p class="l3-body l3-rise">${esc(s.body)}</p>${inner}</div>
+<div class="l3-story">${h2(s)}<p class="l3-body l3-rise">${esc(s.body)}</p>${inner}${nextPanel(s.anchor)}</div>
 </div></section>`;
 
 export const RENDERERS = {
@@ -83,8 +87,9 @@ export const RENDERERS = {
 <form class="l3-tag" data-form="idea" novalidate>
 <label for="idea-input" class="l3-tag-label">${esc(s.tagLabel)}</label>
 <div class="l3-tag-line"><input id="idea-input" name="idea" type="text" maxlength="${SITE.limits.idea}" autocomplete="off" placeholder="${esc(s.placeholder)}" aria-describedby="idea-help idea-msg"><span class="l3-typing" aria-hidden="true" data-typing="${esc(JSON.stringify(s.typing))}"></span></div>
-<div class="l3-tag-foot"><p id="idea-msg" class="l3-msg" aria-live="polite" data-empty="${esc(s.empty)}"></p><button type="submit" class="l3-btn">${esc(s.submit)} <span aria-hidden="true">↓</span></button></div>
+<div class="l3-tag-foot"><p id="idea-msg" class="l3-msg" aria-live="polite" data-empty="${esc(s.empty)}"></p><button type="submit" class="l3-btn ghost">${esc(s.submit)} <span aria-hidden="true">↓</span></button></div>
 </form>
+${nextPanel(s.anchor)}
 <div class="l3-stake" aria-hidden="true"></div>
 ${sprout('l3-surface-sprout', '이름표 옆에서 자라는 새싹')}
 </div>
@@ -112,7 +117,7 @@ ${sprout('l3-surface-sprout', '이름표 옆에서 자라는 새싹')}
 <p class="l3-panel-tag">${esc(s.listLabel)}</p>
 <ol class="l3-questions">${QUESTION_TEMPLATES.map(q => `<li>${esc(q)}</li>`).join('')}</ol>
 <p class="l3-avoid"><span>${esc(s.avoidLabel)}</span><s>${esc(AVOID_QUESTION)}</s></p>
-<div class="l3-row"><button type="button" class="l3-btn" data-action="save-questions" aria-pressed="false">${esc(s.save)}</button><span class="l3-msg" aria-live="polite" data-bind="ask-msg" data-saved="${esc(s.saved)}"></span></div>
+<div class="l3-row"><button type="button" class="l3-btn ghost" data-action="save-questions" aria-pressed="false">${esc(s.save)}</button><span class="l3-msg" aria-live="polite" data-bind="ask-msg" data-saved="${esc(s.saved)}"></span></div>
 </div>`),
 
   layerObserve: s => layer(s, 'observe', 'observe', `
@@ -138,6 +143,7 @@ ${edge(s.anchor)}
 <ol class="l3-areas" data-path data-current="${esc(s.nowLabel)}" data-next="${esc(s.nextLabel)}">${s.areas.map((a, i) => `<li class="l3-area" data-key="${a.key}" style="--c:var(--c-${a.key})"><span class="l3-area-dot" aria-hidden="true">${esc(a.icon)}</span><span class="l3-area-name">${esc(a.name)}</span><span class="l3-area-q">${esc(a.q)}</span><em class="l3-area-badge" data-badge>${i === 0 ? esc(s.nowLabel) : i === 1 ? esc(s.nextLabel) : ''}</em></li>`).join('')}</ol>
 <p class="l3-rule" aria-live="polite" data-bind="path-rule" data-default="${esc(s.ruleDefault)}" data-refuted="${esc(s.ruleRefuted)}">${esc(s.ruleDefault)}</p>
 <p class="l3-hint">${esc(s.ruleNote)}</p>
+${nextPanel(s.anchor)}
 </div></section>`,
 
   aboveBelow: s => `<section id="${s.anchor}" class="l3-ab" data-spec="${s.id}" aria-labelledby="${hid(s)}">
@@ -187,6 +193,7 @@ export function renderPage(opts = {}) {
   const of = t => SECTIONS.filter(s => t.includes(s.type)).map(one).join('\n');
   return `${of(['topbar'])}
 <main id="main">
+<p class="l3-sr-only" data-next-live aria-live="polite"></p>
 ${of(['surface'])}
 <div class="l3-soil" data-soil>
 ${grass()}
