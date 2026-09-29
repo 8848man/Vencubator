@@ -133,7 +133,7 @@ h2:focus { outline: none; }
 .l3-tag input::placeholder { color: var(--cream-2); }
 .l3-typing { position: absolute; left: 0; top: 4px; right: 0; font-family: var(--f-pen); font-size: clamp(28px, 2.6vw, 36px); line-height: 1.25; color: var(--ink-soft); pointer-events: none; white-space: nowrap; overflow: hidden; opacity: 0; }
 .l3-typing.is-on { opacity: 1; }
-.l3-typing.is-on::after { content: ''; display: inline-block; width: 2px; height: .9em; margin-left: 2px; vertical-align: -.1em; background: var(--ink-soft); animation: caret 1s steps(1) 6; }
+.l3-typing.is-on::after { content: ''; display: inline-block; width: 2px; height: .9em; margin-left: 2px; vertical-align: -.1em; background: var(--ink-soft); animation: caret 1s steps(1) infinite; }
 @keyframes caret { 50% { opacity: 0; } }
 .l3-tag-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; }
 .l3-msg { margin: 0; font-size: 14px; font-weight: 600; color: var(--refuted); min-height: 1.2em; }
@@ -426,7 +426,7 @@ h2:focus { outline: none; }
 .l3-next-root path { stroke-dasharray:1; stroke-dashoffset:0; }
 .l3-app-link { text-decoration:underline; text-underline-offset:4px; font-size:14px; }
 .l3-observe .l3-next .l3-btn, .l3-decide .l3-next .l3-btn, .l3-roots .l3-next .l3-btn { background:var(--root); color:var(--ink); }
-.l3-btn.ghost.is-ready { box-shadow:inset 0 0 0 2px var(--green); color:var(--green); }
+.l3-btn.is-ready { box-shadow:0 0 0 3px var(--root); }
 .l3-next.is-growing .l3-next-root path { animation:next-root 400ms 500ms var(--ease) both; }
 .l3-next.is-growing .l3-btn { animation:next-open 600ms 900ms var(--ease) both; }
 .l3-next.is-growing .l3-btn span { animation:next-arrow 400ms 1500ms ease-in-out 2; }
@@ -436,8 +436,6 @@ h2:focus { outline: none; }
 @media(max-width:600px) { .l3-next { flex-direction:column; align-items:flex-end; gap:12px; } }
 @media(prefers-reduced-motion:reduce) { .l3-next.is-growing .l3-next-root path, .l3-next.is-growing .l3-btn, .l3-next.is-growing .l3-btn span { animation:none; } }
 /* L3M-09 — 불투명 상단바로 모든 뒤 배경에서 대비 보장 */
-.l3-top { background:var(--sky); }
-.l3-top.is-dark { background:var(--humus); }
 .l3-top-actions { position:relative; }
 .l3-app-cta { position:relative; font-size:16px; padding:10px 18px; overflow:hidden; }
 .l3-app-cta .l3-mark { color:currentColor; width:19px; height:22px; flex-shrink:0; }
@@ -460,9 +458,8 @@ h2:focus { outline: none; }
 .l3-pain { margin-bottom:36px; }
 .l3-pain [role="group"] { display:flex; flex-wrap:wrap; gap:10px; }
 .l3-pain .l3-chip { text-align:left; border-radius:14px; line-height:1.5; }
-.l3-why { font-size:14px; opacity:.9; margin:-6px 0 24px; }
+.l3-why { font-size:14px; opacity:.9; margin:12px 0 28px; }
 @media(max-width:480px) { .l3-hook { font-size:16px; margin-bottom:12px; } .l3-pain .l3-chip { width:100%; } }
-.l3-btn.ghost[aria-pressed="true"] { background:transparent; color:inherit; }
 </style>
 </head>
 <body>
@@ -491,7 +488,7 @@ h2:focus { outline: none; }
 <form class="l3-tag" data-form="idea" novalidate>
 <label for="idea-input" class="l3-tag-label">이름표에 적을 아이디어 한 문장</label>
 <div class="l3-tag-line"><input id="idea-input" name="idea" type="text" maxlength="120" autocomplete="off" placeholder="예: 시간과 역할이 맞는 팀플 동료를 찾아주는 서비스" aria-describedby="idea-help idea-msg"><span class="l3-typing" aria-hidden="true" data-typing="[&quot;견적·정산을 한곳에서 끝내는 프리랜서 도구&quot;,&quot;리뷰 답글을 도와주는 1인 쇼핑몰 서비스&quot;,&quot;시간과 역할이 맞는 팀플 동료 찾기&quot;]"></span></div>
-<div class="l3-tag-foot"><p id="idea-msg" class="l3-msg" aria-live="polite" data-empty="이름표에 한 문장을 적거나 아래 예시를 골라 주세요."></p><button type="submit" class="l3-btn ghost">심기 <span aria-hidden="true">↓</span></button></div>
+<div class="l3-tag-foot"><p id="idea-msg" class="l3-msg" aria-live="polite" data-empty="이름표에 한 문장을 적거나 아래 예시를 골라 주세요."></p><button type="submit" class="l3-btn">심기 <span aria-hidden="true">↓</span></button></div>
 </form>
 <div class="l3-next" data-next="surface" hidden><svg class="l3-next-root" viewBox="0 0 120 28" aria-hidden="true"><path pathLength="1" d="M0 0C20 22 75 2 120 25"/></svg><button type="button" class="l3-btn" data-goto="learn">이 이름표로 내려가기 · 오늘 배울 것 <span aria-hidden="true">↓</span></button><a class="l3-app-link" data-cta="prototype" href="./app/?from=v31">여기까지 하고 앱에서 이어하기 →</a></div>
 <div class="l3-stake" aria-hidden="true"></div>
@@ -539,7 +536,7 @@ h2:focus { outline: none; }
 <p class="l3-panel-tag">물어볼 질문</p>
 <ol class="l3-questions"><li>마지막으로 이 문제를 겪은 건 언제였나요? 그때 상황을 들려주세요.</li><li>그때는 어떻게 해결하셨어요? 지금도 그 방법을 쓰세요?</li><li>그 방법에서 가장 번거롭거나 아쉬웠던 점은 무엇이었나요?</li></ol>
 <p class="l3-avoid"><span>이런 질문은 피해요</span><s>이런 서비스가 있으면 쓰실 건가요?</s></p>
-<div class="l3-row"><button type="button" class="l3-btn ghost" data-action="save-questions" aria-pressed="false">이 질문으로 기록</button><span class="l3-msg" aria-live="polite" data-bind="ask-msg" data-saved="뿌리에 기록했어요"></span></div>
+<div class="l3-row"><button type="button" class="l3-btn" data-action="save-questions" aria-pressed="false">이 질문으로 기록</button><span class="l3-msg" aria-live="polite" data-bind="ask-msg" data-saved="뿌리에 기록했어요"></span></div>
 </div><div class="l3-next" data-next="ask" hidden><svg class="l3-next-root" viewBox="0 0 120 28" aria-hidden="true"><path pathLength="1" d="M0 0C20 22 75 2 120 25"/></svg><button type="button" class="l3-btn" data-goto="observe">더 깊이 뿌리 뻗기 · 들은 답 해석하기 <span aria-hidden="true">↓</span></button><a class="l3-app-link" data-cta="prototype" href="./app/?from=v31">여기까지 하고 앱에서 이어하기 →</a></div></div>
 </div></section>
 <section id="observe" class="l3-layer l3-observe" data-spec="L3S-05" data-chapter="observe" aria-labelledby="observe-title">
@@ -1181,7 +1178,7 @@ function bindLanding(win = window) {
     setText('idea', state.idea.text);
     // 내 문장만 입력칸에 되살린다. 예시 상태의 빈 칸에서는 손글씨 자동 쓰기가 돈다 (L3M-05)
     if (ideaInput && doc.activeElement !== ideaInput && state.idea.source === 'mine') ideaInput.value = state.idea.text;
-    $('[data-sample]').forEach(b => b.setAttribute('aria-pressed', String(state.idea.source === 'example' && state.idea.sample === b.dataset.sample)));
+    $$('[data-sample]').forEach(b => b.setAttribute('aria-pressed', String(state.idea.source === 'example' && state.idea.sample === b.dataset.sample)));
     typing.sync();
   }
   function paintNotes(c) {
@@ -1264,7 +1261,7 @@ function bindLanding(win = window) {
   function paintNext() {
     const visible = nextState(state);
     let opened = false;
-    $('.l3-next').forEach(el => {
+    $$('.l3-next').forEach(el => {
       const key = el.dataset.next;
       el.hidden = !visible[key];
       if (!visible[key] || !previousNext) el.classList.remove('is-growing');
@@ -1286,7 +1283,7 @@ function bindLanding(win = window) {
   function paintCTA(c) {
     const dots = $('.l3-progress'), cta = $('.l3-app-cta');
     dots.setAttribute('aria-label', CTA_COPY.progress.replace('{n}', c.filled));
-    $('span', dots).forEach((dot,i) => { dot.textContent = i < c.filled ? '●' : '○'; });
+    $$('span', dots).forEach((dot,i) => { dot.textContent = i < c.filled ? '●' : '○'; });
     if (prev && c.filled > prev.filled) {
       if (!reduced) { cta.classList.remove('is-shining','is-complete'); void cta.offsetWidth; cta.classList.add(c.complete?'is-complete':'is-shining'); }
       if (c.complete) showBubble(CTA_COPY.complete);
@@ -1296,7 +1293,7 @@ function bindLanding(win = window) {
   function paint() {
     const c = deriveCard(state);
     setText('pain-line', PAIN.options.find(p=>p.key===state.pain)?.line || PAIN.lineDefault);
-    $('[data-pain]').forEach(b=>b.setAttribute('aria-pressed',String(state.pain===b.dataset.pain)));
+    $$('[data-pain]').forEach(b=>b.setAttribute('aria-pressed',String(state.pain===b.dataset.pain)));
     paintIdea(); paintNotes(c); paintLearn(); paintAsk(); paintObserve(); paintMap(); paintHarvest(c); paintNext(); paintCTA(c);
     rootDraw.sync(prev, c);
     prev = c;
@@ -1306,14 +1303,14 @@ function bindLanding(win = window) {
     const el = $('.l3-typing');
     const lines = el ? JSON.parse(el.dataset.typing || '[]') : [];
     const ph = ideaInput?.getAttribute('placeholder') || '';
-    let timer = 0, line = 0, pos = 0, dir = 1, on = false, finished = false;
-    const active = () => !reduced && !finished && el && lines.length && ideaInput && !ideaInput.value && doc.activeElement !== ideaInput;
+    let timer = 0, line = 0, pos = 0, dir = 1, on = false;
+    const active = () => !reduced && el && lines.length && ideaInput && !ideaInput.value && doc.activeElement !== ideaInput;
     function tick() {
       const t = lines[line];
       pos += dir;
       el.textContent = t.slice(0, pos);
       let wait = dir > 0 ? 90 : 28;
-      if (dir > 0 && pos >= t.length) { if (line === lines.length - 1) { finished = true; return; } dir = -1; wait = 1700; }
+      if (dir > 0 && pos >= t.length) { dir = -1; wait = 1700; }
       else if (dir < 0 && pos <= 0) { dir = 1; line = (line + 1) % lines.length; wait = 420; }
       timer = win.setTimeout(tick, wait);
     }
