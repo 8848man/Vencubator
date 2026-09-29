@@ -3,6 +3,7 @@
 export const MEASUREMENT_ID = 'G-0GFT3M8ZG3';
 const ANALYTICS_HOST = 'vencubator.vercel.app';
 const ANALYTICS_FIELDS = {
+  next_click: ['layer'], pain_select: ['pain'],
   landing_view: [], idea_submit: ['source','len'], card_progress: ['filled'],
   cta_click: ['placement','filled'], app_open: ['from'], entry_import: ['from'],
   project_create: ['from','imported'], lesson_complete: ['count'],
@@ -12,7 +13,8 @@ const ANALYTICS_FIELDS = {
   feedback_prompt: ['category','slot'], feedback_answer: ['category','slot','rating'], feedback_skip: ['category','slot'], feedback_open: ['open_type']
 };
 const ANALYTICS_ENUMS = {
-  source: ['mine','sample'], from: ['v1','v2','v3','direct'],
+  source: ['mine','sample'], from: ['v1','v2','v3','v31','direct'],
+  layer: ['surface','learn','ask','observe','decide','roots'], pain: ['build','praise','interview','late'],
   concept: ['customer','market','product','gtm','finance','operations','strategy'],
   step: ['concept','question','transfer','apply','application','complete'], kind: ['field','simulation','desk'],
   category: ['idea','learning','evidence','decision'], open_type: ['helpful','friction','idea','bug']
@@ -27,7 +29,7 @@ export function analyticsPayload(ev) {
         (key === 'slot' && Number.isInteger(value) && value >= 1 && value <= 100) || (key === 'rating' && Number.isInteger(value) && value >= 1 && value <= 5) ||
         (key === 'placement' && /^(page|hero|footer|l[123]s-\d{1,2}|s\d{1,2})$/.test(value))) props[key] = value;
   }
-  return {schema_version:1,stage:'prototype',environment:'production',app_version:'analytics-1',page:ev.page==='app'?'app':'v3',...props};
+  return {schema_version:1,stage:'prototype',environment:'production',app_version:'analytics-1',page:['app','v31'].includes(ev.page)?ev.page:'v3',...props};
 }
 export function analyticsAllowed(win) {
   try {
@@ -69,6 +71,8 @@ export const EVENTS_KEY = 'vencubator.events.v1';
 export const UTM_KEY = 'vencubator.utm.v1';
 export const MAX_EVENTS = 500;
 export const VARIANTS = ['v1', 'v2', 'v3'];
+// SPEC-016: 기존 변형 목록에 독립 v31을 등록한다.
+VARIANTS.push('v31');
 
 const SAFE_VALUE = /^[A-Za-z0-9_.-]{0,32}$/;
 const SAFE_UTM = /^[\p{L}\p{N}_.-]{1,40}$/u;

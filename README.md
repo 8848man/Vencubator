@@ -21,6 +21,8 @@ Vencubator는 자신의 아이디어를 발전시키며 배우고 행동하는 *
 
 ## 랜딩 페이지
 
+**공개 랜딩 v3.1:** `landing-v3.1/start.cmd` 또는 `node landing-v3.1/scripts/serve.mjs` → http://127.0.0.1:4177/landing-v3.1/ · [SPEC-016](landing-v3.1/docs/SPEC-016-landing-v3.1.md) · [검증](landing-v3.1/docs/VAL-L31.md). 사이트 빌드의 루트(`/`)가 v3.1이며 v3는 보존합니다.
+
 `node landing/scripts/serve.mjs` → http://127.0.0.1:4174/landing/ · 단일 파일은 `landing/dist/index.html`. 명세 [SPEC-006](landing/docs/SPEC-006-landing.md), 안내 [landing/README](landing/README.md).
 
 **랜딩 v2 (아이디어 카드):** `landing-v2/start.cmd` 또는 `node landing-v2/scripts/serve.mjs` → http://127.0.0.1:4175/landing-v2/ · 명세 [SPEC-007](landing-v2/docs/SPEC-007-landing-v2.md), 설계 원리 [PRINCIPLES](landing-v2/docs/PRINCIPLES.md).

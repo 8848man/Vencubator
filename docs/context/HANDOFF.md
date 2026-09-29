@@ -1,9 +1,11 @@
 # HANDOFF
 
-CP-0088 / STATE revision 88
+CP-0095 / STATE revision 95
 
-L04-W09 completed — 체크리스트 4/5 완료: sitemap.xml(공개 / 만)·robots.txt(전체 허용+Sitemap 줄) 빌드 생성, site 19/19. Vercel이 site/dist를 제공함 확인(/_headers 200). Firestore 목록 읽기 403으로 생성 전용 규칙 게시 확인.
+L05-W01 completed · AUTH-027 · SPEC-016 r0.1 · 체크리스트 5/5
 
-다음 첫 행동: P08-W04 — 사용자 PC에서 feedback-rules-check 10/10, 운영에서 의견 1건 저장 확인 → P08-W04 8·10번
+단계 1~5 제품 작업 완료. 자동 검사 192/192, 무결성 오류 0, 두 빌드 성공. 브라우저 QA·캡처는 Playwright 없음으로 미실행. finish/PR 인계는 이 CP 뒤 실행.
 
-AUTH-026 / SPEC-009 r0.3. 브랜치 w/L04-W09-sitemap-robots. main 병합·운영 배포 없음. 사용자 선행 미추적 파일 보존.
+다음 첫 행동: gitflow finish --pr 한 번 실행; 병합 전 GA4 기준선·브라우저 QA·사용성 5명 확인
+
+브랜치 w/L05-W01-landing-v31. main 병합·배포 없음. P08-W04 기존 외부 검증 대기 상태 유지.

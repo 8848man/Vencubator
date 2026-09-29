@@ -7,7 +7,7 @@
 <meta name="description" content="아이디어 한 문장을 이름표에 적어 심어 보세요. 땅속으로 내려갈수록 오늘 배울 것, 물어볼 질문, 들은 답, 내린 결정이 뿌리가 되어 자라요. 1인 빌더를 위한 창업 학습 코파일럿 Vencubator(체험판).">
 <meta name="theme-color" content="#f2f6ec">
 <meta name="google-site-verification" content="jwvBptKaMeO5PcMdZK0uI49if4qb5t_4OxF00X-FMJ8">
-<meta name="generator" content="landing-v3/scripts/build.mjs · SPEC-010">
+<meta name="generator" content="landing-v3.1/scripts/build.mjs · SPEC-016">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232e5e47'/%3E%3Cpath d='M16 21l16 27 16-27M32 36V14' stroke='%23b9da8c' stroke-width='6' fill='none'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;700;800&family=Nanum+Pen+Script&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-/* SPEC-010 · 원시 색상값(hex)은 이 파일에만. PRINCIPLES §4 시각 언어 */
+/* SPEC-016 · 원시 색상값(hex)은 이 파일에만. PRINCIPLES §4 시각 언어 */
 :root {
   /* 지상 */
   --sky: #f2f6ec;
@@ -69,7 +69,7 @@
   --r: 14px;
   --ease: cubic-bezier(.2, .7, .2, 1);
 }
-/* SPEC-010 랜딩 v3 “뿌리”. 색은 tokens.css 변수만 쓴다. sticky는 상단바만(DP-11). */
+/* SPEC-016 랜딩 v3 “뿌리”. 색은 tokens.css 변수만 쓴다. sticky는 상단바만(DP-11). */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: var(--top-h); -webkit-text-size-adjust: 100%; }
 html.reduced { scroll-behavior: auto; }
@@ -417,6 +417,49 @@ h2:focus { outline: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+/* L3M-08: 패널에서 다음 층으로, 복원은 기본 최종 상태 */
+.l3-sr-only { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.l3-next { position:relative; display:flex; flex-wrap:wrap; justify-content:flex-end; align-items:center; gap:16px; margin-top:28px; width:100%; text-align:right; }
+.l3-next .l3-btn { max-width:100%; text-align:left; line-height:1.5; }
+.l3-next .l3-btn span { flex-shrink:0; }
+.l3-next-root { position:absolute; width:120px; height:28px; right:30px; top:-28px; fill:none; stroke:var(--root); stroke-width:3; }
+.l3-next-root path { stroke-dasharray:1; stroke-dashoffset:0; }
+.l3-app-link { text-decoration:underline; text-underline-offset:4px; font-size:14px; }
+.l3-observe .l3-next .l3-btn, .l3-decide .l3-next .l3-btn, .l3-roots .l3-next .l3-btn { background:var(--root); color:var(--ink); }
+.l3-btn.is-ready { box-shadow:0 0 0 3px var(--root); }
+.l3-next.is-growing .l3-next-root path { animation:next-root 400ms 500ms var(--ease) both; }
+.l3-next.is-growing .l3-btn { animation:next-open 600ms 900ms var(--ease) both; }
+.l3-next.is-growing .l3-btn span { animation:next-arrow 400ms 1500ms ease-in-out 2; }
+@keyframes next-root { from { stroke-dashoffset:1; } to { stroke-dashoffset:0; } }
+@keyframes next-open { from { clip-path:inset(0 100% 0 0); transform:translateY(12px); opacity:0; } to { clip-path:inset(0); transform:translateY(0); opacity:1; } }
+@keyframes next-arrow { 50% { transform:translateY(4px); } }
+@media(max-width:600px) { .l3-next { flex-direction:column; align-items:flex-end; gap:12px; } }
+@media(prefers-reduced-motion:reduce) { .l3-next.is-growing .l3-next-root path, .l3-next.is-growing .l3-btn, .l3-next.is-growing .l3-btn span { animation:none; } }
+/* L3M-09 — 불투명 상단바로 모든 뒤 배경에서 대비 보장 */
+.l3-top-actions { position:relative; }
+.l3-app-cta { position:relative; font-size:16px; padding:10px 18px; overflow:hidden; }
+.l3-app-cta .l3-mark { color:currentColor; width:19px; height:22px; flex-shrink:0; }
+.l3-top.is-dark .l3-app-cta, .l3-top.is-dark .l3-app-cta:hover { background:var(--root); color:var(--ink); }
+.l3-app-cta:hover { background:var(--green); }
+.l3-progress { display:inline-flex; gap:2px; font-size:12px; }
+.l3-app-cta::after { content:''; position:absolute; inset:0; background:linear-gradient(105deg,transparent 20%,color-mix(in srgb,var(--white) 55%,transparent) 50%,transparent 80%); transform:translateX(-120%); pointer-events:none; }
+.l3-app-cta.is-shining::after, .l3-app-cta.is-complete::after { animation:cta-light 700ms ease-out 1; }
+.l3-cta-spark { position:absolute; inset:4px 5px auto auto; width:28px; height:28px; fill:var(--root); opacity:0; pointer-events:none; }
+.l3-top.is-dark .l3-cta-spark { fill:var(--green); }
+.l3-app-cta.is-complete .l3-cta-spark { animation:cta-spark 800ms var(--ease) 1; }
+.l3-cta-bubble { position:absolute; right:0; top:calc(100% + 10px); width:270px; max-width:calc(100vw - 32px); border:1px solid var(--green); border-radius:12px; background:var(--paper); color:var(--ink); padding:12px 16px; text-align:left; font-size:14px; box-shadow:0 5px 20px color-mix(in srgb,var(--ink) 15%,transparent); }
+.l3-hero-app { display:block; width:fit-content; margin-top:12px; color:var(--green); font-weight:700; }
+@keyframes cta-light { to { transform:translateX(120%); } }
+@keyframes cta-spark { 0%,100% { opacity:0; transform:scale(.3) rotate(-20deg); } 45% { opacity:1; transform:scale(1.2) rotate(15deg); } }
+@media(max-width:480px) { .l3-progress { display:none; } .l3-app-cta { gap:5px; } .l3-top-actions { gap:2px; } }
+@media(prefers-reduced-motion:reduce) { .l3-app-cta::after, .l3-app-cta .l3-cta-spark { animation:none !important; } }
+/* L3I-11 — 선택 사항인 고민과 실제 의미 */
+.l3-hook { font-size:clamp(16px,1.4vw,20px); font-weight:700; color:var(--green); margin:0 0 18px; max-width:32em; }
+.l3-pain { margin-bottom:36px; }
+.l3-pain [role="group"] { display:flex; flex-wrap:wrap; gap:10px; }
+.l3-pain .l3-chip { text-align:left; border-radius:14px; line-height:1.5; }
+.l3-why { font-size:14px; opacity:.9; margin:12px 0 28px; }
+@media(max-width:480px) { .l3-hook { font-size:16px; margin-bottom:12px; } .l3-pain .l3-chip { width:100%; } }
 </style>
 </head>
 <body>
@@ -425,25 +468,29 @@ h2:focus { outline: none; }
 <a class="l3-skip" href="#main">본문으로 이동</a>
 <div class="l3-shell l3-top-row">
 <a class="l3-brand" href="#surface" aria-label="vencubator 맨 위로"><svg class="l3-mark" viewBox="0 0 32 35" fill="none" aria-hidden="true"><path d="M4 9 16 30 28 9M16 24V4" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M16 14C7 14 8 4 8 4c7 0 8 5 8 10ZM17 13c0-8 9-9 9-9s0 9-9 9Z" fill="currentColor"/></svg><span>vencubator</span></a>
-<div class="l3-top-actions"><button type="button" class="l3-textbtn" data-action="reset">처음부터</button><a class="l3-btn small" href="./app/?from=v3" data-cta="prototype">앱 열기</a></div>
+<div class="l3-top-actions"><button type="button" class="l3-textbtn" data-action="reset">처음부터</button><a class="l3-btn l3-app-cta" href="./app/?from=v31" data-cta="prototype"><svg class="l3-mark" viewBox="0 0 32 35" fill="none" aria-hidden="true"><path d="M4 9 16 30 28 9M16 24V4" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M16 14C7 14 8 4 8 4c7 0 8 5 8 10ZM17 13c0-8 9-9 9-9s0 9-9 9Z" fill="currentColor"/></svg><span>앱 시작하기</span><span class="l3-progress" aria-label="내가 채운 층 0/5"><span aria-hidden="true">○</span><span aria-hidden="true">○</span><span aria-hidden="true">○</span><span aria-hidden="true">○</span><span aria-hidden="true">○</span></span><svg class="l3-cta-spark m-spark" viewBox="0 0 30 30" aria-hidden="true"><path d="m15 1 3 11 11 3-11 3-3 11-3-11-11-3 11-3Z"/></svg></a><button type="button" class="l3-cta-bubble" data-cta-bubble aria-live="polite" hidden></button></div>
 </div></header>
 <main id="main">
+<p class="l3-sr-only" data-next-live aria-live="polite"></p>
 <section id="surface" class="l3-surface" data-spec="L3S-01" aria-labelledby="surface-title">
 <div class="l3-shell l3-surface-grid">
 <div class="l3-surface-copy">
+<p class="l3-hook">아이디어는 있는데, 뭘 먼저 확인해야 할지 몰라 멈춰 있나요?</p>
 <p class="l3-eyebrow">1인 빌더를 위한 창업 학습 코파일럿 · 체험판</p>
 <h1 id="surface-title"><span>아이디어를 심으면,</span><span class="l3-h1-root">근거가 뿌리내려요.</span></h1>
 <p class="l3-lead">떠오른 아이디어를 이름표에 한 문장으로 적어 심어 보세요. 아래로 내려갈수록 오늘 배울 것, 물어볼 질문, 들은 답, 내린 결정이 뿌리가 되어 자라요.</p>
-<div class="l3-samples" role="group" aria-label="예시로 심어 보기"><span>예시로 심어 보기</span><button type="button" class="l3-chip" data-sample="teamup" aria-pressed="false">팀플 동료 찾기</button><button type="button" class="l3-chip" data-sample="banchan" aria-pressed="false">동네 반찬 구독</button><button type="button" class="l3-chip" data-sample="plant" aria-pressed="false">반려식물 케어</button></div>
+<div class="l3-samples" role="group" aria-label="예시로 심어 보기"><span>예시로 심어 보기</span><button type="button" class="l3-chip" data-sample="freelance" aria-pressed="false">프리랜서 정산 도구</button><button type="button" class="l3-chip" data-sample="review" aria-pressed="false">쇼핑몰 리뷰 답글</button><button type="button" class="l3-chip" data-sample="teamup" aria-pressed="false">팀플 동료 찾기</button></div>
 <p id="idea-help" class="l3-privacy">적은 내용은 서버로 보내지 않고 이 브라우저에만 저장돼요.</p>
+<a class="l3-app-link l3-hero-app" data-cta="prototype" data-placement="hero" href="./app/?from=v31">가입 없이 바로 앱에서 시작하기 →</a>
 <a class="l3-down" href="#learn">땅속으로 내려가 보기 <span aria-hidden="true">↓</span></a>
 </div>
 <div class="l3-scene">
 <form class="l3-tag" data-form="idea" novalidate>
 <label for="idea-input" class="l3-tag-label">이름표에 적을 아이디어 한 문장</label>
-<div class="l3-tag-line"><input id="idea-input" name="idea" type="text" maxlength="120" autocomplete="off" placeholder="예: 시간과 역할이 맞는 팀플 동료를 찾아주는 서비스" aria-describedby="idea-help idea-msg"><span class="l3-typing" aria-hidden="true" data-typing="[&quot;동네 반찬을 조금씩 나눠 사는 구독&quot;,&quot;초보 식물 집사에게 물 주기 알림&quot;,&quot;시간과 역할이 맞는 팀플 동료 찾기&quot;]"></span></div>
+<div class="l3-tag-line"><input id="idea-input" name="idea" type="text" maxlength="120" autocomplete="off" placeholder="예: 시간과 역할이 맞는 팀플 동료를 찾아주는 서비스" aria-describedby="idea-help idea-msg"><span class="l3-typing" aria-hidden="true" data-typing="[&quot;견적·정산을 한곳에서 끝내는 프리랜서 도구&quot;,&quot;리뷰 답글을 도와주는 1인 쇼핑몰 서비스&quot;,&quot;시간과 역할이 맞는 팀플 동료 찾기&quot;]"></span></div>
 <div class="l3-tag-foot"><p id="idea-msg" class="l3-msg" aria-live="polite" data-empty="이름표에 한 문장을 적거나 아래 예시를 골라 주세요."></p><button type="submit" class="l3-btn">심기 <span aria-hidden="true">↓</span></button></div>
 </form>
+<div class="l3-next" data-next="surface" hidden><svg class="l3-next-root" viewBox="0 0 120 28" aria-hidden="true"><path pathLength="1" d="M0 0C20 22 75 2 120 25"/></svg><button type="button" class="l3-btn" data-goto="learn">이 이름표로 내려가기 · 오늘 배울 것 <span aria-hidden="true">↓</span></button><a class="l3-app-link" data-cta="prototype" href="./app/?from=v31">여기까지 하고 앱에서 이어하기 →</a></div>
 <div class="l3-stake" aria-hidden="true"></div>
 <svg class="l3-sprout l3-surface-sprout" viewBox="0 0 220 240" role="img" aria-label="이름표 옆에서 자라는 새싹">
 <g class="m-sprout"><path class="m-stem" d="M108 98C111 60 102 47 91 31"/><path class="m-leaf-a" d="M104 64C64 63 60 28 64 20c37 1 51 16 40 44Z"/><path class="m-leaf-b" d="M106 73c2-41 41-52 55-48-1 39-23 54-55 48Z"/><path class="m-vein" d="M110 62c15-14 25-22 38-26"/></g>
@@ -468,19 +515,19 @@ h2:focus { outline: none; }
 <p class="l3-meaning">오늘 배울 것</p>
 <figure class="l3-note" data-slot="learn" data-status="example"><figcaption>배운 것</figcaption><p class="l3-pen" data-value>좋다는 말보다 지난 행동을 묻는다</p><span class="l3-stamp" data-stamp>예시 기록</span></figure>
 </div>
-<div class="l3-story"><h2 id="learn-title" tabindex="-1">뿌리가 처음 닿는 곳에는<br>개념이 하나 있어요.</h2><p class="l3-body l3-rise">지금 아이디어에 가장 먼저 필요한 개념 한 가지. 읽고 끝내지 않고 한 문항으로 바로 확인해요.</p>
+<div class="l3-story"><div class="l3-pain"><p class="l3-panel-tag">이런 적 있나요?</p><p class="l3-hint">가장 가까운 하나를 골라 주세요. 고르지 않아도 계속할 수 있어요.</p><div role="group" aria-label="이런 적 있나요?"><button type="button" class="l3-chip" data-pain="build" aria-pressed="false">주말마다 기능은 늘었는데, 쓸 사람이 있는지는 모르겠어요</button><button type="button" class="l3-chip" data-pain="praise" aria-pressed="false">주변에선 다 좋다는데, 막상 쓰는 사람이 없어요</button><button type="button" class="l3-chip" data-pain="interview" aria-pressed="false">고객 인터뷰를 하라는데, 뭘 물어야 할지 모르겠어요</button><button type="button" class="l3-chip" data-pain="late" aria-pressed="false">다 만들고 나서야 “이거 누가 쓰지?”가 떠올랐어요</button></div></div><h2 id="learn-title" tabindex="-1">뿌리가 처음 닿는 곳에는<br>개념이 하나 있어요.</h2><p class="l3-body l3-rise" data-bind="pain-line" aria-live="polite">지금 아이디어에 가장 먼저 필요한 개념 한 가지. 읽고 끝내지 않고 한 문항으로 바로 확인해요.</p><p class="l3-why">주변에서 “좋다”고 했는데 아무도 쓰지 않았다면, 이 개념 하나로 설명돼요.</p>
 <p class="l3-concept l3-rise">좋다는 말보다, 지난 행동</p>
 <p class="l3-summary l3-rise">고객에게 아이디어가 괜찮은지 묻기보다, 최근에 실제로 어떻게 했는지를 물어보세요. 칭찬은 쉽게 나오지만 지난 행동은 거짓말을 잘 하지 않아요. <small>NSF I-Corps 고객 발견 방식</small></p>
-<div class="l3-panel l3-quiz" data-quiz><p class="l3-panel-tag">확인 문제 <span data-bind="quiz-no">1</span></p><p class="l3-q" data-bind="quiz-q">고객의 실제 문제를 알아보기에 더 좋은 질문은?</p><div class="l3-options" data-options><button type="button" class="l3-option" data-choice="0">이 앱이 있으면 쓰고 싶으세요?</button><button type="button" class="l3-option" data-choice="1">최근 팀원을 찾았을 때 어떻게 하셨나요?</button><button type="button" class="l3-option" data-choice="2">제 아이디어가 괜찮지 않나요?</button></div><p class="l3-feedback" aria-live="polite" data-bind="quiz-feedback"></p></div></div>
+<div class="l3-panel l3-quiz" data-quiz><p class="l3-panel-tag">확인 문제 <span data-bind="quiz-no">1</span></p><p class="l3-q" data-bind="quiz-q">고객의 실제 문제를 알아보기에 더 좋은 질문은?</p><div class="l3-options" data-options><button type="button" class="l3-option" data-choice="0">이 앱이 있으면 쓰고 싶으세요?</button><button type="button" class="l3-option" data-choice="1">최근 팀원을 찾았을 때 어떻게 하셨나요?</button><button type="button" class="l3-option" data-choice="2">제 아이디어가 괜찮지 않나요?</button></div><p class="l3-feedback" aria-live="polite" data-bind="quiz-feedback"></p></div><div class="l3-next" data-next="learn" hidden><svg class="l3-next-root" viewBox="0 0 120 28" aria-hidden="true"><path pathLength="1" d="M0 0C20 22 75 2 120 25"/></svg><button type="button" class="l3-btn" data-goto="ask">더 깊이 뿌리 뻗기 · 물어볼 질문 만들기 <span aria-hidden="true">↓</span></button><a class="l3-app-link" data-cta="prototype" href="./app/?from=v31">여기까지 하고 앱에서 이어하기 →</a></div></div>
 </div></section>
 <section id="ask" class="l3-layer l3-ask" data-spec="L3S-04" data-chapter="ask" aria-labelledby="ask-title">
 <svg class="l3-edge" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V16C160 30 300 6 480 20S780 36 960 18 1260 4 1440 22V40Z"/></svg>
 <div class="l3-layer-grid"><div class="l3-strata">
 <p class="l3-depth"><span class="l3-mono">15–40cm</span><span class="l3-stratum">속흙</span></p>
 <p class="l3-meaning">물어볼 질문</p>
-<figure class="l3-note" data-slot="ask" data-status="example"><figcaption>물어볼 질문</figcaption><p class="l3-pen" data-value>신입생 3명에게 지난 학기 팀원 구한 방법</p><span class="l3-stamp" data-stamp>예시 기록</span></figure>
+<figure class="l3-note" data-slot="ask" data-status="example"><figcaption>물어볼 질문</figcaption><p class="l3-pen" data-value>프리랜서 3명에게 지난달 정산을 어떻게 했는지</p><span class="l3-stamp" data-stamp>예시 기록</span></figure>
 </div>
-<div class="l3-story"><h2 id="ask-title" tabindex="-1">배운 걸 내 아이디어에 대면<br>질문이 생겨요.</h2><p class="l3-body l3-rise">누구에게 물어볼지만 정하면, 방금 배운 방식으로 질문 세 개가 준비돼요.</p>
+<div class="l3-story"><h2 id="ask-title" tabindex="-1">배운 걸 내 아이디어에 대면<br>질문이 생겨요.</h2><p class="l3-body l3-rise">누구에게 물어볼지만 정하면, 방금 배운 방식으로 질문 세 개가 준비돼요.</p><p class="l3-why">인터뷰가 막막한 건 용기가 없어서가 아니라, 물어볼 질문이 없어서예요.</p>
 <p class="l3-customer l3-rise"><span class="l3-pen" data-bind="customer"></span><span class="l3-customer-suffix">에게 물어볼게요</span></p>
 <div class="l3-panel l3-asksheet">
 <label for="customer-input" class="l3-panel-tag">누구에게 물어볼까요?</label>
@@ -490,21 +537,21 @@ h2:focus { outline: none; }
 <ol class="l3-questions"><li>마지막으로 이 문제를 겪은 건 언제였나요? 그때 상황을 들려주세요.</li><li>그때는 어떻게 해결하셨어요? 지금도 그 방법을 쓰세요?</li><li>그 방법에서 가장 번거롭거나 아쉬웠던 점은 무엇이었나요?</li></ol>
 <p class="l3-avoid"><span>이런 질문은 피해요</span><s>이런 서비스가 있으면 쓰실 건가요?</s></p>
 <div class="l3-row"><button type="button" class="l3-btn" data-action="save-questions" aria-pressed="false">이 질문으로 기록</button><span class="l3-msg" aria-live="polite" data-bind="ask-msg" data-saved="뿌리에 기록했어요"></span></div>
-</div></div>
+</div><div class="l3-next" data-next="ask" hidden><svg class="l3-next-root" viewBox="0 0 120 28" aria-hidden="true"><path pathLength="1" d="M0 0C20 22 75 2 120 25"/></svg><button type="button" class="l3-btn" data-goto="observe">더 깊이 뿌리 뻗기 · 들은 답 해석하기 <span aria-hidden="true">↓</span></button><a class="l3-app-link" data-cta="prototype" href="./app/?from=v31">여기까지 하고 앱에서 이어하기 →</a></div></div>
 </div></section>
 <section id="observe" class="l3-layer l3-observe" data-spec="L3S-05" data-chapter="observe" aria-labelledby="observe-title">
 <svg class="l3-edge" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V24C140 10 340 34 520 16S820 0 1000 20 1300 34 1440 12V40Z"/></svg>
 <div class="l3-layer-grid"><div class="l3-strata">
 <p class="l3-depth"><span class="l3-mono">40–70cm</span><span class="l3-stratum">깊은 흙</span></p>
 <p class="l3-meaning">들은 답</p>
-<figure class="l3-note" data-slot="observe" data-status="example"><figcaption>들은 답</figcaption><p class="l3-pen" data-value>모집보다 시간 맞추기가 더 불편했다</p><span class="l3-stamp" data-stamp>예시 기록</span></figure>
+<figure class="l3-note" data-slot="observe" data-status="example"><figcaption>들은 답</figcaption><p class="l3-pen" data-value>정산보다 다음 일감 찾기가 더 급했다</p><span class="l3-stamp" data-stamp>예시 기록</span></figure>
 </div>
-<div class="l3-story"><h2 id="observe-title" tabindex="-1">예상과 다른 답을 만나면,<br>뿌리는 방향을 틀어요.</h2><p class="l3-body l3-rise">좋은 답만 골라 적지 않아요. 막힌 쪽으로 뻗었던 뿌리도 기록으로 남고, 다음 방향을 정하는 근거가 돼요.</p>
+<div class="l3-story"><h2 id="observe-title" tabindex="-1">예상과 다른 답을 만나면,<br>뿌리는 방향을 틀어요.</h2><p class="l3-body l3-rise">좋은 답만 골라 적지 않아요. 막힌 쪽으로 뻗었던 뿌리도 기록으로 남고, 다음 방향을 정하는 근거가 돼요.</p><p class="l3-why">예상과 다른 답은 실패가 아니라, 헛수고를 줄여 주는 신호예요.</p>
 <p class="l3-setup l3-rise"><span class="l3-stamp is-example">가상 예시</span> 같은 질문을 세 명에게 물어봤다고 해볼게요. 이런 답을 들었어요.</p>
-<ul class="l3-quotes"><li class="l3-rise" style="--i:0"><span class="l3-who">응답 1</span>“지난달에도 겪었어요. 그때는 아는 사람한테 물어서 겨우 해결했죠.”</li><li class="l3-rise" style="--i:1"><span class="l3-who">응답 2</span>“불편하긴 한데, 지금 방법으로도 그럭저럭 돼요.”</li><li class="l3-rise" style="--i:2"><span class="l3-who">응답 3</span>“저는 사실 다른 게 더 급해요. 시간 맞추는 게 제일 힘들어요.”</li></ul>
+<ul class="l3-quotes"><li class="l3-rise" style="--i:0"><span class="l3-who">응답 1</span><span data-quote="0">“지난달 정산 때 엑셀 세 개를 오가다 하루를 날렸어요.”</span></li><li class="l3-rise" style="--i:1"><span class="l3-who">응답 2</span><span data-quote="1">“불편하긴 한데, 세무사한테 한 번에 맡기니까 그럭저럭 돼요.”</span></li><li class="l3-rise" style="--i:2"><span class="l3-who">응답 3</span><span data-quote="2">“솔직히 정산보다 다음 일감 찾는 게 더 급해요.”</span></li></ul>
 <div class="l3-panel l3-observe-panel"><p class="l3-q">당신의 예상과 비교하면 어땠나요?</p>
 <div class="l3-choice-row" role="group" aria-label="당신의 예상과 비교하면 어땠나요?"><button type="button" class="l3-choice" data-observe="supported" aria-pressed="false">예상과 같았어요</button><button type="button" class="l3-choice" data-observe="refuted" aria-pressed="false">예상과 달랐어요</button></div>
-<p class="l3-note-msg" aria-live="polite" data-bind="observe-note" data-turn="뿌리가 방향을 틀었어요. 막힌 쪽 뿌리도 그대로 남아요."></p></div></div>
+<p class="l3-note-msg" aria-live="polite" data-bind="observe-note" data-turn="뿌리가 방향을 틀었어요. 막힌 쪽 뿌리도 그대로 남아요."></p></div><div class="l3-next" data-next="observe" hidden><svg class="l3-next-root" viewBox="0 0 120 28" aria-hidden="true"><path pathLength="1" d="M0 0C20 22 75 2 120 25"/></svg><button type="button" class="l3-btn" data-goto="decide">더 깊이 뿌리 뻗기 · 다음 방향 정하기 <span aria-hidden="true">↓</span></button><a class="l3-app-link" data-cta="prototype" href="./app/?from=v31">여기까지 하고 앱에서 이어하기 →</a></div></div>
 </div></section>
 <section id="decide" class="l3-layer l3-decide" data-spec="L3S-06" data-chapter="decide" aria-labelledby="decide-title">
 <svg class="l3-edge" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V14C200 26 360 34 560 18S900 4 1080 22 1320 30 1440 18V40Z"/></svg>
@@ -513,8 +560,8 @@ h2:focus { outline: none; }
 <p class="l3-meaning">결정</p>
 <figure class="l3-note" data-slot="decide" data-status="example"><figcaption>결정</figcaption><p class="l3-pen" data-value>대상을 좁혀 다시 묻기로 했다</p><span class="l3-stamp" data-stamp>예시 기록</span></figure>
 </div>
-<div class="l3-story"><h2 id="decide-title" tabindex="-1">어디로 뻗을지는<br>당신이 정해요.</h2><p class="l3-body l3-rise">AI는 선택지를 정리해 줄 뿐이에요. 들은 답을 근거로 다음 방향을 직접 골라요.</p>
-<div class="l3-panel"><p class="l3-waiting" data-bind="decide-waiting">먼저 바로 위 층에서 들은 답을 해석해 주세요. 결과에 따라 갈 수 있는 방향이 달라져요.</p><div class="l3-decisions" role="group" aria-label="다음 방향" data-decisions></div></div></div>
+<div class="l3-story"><h2 id="decide-title" tabindex="-1">어디로 뻗을지는<br>당신이 정해요.</h2><p class="l3-body l3-rise">AI는 선택지를 정리해 줄 뿐이에요. 들은 답을 근거로 다음 방향을 직접 골라요.</p><p class="l3-why">틀려도 괜찮아요. 방향을 바꾼 기록도 뿌리로 남아요.</p>
+<div class="l3-panel"><p class="l3-waiting" data-bind="decide-waiting">먼저 바로 위 층에서 들은 답을 해석해 주세요. 결과에 따라 갈 수 있는 방향이 달라져요.</p><div class="l3-decisions" role="group" aria-label="다음 방향" data-decisions></div></div><div class="l3-next" data-next="decide" hidden><svg class="l3-next-root" viewBox="0 0 120 28" aria-hidden="true"><path pathLength="1" d="M0 0C20 22 75 2 120 25"/></svg><button type="button" class="l3-btn" data-goto="roots">뿌리 지도 보기 · 앞으로 자랄 영역 <span aria-hidden="true">↓</span></button><a class="l3-app-link" data-cta="prototype" href="./app/?from=v31">여기까지 하고 앱에서 이어하기 →</a></div></div>
 </div></section>
 <section id="roots" class="l3-layer l3-roots" data-spec="L3S-07" aria-labelledby="roots-title">
 <svg class="l3-edge" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40V20C180 6 380 28 600 14S960 32 1160 12 1360 20 1440 16V40Z"/></svg>
@@ -529,6 +576,7 @@ h2:focus { outline: none; }
 <ol class="l3-areas" data-path data-current="지금 자라는 갈래" data-next="다음 갈래"><li class="l3-area" data-key="customer" style="--c:var(--c-customer)"><span class="l3-area-dot" aria-hidden="true">◎</span><span class="l3-area-name">고객 이해</span><span class="l3-area-q">누가, 언제, 무엇 때문에 불편할까?</span><em class="l3-area-badge" data-badge>지금 자라는 갈래</em></li><li class="l3-area" data-key="product" style="--c:var(--c-product)"><span class="l3-area-dot" aria-hidden="true">◇</span><span class="l3-area-name">제품 가치</span><span class="l3-area-q">쓰고 나면 무엇이 더 좋아질까?</span><em class="l3-area-badge" data-badge>다음 갈래</em></li><li class="l3-area" data-key="market" style="--c:var(--c-market)"><span class="l3-area-dot" aria-hidden="true">◈</span><span class="l3-area-name">시장 기회</span><span class="l3-area-q">이 문제를 어디서 먼저 해결할까?</span><em class="l3-area-badge" data-badge></em></li><li class="l3-area" data-key="gtm" style="--c:var(--c-gtm)"><span class="l3-area-dot" aria-hidden="true">↗</span><span class="l3-area-name">고객 확보·판매</span><span class="l3-area-q">어떻게 만나서 쓰거나 사게 할까?</span><em class="l3-area-badge" data-badge></em></li><li class="l3-area" data-key="finance" style="--c:var(--c-finance)"><span class="l3-area-dot" aria-hidden="true">₩</span><span class="l3-area-name">수익·재무</span><span class="l3-area-q">돈이 어떻게 들어오고 얼마나 남을까?</span><em class="l3-area-badge" data-badge></em></li><li class="l3-area" data-key="operations" style="--c:var(--c-operations)"><span class="l3-area-dot" aria-hidden="true">▦</span><span class="l3-area-name">실행·운영</span><span class="l3-area-q">약속한 가치를 계속 전달할 수 있을까?</span><em class="l3-area-badge" data-badge></em></li><li class="l3-area" data-key="strategy" style="--c:var(--c-strategy)"><span class="l3-area-dot" aria-hidden="true">✧</span><span class="l3-area-name">전략·학습</span><span class="l3-area-q">지금 무엇을 확인하고 어떤 결정을 할까?</span><em class="l3-area-badge" data-badge></em></li></ol>
 <p class="l3-rule" aria-live="polite" data-bind="path-rule" data-default="기본 순서는 고객 이해에서 시작해 전략·학습으로 이어져요." data-refuted="들은 답이 예상과 달라서, 방향을 바꿀 기준을 세우는 전략·학습 갈래가 다음으로 당겨졌어요.">기본 순서는 고객 이해에서 시작해 전략·학습으로 이어져요.</p>
 <p class="l3-hint">들은 답에 따라 다음 갈래는 달라질 수 있어요. 어느 쪽으로 뻗을지는 언제나 직접 정해요.</p>
+<div class="l3-next" data-next="roots" hidden><svg class="l3-next-root" viewBox="0 0 120 28" aria-hidden="true"><path pathLength="1" d="M0 0C20 22 75 2 120 25"/></svg><button type="button" class="l3-btn" data-goto="harvest">다시 지상으로 · 앱에서 이어가기 <span aria-hidden="true">↓</span></button></div>
 </div></section>
 </div>
 <section id="grow" class="l3-ab" data-spec="L3S-08" aria-labelledby="grow-title">
@@ -573,14 +621,14 @@ h2:focus { outline: none; }
 </svg><div class="l3-mini-tag"><span class="l3-tag-label">이름표</span><p class="l3-pen" data-bind="idea"></p></div><div class="l3-stake small" aria-hidden="true"></div></div>
 <div><p class="l3-eyebrow">다시 지상으로</p>
 <h2 id="harvest-title" tabindex="-1" data-bind="harvest-title" data-done="뿌리가 다 내렸어요. 이제 진짜로 심어 볼까요?" data-partial="뿌리가 {n}층까지 내렸어요." data-none="예시 뿌리를 따라 끝까지 내려왔어요.">예시 뿌리를 따라 끝까지 내려왔어요.</h2>
-<p class="l3-body">같은 이름표로 앱에서 시작해요. 첫 프로젝트 입력칸에 이 문장이 미리 채워져요. 퀴즈·관찰·결정은 앱에서 직접 해야 기록으로 남아요.</p>
-<div class="l3-row"><a class="l3-btn big" href="./app/?from=v3" data-cta="prototype">이 이름표로 앱에서 심기 <span aria-hidden="true">→</span></a><button type="button" class="l3-btn ghost" data-action="reset">다른 아이디어 심기</button></div></div>
+<p class="l3-body">같은 이름표로 앱에서 시작해요. 첫 프로젝트 입력칸에 이 문장이 미리 채워져요. 앱에서는 가상 예시가 아니라 내 진짜 고객과 한 바퀴를 돌기 때문에, 퀴즈·관찰·결정은 거기서 새로 기록해요.</p>
+<div class="l3-row"><a class="l3-btn big" href="./app/?from=v31" data-cta="prototype">이 이름표로 앱에서 심기 <span aria-hidden="true">→</span></a><button type="button" class="l3-btn ghost" data-action="reset">다른 아이디어 심기</button></div></div>
 </div></section>
 </main>
 <footer class="l3-footer" data-spec="L3S-11"><div class="l3-shell">
 <a class="l3-brand" href="#surface"><svg class="l3-mark" viewBox="0 0 32 35" fill="none" aria-hidden="true"><path d="M4 9 16 30 28 9M16 24V4" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M16 14C7 14 8 4 8 4c7 0 8 5 8 10ZM17 13c0-8 9-9 9-9s0 9-9 9Z" fill="currentColor"/></svg><span>vencubator</span></a>
 <p>Vencubator는 지금 체험판(프로토타입)이에요. 이 페이지의 들은 답과 선택지는 가상 예시이고, 적은 내용은 서버로 보내지 않고 이 브라우저에만 저장돼요.</p>
-<ul><li><a href="./app/?from=v3">앱 열기</a></li></ul>
+<ul><li><a data-cta="prototype" href="./app/?from=v31">앱 시작하기</a></li></ul>
 <small>© 2026 Vencubator</small></div></footer>
 </div>
 <noscript><p style="padding:100px 24px;max-width:720px;margin:auto;line-height:1.8">이 페이지는 아이디어 한 문장을 이름표에 적어 심어 보는 체험형 페이지라 스크립트가 필요해요. Vencubator는 오늘 배울 것 하나, 해볼 것 하나를 안내하는 창업 학습 코파일럿이며 지금 체험판으로 열려 있어요.</p></noscript>
@@ -710,36 +758,51 @@ function track(name, props = {}, env = {}) {
   return ev;
 }
 const readEvents = storage => { const l = readJSON(store(storage), EVENTS_KEY, []); return Array.isArray(l) ? l : []; };
-// SPEC-010 §2: 모든 카피·예시·템플릿·링크의 단일 출처. 마크업·로직 없음.
-// 섹션 id(L3S-xx)는 SPEC-010 §3 표와 1:1, 배열 순서 = 페이지 순서.
+// SPEC-016 §2: 모든 카피·예시·템플릿·링크의 단일 출처. 마크업·로직 없음.
+// 섹션 id(L3S-xx)는 SPEC-016 §3 표와 1:1, 배열 순서 = 페이지 순서.
 // 퀴즈·질문·관찰·결정·7영역은 v2(SPEC-007)와 같은 내용 — prototype과의 일치는 테스트가 검사한다.
 const SITE = {
   lang: 'ko',
   title: 'Vencubator · 아이디어를 심으면 근거가 뿌리내려요',
   description: '아이디어 한 문장을 이름표에 적어 심어 보세요. 땅속으로 내려갈수록 오늘 배울 것, 물어볼 질문, 들은 답, 내린 결정이 뿌리가 되어 자라요. 1인 빌더를 위한 창업 학습 코파일럿 Vencubator(체험판).',
   brand: 'vencubator',
-  variant: 'v3',
-  storageKey: 'vencubator.landing.v3',
+  variant: 'v31',
+  storageKey: 'vencubator.landing.v31',
   limits: { idea: 120, customer: 60 },
   links: {
     // 사이트 루트(/)에 이 랜딩, /app/ 에 앱 (SPEC-009 r0.3). 문장은 같은 출처 저장소로 인계된다.
-    prototype: './app/?from=v3'
+    prototype: './app/?from=v31'
   }
 };
 // SPEC-006/007/010 공통 금지 표현
 const CLAIM_BANNED = ['성공률', 'PMF', '% 완성', '보장', 'AI가 결정', 'AI가 대신', '검증 완료', '1위', '누적 사용자'];
 const REQUIRED_NOTICES = ['프로토타입', '가상 예시', '이 브라우저에만'];
 const SAMPLES = [
-  { key: 'teamup', label: '팀플 동료 찾기', idea: '시간과 역할이 맞는 대학생 팀플 동료를 찾아주는 서비스', customer: '첫 전공 수업에서 팀원을 구하는 대학 신입생' },
-  { key: 'banchan', label: '동네 반찬 구독', idea: '퇴근길에 동네 반찬을 조금씩 나눠 사는 구독 서비스', customer: '평일 저녁을 혼자 해결하는 1인 가구 직장인' },
-  { key: 'plant', label: '반려식물 케어', idea: '초보 식물 집사에게 물 주기 시점을 알려주는 앱', customer: '식물을 두 번 이상 말려 본 초보 집사' }
+  {
+    "key": "freelance",
+    "label": "프리랜서 정산 도구",
+    "idea": "프리랜서 개발자의 견적·세금계산서·정산을 한곳에서 처리하는 도구",
+    "customer": "외주 3건 이상을 동시에 진행하는 1년 차 프리랜서 개발자"
+  },
+  {
+    "key": "review",
+    "label": "쇼핑몰 리뷰 답글",
+    "idea": "1인 쇼핑몰 사장님의 리뷰 답글 작성을 도와주는 서비스",
+    "customer": "하루 리뷰가 20개 넘게 달리는 1인 스마트스토어 운영자"
+  },
+  {
+    "key": "teamup",
+    "label": "팀플 동료 찾기",
+    "idea": "시간과 역할이 맞는 대학생 팀플 동료를 찾아주는 서비스",
+    "customer": "첫 전공 수업에서 팀원을 구하는 대학 신입생"
+  }
 ];
 // 지층 5개 (이름표 + 4개 층). example = 조작하지 않은 방문자에게 보여 줄 “다 쓴 예시 기록” (DP-12)
 const SLOTS = [
-  { key: 'idea', label: '이름표', chapter: 'surface', depth: '지상', example: '시간과 역할이 맞는 팀플 동료 찾기' },
+  { key: 'idea', label: '이름표', chapter: 'surface', depth: '지상', example: '견적·정산을 한곳에서 끝내는 프리랜서 도구' },
   { key: 'learn', label: '배운 것', chapter: 'learn', depth: '0–15cm', example: '좋다는 말보다 지난 행동을 묻는다' },
-  { key: 'ask', label: '물어볼 질문', chapter: 'ask', depth: '15–40cm', example: '신입생 3명에게 지난 학기 팀원 구한 방법' },
-  { key: 'observe', label: '들은 답', chapter: 'observe', depth: '40–70cm', example: '모집보다 시간 맞추기가 더 불편했다' },
+  { key: 'ask', label: '물어볼 질문', chapter: 'ask', depth: '15–40cm', example: '프리랜서 3명에게 지난달 정산을 어떻게 했는지' },
+  { key: 'observe', label: '들은 답', chapter: 'observe', depth: '40–70cm', example: '정산보다 다음 일감 찾기가 더 급했다' },
   { key: 'decide', label: '결정', chapter: 'decide', depth: '70–100cm', example: '대상을 좁혀 다시 묻기로 했다' }
 ];
 const STAMPS = { example: '예시 기록', mine: '내 기록', refuted: '방향 전환' };
@@ -770,11 +833,8 @@ const AVOID_QUESTION = '이런 서비스가 있으면 쓰실 건가요?';
 const OBSERVATION = {
   label: '가상 예시',
   setup: '같은 질문을 세 명에게 물어봤다고 해볼게요. 이런 답을 들었어요.',
-  quotes: [
-    '“지난달에도 겪었어요. 그때는 아는 사람한테 물어서 겨우 해결했죠.”',
-    '“불편하긴 한데, 지금 방법으로도 그럭저럭 돼요.”',
-    '“저는 사실 다른 게 더 급해요. 시간 맞추는 게 제일 힘들어요.”'
-  ],
+  quotesBySample: {"freelance":["“지난달 정산 때 엑셀 세 개를 오가다 하루를 날렸어요.”","“불편하긴 한데, 세무사한테 한 번에 맡기니까 그럭저럭 돼요.”","“솔직히 정산보다 다음 일감 찾는 게 더 급해요.”"],"review":["“어제도 밤 11시까지 답글 달았어요. 복붙하면 티가 나서요.”","“답글은 그냥 짧게 달고 말아요. 그걸로 문제는 없었어요.”","“답글보다 악성 리뷰 대응이 제일 스트레스예요.”"],"teamup":["“지난달에도 겪었어요. 그때는 아는 사람한테 물어서 겨우 해결했죠.”","“불편하긴 한데, 지금 방법으로도 그럭저럭 돼요.”","“저는 사실 다른 게 더 급해요. 시간 맞추는 게 제일 힘들어요.”"]},
+  quotesGeneric: ["“지난달에도 이 문제를 겪었어요. 그때는 아는 사람한테 물어서 겨우 해결했죠.”","“불편하긴 한데, 지금 방법으로도 그럭저럭 돼요.”","“사실 저한테는 다른 게 더 급해요.”"],
   ask: '당신의 예상과 비교하면 어땠나요?',
   choices: [
     { key: 'supported', label: '예상과 같았어요', card: '예상한 불편이 실제로 있었어요' },
@@ -809,8 +869,9 @@ const AREAS = [
 ];
 const SECTIONS = [
   { id: 'L3S-00', type: 'topbar', anchor: 'top',
-    reset: '처음부터', cta: { label: '앱 열기', href: 'prototype' } },
+    reset: '처음부터', cta: { label: '앱 시작하기', href: 'prototype' } },
   { id: 'L3S-01', type: 'surface', anchor: 'surface',
+    hook: '아이디어는 있는데, 뭘 먼저 확인해야 할지 몰라 멈춰 있나요?',
     eyebrow: '1인 빌더를 위한 창업 학습 코파일럿 · 체험판',
     lines: ['아이디어를 심으면,', '근거가 뿌리내려요.'],
     lead: '떠오른 아이디어를 이름표에 한 문장으로 적어 심어 보세요. 아래로 내려갈수록 오늘 배울 것, 물어볼 질문, 들은 답, 내린 결정이 뿌리가 되어 자라요.',
@@ -819,16 +880,17 @@ const SECTIONS = [
     submit: '심기',
     empty: '이름표에 한 문장을 적거나 아래 예시를 골라 주세요.',
     samplesLabel: '예시로 심어 보기',
+    appLink: '가입 없이 바로 앱에서 시작하기 →',
     privacy: '적은 내용은 서버로 보내지 않고 이 브라우저에만 저장돼요.',
     down: '땅속으로 내려가 보기',
-    typing: ['동네 반찬을 조금씩 나눠 사는 구독', '초보 식물 집사에게 물 주기 알림', '시간과 역할이 맞는 팀플 동료 찾기'] },
+    typing: ['견적·정산을 한곳에서 끝내는 프리랜서 도구', '리뷰 답글을 도와주는 1인 쇼핑몰 서비스', '시간과 역할이 맞는 팀플 동료 찾기'] },
   { id: 'L3S-02', type: 'gauge', anchor: 'gauge',
     label: '깊이', unit: 'cm', ground: '지상',
     legendMine: '실선 · 내가 채운 뿌리', legendExample: '점선 · 예시 기록' },
-  { id: 'L3S-03', type: 'layerLearn', anchor: 'learn', depth: '0–15cm', stratum: '겉흙', meaning: '오늘 배울 것',
+  { id: 'L3S-03', type: 'layerLearn', why: "주변에서 “좋다”고 했는데 아무도 쓰지 않았다면, 이 개념 하나로 설명돼요.", anchor: 'learn', depth: '0–15cm', stratum: '겉흙', meaning: '오늘 배울 것',
     title: '뿌리가 처음 닿는 곳에는\n개념이 하나 있어요.',
     body: '지금 아이디어에 가장 먼저 필요한 개념 한 가지. 읽고 끝내지 않고 한 문항으로 바로 확인해요.' },
-  { id: 'L3S-04', type: 'layerAsk', anchor: 'ask', depth: '15–40cm', stratum: '속흙', meaning: '물어볼 질문',
+  { id: 'L3S-04', type: 'layerAsk', why: "인터뷰가 막막한 건 용기가 없어서가 아니라, 물어볼 질문이 없어서예요.", anchor: 'ask', depth: '15–40cm', stratum: '속흙', meaning: '물어볼 질문',
     title: '배운 걸 내 아이디어에 대면\n질문이 생겨요.',
     body: '누구에게 물어볼지만 정하면, 방금 배운 방식으로 질문 세 개가 준비돼요.',
     inputLabel: '누구에게 물어볼까요?',
@@ -837,11 +899,11 @@ const SECTIONS = [
     avoidLabel: '이런 질문은 피해요',
     save: '이 질문으로 기록',
     saved: '뿌리에 기록했어요' },
-  { id: 'L3S-05', type: 'layerObserve', anchor: 'observe', depth: '40–70cm', stratum: '깊은 흙', meaning: '들은 답',
+  { id: 'L3S-05', type: 'layerObserve', why: "예상과 다른 답은 실패가 아니라, 헛수고를 줄여 주는 신호예요.", anchor: 'observe', depth: '40–70cm', stratum: '깊은 흙', meaning: '들은 답',
     title: '예상과 다른 답을 만나면,\n뿌리는 방향을 틀어요.',
     body: '좋은 답만 골라 적지 않아요. 막힌 쪽으로 뻗었던 뿌리도 기록으로 남고, 다음 방향을 정하는 근거가 돼요.',
     turnNote: '뿌리가 방향을 틀었어요. 막힌 쪽 뿌리도 그대로 남아요.' },
-  { id: 'L3S-06', type: 'layerDecide', anchor: 'decide', depth: '70–100cm', stratum: '깊은 흙', meaning: '결정',
+  { id: 'L3S-06', type: 'layerDecide', why: "틀려도 괜찮아요. 방향을 바꾼 기록도 뿌리로 남아요.", anchor: 'decide', depth: '70–100cm', stratum: '깊은 흙', meaning: '결정',
     title: '어디로 뻗을지는\n당신이 정해요.',
     body: 'AI는 선택지를 정리해 줄 뿐이에요. 들은 답을 근거로 다음 방향을 직접 골라요.',
     waiting: '먼저 바로 위 층에서 들은 답을 해석해 주세요. 결과에 따라 갈 수 있는 방향이 달라져요.' },
@@ -889,15 +951,48 @@ const SECTIONS = [
     titleDone: '뿌리가 다 내렸어요. 이제 진짜로 심어 볼까요?',
     titlePartial: '뿌리가 {n}층까지 내렸어요.',
     titleNone: '예시 뿌리를 따라 끝까지 내려왔어요.',
-    body: '같은 이름표로 앱에서 시작해요. 첫 프로젝트 입력칸에 이 문장이 미리 채워져요. 퀴즈·관찰·결정은 앱에서 직접 해야 기록으로 남아요.',
+    body: '같은 이름표로 앱에서 시작해요. 첫 프로젝트 입력칸에 이 문장이 미리 채워져요. 앱에서는 가상 예시가 아니라 내 진짜 고객과 한 바퀴를 돌기 때문에, 퀴즈·관찰·결정은 거기서 새로 기록해요.',
     cta: '이 이름표로 앱에서 심기',
     again: '다른 아이디어 심기' },
   { id: 'L3S-11', type: 'footer', anchor: 'footer',
     notice: 'Vencubator는 지금 체험판(프로토타입)이에요. 이 페이지의 들은 답과 선택지는 가상 예시이고, 적은 내용은 서버로 보내지 않고 이 브라우저에만 저장돼요.',
-    links: [ { label: '앱 열기', href: 'prototype' } ],
+    links: [ { label: '앱 시작하기', href: 'prototype' } ],
     copy: '© 2026 Vencubator' }
 ];
-// SPEC-010 §4: 순수 상태 모델. DOM·저장소 접근 없음 (테스트 대상).
+// SPEC-016 §5.1 — L3I-10
+const NEXT = [
+  {layer:'surface',to:'learn',label:'이 이름표로 내려가기 · 오늘 배울 것 ↓'},
+  {layer:'learn',to:'ask',label:'더 깊이 뿌리 뻗기 · 물어볼 질문 만들기 ↓'},
+  {layer:'ask',to:'observe',label:'더 깊이 뿌리 뻗기 · 들은 답 해석하기 ↓'},
+  {layer:'observe',to:'decide',label:'더 깊이 뿌리 뻗기 · 다음 방향 정하기 ↓'},
+  {layer:'decide',to:'roots',label:'뿌리 지도 보기 · 앞으로 자랄 영역 ↓'},
+  {layer:'roots',to:'harvest',label:'다시 지상으로 · 앱에서 이어가기 ↓'}
+];
+const NEXT_COPY = {app:'여기까지 하고 앱에서 이어하기 →',live:'다음 층이 열렸어요'};
+const CTA_COPY = {first:'언제든 여기서 앱으로 옮겨 심을 수 있어요',complete:'이 이름표로 앱에서 이어갈 수 있어요',progress:'내가 채운 층 {n}/5'};
+const PAIN = {title:'이런 적 있나요?',hint:'가장 가까운 하나를 골라 주세요. 고르지 않아도 계속할 수 있어요.',lineDefault:SECTIONS.find(s=>s.anchor==='learn').body,options:[
+  {
+    "key": "build",
+    "label": "주말마다 기능은 늘었는데, 쓸 사람이 있는지는 모르겠어요",
+    "line": "만들기 전에 “누가, 언제 불편한지”부터 확인하는 방법이에요."
+  },
+  {
+    "key": "praise",
+    "label": "주변에선 다 좋다는데, 막상 쓰는 사람이 없어요",
+    "line": "그 “좋아요”가 왜 믿기 어려운지부터 볼게요."
+  },
+  {
+    "key": "interview",
+    "label": "고객 인터뷰를 하라는데, 뭘 물어야 할지 모르겠어요",
+    "line": "좋은 질문의 기준 하나만 알면, 질문은 금방 만들어져요."
+  },
+  {
+    "key": "late",
+    "label": "다 만들고 나서야 “이거 누가 쓰지?”가 떠올랐어요",
+    "line": "다음 아이디어는 순서를 바꿔, 묻고 나서 만들어 봐요."
+  }
+]};
+// SPEC-016 §4: 순수 상태 모델. DOM·저장소 접근 없음 (테스트 대상).
 // v2(SPEC-007 §4)의 액션·규칙을 계승. 차이: 칸 이름(ask), 예시 값은 “다 쓴 예시 기록”(DP-12), rootState 추가.
 const CHAPTERS = SLOTS.map(s => s.chapter); // ['surface','learn','ask','observe','decide']
 const clean = (v, max) => String(v ?? '').replace(/\s+/g, ' ').trim().slice(0, max);
@@ -905,6 +1000,7 @@ function initialState() {
   const s = SAMPLES[0];
   return {
     v: 1,
+    pain: null,
     idea: { text: s.idea, source: 'example', sample: s.key },
     learn: { variant: 0, tries: 0, result: null, last: null },
     ask: { customer: s.customer, source: 'example', saved: false },
@@ -916,11 +1012,15 @@ function initialState() {
 function reduce(state, action) {
   const s = structuredClone(state);
   switch (action.type) {
+    case 'SET_PAIN':
+      if (!PAIN.options.some(p=>p.key===action.key) || state.pain===action.key) return state;
+      s.pain=action.key; return s;
     case 'SET_IDEA': {
       const text = clean(action.text, SITE.limits.idea);
       if (!text) return state;
       const sample = SAMPLES.find(x => x.key === action.sample);
       s.idea = { text, source: action.source === 'mine' ? 'mine' : 'example', sample: sample?.key ?? null };
+      if (sample && action.source === 'example' && !s.reached.includes('surface')) s.reached.push('surface');
       if (sample && s.ask.source !== 'mine') s.ask = { customer: sample.customer, source: 'example', saved: false };
       return s;
     }
@@ -1012,6 +1112,7 @@ function deserialize(raw) {
     const obs = ['supported', 'refuted'].includes(d.observe) ? d.observe : null;
     return {
       ...base,
+      pain: PAIN.options.some(p=>p.key===d.pain) ? d.pain : null,
       idea: { ...base.idea, ...d.idea, text: clean(d.idea.text, SITE.limits.idea) || base.idea.text, source: d.idea.source === 'mine' ? 'mine' : 'example' },
       ask: { ...base.ask, ...d.ask, customer: clean(d.ask?.customer, SITE.limits.customer) || base.ask.customer, saved: d.ask?.saved === true },
       learn: { ...base.learn, ...d.learn },
@@ -1021,10 +1122,20 @@ function deserialize(raw) {
     };
   } catch { return initialState(); }
 }
-// SPEC-010 §5·§6: 이벤트 → reduce → 화면 반영, 스크롤 → 뿌리·깊이. 스크롤은 그림만 바꾸고 상태를 바꾸지 않는다(REACH 제외).
+// L3I-10: 표시 여부의 단일 출처. 저장된 reached로 재로드 복원.
+function nextState(state) {
+  return {surface:!!state.idea.text && state.reached.includes('surface'),learn:!!state.learn.result,
+    ask:!!state.ask.saved,observe:!!state.observe,decide:!!state.decision,roots:true};
+}
+// L3I-11: 임의 저장값은 범용 답으로 안전하게 복원한다.
+function observationFor(state) {
+  return state.idea.source === 'example' && Object.hasOwn(OBSERVATION.quotesBySample,state.idea.sample)
+    ? OBSERVATION.quotesBySample[state.idea.sample] : OBSERVATION.quotesGeneric;
+}
+// SPEC-016 §5·§6: 이벤트 → reduce → 화면 반영, 스크롤 → 뿌리·깊이. 스크롤은 그림만 바꾸고 상태를 바꾸지 않는다(REACH 제외).
 // L3I-01~09, L3M-01~07. 방문자 입력은 textContent·value로만 넣는다(마크업 주입 없음).
 const SVG = 'http://www.w3.org/2000/svg';
-// 층 경계의 깊이(cm). SPEC-010 §3 지층 표와 같음
+// 층 경계의 깊이(cm). SPEC-016 §3 지층 표와 같음
 const DEPTH_STOPS = [['learn', 0], ['ask', 15], ['observe', 40], ['decide', 70], ['roots', 100]];
 function bindLanding(win = window) {
   const doc = win.document, root = doc.documentElement;
@@ -1048,6 +1159,8 @@ function bindLanding(win = window) {
   };
   let state = store.load();
   let prev = null;
+  let previousNext = null;
+  let firstPlant = true, bubbleTimer = 0;
   const ideaInput = $('#idea-input'), customerInput = $('#customer-input');
   function dispatch(action) {
     const next = reduce(state, action);
@@ -1065,7 +1178,7 @@ function bindLanding(win = window) {
     setText('idea', state.idea.text);
     // 내 문장만 입력칸에 되살린다. 예시 상태의 빈 칸에서는 손글씨 자동 쓰기가 돈다 (L3M-05)
     if (ideaInput && doc.activeElement !== ideaInput && state.idea.source === 'mine') ideaInput.value = state.idea.text;
-    $$('.l3-chip').forEach(b => b.setAttribute('aria-pressed', String(state.idea.source === 'example' && state.idea.sample === b.dataset.sample)));
+    $$('[data-sample]').forEach(b => b.setAttribute('aria-pressed', String(state.idea.source === 'example' && state.idea.sample === b.dataset.sample)));
     typing.sync();
   }
   function paintNotes(c) {
@@ -1100,9 +1213,11 @@ function bindLanding(win = window) {
     if (customerInput && doc.activeElement !== customerInput) customerInput.value = state.ask.customer;
     const m = $('[data-bind="ask-msg"]');
     if (m) m.textContent = state.ask.saved ? m.dataset.saved : '';
+    $('[data-action="save-questions"]')?.classList.toggle('is-ready', state.ask.source === 'mine' && !state.ask.saved);
     $('[data-action="save-questions"]')?.setAttribute('aria-pressed', String(state.ask.saved));
   }
   function paintObserve() {
+    observationFor(state).forEach((quote,i)=>{ const el = $('[data-quote="'+i+'"]'); if (el.textContent !== quote) el.textContent=quote; });
     $$('[data-observe]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.observe === state.observe)));
     const note = $('[data-bind="observe-note"]');
     if (note) { note.textContent = state.observe ? OBSERVATION.note[state.observe] + (state.observe === 'refuted' ? ' ' + note.dataset.turn : '') : ''; note.dataset.tone = state.observe || ''; }
@@ -1142,9 +1257,44 @@ function bindLanding(win = window) {
     const grow = String(0.35 + 0.65 * c.grow);
     $$('.l3-sprout').forEach(el => el.style.setProperty('--grow', grow));
   }
+  // L3I-10 / L3M-08: 최초 paint는 복원, 이후 false→true만 유한 모션.
+  function paintNext() {
+    const visible = nextState(state);
+    let opened = false;
+    $$('.l3-next').forEach(el => {
+      const key = el.dataset.next;
+      el.hidden = !visible[key];
+      if (!visible[key] || !previousNext) el.classList.remove('is-growing');
+      if (previousNext && !previousNext[key] && visible[key]) {
+        opened = true;
+        if (!reduced) { el.classList.remove('is-growing'); void el.offsetWidth; el.classList.add('is-growing'); }
+      }
+    });
+    if (opened) $('[data-next-live]').textContent = NEXT_COPY.live;
+    else $('[data-next-live]').textContent = '';
+    previousNext = visible;
+  }
+  // L3I-12 / L3M-09: 이름표 포함 5칸. 초기 복원에는 강조하지 않는다.
+  function showBubble(text) {
+    const bubble = $('[data-cta-bubble]');
+    win.clearTimeout(bubbleTimer); bubble.textContent = text; bubble.hidden = false;
+    bubbleTimer = win.setTimeout(() => { bubble.hidden = true; }, 3000);
+  }
+  function paintCTA(c) {
+    const dots = $('.l3-progress'), cta = $('.l3-app-cta');
+    dots.setAttribute('aria-label', CTA_COPY.progress.replace('{n}', c.filled));
+    $$('span', dots).forEach((dot,i) => { dot.textContent = i < c.filled ? '●' : '○'; });
+    if (prev && c.filled > prev.filled) {
+      if (!reduced) { cta.classList.remove('is-shining','is-complete'); void cta.offsetWidth; cta.classList.add(c.complete?'is-complete':'is-shining'); }
+      if (c.complete) showBubble(CTA_COPY.complete);
+    }
+    if (c.filled === 0) { cta.classList.remove('is-shining','is-complete'); $('[data-cta-bubble]').hidden = true; }
+  }
   function paint() {
     const c = deriveCard(state);
-    paintIdea(); paintNotes(c); paintLearn(); paintAsk(); paintObserve(); paintMap(); paintHarvest(c);
+    setText('pain-line', PAIN.options.find(p=>p.key===state.pain)?.line || PAIN.lineDefault);
+    $$('[data-pain]').forEach(b=>b.setAttribute('aria-pressed',String(state.pain===b.dataset.pain)));
+    paintIdea(); paintNotes(c); paintLearn(); paintAsk(); paintObserve(); paintMap(); paintHarvest(c); paintNext(); paintCTA(c);
     rootDraw.sync(prev, c);
     prev = c;
   }
@@ -1308,6 +1458,7 @@ function bindLanding(win = window) {
     const sample = SAMPLES.find(x => x.idea === text);
     dispatch(sample ? { type: 'SET_IDEA', text, source: 'example', sample: sample.key } : { type: 'SET_IDEA', text, source: 'mine' });
     dispatch({ type: 'REACH', chapter: 'surface' });
+    if (firstPlant) { firstPlant = false; if (!deriveCard(state).complete) showBubble(CTA_COPY.first); }
     const tag = e.currentTarget;
     if (!reduced) { tag.classList.remove('is-planted'); void tag.offsetWidth; tag.classList.add('is-planted'); }
     win.setTimeout(() => goTo('learn'), reduced ? 0 : 520);
@@ -1317,7 +1468,13 @@ function bindLanding(win = window) {
   ideaInput?.addEventListener('input', () => typing.sync());
   doc.addEventListener('click', e => {
     const t = e.target.closest('button, a'); if (!t) return;
-    if (t.dataset.sample) { // L3I-02
+    if (t.dataset.pain) { // L3I-11
+      if (state.pain !== t.dataset.pain) { dispatch({type:'SET_PAIN',key:t.dataset.pain}); track('pain_select',{pain:t.dataset.pain},TRACK_ENV); }
+    } else if (t.hasAttribute('data-cta-bubble')) { t.hidden = true; win.clearTimeout(bubbleTimer);
+    } else if (t.dataset.goto) { // L3I-10
+      goTo(t.dataset.goto);
+      track('next_click', {layer:t.closest('.l3-next').dataset.next}, TRACK_ENV);
+    } else if (t.dataset.sample) { // L3I-02
       const s = SAMPLES.find(x => x.key === t.dataset.sample);
       if (ideaInput) ideaInput.value = s.idea;
       dispatch({ type: 'SET_IDEA', text: s.idea, source: 'example', sample: s.key });
@@ -1330,13 +1487,13 @@ function bindLanding(win = window) {
     } else if (t.dataset.decide) { // L3I-06
       dispatch({ type: 'DECIDE', key: t.dataset.decide });
     } else if (t.dataset.action === 'reset') { // L3I-07
-      store.clear(); state = initialState(); prev = null;
+      store.clear(); state = initialState(); prev = null; previousNext = null;
       if (ideaInput) ideaInput.value = '';
       paint();
       win.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
       ideaInput?.focus({ preventScroll: true });
     } else if (t.dataset.cta === 'prototype') { // L3I-08 같은 사이트 /app/ 로 이동, 문장은 저장소로 인계
-      track('cta_click', { placement: (t.closest('[data-spec]')?.dataset.spec || 'page').toLowerCase(), filled: deriveCard(state).filled }, TRACK_ENV);
+      track('cta_click', { placement: (t.dataset.placement || t.closest('[data-spec]')?.dataset.spec || 'page').toLowerCase(), filled: deriveCard(state).filled }, TRACK_ENV);
     }
   });
   customerInput?.addEventListener('input', () => dispatch({ type: 'SET_CUSTOMER', text: customerInput.value }));

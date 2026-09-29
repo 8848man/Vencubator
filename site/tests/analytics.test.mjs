@@ -32,3 +32,12 @@ test('single script, safe URL and one page view, failures never escape',()=>{
  const broken=browser();broken.document.head.appendChild=()=>{throw Error('blocked');};assert.doesNotThrow(()=>sendAnalytics(ev,broken));
  assert.equal(sendAnalytics(ev,browser('localhost')),false);
 });
+
+test('AC-L31-06 새 enum·v31 페이지, 자유 텍스트 폐기',()=>{
+ for(const [name,key,values] of [['next_click','layer',['surface','learn','ask','observe','decide','roots']],['pain_select','pain',['build','praise','interview','late']]]){
+  for(const value of values)assert.equal(analyticsPayload({name,page:'v31',props:{[key]:value}})[key],value);
+  const p=analyticsPayload({name,page:'v31',props:{[key]:'private text',text:'secret'}});assert.equal(p[key],undefined);assert.equal(p.text,undefined);assert.equal(p.page,'v31');
+ }
+ assert.equal(analyticsPayload({name:'app_open',page:'app',props:{from:'v31'}}).from,'v31');
+ assert.equal(analyticsPayload({name:'landing_view',page:'v3'}).page,'v3');
+});

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 88,
-  "updated_at": "2026-09-27T20:39:46.820Z",
+  "revision": 95,
+  "updated_at": "2026-09-29T03:19:19.582Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -13,20 +13,20 @@
   },
   "next": {
     "stage": "S1",
-    "phase": "P08",
-    "work_item": "P08-W04",
-    "condition": "Firestore 생성 전용 규칙 게시 확인됨(목록 읽기 403)",
-    "action": "사용자 PC에서 feedback-rules-check 10/10, 운영에서 의견 1건 저장 확인 → P08-W04 8·10번"
+    "phase": "L05",
+    "work_item": "L05-W01",
+    "action": "gitflow finish --pr 한 번 실행; 병합 전 GA4 기준선·브라우저 QA·사용성 5명 확인",
+    "condition": "AUTH-027 승인 범위"
   },
   "checkpoint": {
-    "id": "CP-0088",
-    "path": "docs/execution/checkpoints/CP-0088.md",
-    "manifest": "docs/execution/checkpoints/CP-0088.manifest.json"
+    "id": "CP-0095",
+    "path": "docs/execution/checkpoints/CP-0095.md",
+    "manifest": "docs/execution/checkpoints/CP-0095.manifest.json"
   },
   "git": {
-    "branch": "w/L04-W09-sitemap-robots",
-    "base": "942859084a49da095f5e5f6f6aef2fd7e21866fb",
-    "head": "8027b2a3d2e5dfb28256bbe96101aeedb73a50cc",
+    "branch": "w/L05-W01-landing-v31",
+    "base": "b5eeb68da12f6050152fcc749b0d1c8a40876e7f",
+    "head": "26dd2e148e194e88e572dff31b1f0ceb8d50a3f2",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -52,7 +52,8 @@
         "P05",
         "P06",
         "P07",
-        "P08"
+        "P08",
+        "L05"
       ]
     },
     "S2": {
@@ -463,6 +464,21 @@
         "P08-W03",
         "P08-W04",
         "P08-W05"
+      ]
+    },
+    "L05": {
+      "stage": "S1",
+      "name": "랜딩 v3.1 — 다음 층 안내·앱 CTA·공감",
+      "status": "completed",
+      "gate_status": "not_evaluated",
+      "validation_status": "passed",
+      "work_item_ids": [
+        "L05-W01"
+      ],
+      "authorization_ref": "AUTH-027",
+      "completed_checkpoint": "CP-0095",
+      "validation_refs": [
+        "landing-v3.1/docs/VAL-L31.md"
       ]
     }
   },
@@ -1216,6 +1232,18 @@
       ],
       "completed_checkpoint": "CP-0088",
       "checklist": "4/5"
+    },
+    "L05-W01": {
+      "phase": "L05",
+      "status": "completed",
+      "validation_status": "passed",
+      "authorization_ref": "AUTH-027",
+      "definition_path": "docs/execution/work-items/L05-W01.md",
+      "checklist": "5/5",
+      "completed_checkpoint": "CP-0095",
+      "validation_refs": [
+        "landing-v3.1/docs/VAL-L31.md"
+      ]
     }
   }
 }
