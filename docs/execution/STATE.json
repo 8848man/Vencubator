@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 89,
-  "updated_at": "2026-09-29T03:00:14.520Z",
+  "revision": 90,
+  "updated_at": "2026-09-29T03:03:02.385Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -15,18 +15,18 @@
     "stage": "S1",
     "phase": "L05",
     "work_item": "L05-W01",
-    "action": "단계 1: 명세 반입과 v3 폴더 복사, 식별자·계측 준비",
+    "action": "단계 2: nextState와 패널 아래 다음 층 버튼 구현",
     "condition": "AUTH-027 승인 범위"
   },
   "checkpoint": {
-    "id": "CP-0089",
-    "path": "docs/execution/checkpoints/CP-0089.md",
-    "manifest": "docs/execution/checkpoints/CP-0089.manifest.json"
+    "id": "CP-0090",
+    "path": "docs/execution/checkpoints/CP-0090.md",
+    "manifest": "docs/execution/checkpoints/CP-0090.manifest.json"
   },
   "git": {
     "branch": "w/L05-W01-landing-v31",
     "base": "b5eeb68da12f6050152fcc749b0d1c8a40876e7f",
-    "head": "a7c92003c2a53a8bf2bdef2f63b6eda1f9a0a5a2",
+    "head": "7d3014de5802e2241e2f9559327af0448bfa0857",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -1235,7 +1235,7 @@
       "validation_status": "not_run",
       "authorization_ref": "AUTH-027",
       "definition_path": "docs/execution/work-items/L05-W01.md",
-      "checklist": "0/5"
+      "checklist": "1/5"
     }
   }
 }
