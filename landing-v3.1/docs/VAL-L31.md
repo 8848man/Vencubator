@@ -22,8 +22,8 @@
 | `node scripts/verify-checkpoint.mjs` | 각 게시 CP 확인 | 0 | CP-0089~0093 통과, 최종 CP 게시 후 재검사 |
 | `node landing-v3.1/scripts/build.mjs` | 1 | 0 | 112.7 KB (출력 문자 수 기준) |
 | `node site/scripts/build.mjs` | 1 | 0 | 공개 랜딩 109.2 KB (출력 문자 수 기준), app 복사 |
-| `node landing-v3.1/scripts/qa.mjs --shots` | — | — | `SKIP: playwright 없음` |
-| `node site/scripts/qa.mjs --shots` | — | — | `SKIP: playwright 없음` |
+| `node landing-v3.1/scripts/qa.mjs --shots` | 99 | 0 | 수정 후 재검(아래 “브라우저 검증과 수정”) |
+| `node site/scripts/qa.mjs` | 30 | 0 | 수정 후 재검, `/`=v3.1 → `/app/?from=v31` 문장 인계 |
 | QA 스크립트 및 공개 인라인 JS `node --check` | 3 | 0 | 구문 검사만, DOM 실행 아님 |
 | `git diff --check` | 1 | 0 | 공백 오류 없음 |
 
@@ -41,18 +41,18 @@
 | AC-L3-05 | 충족 | hex·sticky·시각 규칙 정적 검사 |
 | AC-L3-06 | 충족 | 직접 네트워크 API 없음, 방문자 입력 textContent/value |
 | AC-L3-07 | 충족 | 앱 LESSON·AREAS·STATE 일치 |
-| AC-L3-08 | 미실행 | Playwright 없음, 브라우저 시나리오 미실행 |
+| AC-L3-08 | 충족 | 수정 후 qa 99/99 (2026-09-29 재검) |
 | AC-L3-09 | 충족 | 독립/공개 단일 파일 빌드 |
 | AC-L3-10 | 충족 | 내부 용어·개발 주석 제거 검사 |
 | AC-L31-01 | 충족 | v31 식별자·앱 저장소 분리 검사 |
 | AC-L31-02 | 충족 | nextState·pain·observationFor 전 조건·복원 검사 |
 | AC-L31-03 | 충족 | 6개 버튼·5개 층 링크·hero·4개 고민·why·live 렌더 검사 |
 | AC-L31-04 | 충족 | 명세 원문 카피·예시별 답·과장 인계 없음 |
-| AC-L31-05 | 충족 | 양 구간 배경 ≥3:1, 글자 ≥4.5:1 계산; infinite 없음 |
+| AC-L31-05 | 충족 | 양 구간 배경 ≥3:1, 글자 ≥4.5:1 계산; 새 모션 infinite 없음(v3 입력 커서만 예외) |
 | AC-L31-06 | 충족 | 새 enum·page·5곳 복사본 일치, 자유 텍스트 배제 |
-| AC-L31-07 | 미실행 | QA 시나리오 추가·구문 검사만, Playwright 없음 |
+| AC-L31-07 | 충족 | 수정 후 qa 99/99, 첫 실행은 JS 오류로 실패했음(아래 기록) |
 | AC-L31-08 | 충족 | v3 41/41, origin/main 대비 허용 파일 2개만 변경 |
-| AC-L31-09 | 미실행 | 사이트 자동 검사·빌드·readEntry는 통과; 실제 / → /app/?from=v31 브라우저 인계 미실행 |
+| AC-L31-09 | 충족 | site qa 30/30, / → /app/?from=v31 문장 인계·project_create from=v31 |
 
 ## 보존·구현 판단
 
@@ -69,3 +69,19 @@
 1. GA4에서 v3 최근 2주 기준선(층별 도달·cta_click·app_open)을 기록한다.
 2. Playwright가 있는 환경에서 두 QA 명령을 실행해 1440·390·모션 감소 및 문장 인계를 확인한다.
 3. 사용성 5명: 아이디어 하나로 끝까지, 앱에서 이어하기. 앱 버튼 찾는 시간과 층별 멈춤 위치를 기록한다.
+
+## 브라우저 검증과 수정 (2026-09-29, Claude Cowork)
+
+사용자 보고: “v3에 잘 되던 기능들이 v3.1에서 안 된다.” 첫 브라우저 실행에서 `TypeError: $(...).forEach is not a function`로 첫 paint가 중단되어 이름표·퀴즈·저장·관찰·결정 화면 반영이 모두 멈췄다(단위 검사는 DOM을 실행하지 않아 통과했었다).
+
+| 구분 | 원인 | 수정 |
+|---|---|---|
+| 결함(치명) | `$`(단일 요소)에 `.forEach` 4곳: 예시 칩·다음 버튼·진행 점·고민 칩 | `$$`로 교체 |
+| 회귀 | 손글씨 자동 쓰기가 한 바퀴 후 정지, 입력 커서 깜빡임 6회 제한(“무한 반복 금지”를 기존 L3M-05에도 적용) | v3 순환·커서 복원. 검사는 커서만 예외로 두고 새 모션의 무한 반복은 계속 금지 |
+| 회귀 | “심기”·“이 질문으로 기록”이 테두리형(ghost)으로 바뀜 | v3 채움형 복원. 미저장 강조는 연두 링(`.l3-btn.is-ready`) |
+| 회귀 | 상단바를 불투명으로 바꿔 v3의 반투명·흐림 효과 제거 | v3 상단바 복원(짙은 구간 CTA 대비는 연두/짙은 글자로 유지) |
+| 보완 | 층별 한 줄(`why`)이 본문에 붙어 보임 | 간격 조정 |
+
+재검(클라우드 Chromium, 폰트 CDN 차단 상태): landing-v3.1 qa 99/99(데스크톱·390px·모션 감소, JS 오류 0, 가로 스크롤 0), landing-v3 qa 50/50(불변 확인), site qa 30/30. 단위: landing-v3.1 49/49, site 20/20, landing-v3·prototype 116/116. `landing-v3/` 변경 없음.
+
+교훈: 브라우저 검사를 “미실행”으로 두고 병합 후보를 만들지 않는다. Playwright가 없는 환경이면 검사를 다른 환경에서 돌린 뒤 PR을 연다.
