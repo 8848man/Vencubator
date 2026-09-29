@@ -1,11 +1,11 @@
 # HANDOFF
 
-CP-0093 / STATE revision 93
+CP-0094 / STATE revision 94
 
-L05-W01 in_progress · AUTH-027 · SPEC-016 r0.1 · 체크리스트 4/5
+L05-W01 validating · AUTH-027 · SPEC-016 r0.1 · 체크리스트 4/5
 
-단계 4 완료: v31 49/49, v3 41/41. 확정 카피·고민·예시별 답·21개 ID 검사 통과. 사용자 연구·브라우저 QA 미실행.
+단계 5 검증 경계: 자동 검사 192/192, 두 빌드 성공. QA 두 명령 Playwright 없음으로 미실행. VAL-L31에 AC별 판정 기록.
 
-다음 첫 행동: 단계 5: AC-L31-07 QA 추가·캡처·사이트 전환·최종 검사
+다음 첫 행동: 최종 무결성 검사 뒤 완료 CP·finish --pr
 
 브랜치 w/L05-W01-landing-v31. main 병합·배포 없음. P08-W04 기존 외부 검증 대기 상태 유지.
