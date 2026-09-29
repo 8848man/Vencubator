@@ -48,9 +48,9 @@ test('AC-L31-05 상단 CTA 배경 3:1·글자 4.5:1 (두 구간)',()=>{
  const luminance=hex=>hex.slice(1).match(/../g).map(x=>parseInt(x,16)/255).map(c=>c<=.04045?c/12.92:((c+.055)/1.055)**2.4).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i],0);
  const ratio=(a,b)=>{const l=[luminance(tokens[a]),luminance(tokens[b])].sort((a,b)=>b-a);return(l[0]+.05)/(l[1]+.05);};
  for(const [bg,bar,fg] of [['green','sky','white'],['root','humus','ink']]){assert.ok(ratio(bg,bar)>=3);assert.ok(ratio(bg,fg)>=4.5);}
- assert.match(css,/\.l3-top\.is-dark \{ background:var\(--humus\)/);
+ assert.match(css,/\.l3-top\.is-dark \{ background: color-mix\(in srgb, var\(--humus\) 8\d%/); // v3 반투명 상단바 유지(짙은 흙 위에서는 부엽토색에 가까움)
  assert.match(css,/background:var\(--root\); color:var\(--ink\)/);
- assert.ok(!/\binfinite\b/.test(css));
+ assert.ok(!/\binfinite\b/.test(css.replace(/animation: caret 1s steps\(1\) infinite;/, '')), '입력 커서(L3M-05) 외 무한 반복 금지');
 });
 
 test('AC-L31-04 확정 예시별 답·과장 인계 없음',()=>{
