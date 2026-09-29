@@ -1,39 +1,14 @@
-# Vencubator 랜딩 v3 — 뿌리 (공개 랜딩)
+# Vencubator 랜딩 v3.1 — 뿌리 · 다음 층
 
-사이트 루트(`/`)의 유일한 랜딩입니다. v1·v2 폴더는 기록용으로 남겨 두고 배포하지 않습니다.
+AUTH-027 / SPEC-016 r0.1. v3를 보존한 독립 개선판입니다. 다음 층 안내, 앱 CTA 진행 점, 고민 선택과 예시별 관찰 답을 제공합니다. 사이트 빌드의 루트(/)이며 운영 공개는 사용자 병합 후입니다.
 
-v1은 완성도가 높았지만 참고 사이트의 구성·장치를 그대로 따랐고, v2는 원리만 남기면서 **대비·규모·리듬·스크롤의 즐거움**까지 버렸습니다. v3는 두 버전의 좋은 점을 모으되, 표현은 Vencubator 제품 철학에서 새로 꺼냈습니다.
+- Windows: landing-v3.1/start.cmd
+- 개발: node landing-v3.1/scripts/serve.mjs → http://127.0.0.1:4177/landing-v3.1/
+- 빌드: node landing-v3.1/scripts/build.mjs → dist/index.html
+- 검사: node --test landing-v3.1/tests/*.test.mjs
+- 브라우저 QA: node landing-v3.1/scripts/qa.mjs --shots (4197, Playwright 없으면 미실행)
+- 사이트: node site/scripts/build.mjs → node site/scripts/serve.mjs (4180)
 
-> 아이디어는 땅 위의 새싹, 근거는 땅속의 뿌리. 페이지를 내려가는 것 = 땅속으로 들어가는 것.
+[정책](docs/POLICY.md) · [명세](docs/SPEC-016-landing-v3.1.md) · [작업 지시](docs/WORKORDER.md) · [검증](docs/VAL-L31.md)
 
-- **지상**: 새싹 옆에 꽂힌 **식물 이름표**가 곧 입력칸. 비어 있으면 예시 문장이 손글씨로 써집니다.
-- **지층 4개**: 겉흙 0–15cm(오늘 배울 것) → 속흙 15–40cm(물어볼 질문) → 깊은 흙 40–70cm(들은 답) → 70–100cm(결정). 층마다 실제 뜻을 함께 적습니다.
-- **스크롤 = 뿌리**: 왼쪽 가장자리에 뿌리 한 줄기가 스크롤만큼 그려지고, 끝에 현재 깊이(cm)가 붙어 다닙니다. 화면을 붙잡는 고정 무대는 없습니다.
-- **반박도 성장**: “예상과 달랐어요”를 고르면 뿌리가 방향을 틀고, 막힌 쪽 뿌리도 남습니다.
-- **가만히 있어도 완성**: 조작하지 않아도 각 층에 “다 쓴 예시 기록”(점선 뿌리)이 보이고, 내가 채운 층은 연두 실선으로 바뀝니다.
-- **부엽토**: 일곱 갈래 뿌리 지도, 지금·다음 갈래만 밝게. → **위와 아래**(줄기=부캐, 뿌리=본캐) → **지금은 씨앗 단계**(체험판 → 첫 정식 버전 → 더 똑똑한 코파일럿) → 다시 지상에서 **이 이름표로 앱에서 심기**.
-- 화면에는 사용자에게 필요한 정보만 둡니다. 명세·기획서 링크, 내부 단계 코드, 개발 용어는 없습니다(SPEC-016 §8).
-
-## 실행
-
-- **Windows:** `landing-v3.1/start.cmd` 더블클릭 → http://127.0.0.1:4177/landing-v3.1/ (앱은 같은 서버의 `/landing-v3.1/app/`)
-- 서버 없이: `landing-v3.1/dist/index.html` 더블클릭
-- 배포본 확인: `node site/scripts/build.mjs && node site/scripts/serve.mjs` → http://127.0.0.1:4180/ (랜딩) · /app/ (앱)
-
-```bash
-node --test landing-v3.1/tests/*.test.mjs          # 명세 AC 검사
-node landing-v3.1/scripts/build.mjs                # dist 단일 파일 생성
-node landing-v3.1/scripts/qa.mjs --shots           # (선택) Playwright 시나리오
-```
-
-## 문서
-
-| 문서 | 내용 |
-|---|---|
-| [PRINCIPLES](docs/PRINCIPLES.md) | v1·v2 회고, 추가 원리 DP-9~12, “뿌리” 컨셉, 참고 사이트 장치 겹침 점검 |
-| [SPEC-016](docs/SPEC-016-landing-v3.1.md) | 섹션·상태 모델·상호작용·모션·AC (권위 명세) |
-| [VAL-L03](docs/VAL-L03.md) | 검증 기록 |
-
-## 코드
-
-`src/content.mjs`(카피) → `src/state.mjs`(순수 상태, v2 모델 계승 + `rootState`) → `src/render.mjs`(정적 마크업) → `src/interact.mjs`(이벤트·뿌리 그리기·깊이·손글씨). 색은 `src/tokens.css`에만. 입력은 서버로 보내지 않고 이 브라우저에만 저장합니다(`vencubator.landing.v31`).
+variant v31, 저장 키 vencubator.landing.v31. 앱은 ./app/?from=v31로 이름표 문장만 인계합니다. LESSON·AREAS는 앱과 일치하며, 방문자 입력은 textContent·value로만 반영합니다.
