@@ -53,3 +53,10 @@ test('index.html은 상대 경로로 파일을 부른다 (SPEC-009 §2)', async 
   const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   assert.ok(!/(href|src)="\/(?!\/)/.test(html), '루트 기준 경로가 남아 있음');
 });
+
+test('AC-L31-01 v31 독립 저장소에서 이름표만 인계',()=>{
+ const st=mem({[LANDING_KEYS.v3]:JSON.stringify({idea:{text:'v3'}}),[LANDING_KEYS.v31]:JSON.stringify({idea:{text:'v31'},learn:{result:'first'},decision:'keep'})});
+ assert.deepEqual(readEntry('?from=v31',st),{from:'v31',idea:'v31'});
+ assert.deepEqual(readEntry('?from=v3',st),{from:'v3',idea:'v3'});
+ assert.deepEqual(readEntry('?from=v31',mem({[LANDING_KEYS.v3]:JSON.stringify({idea:{text:'v3'}})})),{from:'v31',idea:null});
+});

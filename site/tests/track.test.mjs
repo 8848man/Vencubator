@@ -46,6 +46,6 @@ test('직접 네트워크 API 대신 Google tag 어댑터, 복사본 동일', ()
   const src = readFileSync(new URL('../shared/track.mjs', import.meta.url), 'utf8');
   assert.ok(!/\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource/.test(src));
   const h = s => createHash('sha256').update(s).digest('hex');
-  for (const p of ['../../landing/src/track.mjs', '../../landing-v2/src/track.mjs', '../../prototype/track.mjs'])
+  for (const p of ['../../landing/src/track.mjs', '../../landing-v2/src/track.mjs', '../../prototype/track.mjs', '../../landing-v3/src/track.mjs', '../../landing-v3.1/src/track.mjs'])
     assert.equal(h(readFileSync(new URL(p, import.meta.url), 'utf8')), h(src), `${p}가 site/shared/track.mjs와 다름 — 복사해서 맞춰 주세요`);
 });
