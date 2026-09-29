@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 91,
-  "updated_at": "2026-09-29T03:05:37.249Z",
+  "revision": 92,
+  "updated_at": "2026-09-29T03:07:50.289Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -15,18 +15,18 @@
     "stage": "S1",
     "phase": "L05",
     "work_item": "L05-W01",
-    "action": "단계 3: 앱 CTA·진행 점·대비 계산 구현",
+    "action": "단계 4: 확정 카피·고민·예시별 관찰 답 구현",
     "condition": "AUTH-027 승인 범위"
   },
   "checkpoint": {
-    "id": "CP-0091",
-    "path": "docs/execution/checkpoints/CP-0091.md",
-    "manifest": "docs/execution/checkpoints/CP-0091.manifest.json"
+    "id": "CP-0092",
+    "path": "docs/execution/checkpoints/CP-0092.md",
+    "manifest": "docs/execution/checkpoints/CP-0092.manifest.json"
   },
   "git": {
     "branch": "w/L05-W01-landing-v31",
     "base": "b5eeb68da12f6050152fcc749b0d1c8a40876e7f",
-    "head": "cd33f83e347dada134666f6e63767156aae2dd28",
+    "head": "2b29ea433d40dbe6a91f30294f427b127b280f2a",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -1235,7 +1235,7 @@
       "validation_status": "not_run",
       "authorization_ref": "AUTH-027",
       "definition_path": "docs/execution/work-items/L05-W01.md",
-      "checklist": "2/5"
+      "checklist": "3/5"
     }
   }
 }
