@@ -1,0 +1,12 @@
+{
+  "checkpoint_id": "CP-0089",
+  "target_state_revision": 89,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "path": "docs/process/APPROVALS.md",
+      "exists": true,
+      "sha256": "15433461F7B7AD4000E5F80E311DB1ED8BCCCF7A895BCA685B954F4D72577DA4"
+    }
+  ]
+}
