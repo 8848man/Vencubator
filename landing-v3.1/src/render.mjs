@@ -90,7 +90,7 @@ export const RENDERERS = {
 <form class="l3-tag" data-form="idea" novalidate>
 <label for="idea-input" class="l3-tag-label">${esc(s.tagLabel)}</label>
 <div class="l3-tag-line"><input id="idea-input" name="idea" type="text" maxlength="${SITE.limits.idea}" autocomplete="off" placeholder="${esc(s.placeholder)}" aria-describedby="idea-help idea-msg"><span class="l3-typing" aria-hidden="true" data-typing="${esc(JSON.stringify(s.typing))}"></span></div>
-<div class="l3-tag-foot"><p id="idea-msg" class="l3-msg" aria-live="polite" data-empty="${esc(s.empty)}"></p><button type="submit" class="l3-btn ghost">${esc(s.submit)} <span aria-hidden="true">↓</span></button></div>
+<div class="l3-tag-foot"><p id="idea-msg" class="l3-msg" aria-live="polite" data-empty="${esc(s.empty)}"></p><button type="submit" class="l3-btn">${esc(s.submit)} <span aria-hidden="true">↓</span></button></div>
 </form>
 ${nextPanel(s.anchor)}
 <div class="l3-stake" aria-hidden="true"></div>
@@ -120,7 +120,7 @@ ${sprout('l3-surface-sprout', '이름표 옆에서 자라는 새싹')}
 <p class="l3-panel-tag">${esc(s.listLabel)}</p>
 <ol class="l3-questions">${QUESTION_TEMPLATES.map(q => `<li>${esc(q)}</li>`).join('')}</ol>
 <p class="l3-avoid"><span>${esc(s.avoidLabel)}</span><s>${esc(AVOID_QUESTION)}</s></p>
-<div class="l3-row"><button type="button" class="l3-btn ghost" data-action="save-questions" aria-pressed="false">${esc(s.save)}</button><span class="l3-msg" aria-live="polite" data-bind="ask-msg" data-saved="${esc(s.saved)}"></span></div>
+<div class="l3-row"><button type="button" class="l3-btn" data-action="save-questions" aria-pressed="false">${esc(s.save)}</button><span class="l3-msg" aria-live="polite" data-bind="ask-msg" data-saved="${esc(s.saved)}"></span></div>
 </div>`),
 
   layerObserve: s => layer(s, 'observe', 'observe', `

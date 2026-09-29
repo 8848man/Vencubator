@@ -53,7 +53,7 @@ export function bindLanding(win = window) {
     setText('idea', state.idea.text);
     // 내 문장만 입력칸에 되살린다. 예시 상태의 빈 칸에서는 손글씨 자동 쓰기가 돈다 (L3M-05)
     if (ideaInput && doc.activeElement !== ideaInput && state.idea.source === 'mine') ideaInput.value = state.idea.text;
-    $('[data-sample]').forEach(b => b.setAttribute('aria-pressed', String(state.idea.source === 'example' && state.idea.sample === b.dataset.sample)));
+    $$('[data-sample]').forEach(b => b.setAttribute('aria-pressed', String(state.idea.source === 'example' && state.idea.sample === b.dataset.sample)));
     typing.sync();
   }
 
@@ -143,7 +143,7 @@ export function bindLanding(win = window) {
   function paintNext() {
     const visible = nextState(state);
     let opened = false;
-    $('.l3-next').forEach(el => {
+    $$('.l3-next').forEach(el => {
       const key = el.dataset.next;
       el.hidden = !visible[key];
       if (!visible[key] || !previousNext) el.classList.remove('is-growing');
@@ -166,7 +166,7 @@ export function bindLanding(win = window) {
   function paintCTA(c) {
     const dots = $('.l3-progress'), cta = $('.l3-app-cta');
     dots.setAttribute('aria-label', CTA_COPY.progress.replace('{n}', c.filled));
-    $('span', dots).forEach((dot,i) => { dot.textContent = i < c.filled ? '●' : '○'; });
+    $$('span', dots).forEach((dot,i) => { dot.textContent = i < c.filled ? '●' : '○'; });
     if (prev && c.filled > prev.filled) {
       if (!reduced) { cta.classList.remove('is-shining','is-complete'); void cta.offsetWidth; cta.classList.add(c.complete?'is-complete':'is-shining'); }
       if (c.complete) showBubble(CTA_COPY.complete);
@@ -177,7 +177,7 @@ export function bindLanding(win = window) {
   function paint() {
     const c = deriveCard(state);
     setText('pain-line', PAIN.options.find(p=>p.key===state.pain)?.line || PAIN.lineDefault);
-    $('[data-pain]').forEach(b=>b.setAttribute('aria-pressed',String(state.pain===b.dataset.pain)));
+    $$('[data-pain]').forEach(b=>b.setAttribute('aria-pressed',String(state.pain===b.dataset.pain)));
     paintIdea(); paintNotes(c); paintLearn(); paintAsk(); paintObserve(); paintMap(); paintHarvest(c); paintNext(); paintCTA(c);
     rootDraw.sync(prev, c);
     prev = c;
@@ -188,14 +188,14 @@ export function bindLanding(win = window) {
     const el = $('.l3-typing');
     const lines = el ? JSON.parse(el.dataset.typing || '[]') : [];
     const ph = ideaInput?.getAttribute('placeholder') || '';
-    let timer = 0, line = 0, pos = 0, dir = 1, on = false, finished = false;
-    const active = () => !reduced && !finished && el && lines.length && ideaInput && !ideaInput.value && doc.activeElement !== ideaInput;
+    let timer = 0, line = 0, pos = 0, dir = 1, on = false;
+    const active = () => !reduced && el && lines.length && ideaInput && !ideaInput.value && doc.activeElement !== ideaInput;
     function tick() {
       const t = lines[line];
       pos += dir;
       el.textContent = t.slice(0, pos);
       let wait = dir > 0 ? 90 : 28;
-      if (dir > 0 && pos >= t.length) { if (line === lines.length - 1) { finished = true; return; } dir = -1; wait = 1700; }
+      if (dir > 0 && pos >= t.length) { dir = -1; wait = 1700; }
       else if (dir < 0 && pos <= 0) { dir = 1; line = (line + 1) % lines.length; wait = 420; }
       timer = win.setTimeout(tick, wait);
     }
