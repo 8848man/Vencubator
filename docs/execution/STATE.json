@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "revision": 94,
-  "updated_at": "2026-09-29T03:19:11.317Z",
+  "revision": 95,
+  "updated_at": "2026-09-29T03:19:19.582Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "stage": "S1",
-    "phase": "L05",
-    "work_item": "L05-W01",
-    "owner": "Codex",
-    "run_state": "validating"
+    "stage": null,
+    "phase": null,
+    "work_item": null,
+    "owner": null,
+    "run_state": "idle"
   },
   "next": {
     "stage": "S1",
     "phase": "L05",
     "work_item": "L05-W01",
-    "action": "최종 무결성 검사 뒤 완료 CP·finish --pr",
+    "action": "gitflow finish --pr 한 번 실행; 병합 전 GA4 기준선·브라우저 QA·사용성 5명 확인",
     "condition": "AUTH-027 승인 범위"
   },
   "checkpoint": {
-    "id": "CP-0094",
-    "path": "docs/execution/checkpoints/CP-0094.md",
-    "manifest": "docs/execution/checkpoints/CP-0094.manifest.json"
+    "id": "CP-0095",
+    "path": "docs/execution/checkpoints/CP-0095.md",
+    "manifest": "docs/execution/checkpoints/CP-0095.manifest.json"
   },
   "git": {
     "branch": "w/L05-W01-landing-v31",
     "base": "b5eeb68da12f6050152fcc749b0d1c8a40876e7f",
-    "head": "8ec0d9bf0c49337bebe2adb2d25fc5f79f2d66e5",
+    "head": "26dd2e148e194e88e572dff31b1f0ceb8d50a3f2",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -469,13 +469,17 @@
     "L05": {
       "stage": "S1",
       "name": "랜딩 v3.1 — 다음 층 안내·앱 CTA·공감",
-      "status": "in_progress",
+      "status": "completed",
       "gate_status": "not_evaluated",
-      "validation_status": "not_run",
+      "validation_status": "passed",
       "work_item_ids": [
         "L05-W01"
       ],
-      "authorization_ref": "AUTH-027"
+      "authorization_ref": "AUTH-027",
+      "completed_checkpoint": "CP-0095",
+      "validation_refs": [
+        "landing-v3.1/docs/VAL-L31.md"
+      ]
     }
   },
   "work_items": {
@@ -1231,11 +1235,15 @@
     },
     "L05-W01": {
       "phase": "L05",
-      "status": "validating",
-      "validation_status": "not_run",
+      "status": "completed",
+      "validation_status": "passed",
       "authorization_ref": "AUTH-027",
       "definition_path": "docs/execution/work-items/L05-W01.md",
-      "checklist": "4/5"
+      "checklist": "5/5",
+      "completed_checkpoint": "CP-0095",
+      "validation_refs": [
+        "landing-v3.1/docs/VAL-L31.md"
+      ]
     }
   }
 }
