@@ -1,9 +1,9 @@
-// SPEC-009 r0.3 사이트 조립: site/dist/{index.html(랜딩 v3), app/}
+// SPEC-009 r0.3 사이트 조립: site/dist/{index.html(랜딩 v3.1), app/}
 // 사용: node site/scripts/build.mjs  → site/dist 폴더를 그대로 정적 호스팅에 올리면 된다
 import { mkdir, rm, readdir, copyFile, writeFile } from 'node:fs/promises';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { build as buildLanding } from '../../landing-v3/scripts/build.mjs';
+import { build as buildLanding } from '../../landing-v3.1/scripts/build.mjs';
 
 const SITE = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO = resolve(SITE, '..');

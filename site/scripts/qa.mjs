@@ -1,4 +1,4 @@
-// SPEC-009 r0.3 AC-S05 브라우저 시나리오: / 랜딩 v3 → 이름표 → 앱 새 프로젝트 칸 (Playwright 필요, 없으면 건너뜀)
+// SPEC-009 r0.3 AC-S05 브라우저 시나리오: / 랜딩 v3.1 → 이름표 → 앱 새 프로젝트 칸 (Playwright 필요, 없으면 건너뜀)
 // 사용: node site/scripts/build.mjs && node site/scripts/qa.mjs [--shots]
 // QA_FONT_ROUTE=<모듈 경로>: 웹폰트 CDN이 막힌 환경에서 폰트 요청을 대체하는 routeFonts(page) (선택)
 import { resolve, dirname } from 'node:path';
@@ -29,9 +29,9 @@ try {
     if (routeFonts) await routeFonts(page);
     const shot = async n => { if (shots) await page.screenshot({ path: resolve(SITE, `qa-shots/${vp.n}-${n}.png`) }); };
 
-    // 1) / 는 곧바로 랜딩 v3 (리디렉션 없음), UTM 유지
+    // 1) / 는 곧바로 랜딩 v3.1 (리디렉션 없음), UTM 유지
     await page.goto(BASE + '/?utm_source=geeknews&utm_medium=community'); await page.waitForTimeout(700);
-    check(`${vp.n}: / = 랜딩 v3`, new URL(page.url()).pathname === '/' && await page.locator('form.l3-tag').count() === 1, page.url());
+    check(`${vp.n}: / = 랜딩 v3.1`, new URL(page.url()).pathname === '/' && await page.locator('form.l3-tag').count() === 1, page.url());
     const utm = await page.evaluate(() => sessionStorage.getItem('vencubator.utm.v1'));
     check(`${vp.n}: UTM 보관`, utm && utm.includes('geeknews'), utm);
     const text = await page.evaluate(() => document.body.innerText);
@@ -45,7 +45,7 @@ try {
     await page.fill('#idea-input', idea); await page.click('.l3-tag button[type=submit]'); await page.waitForTimeout(900);
     await page.locator('#harvest a[data-cta="prototype"]').scrollIntoViewIfNeeded();
     await page.locator('#harvest a[data-cta="prototype"]').click();
-    await page.waitForURL(/\/app\/\?from=v3/); await page.waitForTimeout(400);
+    await page.waitForURL(/\/app\/\?from=v31/); await page.waitForTimeout(400);
     await page.fill('#maker-name', 'QA'); await page.click('#login-form button[type=submit]'); await page.waitForTimeout(500); await shot('app-import');
     const d = await page.inputValue('#new-form textarea[name=description]').catch(() => 'NO-FORM');
     check(`${vp.n}: 랜딩 → 앱 새 프로젝트 칸에 문장`, d === idea, d);
@@ -70,8 +70,8 @@ try {
     let idx = -1, ordered = true; for (const n of order) { const j = names.indexOf(n, idx + 1); if (j < 0) { ordered = false; break; } idx = j; }
     check(`${vp.n}: 이벤트 순서 기록`, ordered, names.join(','));
     check(`${vp.n}: 이벤트에 입력 문장 없음`, !JSON.stringify(ev).includes('헬스장'));
-    const pc = ev.find(e => e.name === 'project_create' && e.props.from === 'v3');
-    check(`${vp.n}: project_create 출처 v3·가져오기`, pc && pc.variant === 'v3' && pc.props.imported === true, JSON.stringify(pc?.props));
+    const pc = ev.find(e => e.name === 'project_create' && e.props.from === 'v31');
+    check(`${vp.n}: project_create 출처 v31·가져오기`, pc && pc.variant === 'v31' && pc.props.imported === true, JSON.stringify(pc?.props));
     const ovApp = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
     check(`${vp.n}: 앱 가로 스크롤 없음`, ovApp <= 0, `overflow=${ovApp}`);
     check(`${vp.n}: JS 오류 없음`, errors.length === 0, errors.join(' | '));

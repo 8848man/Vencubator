@@ -58,6 +58,20 @@ try {
     check(`${P}: 이름표 손글씨 자동 쓰기 (L3M-05)`, await page.evaluate(() => document.querySelector('.l3-typing').classList.contains('is-on') && document.querySelector('.l3-typing').textContent.length > 0));
     await shot('01-surface');
 
+    // AC-L31-07: optional pain, sample-specific quotes, next step and focus.
+    check(`${P}: 히어로 앱 링크 첫 화면`, await page.locator('[data-placement="hero"]').evaluate(el=>{const r=el.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight;}));
+    await page.click('[data-sample="review"]');
+    check(`${P}: 칩 → 다음 버튼 표시`, await page.isVisible('.l3-next[data-next="surface"]'));
+    check(`${P}: 칩 선택 자동 스크롤 없음`, await page.evaluate(()=>scrollY===0));
+    check(`${P}: 리뷰 예시 관찰 답`, (await page.textContent('[data-quote="0"]')).includes('답글'));
+    await page.click('.l3-next[data-next="surface"] button'); await page.waitForTimeout(900);
+    check(`${P}: 다음 층 도달·제목 포커스`, await page.evaluate(()=>document.activeElement.id==='learn-title'&&Math.abs(document.querySelector('#learn').getBoundingClientRect().top)<120));
+    await page.click('[data-pain="interview"]');
+    check(`${P}: 고민 선택·도입 문장`, (await page.textContent('[data-bind="pain-line"]'))==='좋은 질문의 기준 하나만 알면, 질문은 금방 만들어져요.' && await page.getAttribute('[data-pain="interview"]','aria-pressed')==='true');
+    await page.click('[data-sample="freelance"]');
+    check(`${P}: 예시 교체 → 정산 답`, (await page.textContent('[data-quote="0"]')).includes('정산'));
+    await page.click('.l3-harvest [data-action="reset"]'); await page.waitForTimeout(900);
+
     // L3I-01 이름표 심기
     const idea = '퇴근길 동네 헬스장 PT를 여럿이 나눠 받는 서비스';
     await page.fill('#idea-input', idea);
@@ -67,6 +81,12 @@ try {
     const learnTop = await page.evaluate(() => document.getElementById('learn').getBoundingClientRect().top);
     check(`${P}: 심기 → 겉흙으로 이동`, Math.abs(learnTop) < 120, `learnTop=${Math.round(learnTop)}`);
     check(`${P}: 이름표 문장 반영`, (await page.textContent('.l3-harvest [data-bind="idea"]')).trim() === idea);
+
+    check(`${P}: 내 문장 → 공통 관찰 답`, (await page.textContent('[data-quote="2"]'))==='“사실 저한테는 다른 게 더 급해요.”');
+    check(`${P}: 첫 심기 말풍선`, await page.isVisible('[data-cta-bubble]'));
+    await page.click('[data-cta-bubble]');
+    check(`${P}: 말풍선 클릭 닫기`, !(await page.isVisible('[data-cta-bubble]')));
+    check(`${P}: CTA 진행 1/5`, await page.getAttribute('.l3-progress','aria-label')==='내가 채운 층 1/5');
 
     // 스크롤 → 뿌리·깊이 (L3M-01·02)
     const r1 = await rootInfo(page);
@@ -84,15 +104,18 @@ try {
     await page.click('.l3-option[data-choice="0"]');
     const nl = await note(page, 'learn');
     check(`${P}: 정답 → 배운 것 = 내 기록`, nl.status === 'mine' && nl.stamp === '내 기록', nl.text);
-    await page.waitForTimeout(700); await shot('02-learn');
+    check(`${P}: 퀴즈 → 다음 버튼`, await page.isVisible('.l3-next[data-next="learn"]'));
+    await page.waitForTimeout(1700); await shot('02-learn');
 
     // L3I-04 고객 → 질문
     await scrollToId(page, 'ask'); await page.waitForTimeout(300);
     await page.fill('#customer-input', '회사 근처에서 운동하는 3년차 직장인');
     check(`${P}: 고객 이름 반영`, (await page.textContent('.l3-customer [data-bind="customer"]')).includes('3년차 직장인'));
+    check(`${P}: 미저장 고객 강조`, await page.locator('[data-action="save-questions"]').evaluate(el=>el.classList.contains('is-ready')));
     await page.click('[data-action="save-questions"]');
+    check(`${P}: 저장 → 다음 버튼`, await page.isVisible('.l3-next[data-next="ask"]'));
     check(`${P}: 질문 저장 → 내 기록`, (await note(page, 'ask')).status === 'mine');
-    await page.waitForTimeout(700); await shot('03-ask');
+    await page.waitForTimeout(1700); await shot('03-ask');
 
     // L3I-05 달랐어요 → 우회 뿌리 + 전략 다음
     await scrollToId(page, 'observe'); await page.waitForTimeout(300);
@@ -103,6 +126,7 @@ try {
       stub: document.querySelector('[data-root-stub]').getAttribute('d').length > 10,
       next: document.querySelector('.l3-area.is-next')?.dataset.key
     }));
+    check(`${P}: 관찰 → 다음 버튼`, await page.isVisible('.l3-next[data-next="observe"]'));
     const no = await note(page, 'observe');
     check(`${P}: 달랐어요 → 뿌리 방향 전환`, turn.turned && turn.stub && no.flag === 'refuted' && no.stamp === '방향 전환', JSON.stringify(turn));
     check(`${P}: 뿌리 지도에서 전략·학습이 다음`, turn.next === 'strategy');
@@ -112,7 +136,10 @@ try {
     await scrollToId(page, 'decide'); await page.waitForTimeout(300);
     await page.click('[data-decide]');
     check(`${P}: 결정 → 내 기록`, (await note(page, 'decide')).status === 'mine');
-    await page.waitForTimeout(700); await shot('05-decide');
+    check(`${P}: 결정 → 다음 버튼`, await page.isVisible('.l3-next[data-next="decide"]'));
+    check(`${P}: CTA 진행 5/5`, await page.getAttribute('.l3-progress','aria-label')==='내가 채운 층 5/5');
+    check(`${P}: 완성 말풍선`, (await page.textContent('[data-cta-bubble]'))==='이 이름표로 앱에서 이어갈 수 있어요');
+    await page.waitForTimeout(1700); await shot('05-decide');
     await scrollToId(page, 'roots'); await page.waitForTimeout(700); await shot('06-roots');
     const ht = await page.textContent('[data-bind="harvest-title"]');
     check(`${P}: 다섯 층 완성 → 수확 제목`, ht.includes('뿌리가 다 내렸어요'), ht);
@@ -123,13 +150,21 @@ try {
     // 계측 (SPEC-009 §4): 자유 텍스트 없음
     const ev = await page.evaluate(() => JSON.parse(localStorage.getItem('vencubator.events.v1') || '[]'));
     const names = ev.map(e => e.name);
-    check(`${P}: 이벤트 기록 page=v3`, names.includes('landing_view') && names.includes('idea_submit') && names.includes('card_progress') && ev.every(e => e.page === 'v31'), names.join(','));
+    check(`${P}: 이벤트 기록 page=v31`, names.includes('landing_view') && names.includes('idea_submit') && names.includes('card_progress') && ev.every(e => e.page === 'v31'), names.join(','));
     check(`${P}: 이벤트에 입력 문장 없음`, !JSON.stringify(ev).includes('헬스장'));
 
     // L3I-09 새로고침 복원
     await page.reload(); await page.waitForTimeout(900);
     const kept = await Promise.all(['learn', 'ask', 'observe', 'decide'].map(k => note(page, k)));
     check(`${P}: 새로고침 복원`, kept.every(k => k.status === 'mine') && (await page.inputValue('#idea-input')) === idea);
+
+    check(`${P}: 복원된 버튼 모두 유지·등장 모션 없음`, await page.locator('.l3-next').evaluateAll(els=>els.every(el=>!el.hidden&&!el.classList.contains('is-growing'))));
+    check(`${P}: 복원 CTA 강조 없음`, await page.locator('.l3-app-cta').evaluate(el=>!el.classList.contains('is-shining')&&!el.classList.contains('is-complete')));
+    await page.click('[data-observe="supported"]');
+    check(`${P}: 관찰 변경 → 결정 버튼 숨김`, !(await page.isVisible('.l3-next[data-next="decide"]')));
+    check(`${P}: CTA 진행 감소 4/5`, await page.getAttribute('.l3-progress','aria-label')==='내가 채운 층 4/5');
+    const newEvents=await page.evaluate(()=>JSON.parse(localStorage.getItem('vencubator.events.v1')));
+    check(`${P}: next_click·pain_select enum`, newEvents.some(e=>e.name==='next_click'&&e.props.layer==='surface')&&newEvents.some(e=>e.name==='pain_select'&&e.props.pain==='interview'));
 
     // 가로 스크롤·오류
     const ov = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
@@ -150,6 +185,11 @@ try {
     check('reduced: 뿌리 전체·눈금 숨김', r.off === 0 && !r.tipVisible, JSON.stringify(r));
     check('reduced: 진입 효과 없음', faded === 0, `faded=${faded}`);
     check('reduced: 자동 쓰기 없음', await page.evaluate(() => !document.querySelector('.l3-typing').classList.contains('is-on')));
+    await page.click('[data-sample="review"]');
+    check('reduced: 다음 버튼 즉시 최종 상태', await page.locator('.l3-next[data-next="surface"]').evaluate(el=>!el.hidden&&!el.classList.contains('is-growing')&&getComputedStyle(el.querySelector('button')).opacity==='1'));
+    await page.fill('#idea-input','모션 감소 이름표'); await page.click('.l3-tag button[type=submit]');
+    check('reduced: 진행 점과 말풍선·빛 없음', await page.getAttribute('.l3-progress','aria-label')==='내가 채운 층 1/5' && await page.isVisible('[data-cta-bubble]') && await page.locator('.l3-app-cta').evaluate(el=>getComputedStyle(el,'::after').animationName==='none'));
+    check('reduced: 가로 스크롤 없음',await page.evaluate(()=>document.documentElement.scrollWidth===innerWidth));
     if (shots) { await scrollToId(page, 'ask'); await page.waitForTimeout(200); await page.screenshot({ path: resolve(DIR, 'qa-shots/reduced-ask.png') }); }
     check('reduced: JS 오류 없음', errors.length === 0, errors.join(' | '));
     await ctx.close();

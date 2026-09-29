@@ -23,5 +23,5 @@ createServer(async (req, res) => {
     res.writeHead(200, { 'content-type': TYPES[extname(file)] || 'application/octet-stream', 'cache-control': 'no-store' });
     res.end(body);
   } catch { res.writeHead(404); res.end('Not found'); }
-}).listen(PORT, '127.0.0.1', () => console.log(`Landing v3: http://127.0.0.1:${PORT}/landing-v3.1/  (앱: /landing-v3.1/app/)`))
+}).listen(PORT, '127.0.0.1', () => console.log(`Landing v3.1: http://127.0.0.1:${PORT}/landing-v3.1/  (앱: /landing-v3.1/app/)`))
   .on('error', e => { console.error(e.code === 'EADDRINUSE' ? `포트 ${PORT}가 사용 중이에요. 다른 포트로: node landing-v3.1/scripts/serve.mjs 4186` : e.message); process.exit(1); });
