@@ -8,7 +8,7 @@ import { RENDERERS } from '../src/render.mjs';
 import { read, exists, repoPath } from './_util.mjs';
 
 // TODO 단계 2: I10/M08, 단계 3: I12/M09, 단계 4: I11 해제
-const PLANNED = ['L3I-11','L3I-12','L3M-09'];
+const PLANNED = ['L3I-11'];
 const spec = read('docs/SPEC-016-landing-v3.1.md');
 const table = [...spec.matchAll(/^\| (L3S-\d{2}) \| `(\w+)` \|/gm)].map(m => ({ id: m[1], type: m[2] }));
 

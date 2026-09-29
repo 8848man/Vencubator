@@ -74,3 +74,10 @@ test('AC-L31-03 다음 층 버튼 6개, 숨김·위치·접근성',()=>{
  assert.ok(out.includes('data-next-live aria-live="polite"'));
  for(const [layer,to] of [['surface','learn'],['learn','ask'],['ask','observe'],['observe','decide'],['decide','roots'],['roots','harvest']])assert.ok(out.includes('data-next="'+layer+'" hidden')&&out.includes('data-goto="'+to+'"'));
 });
+
+test('AC-L31-03 앱 CTA·진행 점·말풍선·히어로',()=>{
+ const out=renderPage();assert.ok(out.includes('앱 시작하기'));
+ assert.ok(out.includes('data-placement="hero"')&&out.includes('가입 없이 바로 앱에서 시작하기 →'));
+ assert.ok(out.includes('aria-label="내가 채운 층 0/5"'));
+ assert.ok(out.includes('data-cta-bubble aria-live="polite" hidden'));
+});

@@ -1,6 +1,6 @@
 // SPEC-016 §5·§6: 이벤트 → reduce → 화면 반영, 스크롤 → 뿌리·깊이. 스크롤은 그림만 바꾸고 상태를 바꾸지 않는다(REACH 제외).
 // L3I-01~09, L3M-01~07. 방문자 입력은 textContent·value로만 넣는다(마크업 주입 없음).
-import { SITE, SECTIONS, SAMPLES, STAMPS, LESSON, OBSERVATION, DECISIONS, NEXT_COPY } from './content.mjs';
+import { SITE, SECTIONS, SAMPLES, STAMPS, LESSON, OBSERVATION, DECISIONS, NEXT_COPY, CTA_COPY } from './content.mjs';
 import { initialState, reduce, deriveCard, rootState, pathOrder, serialize, deserialize, nextState } from './state.mjs';
 import { track, captureUtm, ensureAssignment } from './track.mjs';
 
@@ -33,6 +33,7 @@ export function bindLanding(win = window) {
   let state = store.load();
   let prev = null;
   let previousNext = null;
+  let firstPlant = true, bubbleTimer = 0;
   const ideaInput = $('#idea-input'), customerInput = $('#customer-input');
 
   function dispatch(action) {
@@ -155,9 +156,26 @@ export function bindLanding(win = window) {
     previousNext = visible;
   }
 
+  // L3I-12 / L3M-09: 이름표 포함 5칸. 초기 복원에는 강조하지 않는다.
+  function showBubble(text) {
+    const bubble = $('[data-cta-bubble]');
+    win.clearTimeout(bubbleTimer); bubble.textContent = text; bubble.hidden = false;
+    bubbleTimer = win.setTimeout(() => { bubble.hidden = true; }, 3000);
+  }
+  function paintCTA(c) {
+    const dots = $('.l3-progress'), cta = $('.l3-app-cta');
+    dots.setAttribute('aria-label', CTA_COPY.progress.replace('{n}', c.filled));
+    $('span', dots).forEach((dot,i) => { dot.textContent = i < c.filled ? '●' : '○'; });
+    if (prev && c.filled > prev.filled) {
+      if (!reduced) { cta.classList.remove('is-shining','is-complete'); void cta.offsetWidth; cta.classList.add(c.complete?'is-complete':'is-shining'); }
+      if (c.complete) showBubble(CTA_COPY.complete);
+    }
+    if (c.filled === 0) { cta.classList.remove('is-shining','is-complete'); $('[data-cta-bubble]').hidden = true; }
+  }
+
   function paint() {
     const c = deriveCard(state);
-    paintIdea(); paintNotes(c); paintLearn(); paintAsk(); paintObserve(); paintMap(); paintHarvest(c); paintNext();
+    paintIdea(); paintNotes(c); paintLearn(); paintAsk(); paintObserve(); paintMap(); paintHarvest(c); paintNext(); paintCTA(c);
     rootDraw.sync(prev, c);
     prev = c;
   }
@@ -167,14 +185,14 @@ export function bindLanding(win = window) {
     const el = $('.l3-typing');
     const lines = el ? JSON.parse(el.dataset.typing || '[]') : [];
     const ph = ideaInput?.getAttribute('placeholder') || '';
-    let timer = 0, line = 0, pos = 0, dir = 1, on = false;
-    const active = () => !reduced && el && lines.length && ideaInput && !ideaInput.value && doc.activeElement !== ideaInput;
+    let timer = 0, line = 0, pos = 0, dir = 1, on = false, finished = false;
+    const active = () => !reduced && !finished && el && lines.length && ideaInput && !ideaInput.value && doc.activeElement !== ideaInput;
     function tick() {
       const t = lines[line];
       pos += dir;
       el.textContent = t.slice(0, pos);
       let wait = dir > 0 ? 90 : 28;
-      if (dir > 0 && pos >= t.length) { dir = -1; wait = 1700; }
+      if (dir > 0 && pos >= t.length) { if (line === lines.length - 1) { finished = true; return; } dir = -1; wait = 1700; }
       else if (dir < 0 && pos <= 0) { dir = 1; line = (line + 1) % lines.length; wait = 420; }
       timer = win.setTimeout(tick, wait);
     }
@@ -330,6 +348,7 @@ export function bindLanding(win = window) {
     const sample = SAMPLES.find(x => x.idea === text);
     dispatch(sample ? { type: 'SET_IDEA', text, source: 'example', sample: sample.key } : { type: 'SET_IDEA', text, source: 'mine' });
     dispatch({ type: 'REACH', chapter: 'surface' });
+    if (firstPlant) { firstPlant = false; if (!deriveCard(state).complete) showBubble(CTA_COPY.first); }
     const tag = e.currentTarget;
     if (!reduced) { tag.classList.remove('is-planted'); void tag.offsetWidth; tag.classList.add('is-planted'); }
     win.setTimeout(() => goTo('learn'), reduced ? 0 : 520);
@@ -340,7 +359,8 @@ export function bindLanding(win = window) {
 
   doc.addEventListener('click', e => {
     const t = e.target.closest('button, a'); if (!t) return;
-    if (t.dataset.goto) { // L3I-10
+    if (t.hasAttribute('data-cta-bubble')) { t.hidden = true; win.clearTimeout(bubbleTimer);
+    } else if (t.dataset.goto) { // L3I-10
       goTo(t.dataset.goto);
       track('next_click', {layer:t.closest('.l3-next').dataset.next}, TRACK_ENV);
     } else if (t.dataset.sample) { // L3I-02
@@ -362,7 +382,7 @@ export function bindLanding(win = window) {
       win.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
       ideaInput?.focus({ preventScroll: true });
     } else if (t.dataset.cta === 'prototype') { // L3I-08 같은 사이트 /app/ 로 이동, 문장은 저장소로 인계
-      track('cta_click', { placement: (t.closest('[data-spec]')?.dataset.spec || 'page').toLowerCase(), filled: deriveCard(state).filled }, TRACK_ENV);
+      track('cta_click', { placement: (t.dataset.placement || t.closest('[data-spec]')?.dataset.spec || 'page').toLowerCase(), filled: deriveCard(state).filled }, TRACK_ENV);
     }
   });
 

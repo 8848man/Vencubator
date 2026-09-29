@@ -1,5 +1,5 @@
 // SPEC-016 §2·§3: 섹션 type → HTML 문자열 (순수). 방문자 입력값은 여기서 넣지 않고 interact.mjs가 textContent로 채운다.
-import { SITE, SECTIONS, SAMPLES, SLOTS, STAMPS, LESSON, QUESTION_TEMPLATES, AVOID_QUESTION, OBSERVATION, NEXT, NEXT_COPY } from './content.mjs';
+import { SITE, SECTIONS, SAMPLES, SLOTS, STAMPS, LESSON, QUESTION_TEMPLATES, AVOID_QUESTION, OBSERVATION, NEXT, NEXT_COPY, CTA_COPY } from './content.mjs';
 
 export const esc = (v = '') => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const br = v => esc(v).replace(/\n/g, '<br>');
@@ -70,10 +70,10 @@ export const RENDERERS = {
 <a class="l3-skip" href="#main">본문으로 이동</a>
 <div class="l3-shell l3-top-row">
 <a class="l3-brand" href="#surface" aria-label="${esc(SITE.brand)} 맨 위로">${mark()}<span>${esc(SITE.brand)}</span></a>
-<div class="l3-top-actions"><button type="button" class="l3-textbtn" data-action="reset">${esc(s.reset)}</button><a class="l3-btn small" href="${esc(href(s.cta.href, o))}" data-cta="prototype">${esc(s.cta.label)}</a></div>
+<div class="l3-top-actions"><button type="button" class="l3-textbtn" data-action="reset">${esc(s.reset)}</button><a class="l3-btn l3-app-cta" href="${esc(href(s.cta.href, o))}" data-cta="prototype">${mark()}<span>${esc(s.cta.label)}</span><span class="l3-progress" aria-label="${esc(CTA_COPY.progress.replace('{n}',0))}">${Array.from({length:5},()=>'<span aria-hidden="true">○</span>').join('')}</span><svg class="l3-cta-spark m-spark" viewBox="0 0 30 30" aria-hidden="true"><path d="m15 1 3 11 11 3-11 3-3 11-3-11-11-3 11-3Z"/></svg></a><button type="button" class="l3-cta-bubble" data-cta-bubble aria-live="polite" hidden></button></div>
 </div></header>`,
 
-  surface: s => `<section id="${s.anchor}" class="l3-surface" data-spec="${s.id}" aria-labelledby="${hid(s)}">
+  surface: (s, o) => `<section id="${s.anchor}" class="l3-surface" data-spec="${s.id}" aria-labelledby="${hid(s)}">
 <div class="l3-shell l3-surface-grid">
 <div class="l3-surface-copy">
 <p class="l3-eyebrow">${esc(s.eyebrow)}</p>
@@ -81,6 +81,7 @@ export const RENDERERS = {
 <p class="l3-lead">${esc(s.lead)}</p>
 <div class="l3-samples" role="group" aria-label="${esc(s.samplesLabel)}"><span>${esc(s.samplesLabel)}</span>${SAMPLES.map(x => `<button type="button" class="l3-chip" data-sample="${esc(x.key)}" aria-pressed="false">${esc(x.label)}</button>`).join('')}</div>
 <p id="idea-help" class="l3-privacy">${esc(s.privacy)}</p>
+<a class="l3-app-link l3-hero-app" data-cta="prototype" data-placement="hero" href="${esc(href('prototype',o))}">${esc(s.appLink)}</a>
 <a class="l3-down" href="#learn">${esc(s.down)} <span aria-hidden="true">↓</span></a>
 </div>
 <div class="l3-scene">
@@ -183,7 +184,7 @@ ${nextPanel(s.anchor)}
   footer: (s, o) => `<footer class="l3-footer" data-spec="${s.id}"><div class="l3-shell">
 <a class="l3-brand" href="#surface">${mark()}<span>${esc(SITE.brand)}</span></a>
 <p>${esc(s.notice)}</p>
-<ul>${s.links.filter(l => !(o.public && DOC_LINKS.includes(l.href))).map(l => `<li><a href="${esc(href(l.href, o))}">${esc(l.label)}</a></li>`).join('')}</ul>
+<ul>${s.links.filter(l => !(o.public && DOC_LINKS.includes(l.href))).map(l => `<li><a data-cta="prototype" href="${esc(href(l.href, o))}">${esc(l.label)}</a></li>`).join('')}</ul>
 <small>${esc(s.copy)}</small></div></footer>`
 };
 

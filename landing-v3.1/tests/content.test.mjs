@@ -42,3 +42,13 @@ test('AC-L3-06 네트워크 전송 코드 없음', () => {
 test('AC-L3-06 방문자 입력은 innerHTML로 넣지 않음', () => {
   assert.ok(!/innerHTML|insertAdjacentHTML|outerHTML/.test(read('src/interact.mjs')));
 });
+
+test('AC-L31-05 상단 CTA 배경 3:1·글자 4.5:1 (두 구간)',()=>{
+ const tokens=Object.fromEntries([...read('src/tokens.css').matchAll(/--([\w-]+):\s*(#[a-f0-9]{6})/gi)].map(m=>[m[1],m[2]]));
+ const luminance=hex=>hex.slice(1).match(/../g).map(x=>parseInt(x,16)/255).map(c=>c<=.04045?c/12.92:((c+.055)/1.055)**2.4).reduce((s,c,i)=>s+c*[.2126,.7152,.0722][i],0);
+ const ratio=(a,b)=>{const l=[luminance(tokens[a]),luminance(tokens[b])].sort((a,b)=>b-a);return(l[0]+.05)/(l[1]+.05);};
+ for(const [bg,bar,fg] of [['green','sky','white'],['root','humus','ink']]){assert.ok(ratio(bg,bar)>=3);assert.ok(ratio(bg,fg)>=4.5);}
+ assert.match(css,/\.l3-top\.is-dark \{ background:var\(--humus\)/);
+ assert.match(css,/background:var\(--root\); color:var\(--ink\)/);
+ assert.ok(!/\binfinite\b/.test(css));
+});

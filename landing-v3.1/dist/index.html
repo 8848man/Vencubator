@@ -133,7 +133,7 @@ h2:focus { outline: none; }
 .l3-tag input::placeholder { color: var(--cream-2); }
 .l3-typing { position: absolute; left: 0; top: 4px; right: 0; font-family: var(--f-pen); font-size: clamp(28px, 2.6vw, 36px); line-height: 1.25; color: var(--ink-soft); pointer-events: none; white-space: nowrap; overflow: hidden; opacity: 0; }
 .l3-typing.is-on { opacity: 1; }
-.l3-typing.is-on::after { content: ''; display: inline-block; width: 2px; height: .9em; margin-left: 2px; vertical-align: -.1em; background: var(--ink-soft); animation: caret 1s steps(1) infinite; }
+.l3-typing.is-on::after { content: ''; display: inline-block; width: 2px; height: .9em; margin-left: 2px; vertical-align: -.1em; background: var(--ink-soft); animation: caret 1s steps(1) 6; }
 @keyframes caret { 50% { opacity: 0; } }
 .l3-tag-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; }
 .l3-msg { margin: 0; font-size: 14px; font-weight: 600; color: var(--refuted); min-height: 1.2em; }
@@ -435,6 +435,26 @@ h2:focus { outline: none; }
 @keyframes next-arrow { 50% { transform:translateY(4px); } }
 @media(max-width:600px) { .l3-next { flex-direction:column; align-items:flex-end; gap:12px; } }
 @media(prefers-reduced-motion:reduce) { .l3-next.is-growing .l3-next-root path, .l3-next.is-growing .l3-btn, .l3-next.is-growing .l3-btn span { animation:none; } }
+/* L3M-09 — 불투명 상단바로 모든 뒤 배경에서 대비 보장 */
+.l3-top { background:var(--sky); }
+.l3-top.is-dark { background:var(--humus); }
+.l3-top-actions { position:relative; }
+.l3-app-cta { position:relative; font-size:16px; padding:10px 18px; overflow:hidden; }
+.l3-app-cta .l3-mark { color:currentColor; width:19px; height:22px; flex-shrink:0; }
+.l3-top.is-dark .l3-app-cta, .l3-top.is-dark .l3-app-cta:hover { background:var(--root); color:var(--ink); }
+.l3-app-cta:hover { background:var(--green); }
+.l3-progress { display:inline-flex; gap:2px; font-size:12px; }
+.l3-app-cta::after { content:''; position:absolute; inset:0; background:linear-gradient(105deg,transparent 20%,color-mix(in srgb,var(--white) 55%,transparent) 50%,transparent 80%); transform:translateX(-120%); pointer-events:none; }
+.l3-app-cta.is-shining::after, .l3-app-cta.is-complete::after { animation:cta-light 700ms ease-out 1; }
+.l3-cta-spark { position:absolute; inset:4px 5px auto auto; width:28px; height:28px; fill:var(--root); opacity:0; pointer-events:none; }
+.l3-top.is-dark .l3-cta-spark { fill:var(--green); }
+.l3-app-cta.is-complete .l3-cta-spark { animation:cta-spark 800ms var(--ease) 1; }
+.l3-cta-bubble { position:absolute; right:0; top:calc(100% + 10px); width:270px; max-width:calc(100vw - 32px); border:1px solid var(--green); border-radius:12px; background:var(--paper); color:var(--ink); padding:12px 16px; text-align:left; font-size:14px; box-shadow:0 5px 20px color-mix(in srgb,var(--ink) 15%,transparent); }
+.l3-hero-app { display:block; width:fit-content; margin-top:12px; color:var(--green); font-weight:700; }
+@keyframes cta-light { to { transform:translateX(120%); } }
+@keyframes cta-spark { 0%,100% { opacity:0; transform:scale(.3) rotate(-20deg); } 45% { opacity:1; transform:scale(1.2) rotate(15deg); } }
+@media(max-width:480px) { .l3-progress { display:none; } .l3-app-cta { gap:5px; } .l3-top-actions { gap:2px; } }
+@media(prefers-reduced-motion:reduce) { .l3-app-cta::after, .l3-app-cta .l3-cta-spark { animation:none !important; } }
 </style>
 </head>
 <body>
@@ -443,7 +463,7 @@ h2:focus { outline: none; }
 <a class="l3-skip" href="#main">본문으로 이동</a>
 <div class="l3-shell l3-top-row">
 <a class="l3-brand" href="#surface" aria-label="vencubator 맨 위로"><svg class="l3-mark" viewBox="0 0 32 35" fill="none" aria-hidden="true"><path d="M4 9 16 30 28 9M16 24V4" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M16 14C7 14 8 4 8 4c7 0 8 5 8 10ZM17 13c0-8 9-9 9-9s0 9-9 9Z" fill="currentColor"/></svg><span>vencubator</span></a>
-<div class="l3-top-actions"><button type="button" class="l3-textbtn" data-action="reset">처음부터</button><a class="l3-btn small" href="./app/?from=v31" data-cta="prototype">앱 열기</a></div>
+<div class="l3-top-actions"><button type="button" class="l3-textbtn" data-action="reset">처음부터</button><a class="l3-btn l3-app-cta" href="./app/?from=v31" data-cta="prototype"><svg class="l3-mark" viewBox="0 0 32 35" fill="none" aria-hidden="true"><path d="M4 9 16 30 28 9M16 24V4" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M16 14C7 14 8 4 8 4c7 0 8 5 8 10ZM17 13c0-8 9-9 9-9s0 9-9 9Z" fill="currentColor"/></svg><span>앱 시작하기</span><span class="l3-progress" aria-label="내가 채운 층 0/5"><span aria-hidden="true">○</span><span aria-hidden="true">○</span><span aria-hidden="true">○</span><span aria-hidden="true">○</span><span aria-hidden="true">○</span></span><svg class="l3-cta-spark m-spark" viewBox="0 0 30 30" aria-hidden="true"><path d="m15 1 3 11 11 3-11 3-3 11-3-11-11-3 11-3Z"/></svg></a><button type="button" class="l3-cta-bubble" data-cta-bubble aria-live="polite" hidden></button></div>
 </div></header>
 <main id="main">
 <p class="l3-sr-only" data-next-live aria-live="polite"></p>
@@ -455,6 +475,7 @@ h2:focus { outline: none; }
 <p class="l3-lead">떠오른 아이디어를 이름표에 한 문장으로 적어 심어 보세요. 아래로 내려갈수록 오늘 배울 것, 물어볼 질문, 들은 답, 내린 결정이 뿌리가 되어 자라요.</p>
 <div class="l3-samples" role="group" aria-label="예시로 심어 보기"><span>예시로 심어 보기</span><button type="button" class="l3-chip" data-sample="teamup" aria-pressed="false">팀플 동료 찾기</button><button type="button" class="l3-chip" data-sample="banchan" aria-pressed="false">동네 반찬 구독</button><button type="button" class="l3-chip" data-sample="plant" aria-pressed="false">반려식물 케어</button></div>
 <p id="idea-help" class="l3-privacy">적은 내용은 서버로 보내지 않고 이 브라우저에만 저장돼요.</p>
+<a class="l3-app-link l3-hero-app" data-cta="prototype" data-placement="hero" href="./app/?from=v31">가입 없이 바로 앱에서 시작하기 →</a>
 <a class="l3-down" href="#learn">땅속으로 내려가 보기 <span aria-hidden="true">↓</span></a>
 </div>
 <div class="l3-scene">
@@ -601,7 +622,7 @@ h2:focus { outline: none; }
 <footer class="l3-footer" data-spec="L3S-11"><div class="l3-shell">
 <a class="l3-brand" href="#surface"><svg class="l3-mark" viewBox="0 0 32 35" fill="none" aria-hidden="true"><path d="M4 9 16 30 28 9M16 24V4" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M16 14C7 14 8 4 8 4c7 0 8 5 8 10ZM17 13c0-8 9-9 9-9s0 9-9 9Z" fill="currentColor"/></svg><span>vencubator</span></a>
 <p>Vencubator는 지금 체험판(프로토타입)이에요. 이 페이지의 들은 답과 선택지는 가상 예시이고, 적은 내용은 서버로 보내지 않고 이 브라우저에만 저장돼요.</p>
-<ul><li><a href="./app/?from=v31">앱 열기</a></li></ul>
+<ul><li><a data-cta="prototype" href="./app/?from=v31">앱 시작하기</a></li></ul>
 <small>© 2026 Vencubator</small></div></footer>
 </div>
 <noscript><p style="padding:100px 24px;max-width:720px;margin:auto;line-height:1.8">이 페이지는 아이디어 한 문장을 이름표에 적어 심어 보는 체험형 페이지라 스크립트가 필요해요. Vencubator는 오늘 배울 것 하나, 해볼 것 하나를 안내하는 창업 학습 코파일럿이며 지금 체험판으로 열려 있어요.</p></noscript>
@@ -830,7 +851,7 @@ const AREAS = [
 ];
 const SECTIONS = [
   { id: 'L3S-00', type: 'topbar', anchor: 'top',
-    reset: '처음부터', cta: { label: '앱 열기', href: 'prototype' } },
+    reset: '처음부터', cta: { label: '앱 시작하기', href: 'prototype' } },
   { id: 'L3S-01', type: 'surface', anchor: 'surface',
     eyebrow: '1인 빌더를 위한 창업 학습 코파일럿 · 체험판',
     lines: ['아이디어를 심으면,', '근거가 뿌리내려요.'],
@@ -840,6 +861,7 @@ const SECTIONS = [
     submit: '심기',
     empty: '이름표에 한 문장을 적거나 아래 예시를 골라 주세요.',
     samplesLabel: '예시로 심어 보기',
+    appLink: '가입 없이 바로 앱에서 시작하기 →',
     privacy: '적은 내용은 서버로 보내지 않고 이 브라우저에만 저장돼요.',
     down: '땅속으로 내려가 보기',
     typing: ['동네 반찬을 조금씩 나눠 사는 구독', '초보 식물 집사에게 물 주기 알림', '시간과 역할이 맞는 팀플 동료 찾기'] },
@@ -915,7 +937,7 @@ const SECTIONS = [
     again: '다른 아이디어 심기' },
   { id: 'L3S-11', type: 'footer', anchor: 'footer',
     notice: 'Vencubator는 지금 체험판(프로토타입)이에요. 이 페이지의 들은 답과 선택지는 가상 예시이고, 적은 내용은 서버로 보내지 않고 이 브라우저에만 저장돼요.',
-    links: [ { label: '앱 열기', href: 'prototype' } ],
+    links: [ { label: '앱 시작하기', href: 'prototype' } ],
     copy: '© 2026 Vencubator' }
 ];
 // SPEC-016 §5.1 — L3I-10
@@ -928,6 +950,7 @@ const NEXT = [
   {layer:'roots',to:'harvest',label:'다시 지상으로 · 앱에서 이어가기 ↓'}
 ];
 const NEXT_COPY = {app:'여기까지 하고 앱에서 이어하기 →',live:'다음 층이 열렸어요'};
+const CTA_COPY = {first:'언제든 여기서 앱으로 옮겨 심을 수 있어요',complete:'이 이름표로 앱에서 이어갈 수 있어요',progress:'내가 채운 층 {n}/5'};
 // SPEC-016 §4: 순수 상태 모델. DOM·저장소 접근 없음 (테스트 대상).
 // v2(SPEC-007 §4)의 액션·규칙을 계승. 차이: 칸 이름(ask), 예시 값은 “다 쓴 예시 기록”(DP-12), rootState 추가.
 const CHAPTERS = SLOTS.map(s => s.chapter); // ['surface','learn','ask','observe','decide']
@@ -1086,6 +1109,7 @@ function bindLanding(win = window) {
   let state = store.load();
   let prev = null;
   let previousNext = null;
+  let firstPlant = true, bubbleTimer = 0;
   const ideaInput = $('#idea-input'), customerInput = $('#customer-input');
   function dispatch(action) {
     const next = reduce(state, action);
@@ -1198,9 +1222,25 @@ function bindLanding(win = window) {
     else $('[data-next-live]').textContent = '';
     previousNext = visible;
   }
+  // L3I-12 / L3M-09: 이름표 포함 5칸. 초기 복원에는 강조하지 않는다.
+  function showBubble(text) {
+    const bubble = $('[data-cta-bubble]');
+    win.clearTimeout(bubbleTimer); bubble.textContent = text; bubble.hidden = false;
+    bubbleTimer = win.setTimeout(() => { bubble.hidden = true; }, 3000);
+  }
+  function paintCTA(c) {
+    const dots = $('.l3-progress'), cta = $('.l3-app-cta');
+    dots.setAttribute('aria-label', CTA_COPY.progress.replace('{n}', c.filled));
+    $('span', dots).forEach((dot,i) => { dot.textContent = i < c.filled ? '●' : '○'; });
+    if (prev && c.filled > prev.filled) {
+      if (!reduced) { cta.classList.remove('is-shining','is-complete'); void cta.offsetWidth; cta.classList.add(c.complete?'is-complete':'is-shining'); }
+      if (c.complete) showBubble(CTA_COPY.complete);
+    }
+    if (c.filled === 0) { cta.classList.remove('is-shining','is-complete'); $('[data-cta-bubble]').hidden = true; }
+  }
   function paint() {
     const c = deriveCard(state);
-    paintIdea(); paintNotes(c); paintLearn(); paintAsk(); paintObserve(); paintMap(); paintHarvest(c); paintNext();
+    paintIdea(); paintNotes(c); paintLearn(); paintAsk(); paintObserve(); paintMap(); paintHarvest(c); paintNext(); paintCTA(c);
     rootDraw.sync(prev, c);
     prev = c;
   }
@@ -1209,14 +1249,14 @@ function bindLanding(win = window) {
     const el = $('.l3-typing');
     const lines = el ? JSON.parse(el.dataset.typing || '[]') : [];
     const ph = ideaInput?.getAttribute('placeholder') || '';
-    let timer = 0, line = 0, pos = 0, dir = 1, on = false;
-    const active = () => !reduced && el && lines.length && ideaInput && !ideaInput.value && doc.activeElement !== ideaInput;
+    let timer = 0, line = 0, pos = 0, dir = 1, on = false, finished = false;
+    const active = () => !reduced && !finished && el && lines.length && ideaInput && !ideaInput.value && doc.activeElement !== ideaInput;
     function tick() {
       const t = lines[line];
       pos += dir;
       el.textContent = t.slice(0, pos);
       let wait = dir > 0 ? 90 : 28;
-      if (dir > 0 && pos >= t.length) { dir = -1; wait = 1700; }
+      if (dir > 0 && pos >= t.length) { if (line === lines.length - 1) { finished = true; return; } dir = -1; wait = 1700; }
       else if (dir < 0 && pos <= 0) { dir = 1; line = (line + 1) % lines.length; wait = 420; }
       timer = win.setTimeout(tick, wait);
     }
@@ -1364,6 +1404,7 @@ function bindLanding(win = window) {
     const sample = SAMPLES.find(x => x.idea === text);
     dispatch(sample ? { type: 'SET_IDEA', text, source: 'example', sample: sample.key } : { type: 'SET_IDEA', text, source: 'mine' });
     dispatch({ type: 'REACH', chapter: 'surface' });
+    if (firstPlant) { firstPlant = false; if (!deriveCard(state).complete) showBubble(CTA_COPY.first); }
     const tag = e.currentTarget;
     if (!reduced) { tag.classList.remove('is-planted'); void tag.offsetWidth; tag.classList.add('is-planted'); }
     win.setTimeout(() => goTo('learn'), reduced ? 0 : 520);
@@ -1373,7 +1414,8 @@ function bindLanding(win = window) {
   ideaInput?.addEventListener('input', () => typing.sync());
   doc.addEventListener('click', e => {
     const t = e.target.closest('button, a'); if (!t) return;
-    if (t.dataset.goto) { // L3I-10
+    if (t.hasAttribute('data-cta-bubble')) { t.hidden = true; win.clearTimeout(bubbleTimer);
+    } else if (t.dataset.goto) { // L3I-10
       goTo(t.dataset.goto);
       track('next_click', {layer:t.closest('.l3-next').dataset.next}, TRACK_ENV);
     } else if (t.dataset.sample) { // L3I-02
@@ -1395,7 +1437,7 @@ function bindLanding(win = window) {
       win.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
       ideaInput?.focus({ preventScroll: true });
     } else if (t.dataset.cta === 'prototype') { // L3I-08 같은 사이트 /app/ 로 이동, 문장은 저장소로 인계
-      track('cta_click', { placement: (t.closest('[data-spec]')?.dataset.spec || 'page').toLowerCase(), filled: deriveCard(state).filled }, TRACK_ENV);
+      track('cta_click', { placement: (t.dataset.placement || t.closest('[data-spec]')?.dataset.spec || 'page').toLowerCase(), filled: deriveCard(state).filled }, TRACK_ENV);
     }
   });
   customerInput?.addEventListener('input', () => dispatch({ type: 'SET_CUSTOMER', text: customerInput.value }));

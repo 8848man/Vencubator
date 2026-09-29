@@ -107,7 +107,7 @@ export const AREAS = [
 
 export const SECTIONS = [
   { id: 'L3S-00', type: 'topbar', anchor: 'top',
-    reset: '처음부터', cta: { label: '앱 열기', href: 'prototype' } },
+    reset: '처음부터', cta: { label: '앱 시작하기', href: 'prototype' } },
 
   { id: 'L3S-01', type: 'surface', anchor: 'surface',
     eyebrow: '1인 빌더를 위한 창업 학습 코파일럿 · 체험판',
@@ -118,6 +118,7 @@ export const SECTIONS = [
     submit: '심기',
     empty: '이름표에 한 문장을 적거나 아래 예시를 골라 주세요.',
     samplesLabel: '예시로 심어 보기',
+    appLink: '가입 없이 바로 앱에서 시작하기 →',
     privacy: '적은 내용은 서버로 보내지 않고 이 브라우저에만 저장돼요.',
     down: '땅속으로 내려가 보기',
     typing: ['동네 반찬을 조금씩 나눠 사는 구독', '초보 식물 집사에게 물 주기 알림', '시간과 역할이 맞는 팀플 동료 찾기'] },
@@ -203,7 +204,7 @@ export const SECTIONS = [
 
   { id: 'L3S-11', type: 'footer', anchor: 'footer',
     notice: 'Vencubator는 지금 체험판(프로토타입)이에요. 이 페이지의 들은 답과 선택지는 가상 예시이고, 적은 내용은 서버로 보내지 않고 이 브라우저에만 저장돼요.',
-    links: [ { label: '앱 열기', href: 'prototype' } ],
+    links: [ { label: '앱 시작하기', href: 'prototype' } ],
     copy: '© 2026 Vencubator' }
 ];
 
@@ -217,3 +218,5 @@ export const NEXT = [
   {layer:'roots',to:'harvest',label:'다시 지상으로 · 앱에서 이어가기 ↓'}
 ];
 export const NEXT_COPY = {app:'여기까지 하고 앱에서 이어하기 →',live:'다음 층이 열렸어요'};
+
+export const CTA_COPY = {first:'언제든 여기서 앱으로 옮겨 심을 수 있어요',complete:'이 이름표로 앱에서 이어갈 수 있어요',progress:'내가 채운 층 {n}/5'};
