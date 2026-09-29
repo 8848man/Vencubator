@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 92,
-  "updated_at": "2026-09-29T03:07:50.289Z",
+  "revision": 93,
+  "updated_at": "2026-09-29T03:10:17.126Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -15,18 +15,18 @@
     "stage": "S1",
     "phase": "L05",
     "work_item": "L05-W01",
-    "action": "단계 4: 확정 카피·고민·예시별 관찰 답 구현",
+    "action": "단계 5: AC-L31-07 QA 추가·캡처·사이트 전환·최종 검사",
     "condition": "AUTH-027 승인 범위"
   },
   "checkpoint": {
-    "id": "CP-0092",
-    "path": "docs/execution/checkpoints/CP-0092.md",
-    "manifest": "docs/execution/checkpoints/CP-0092.manifest.json"
+    "id": "CP-0093",
+    "path": "docs/execution/checkpoints/CP-0093.md",
+    "manifest": "docs/execution/checkpoints/CP-0093.manifest.json"
   },
   "git": {
     "branch": "w/L05-W01-landing-v31",
     "base": "b5eeb68da12f6050152fcc749b0d1c8a40876e7f",
-    "head": "2b29ea433d40dbe6a91f30294f427b127b280f2a",
+    "head": "5ce349f40b559d71e1b8caac51f7414537df1209",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -1235,7 +1235,7 @@
       "validation_status": "not_run",
       "authorization_ref": "AUTH-027",
       "definition_path": "docs/execution/work-items/L05-W01.md",
-      "checklist": "3/5"
+      "checklist": "4/5"
     }
   }
 }
