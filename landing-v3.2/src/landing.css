@@ -1,0 +1,437 @@
+/* SPEC-017 랜딩 v3 “뿌리”. 색은 tokens.css 변수만 쓴다. sticky는 상단바만(DP-11). */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--top-h); -webkit-text-size-adjust: 100%; }
+html.reduced { scroll-behavior: auto; }
+body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.65 var(--f-body); word-break: keep-all; overflow-wrap: break-word; -webkit-font-smoothing: antialiased; }
+[hidden] { display: none !important; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--refuted); outline-offset: 3px; border-radius: 6px; }
+h1, h2, h3 { margin: 0; font-family: var(--f-display); text-wrap: balance; }
+h2:focus { outline: none; }
+.l3-shell { width: 100%; max-width: calc(var(--shell) + 2 * var(--gutter)); margin: 0 auto; padding: 0 var(--gutter); }
+.l3-mono { font-family: var(--f-mono); }
+.l3-pen { font-family: var(--f-pen); }
+.l3-skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: var(--sky); padding: 8px 14px; border-radius: 8px; z-index: 50; }
+.l3-skip:focus { left: 12px; }
+
+/* ── 버튼 ── */
+.l3-btn { display: inline-flex; align-items: center; gap: 8px; border: 0; border-radius: 999px; background: var(--green); color: var(--white); padding: 12px 22px; font-weight: 700; font-size: 16px; line-height: 1.2; text-decoration: none; transition: background .2s, transform .2s var(--ease); }
+.l3-btn:hover { background: var(--green-2); transform: translateY(-1px); }
+.l3-btn.small { padding: 8px 16px; font-size: 14px; }
+.l3-btn.big { padding: 17px 28px; font-size: 18px; }
+.l3-btn.ghost { background: transparent; color: inherit; box-shadow: inset 0 0 0 1.5px currentColor; }
+.l3-btn[aria-pressed="true"] { background: var(--root); color: var(--ink); }
+.l3-textbtn { border: 0; background: none; padding: 8px 6px; font-size: 14px; font-weight: 600; opacity: .8; }
+.l3-textbtn:hover { opacity: 1; text-decoration: underline; }
+
+/* ── L3S-00 상단바 ── */
+.l3-top { position: sticky; top: 0; z-index: 20; height: var(--top-h); background: color-mix(in srgb, var(--sky) 86%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid color-mix(in srgb, var(--ink) 8%, transparent); transition: background .4s, color .4s; }
+.l3-top.is-dark { background: color-mix(in srgb, var(--humus) 84%, transparent); color: var(--cream); border-color: color-mix(in srgb, var(--cream) 10%, transparent); }
+.l3-top-row { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.l3-brand { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 800; font-size: 19px; letter-spacing: -.02em; }
+.l3-mark { width: 24px; height: 26px; color: var(--green); }
+.l3-top.is-dark .l3-mark, .l3-footer .l3-mark { color: var(--root); }
+.l3-top-actions { display: flex; align-items: center; gap: 6px; }
+
+/* ── L3S-01 지상 ── */
+.l3-surface { position: relative; z-index: 1; background: linear-gradient(180deg, var(--sky) 0%, var(--sky-2) 100%); min-height: min(calc(100svh - var(--top-h)), 900px); display: flex; align-items: stretch; padding-top: clamp(32px, 6vh, 72px); }
+.l3-surface-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: clamp(24px, 4vw, 64px); align-items: stretch; }
+.l3-surface-copy { align-self: center; padding: 24px 0 clamp(72px, 12vh, 128px); }
+.l3-eyebrow { margin: 0 0 18px; font-size: 14px; font-weight: 700; color: var(--green); letter-spacing: .01em; }
+.l3-surface h1 { font-size: clamp(40px, 4.9vw, 76px); font-weight: 800; line-height: 1.1; letter-spacing: -.03em; }
+.l3-surface h1 span { display: block; white-space: nowrap; }
+.l3-h1-root { position: relative; color: var(--green); width: fit-content; }
+.l3-h1-root::before { content: ''; position: absolute; left: .04em; right: .1em; bottom: -.02em; height: 4px; border-radius: 4px; background: var(--root-edge); }
+.l3-h1-root::after { content: ''; position: absolute; left: .1em; right: .2em; top: calc(100% + .02em); height: .34em; background: repeating-linear-gradient(90deg, var(--root-edge) 0 2px, transparent 2px 1.1em); -webkit-mask: linear-gradient(180deg, black, transparent); mask: linear-gradient(180deg, black, transparent); }
+.l3-lead { margin: 36px 0 26px; max-width: 34em; font-size: clamp(17px, 1.35vw, 19px); color: var(--ink-2); }
+.l3-samples { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.l3-samples > span { font-size: 14px; font-weight: 600; color: var(--ink-2); margin-right: 4px; }
+.l3-chip { border: 1.5px solid var(--ink); background: transparent; border-radius: 999px; padding: 6px 14px; font-size: 14px; font-weight: 600; transition: background .2s, color .2s; }
+.l3-chip:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.l3-chip[aria-pressed="true"] { background: var(--ink); color: var(--sky); }
+.l3-privacy { margin: 14px 0 0; font-size: 13.5px; color: var(--ink-soft); }
+.l3-down { display: inline-block; margin-top: 26px; font-weight: 700; font-size: 15px; text-decoration: none; border-bottom: 2px solid var(--root-edge); padding-bottom: 2px; }
+
+.l3-scene { position: relative; display: flex; flex-direction: column; align-items: flex-end; min-height: clamp(420px, 60vh, 580px); padding-top: clamp(32px, 9vh, 110px); }
+.l3-tag { position: relative; z-index: 2; width: min(440px, 100%); rotate: -2deg; background: var(--tag); border: 2px solid var(--ink); border-radius: 20px; padding: 26px 24px 18px; box-shadow: 8px 10px 0 color-mix(in srgb, var(--ink) 12%, transparent); transform-origin: 60% 100%; }
+.l3-tag::before { content: ''; position: absolute; top: 10px; left: 50%; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; border: 2px solid var(--ink); background: var(--sky-2); }
+.l3-tag.is-planted { animation: plant .7s var(--ease); }
+@keyframes plant { 0% { rotate: -2deg; } 25% { rotate: 2deg; translate: 0 8px; } 55% { rotate: -3.5deg; translate: 0 2px; } 100% { rotate: -2deg; translate: 0 0; } }
+.l3-tag-label { display: block; font-size: 13px; font-weight: 700; color: var(--ink-2); }
+.l3-tag-line { position: relative; margin-top: 6px; }
+.l3-tag input { width: 100%; border: 0; border-bottom: 2px dashed var(--cream-2); background: transparent; padding: 4px 0 6px; font-family: var(--f-pen); font-size: clamp(28px, 2.6vw, 36px); line-height: 1.25; color: var(--ink); outline: none; border-radius: 0; }
+.l3-tag input:focus { border-bottom: 2px solid var(--green); }
+.l3-tag input::placeholder { color: var(--cream-2); }
+.l3-typing { position: absolute; left: 0; top: 4px; right: 0; font-family: var(--f-pen); font-size: clamp(28px, 2.6vw, 36px); line-height: 1.25; color: var(--ink-soft); pointer-events: none; white-space: nowrap; overflow: hidden; opacity: 0; }
+.l3-typing.is-on { opacity: 1; }
+.l3-typing.is-on::after { content: ''; display: inline-block; width: 2px; height: .9em; margin-left: 2px; vertical-align: -.1em; background: var(--ink-soft); animation: caret 1s steps(1) infinite; }
+@keyframes caret { 50% { opacity: 0; } }
+.l3-tag-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; }
+.l3-msg { margin: 0; font-size: 14px; font-weight: 600; color: var(--refuted); min-height: 1.2em; }
+.l3-stake { flex: 1 1 auto; min-height: 150px; width: 22px; margin-right: 34%; margin-bottom: -26px; background: linear-gradient(90deg, var(--wood-dark), var(--wood) 45%, var(--wood-dark)); border-radius: 0 0 6px 6px; }
+.l3-stake.small { min-height: 160px; flex: 1 1 auto; margin-bottom: 0; }
+.l3-surface-sprout { position: absolute; left: 0; bottom: -6px; width: min(50%, 260px); height: auto; z-index: 1; }
+
+/* ── 새싹 마스코트 (L3M-07) ── */
+.l3-sprout { overflow: visible; }
+.l3-sprout .m-torso { fill: var(--m-body); stroke: var(--m-line); stroke-width: 3; }
+.l3-sprout .m-arm, .l3-sprout .m-feet { fill: var(--m-body-dark); stroke: var(--m-line); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.l3-sprout .m-shine { fill: none; stroke: var(--white); stroke-width: 4; stroke-linecap: round; opacity: .55; }
+.l3-sprout .m-eye { fill: var(--m-line); }
+.l3-sprout .m-cheek { fill: var(--m-cheek); opacity: .75; }
+.l3-sprout .m-mouth { fill: none; stroke: var(--m-line); stroke-width: 3; stroke-linecap: round; }
+.l3-sprout .m-gem { fill: var(--m-gem); stroke: var(--m-line); stroke-width: 2; }
+.l3-sprout .m-stem { fill: none; stroke: var(--green); stroke-width: 5; stroke-linecap: round; }
+.l3-sprout .m-leaf-a, .l3-sprout .m-leaf-b { fill: var(--leaf); stroke: var(--green); stroke-width: 2.5; }
+.l3-sprout .m-vein { fill: none; stroke: var(--green); stroke-width: 2; stroke-linecap: round; }
+.l3-sprout .m-sprout { transform-origin: 108px 98px; transform: scale(calc(.55 + var(--grow, .35) * .6)); transition: transform .9s var(--ease); }
+.l3-sprout .m-spark { fill: var(--m-gem); opacity: calc(var(--grow, .35) * 2 - 1.2); transition: opacity .6s; }
+
+/* ── 흙 (L3S-02~07) ── */
+.l3-soil { position: relative; z-index: 2; }
+.l3-horizon { position: relative; z-index: 2; display: block; width: 100%; height: 60px; margin-top: -30px; margin-bottom: -1px; }
+.l3-horizon .h-soil { fill: var(--topsoil); }
+.l3-horizon .h-grass { fill: none; stroke: var(--green-2); stroke-width: 2.2; stroke-linecap: round; }
+
+.l3-rail { --rail-x: 52px; --rail-turn: 34px; position: absolute; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
+.l3-root { position: absolute; left: 0; top: 0; overflow: visible; }
+.l3-root path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.l3-root-edge { stroke: var(--root-edge); stroke-width: 10; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.l3-root-main { stroke: var(--root); stroke-width: 5; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.l3-root [data-root-hairs] path { stroke: var(--root-edge); stroke-width: 2; opacity: 0; transition: opacity .6s; }
+.l3-root [data-root-hairs] path.is-drawn { opacity: .75; }
+.l3-side { stroke-dasharray: 1 1; stroke-dashoffset: 1; transition: stroke-dashoffset .6s var(--ease), opacity .4s; }
+.l3-side.is-edge { stroke: var(--root-edge); stroke-width: 7; }
+.l3-side.is-top { stroke: var(--root); stroke-width: 3.5; }
+.l3-side.is-drawn { stroke-dashoffset: 0; }
+.l3-side.is-example { stroke-dasharray: .03 .04; stroke-dashoffset: 0; opacity: 0; }
+.l3-side.is-example.is-edge { stroke: var(--root-edge); stroke-width: 2.5; }
+.l3-side.is-example.is-top { stroke: transparent; }
+.l3-side.is-example.is-drawn { opacity: .85; }
+.l3-side.is-turn.is-top { stroke: var(--refuted); }
+.l3-root-stub { stroke: var(--refuted); stroke-width: 3; stroke-dasharray: 6 6; opacity: 0; transition: opacity .5s; }
+.l3-root-stub.is-drawn { opacity: 1; }
+.l3-ticks .l3-tick { position: absolute; transform: translate(calc(-100% - 16px), -50%); font: 500 11px/1 var(--f-mono); color: var(--ink); background: color-mix(in srgb, var(--paper) 88%, transparent); padding: 4px 6px; border-radius: 4px; white-space: nowrap; }
+.l3-tip { position: absolute; left: 0; top: 0; width: 0; height: 0; opacity: 0; transition: opacity .3s; will-change: transform; }
+.l3-tip.is-visible { opacity: 1; }
+.l3-tip::before { content: ''; position: absolute; left: -8px; top: -8px; width: 16px; height: 16px; border-radius: 50%; background: var(--root); border: 3px solid var(--root-edge); }
+.l3-tip-box { position: absolute; left: 16px; top: -14px; display: flex; gap: 8px; align-items: center; white-space: nowrap; background: var(--ink); color: var(--root); font: 500 12px/1 var(--f-mono); padding: 7px 10px; border-radius: 999px; }
+.l3-tip-box [data-tip-name] { color: var(--cream); font-family: var(--f-body); font-weight: 600; }
+.l3-legend { position: absolute; z-index: 4; top: 64px; right: var(--gutter); margin: 0; display: flex; gap: 16px; font: 500 12px/1 var(--f-mono); color: var(--ink-2); }
+.l3-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.l3-legend span::before { content: ''; width: 22px; height: 0; border-top: 4px solid var(--root); box-shadow: 0 0 0 1.5px var(--root-edge); border-radius: 3px; }
+.l3-legend .l3-legend-example::before { border-top: 2px dashed var(--root-edge); box-shadow: none; }
+
+.l3-layer { position: relative; }
+.l3-layer::after { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(color-mix(in srgb, var(--root-edge) 22%, transparent) 1.3px, transparent 1.8px), radial-gradient(color-mix(in srgb, var(--root-edge) 14%, transparent) 2px, transparent 2.6px); background-size: 37px 41px, 83px 71px; background-position: 0 0, 19px 27px; }
+.l3-edge { position: absolute; left: 0; top: -39px; width: 100%; height: 40px; display: block; }
+.l3-learn { background: var(--topsoil); }
+.l3-learn .l3-edge { display: none; }
+.l3-ask { background: var(--subsoil); }
+.l3-ask .l3-edge path { fill: var(--subsoil); }
+.l3-observe { background: var(--deep); color: var(--cream); }
+.l3-observe .l3-edge path { fill: var(--deep); }
+.l3-decide { background: var(--deeper); color: var(--cream); }
+.l3-decide .l3-edge path { fill: var(--deeper); }
+.l3-roots { background: var(--humus); color: var(--cream); }
+.l3-roots .l3-edge path { fill: var(--humus); }
+.l3-observe::after, .l3-decide::after, .l3-roots::after { background-image: radial-gradient(color-mix(in srgb, var(--cream) 9%, transparent) 1.3px, transparent 1.8px), radial-gradient(color-mix(in srgb, var(--cream) 5%, transparent) 2px, transparent 2.6px); }
+
+.l3-layer-grid { position: relative; z-index: 2; max-width: calc(var(--shell) + 136px); margin: 0 auto; padding: clamp(96px, 13vh, 150px) var(--gutter) clamp(104px, 14vh, 160px) 136px; display: grid; grid-template-columns: 240px minmax(0, 1fr); column-gap: clamp(32px, 5vw, 72px); }
+.l3-strata { padding-top: 6px; }
+.l3-depth { margin: 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; }
+.l3-depth .l3-mono { font-size: 13px; font-weight: 500; padding: 3px 8px; border-radius: 4px; background: color-mix(in srgb, currentColor 10%, transparent); }
+.l3-stratum { font-family: var(--f-display); font-size: 24px; font-weight: 700; }
+.l3-meaning { margin: 8px 0 0; font-size: 15px; font-weight: 700; color: var(--green); }
+.l3-observe .l3-meaning, .l3-decide .l3-meaning, .l3-roots .l3-meaning { color: var(--root); }
+.l3-note { margin: 28px 0 0; max-width: 240px; background: var(--paper); color: var(--ink); padding: 12px 16px 14px; border-radius: 4px 14px 14px 14px; rotate: -1.4deg; box-shadow: 0 1px 0 color-mix(in srgb, var(--ink) 10%, transparent), 0 12px 26px -16px color-mix(in srgb, var(--ink) 70%, transparent); }
+.l3-note figcaption { font: 500 11px/1 var(--f-mono); color: var(--ink-soft); letter-spacing: .04em; }
+.l3-note .l3-pen { margin: 8px 0 10px; font-size: 26px; line-height: 1.12; color: var(--ink-soft); }
+.l3-note[data-status="mine"] .l3-pen { color: var(--green); }
+.l3-note.is-writing .l3-pen { animation: write .7s var(--ease); }
+@keyframes write { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.l3-stamp { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; border: 1px dashed var(--ink-soft); color: var(--ink-soft); line-height: 1.3; }
+.l3-note[data-status="mine"] .l3-stamp { border: 1px solid var(--root-edge); background: var(--root); color: var(--ink); }
+.l3-note[data-flag="refuted"] .l3-stamp { border-color: var(--refuted); background: var(--refuted); color: var(--white); }
+
+.l3-story { min-width: 0; }
+.l3-story h2 { font-size: clamp(32px, 4.1vw, 56px); font-weight: 700; line-height: 1.2; letter-spacing: -.02em; }
+.l3-body { margin: 22px 0 0; max-width: 36em; font-size: 18px; color: var(--ink-2); }
+.l3-observe .l3-body, .l3-decide .l3-body, .l3-roots .l3-body { color: var(--cream-2); }
+
+/* 겉흙 */
+.l3-concept { margin: 56px 0 0; font-family: var(--f-display); font-size: clamp(40px, 6.2vw, 88px); font-weight: 800; line-height: 1.08; letter-spacing: -.035em; color: var(--green); text-wrap: balance; }
+.l3-summary { margin: 22px 0 0; max-width: 38em; font-size: 17px; color: var(--ink-2); }
+.l3-summary small { display: block; margin-top: 6px; font: 500 12px/1.4 var(--f-mono); color: var(--ink-soft); }
+
+/* 조작 판 (테두리는 조작할 수 있는 것에만) */
+.l3-panel { margin-top: 40px; max-width: 680px; border: 2px solid var(--ink); border-radius: var(--r); background: var(--paper); color: var(--ink); padding: clamp(18px, 2.4vw, 28px); box-shadow: 6px 7px 0 color-mix(in srgb, var(--ink) 14%, transparent); }
+.l3-observe .l3-panel, .l3-decide .l3-panel { background: color-mix(in srgb, var(--cream) 6%, transparent); border-color: color-mix(in srgb, var(--cream) 55%, transparent); color: var(--cream); box-shadow: none; }
+.l3-panel-tag { display: block; margin: 0 0 10px; font: 500 12px/1.3 var(--f-mono); letter-spacing: .05em; color: var(--ink-soft); }
+.l3-q { margin: 0 0 14px; font-size: 19px; font-weight: 700; line-height: 1.45; }
+.l3-options { display: grid; gap: 10px; }
+.l3-option { text-align: left; padding: 14px 16px; border: 1.5px solid color-mix(in srgb, var(--ink) 28%, transparent); background: var(--white); border-radius: 10px; font-size: 16px; line-height: 1.45; transition: border-color .2s, background .2s; }
+.l3-option:hover:not(:disabled) { border-color: var(--ink); }
+.l3-option:disabled { opacity: .55; cursor: default; }
+.l3-option.is-right { opacity: 1; border-color: var(--green); background: color-mix(in srgb, var(--root) 45%, var(--white)); font-weight: 700; }
+.l3-feedback { margin: 12px 0 0; min-height: 1.5em; font-size: 15.5px; font-weight: 600; }
+.l3-feedback[data-tone="good"] { color: var(--green); }
+.l3-feedback[data-tone="retry"] { color: var(--refuted); }
+.l3-feedback[data-tone="soft"] { color: var(--ink-2); }
+
+/* 속흙 */
+.l3-customer { margin: 48px 0 0; font-size: clamp(38px, 5vw, 66px); line-height: 1.15; }
+.l3-customer .l3-pen { font-size: inherit; color: var(--ink); background: linear-gradient(transparent 64%, color-mix(in srgb, var(--root) 75%, transparent) 64%, color-mix(in srgb, var(--root) 75%, transparent) 92%, transparent 92%); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.l3-customer-suffix { font-size: 19px; font-weight: 600; color: var(--ink-2); margin-left: 10px; white-space: nowrap; }
+.l3-asksheet input { width: 100%; border: 1.5px solid var(--ink); border-radius: 10px; background: var(--white); padding: 12px 14px; font-size: 17px; }
+.l3-hint { margin: 8px 0 18px; font-size: 14px; color: var(--ink-soft); }
+.l3-questions { margin: 0; padding-left: 1.3em; }
+.l3-questions li { margin: 6px 0; font-size: 16.5px; line-height: 1.55; }
+.l3-avoid { margin: 16px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 15px; }
+.l3-avoid span { font-size: 12px; font-weight: 700; color: var(--refuted); }
+.l3-avoid s { color: var(--ink-soft); }
+.l3-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 20px; }
+.l3-row .l3-msg { color: var(--green); }
+
+/* 깊은 흙: 들은 답 */
+.l3-setup { margin: 40px 0 0; font-size: 17px; color: var(--cream-2); }
+.l3-stamp.is-example { border-color: var(--cream-2); color: var(--cream-2); margin-right: 6px; }
+.l3-quotes { list-style: none; margin: 30px 0 0; padding: 0; display: grid; gap: 22px; max-width: 760px; }
+.l3-quotes li { font-family: var(--f-display); font-size: clamp(20px, 2vw, 26px); font-weight: 500; line-height: 1.45; color: var(--cream); padding-left: 20px; border-left: 3px solid color-mix(in srgb, var(--root) 55%, transparent); }
+.l3-who { display: block; margin-bottom: 4px; font: 500 12px/1.3 var(--f-mono); color: var(--cream-2); }
+.l3-observe-panel .l3-q { color: var(--cream); }
+.l3-choice-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.l3-choice { border: 1.5px solid var(--cream-2); background: transparent; color: var(--cream); border-radius: 999px; padding: 12px 20px; font-weight: 700; transition: background .2s, color .2s; }
+.l3-choice:hover { background: color-mix(in srgb, var(--cream) 10%, transparent); }
+.l3-choice[data-observe="supported"][aria-pressed="true"] { background: var(--root); border-color: var(--root); color: var(--ink); }
+.l3-choice[data-observe="refuted"][aria-pressed="true"] { background: var(--refuted); border-color: var(--refuted); color: var(--ink); }
+.l3-note-msg { margin: 14px 0 0; min-height: 1.4em; font-size: 15.5px; color: var(--cream); }
+.l3-note-msg[data-tone="refuted"] { color: color-mix(in srgb, var(--refuted) 65%, var(--cream)); }
+
+/* 결정 */
+.l3-waiting { margin: 0; font-size: 16px; color: var(--cream-2); }
+.l3-decisions { display: grid; gap: 10px; }
+.l3-decision { display: grid; gap: 4px; text-align: left; padding: 16px 18px; border: 1.5px solid color-mix(in srgb, var(--cream) 45%, transparent); background: transparent; color: var(--cream); border-radius: 12px; transition: background .2s, border-color .2s; }
+.l3-decision:hover { border-color: var(--cream); }
+.l3-decision strong { font-size: 17px; }
+.l3-decision span { font-size: 14.5px; color: var(--cream-2); line-height: 1.5; }
+.l3-decision[aria-pressed="true"] { background: var(--root); border-color: var(--root); color: var(--ink); }
+.l3-decision[aria-pressed="true"] span { color: var(--ink-2); }
+
+/* 부엽토: 일곱 갈래 */
+.l3-roots .l3-layer-grid { padding-bottom: 24px; }
+.l3-map { position: relative; z-index: 2; padding-bottom: clamp(96px, 14vh, 150px); }
+.l3-map-lines { display: block; width: 100%; height: 190px; }
+.l3-map-lines path { fill: none; stroke: color-mix(in srgb, var(--root) 22%, transparent); stroke-width: 2; stroke-linecap: round; transition: stroke .5s, stroke-width .5s; }
+.l3-map-lines path.is-current { stroke: var(--root); stroke-width: 5; }
+.l3-map-lines path.is-next { stroke: var(--root); stroke-width: 3; stroke-dasharray: 6 9; }
+.l3-map-lines circle { fill: var(--root); }
+.l3-areas { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; }
+.l3-area { display: grid; justify-items: center; text-align: center; gap: 4px; padding: 0 4px; opacity: .55; transition: opacity .4s; }
+.l3-area.is-current, .l3-area.is-next { opacity: 1; }
+.l3-area-dot { display: grid; place-items: center; width: 46px; height: 46px; margin-bottom: 8px; border-radius: 50%; font-size: 19px; color: var(--cream); background: color-mix(in srgb, var(--c) 40%, var(--humus)); border: 2px solid color-mix(in srgb, var(--c) 75%, var(--cream)); }
+.l3-area.is-current .l3-area-dot { background: var(--c); box-shadow: 0 0 0 7px color-mix(in srgb, var(--root) 22%, transparent); }
+.l3-area.is-next .l3-area-dot { border-style: dashed; border-color: var(--root); }
+.l3-area-name { font-size: 15.5px; font-weight: 700; color: var(--cream); }
+.l3-area-q { font-size: 13px; line-height: 1.45; color: var(--cream-2); }
+.l3-area-badge { min-height: 1.2em; font: 500 12px/1.2 var(--f-mono); font-style: normal; color: var(--root); }
+.l3-area.is-moved .l3-area-name { color: color-mix(in srgb, var(--refuted) 60%, var(--cream)); }
+.l3-rule { margin: 40px auto 0; max-width: 40em; text-align: center; font-size: 17px; color: var(--cream); }
+.l3-map .l3-hint { text-align: center; color: var(--cream-2); }
+
+/* ── L3S-08 위와 아래 ── */
+.l3-ab-above { background: var(--sky); padding-top: clamp(96px, 13vh, 150px); }
+.l3-ab-below { background: var(--topsoil); border-top: 4px solid var(--wood-dark); padding-bottom: clamp(96px, 13vh, 150px); }
+.l3-ab-grid { display: grid; grid-template-columns: 200px minmax(0, 1fr); column-gap: clamp(32px, 5vw, 80px); }
+.l3-ab-above .l3-ab-grid { align-items: end; }
+.l3-ab-above .l3-ab-grid > div { padding-bottom: 56px; }
+.l3-ab-below .l3-ab-grid > div { padding-top: 48px; }
+.l3-ab-stem, .l3-ab-roots { display: block; width: 200px; height: 260px; }
+.l3-ab-stem .s-stem { fill: none; stroke: var(--green); stroke-width: 6; stroke-linecap: round; }
+.l3-ab-stem .s-leaf { fill: var(--leaf); stroke: var(--green); stroke-width: 2.5; }
+.l3-ab-roots path { fill: none; stroke: var(--root-edge); stroke-width: 4; stroke-linecap: round; }
+.l3-ab-roots path:first-child { stroke-width: 6; }
+.l3-ab h2 { font-size: clamp(32px, 4.4vw, 58px); font-weight: 800; line-height: 1.15; letter-spacing: -.025em; margin-bottom: 40px; max-width: 16em; }
+.l3-ab h3 { margin-top: 12px; font-size: clamp(22px, 2.2vw, 28px); font-weight: 700; }
+.l3-ab .l3-body { margin-top: 12px; font-size: 17px; }
+.l3-ab-tag { display: inline-block; margin: 0; font: 500 12.5px/1 var(--f-mono); padding: 6px 10px; border-radius: 999px; background: var(--ink); color: var(--sky); }
+.l3-ab-below .l3-ab-tag { background: var(--root-edge); color: var(--cream); }
+.l3-leaves, .l3-rootlets { list-style: none; margin: 20px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.l3-leaves li { padding: 7px 16px 7px 14px; border-radius: 999px 0 999px 0; background: color-mix(in srgb, var(--leaf) 38%, var(--white)); font-size: 14.5px; font-weight: 600; color: var(--green); }
+.l3-rootlets li { padding: 7px 14px; border-radius: 0 999px 999px 0; background: color-mix(in srgb, var(--root-edge) 14%, transparent); font-size: 14.5px; font-weight: 600; color: var(--root-edge); }
+.l3-ab-below .l3-hint { margin-top: 24px; }
+
+/* ── L3S-09 앞으로 자랄 모습 ── */
+.l3-honest { background: var(--paper); padding: clamp(96px, 13vh, 140px) 0; }
+.l3-honest-head { max-width: 40em; }
+.l3-honest h2 { font-size: clamp(32px, 4vw, 52px); font-weight: 800; letter-spacing: -.02em; }
+.l3-honest-head .l3-body { margin-top: 16px; }
+.l3-journey { list-style: none; margin: 56px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); position: relative; }
+.l3-journey > li { position: relative; padding-top: 4px; }
+.l3-journey-mark { display: flex; align-items: flex-end; gap: 12px; padding-bottom: 14px; border-bottom: 3px solid var(--wood-dark); margin-bottom: 20px; }
+.l3-plant { width: 76px; height: 72px; overflow: visible; }
+.l3-plant .p-ground { stroke: none; }
+.l3-plant .p-seed { fill: var(--wood); stroke: var(--wood-dark); stroke-width: 2; }
+.l3-plant .p-stem { fill: none; stroke: var(--green); stroke-width: 4; stroke-linecap: round; }
+.l3-plant .p-leaf { fill: var(--leaf); stroke: var(--green); stroke-width: 2; }
+.l3-journey > li:not([data-status="in_progress"]) .l3-plant { opacity: .55; }
+.l3-journey > li:not([data-status="in_progress"]) .p-leaf { fill: transparent; stroke-dasharray: 4 4; }
+.l3-journey-when { font: 500 13px/1 var(--f-mono); color: var(--ink-soft); padding-bottom: 6px; }
+.l3-journey-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.l3-journey h3 { font-size: clamp(22px, 2.2vw, 28px); font-weight: 700; }
+.l3-journey em { font-style: normal; font-size: 12.5px; font-weight: 700; padding: 5px 11px; border-radius: 999px; border: 1px dashed var(--ink-soft); color: var(--ink-soft); white-space: nowrap; }
+.l3-journey li[data-status="in_progress"] em { border: 1px solid var(--root-edge); background: var(--root); color: var(--ink); }
+.l3-journey-t { margin: 10px 0 0; font-size: 17px; font-weight: 700; color: var(--green); }
+.l3-journey ul { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.l3-journey ul li { position: relative; padding-left: 18px; font-size: 15.5px; line-height: 1.55; color: var(--ink-2); }
+.l3-journey ul li::before { content: ''; position: absolute; left: 2px; top: .62em; width: 7px; height: 7px; border-radius: 50%; background: var(--leaf); }
+.l3-journey li:not([data-status="in_progress"]) ul li::before { background: transparent; border: 1.5px solid var(--leaf); }
+.l3-journey-note { margin: 16px 0 0; font-size: 14px; color: var(--ink-soft); }
+.l3-faq-wrap { margin-top: clamp(72px, 10vh, 112px); display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(32px, 6vw, 96px); }
+.l3-faq-title { font-size: clamp(24px, 2.6vw, 32px); font-weight: 700; padding-top: 12px; }
+.l3-faq details { border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
+.l3-faq details:last-child { border-bottom: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
+.l3-faq summary { list-style: none; display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; font-size: 16.5px; font-weight: 700; cursor: pointer; }
+.l3-faq summary::-webkit-details-marker { display: none; }
+.l3-faq summary::after { content: '+'; font-family: var(--f-mono); font-weight: 400; color: var(--ink-soft); }
+.l3-faq details[open] summary::after { content: '−'; }
+.l3-faq p { margin: 0 0 18px; font-size: 15.5px; color: var(--ink-2); }
+
+/* ── L3S-10 다시 지상으로 ── */
+.l3-harvest { background: linear-gradient(180deg, var(--sky-2), var(--sky)); padding-top: clamp(96px, 13vh, 150px); }
+.l3-harvest-grid { display: grid; grid-template-columns: minmax(260px, 400px) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: end; }
+.l3-harvest-grid > div:last-child { padding-bottom: clamp(80px, 12vh, 130px); }
+.l3-harvest-scene { position: relative; display: flex; flex-direction: column; align-items: flex-end; min-height: 440px; }
+.l3-harvest-sprout { position: absolute; left: 0; bottom: -4px; width: 46%; }
+.l3-mini-tag { position: relative; z-index: 1; width: 60%; background: var(--tag); border-radius: 16px; padding: 14px 18px 16px; rotate: 3deg; box-shadow: 0 1px 0 color-mix(in srgb, var(--ink) 12%, transparent), 0 16px 30px -18px color-mix(in srgb, var(--ink) 70%, transparent); margin-right: 0; }
+.l3-mini-tag .l3-pen { margin: 4px 0 0; font-size: 26px; line-height: 1.15; color: var(--green); }
+.l3-harvest-scene .l3-stake { margin-right: 30%; }
+.l3-harvest h2 { font-size: clamp(32px, 4.4vw, 58px); font-weight: 800; line-height: 1.18; letter-spacing: -.025em; }
+.l3-harvest .l3-body { font-size: 18px; }
+.l3-harvest .l3-row { margin-top: 32px; }
+
+/* ── L3S-11 푸터 ── */
+.l3-footer { background: var(--humus); color: var(--cream-2); padding: 56px 0 64px; font-size: 14px; }
+.l3-footer .l3-brand { color: var(--cream); }
+.l3-footer p { max-width: 48em; margin: 16px 0; }
+.l3-footer ul { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-wrap: wrap; gap: 18px; }
+.l3-footer small { color: color-mix(in srgb, var(--cream-2) 70%, transparent); }
+
+/* ── L3M-06 층 진입 (초기 불투명도 .35 이상) ── */
+.js .l3-rise, .js .l3-layer h2, .js .l3-note, .js .l3-panel { transition: opacity .7s var(--ease), translate .7s var(--ease); }
+.js .l3-rise:not(.is-in), .js .l3-layer h2:not(.is-in), .js .l3-note:not(.is-in), .js .l3-panel:not(.is-in) { opacity: .35; translate: 0 12px; }
+.js .l3-quotes li { transition-delay: calc(var(--i, 0) * 90ms); }
+
+/* ── 반응형 ── */
+@media (max-width: 1100px) {
+  .l3-ticks { display: none; }
+}
+@media (max-width: 900px) {
+  .l3-surface { min-height: 0; }
+  .l3-surface-grid { grid-template-columns: 1fr; }
+  .l3-surface-copy { padding-bottom: 8px; }
+  .l3-surface h1 span { white-space: normal; }
+  .l3-scene { min-height: 0; align-items: stretch; padding-top: 24px; }
+  .l3-tag { width: 100%; rotate: -1deg; }
+  .l3-stake { min-height: 150px; margin-right: 22%; align-self: flex-end; }
+  .l3-surface-sprout { width: 150px; }
+  .l3-tip-box [data-tip-name] { display: none; }
+  .l3-legend { position: relative; top: auto; right: auto; z-index: 4; padding: 12px var(--gutter) 0 48px; background: var(--topsoil); flex-wrap: wrap; gap: 8px 16px; }
+  .l3-rail { --rail-x: 20px; --rail-turn: 12px; }
+  .l3-layer-grid { grid-template-columns: 1fr; padding: 80px var(--gutter) 96px 48px; }
+  .l3-note { max-width: 100%; margin: 16px 0 28px; }
+  .l3-concept { margin-top: 36px; }
+  .l3-customer-suffix { display: block; margin: 8px 0 0; }
+  .l3-map-lines { display: none; }
+  .l3-map { padding-left: 48px; }
+  .l3-areas { grid-template-columns: 1fr; gap: 0; }
+  .l3-area { grid-template-columns: 46px minmax(0, 1fr); justify-items: start; text-align: left; column-gap: 14px; row-gap: 0; padding: 12px 0; border-top: 1px solid color-mix(in srgb, var(--cream) 10%, transparent); }
+  .l3-area-dot { grid-row: span 3; margin: 0; }
+  .l3-rule, .l3-map .l3-hint { text-align: left; }
+  .l3-ab-grid { grid-template-columns: 90px minmax(0, 1fr); }
+  .l3-ab-stem, .l3-ab-roots { width: 90px; height: 170px; }
+  .l3-journey, .l3-faq-wrap, .l3-harvest-grid { grid-template-columns: 1fr; }
+  .l3-journey { gap: 44px; }
+  .l3-harvest-scene { min-height: 360px; max-width: 360px; order: 2; }
+  .l3-harvest-grid > div:last-child { padding-bottom: 8px; }
+}
+@media (max-width: 480px) {
+  .l3-top-actions .l3-textbtn { display: none; }
+  .l3-tag { padding: 24px 18px 16px; }
+  .l3-tag-foot { flex-wrap: wrap; }
+  .l3-ab-grid { grid-template-columns: 1fr; }
+  .l3-ab-stem, .l3-ab-roots { display: none; }
+}
+
+/* ── 모션 감소: 최종 상태, 효과 없음 ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* L3M-08: 패널에서 다음 층으로, 복원은 기본 최종 상태 */
+.l3-sr-only { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.l3-next { position:relative; display:flex; flex-wrap:wrap; justify-content:flex-end; align-items:center; gap:16px; margin-top:28px; width:100%; text-align:right; }
+.l3-next .l3-btn { max-width:100%; text-align:left; line-height:1.5; }
+.l3-next .l3-btn span { flex-shrink:0; }
+.l3-next-root { position:absolute; width:120px; height:28px; right:30px; top:-28px; fill:none; stroke:var(--root); stroke-width:3; }
+.l3-next-root path { stroke-dasharray:1; stroke-dashoffset:0; }
+.l3-app-link { text-decoration:underline; text-underline-offset:4px; font-size:14px; }
+.l3-observe .l3-next .l3-btn, .l3-decide .l3-next .l3-btn, .l3-roots .l3-next .l3-btn { background:var(--root); color:var(--ink); }
+.l3-btn.is-ready { box-shadow:0 0 0 3px var(--root); }
+.l3-next.is-growing .l3-next-root path { animation:next-root 400ms 500ms var(--ease) both; }
+.l3-next.is-growing .l3-btn { animation:next-open 600ms 900ms var(--ease) both; }
+.l3-next.is-growing .l3-btn span { animation:next-arrow 400ms 1500ms ease-in-out 2; }
+@keyframes next-root { from { stroke-dashoffset:1; } to { stroke-dashoffset:0; } }
+@keyframes next-open { from { clip-path:inset(0 100% 0 0); transform:translateY(12px); opacity:0; } to { clip-path:inset(0); transform:translateY(0); opacity:1; } }
+@keyframes next-arrow { 50% { transform:translateY(4px); } }
+@media(max-width:600px) { .l3-next { flex-direction:column; align-items:flex-end; gap:12px; } }
+@media(prefers-reduced-motion:reduce) { .l3-next.is-growing .l3-next-root path, .l3-next.is-growing .l3-btn, .l3-next.is-growing .l3-btn span { animation:none; } }
+
+/* L3M-09 — 불투명 상단바로 모든 뒤 배경에서 대비 보장 */
+.l3-top-actions { position:relative; }
+.l3-app-cta { position:relative; font-size:16px; padding:10px 18px; overflow:hidden; }
+.l3-app-cta .l3-mark { color:currentColor; width:19px; height:22px; flex-shrink:0; }
+.l3-top.is-dark .l3-app-cta, .l3-top.is-dark .l3-app-cta:hover { background:var(--root); color:var(--ink); }
+.l3-app-cta:hover { background:var(--green); }
+.l3-progress { display:inline-flex; gap:2px; font-size:12px; }
+.l3-app-cta::after { content:''; position:absolute; inset:0; background:linear-gradient(105deg,transparent 20%,color-mix(in srgb,var(--white) 55%,transparent) 50%,transparent 80%); transform:translateX(-120%); pointer-events:none; }
+.l3-app-cta.is-shining::after, .l3-app-cta.is-complete::after { animation:cta-light 700ms ease-out 1; }
+.l3-cta-spark { position:absolute; inset:4px 5px auto auto; width:28px; height:28px; fill:var(--root); opacity:0; pointer-events:none; }
+.l3-top.is-dark .l3-cta-spark { fill:var(--green); }
+.l3-app-cta.is-complete .l3-cta-spark { animation:cta-spark 800ms var(--ease) 1; }
+.l3-cta-bubble { position:absolute; right:0; top:calc(100% + 10px); width:270px; max-width:calc(100vw - 32px); border:1px solid var(--green); border-radius:12px; background:var(--paper); color:var(--ink); padding:12px 16px; text-align:left; font-size:14px; box-shadow:0 5px 20px color-mix(in srgb,var(--ink) 15%,transparent); }
+.l3-hero-app { display:block; width:fit-content; margin-top:12px; color:var(--green); font-weight:700; }
+@keyframes cta-light { to { transform:translateX(120%); } }
+@keyframes cta-spark { 0%,100% { opacity:0; transform:scale(.3) rotate(-20deg); } 45% { opacity:1; transform:scale(1.2) rotate(15deg); } }
+@media(max-width:480px) { .l3-progress { display:none; } .l3-app-cta { gap:5px; } .l3-top-actions { gap:2px; } }
+@media(prefers-reduced-motion:reduce) { .l3-app-cta::after, .l3-app-cta .l3-cta-spark { animation:none !important; } }
+
+/* L3I-11 — 선택 사항인 고민과 실제 의미 */
+.l3-hook { font-size:clamp(16px,1.4vw,20px); font-weight:700; color:var(--green); margin:0 0 18px; max-width:32em; }
+.l3-pain { margin-bottom:36px; }
+.l3-pain [role="group"] { display:flex; flex-wrap:wrap; gap:10px; }
+.l3-pain .l3-chip { text-align:left; border-radius:14px; line-height:1.5; }
+.l3-why { font-size:14px; opacity:.9; margin:12px 0 28px; }
+@media(max-width:480px) { .l3-hook { font-size:16px; margin-bottom:12px; } .l3-pain .l3-chip { width:100%; } }
+
+
+/* SPEC-017 §8 — 대상·가치 위계 */
+.l3-eyebrow { font-size: 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.l3-badge { font-size: 13px; font-weight: 700; color: var(--green); background: var(--sky-2); padding: 3px 10px; border-radius: 999px; }
+.l3-lead { margin: 40px 0 20px; }
+.l3-gets { list-style: none; margin: 0 0 24px; padding: 0; display: grid; gap: 10px; max-width: 34em; }
+.l3-gets li { position: relative; padding-left: 22px; display: grid; gap: 2px; }
+.l3-gets li::before { content: ''; position: absolute; left: 2px; top: .5em; width: 10px; height: 10px; border-radius: 50%; background: var(--dot); }
+.l3-gets strong { font-size: 16px; color: var(--ink); }
+.l3-gets span { font-size: 14px; color: var(--ink-2); }
+@media (max-width: 480px) {
+  .l3-surface { padding-top: 12px; }
+  .l3-surface-copy { padding-top: 8px; }
+  .l3-surface h1 { font-size: 32px; }
+  .l3-eyebrow { font-size: 15px; margin-bottom: 12px; }
+  .l3-lead { margin: 22px 0 14px; font-size: 16px; }
+  .l3-gets { gap: 6px; margin-bottom: 18px; }
+  .l3-gets span { display: none; }
+}

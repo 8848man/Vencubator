@@ -1,0 +1,60 @@
+/* SPEC-017 · 원시 색상값(hex)은 이 파일에만. PRINCIPLES §4 시각 언어 */
+:root {
+  /* 지상 */
+  --sky: #f2f6ec;
+  --sky-2: #e3eddb;
+  --paper: #fbf7ec;
+  --tag: #fffaf0;
+  --wood: #b98c5a;
+  --wood-dark: #8a6440;
+  /* 흙 (밝기 = 깊이, DP-9) */
+  --topsoil: #e9dfcb;
+  --subsoil: #cdb690;
+  --deep: #4a3b2d;
+  --deeper: #3a2e23;
+  --humus: #241d16;
+  /* 뿌리·새싹 */
+  --root: #b9da8c;
+  --root-edge: #5d4a33;
+  --root-pale: #efe6cf;
+  --green: #2e5e47;
+  --green-2: #3f7a5d;
+  --leaf: #7fb069;
+  --refuted: #d08a4a;
+  /* 글자 */
+  --ink: #1f2a22;
+  --ink-2: #4a5249;
+  --ink-soft: #6c6a5c;
+  --cream: #f6efdf;
+  --cream-2: #cbbfa6;
+  --white: #ffffff;
+  /* 7영역 (prototype/content.mjs STATS 와 일치 — AC-L3-07) */
+  --c-customer: #347a63;
+  --c-market: #568abb;
+  --c-product: #b58b45;
+  --c-gtm: #a47283;
+  --c-finance: #8a79a5;
+  --c-operations: #668d8f;
+  --c-strategy: #bb825b;
+  /* 가치 3줄 점 (SPEC-017 §3.1) */
+  --c-dot-learn: var(--leaf);
+  --c-dot-ask: var(--wood);
+  --c-dot-decide: var(--green);
+  /* 마스코트 */
+  --m-body: #9fcf7c;
+  --m-body-dark: #5d9a4f;
+  --m-line: #213a2c;
+  --m-cheek: #f2a48e;
+  --m-gem: #f0c75e;
+
+  --f-display: 'Hahmlet', 'Noto Serif KR', serif;
+  --f-body: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  --f-pen: 'Nanum Pen Script', 'Hahmlet', cursive;
+  --f-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --shell: 1200px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --top-h: 60px;
+  --r: 14px;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}

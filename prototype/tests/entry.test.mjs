@@ -60,3 +60,9 @@ test('AC-L31-01 v31 독립 저장소에서 이름표만 인계',()=>{
  assert.deepEqual(readEntry('?from=v3',st),{from:'v3',idea:'v3'});
  assert.deepEqual(readEntry('?from=v31',mem({[LANDING_KEYS.v3]:JSON.stringify({idea:{text:'v3'}})})),{from:'v31',idea:null});
 });
+
+test('AC-L32-01 v32 독립 저장소에서 아이디어 문장만 인계',()=>{
+ const st=mem({[LANDING_KEYS.v31]:JSON.stringify({idea:{text:'v31'}}),[LANDING_KEYS.v32]:JSON.stringify({idea:{text:'v32'},learn:{result:'first'},decision:'keep'})});
+ assert.deepEqual(readEntry('?from=v32',st),{from:'v32',idea:'v32'});
+ assert.deepEqual(readEntry('?from=v32',mem({[LANDING_KEYS.v31]:JSON.stringify({idea:{text:'v31'}})})),{from:'v32',idea:null});
+});
