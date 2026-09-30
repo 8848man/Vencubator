@@ -532,12 +532,82 @@ h2[tabindex="-1"]:focus { outline: none; }
 <noscript><p style="padding:100px 24px;max-width:720px;margin:auto;line-height:1.8">이 페이지는 아이디어 한 문장으로 카드를 채워보는 체험형 페이지라 스크립트가 필요해요. Vencubator는 오늘 배울 것 하나, 해볼 것 하나를 안내하는 창업 학습 코파일럿이며 현재 프로토타입 단계입니다.</p></noscript>
 <script type="module">
 // SPEC-009 §4 공통 이벤트 — 원본은 site/shared/track.mjs. landing/src, landing-v2/src, prototype 에 같은 내용으로 복사해 쓴다.
-// 네트워크 전송 없음: 브라우저 저장소 버퍼에만 기록한다. 전송 어댑터는 DR-G02 결정 후 이 파일에만 추가한다.
+// SPEC-011: 로컬 버퍼 + 운영 GA4 어댑터. Firebase 연결 웹 스트림, SDK 중복 설치 없음.
+const MEASUREMENT_ID = 'G-0GFT3M8ZG3';
+const ANALYTICS_HOST = 'vencubator.vercel.app';
+const ANALYTICS_FIELDS = {
+  next_click: ['layer'], pain_select: ['pain'],
+  landing_view: [], idea_submit: ['source','len'], card_progress: ['filled'],
+  cta_click: ['placement','filled'], app_open: ['from'], entry_import: ['from'],
+  project_create: ['from','imported'], lesson_complete: ['count'],
+  lesson_start: ['concept'], lesson_step: ['concept','step'], lesson_answer: ['concept'],
+  application_save: ['concept'], field_task_plan: ['concept'], evidence_save: ['kind'],
+  // SPEC-015 §7: 가치 피드백 퍼널 집계만. 자유 입력·칩·respondent는 보내지 않는다.
+  feedback_prompt: ['category','slot'], feedback_answer: ['category','slot','rating'], feedback_skip: ['category','slot'], feedback_open: ['open_type']
+};
+const ANALYTICS_ENUMS = {
+  source: ['mine','sample'], from: ['v1','v2','v3','v31','v32','direct'],
+  layer: ['surface','learn','ask','observe','decide','roots'], pain: ['build','praise','interview','late'],
+  concept: ['customer','market','product','gtm','finance','operations','strategy'],
+  step: ['concept','question','transfer','apply','application','complete'], kind: ['field','simulation','desk'],
+  category: ['idea','learning','evidence','decision'], open_type: ['helpful','friction','idea','bug']
+};
+function analyticsPayload(ev) {
+  if (!Object.hasOwn(ANALYTICS_FIELDS, ev.name)) return null;
+  const props = {};
+  for (const key of ANALYTICS_FIELDS[ev.name]) {
+    const value = ev.props?.[key];
+    if (ANALYTICS_ENUMS[key]?.includes(value) || (key === 'imported' && typeof value === 'boolean') ||
+        (['len','filled','count'].includes(key) && Number.isInteger(value) && value >= 0 && value <= 10000) ||
+        (key === 'slot' && Number.isInteger(value) && value >= 1 && value <= 100) || (key === 'rating' && Number.isInteger(value) && value >= 1 && value <= 5) ||
+        (key === 'placement' && /^(page|hero|footer|l[123]s-\d{1,2}|s\d{1,2})$/.test(value))) props[key] = value;
+  }
+  return {schema_version:1,stage:'prototype',environment:'production',app_version:'analytics-1',page:['app','v31','v32'].includes(ev.page)?ev.page:'v3',...props};
+}
+function analyticsAllowed(win) {
+  try {
+    if (win?.location?.protocol !== 'https:' || win.location.hostname !== ANALYTICS_HOST) return false;
+    const q = new URLSearchParams(win.location.search);
+    if(q.get('internal')==='1')win.sessionStorage?.setItem('vencubator.analytics.internal','1');
+    if(q.get('internal')==='0')win.sessionStorage?.removeItem('vencubator.analytics.internal');
+    return !q.has('lab') && q.get('internal')!=='1' && win.sessionStorage?.getItem('vencubator.analytics.internal')!=='1' && win.navigator?.doNotTrack!=='1';
+  } catch { return false; }
+}
+function sendAnalytics(ev, win = globalThis.window) {
+  try {
+    const payload = analyticsPayload(ev);
+    if (!payload || !analyticsAllowed(win)) return false;
+    // One initializer per document. No replay of historical local buffer.
+    if (!win.__vencubatorAnalytics) {
+      const layer = win.dataLayer = win.dataLayer || [];
+      const tag = function(){layer.push(arguments);};
+      const page = win.location.pathname.startsWith('/app') ? '/app/' : '/';
+      const safeUrl = 'https://' + ANALYTICS_HOST + page;
+      tag('js',new Date());
+      tag('config',MEASUREMENT_ID,{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false,
+        page_location:safeUrl,page_referrer:'',page_title:page==='/app/'?'Vencubator App':'Vencubator',ignore_referrer:true});
+      const script = win.document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + MEASUREMENT_ID;
+      script.onerror = () => { win.__vencubatorAnalytics.failed = true; layer.length = 0; };
+      win.__vencubatorAnalytics = {tag,failed:false};
+      win.document.head.appendChild(script);
+      tag('event','page_view',{send_to:MEASUREMENT_ID,page_location:safeUrl,page_referrer:'',page_title:page==='/app/'?'Vencubator App':'Vencubator'});
+    }
+    if (win.__vencubatorAnalytics.failed || win.dataLayer.length > 500) return false;
+    win.__vencubatorAnalytics.tag('event',ev.name,{send_to:MEASUREMENT_ID,...payload});
+    return true;
+  } catch { return false; }
+}
 const EXP_KEY = 'vencubator.exp.v1';
 const EVENTS_KEY = 'vencubator.events.v1';
 const UTM_KEY = 'vencubator.utm.v1';
 const MAX_EVENTS = 500;
 const VARIANTS = ['v1', 'v2', 'v3'];
+// SPEC-016: 기존 변형 목록에 독립 v31을 등록한다.
+VARIANTS.push('v31');
+// SPEC-017: 독립 v32 등록 (메시지 개정판).
+VARIANTS.push('v32');
 
 const SAFE_VALUE = /^[A-Za-z0-9_.-]{0,32}$/;
 const SAFE_UTM = /^[\p{L}\p{N}_.-]{1,40}$/u;
@@ -590,6 +660,7 @@ function track(name, props = {}, env = {}) {
   const list = readJSON(st, EVENTS_KEY, []);
   const next = (Array.isArray(list) ? list : []).concat(ev).slice(-MAX_EVENTS);
   writeJSON(st, EVENTS_KEY, next);
+  sendAnalytics(ev);
   return ev;
 }
 const readEvents = storage => { const l = readJSON(store(storage), EVENTS_KEY, []); return Array.isArray(l) ? l : []; };
