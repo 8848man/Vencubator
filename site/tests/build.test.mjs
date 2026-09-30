@@ -15,8 +15,10 @@ test('dist: 루트 랜딩 + 앱, 개발용 파일 제외', async () => {
   assert.ok(!/http:\/\/127\.0\.0\.1/.test(index), '로컬 주소가 남음');
   assert.ok(!/^\s*import\s/m.test(index) && !/^export\s/m.test(index));
   assert.ok(!index.includes('generator'), '생성기 표기');
-  // L04-W08: Google Search Console URL 접두어 속성(https://vencubator.vercel.app) 소유권 확인. 삭제하면 확인이 풀린다.
-  assert.match(index.slice(0, index.indexOf('</head>')), /<meta name="google-site-verification" content="jwvBptKaMeO5PcMdZK0uI49if4qb5t_4OxF00X-FMJ8">/, '루트 head에 Search Console 확인 태그');
+  // L04-W08: Google Search Console URL 접두어 속성(https://vencubator.vercel.app) 소유권 확인 — 사이트 빌드가 붙인다. 삭제하면 확인이 풀린다.
+  assert.match(index.slice(0, index.indexOf('</head>')), /<meta name="google-site-verification" content="jwvBptKaMeO5PcMdZK0uI49if4qb5t_4OxF00X-FMJ8" \/>/, '루트 head에 Search Console 확인 태그');
+  // 네이버 서치어드바이저 사이트 소유확인 — 사이트 빌드가 붙인다(랜딩 원본에는 없음).
+  assert.match(index.slice(0, index.indexOf('</head>')), /<meta name="naver-site-verification" content="aed7135a527e86d697bfe5a53a86112012033673" \/>/, '루트 head에 네이버 서치어드바이저 확인 태그');
   assert.ok(index.includes("variant: 'v31'") && index.includes('vencubator.landing.v31'));
   assert.ok(index.includes('아이디어는 있는데, 뭘 먼저 확인해야 할지 몰라 멈춰 있나요?'));
   assert.equal(readFileSync(D('_headers'),'utf8'), '/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: DENY\n');
@@ -24,15 +26,27 @@ test('dist: 루트 랜딩 + 앱, 개발용 파일 제외', async () => {
   assert.ok(!/(href|src)="\/(?!\/)/.test(app), '앱에 루트 기준 경로');
 });
 
-test('L04-W09 sitemap.xml·robots.txt: 운영 절대 URL, 공개 첫 페이지만, robots에 사이트맵 위치', async () => {
+test('확인 메타: 없으면 head 앞쪽에 한 번만, 있으면 그대로', async () => {
+  const { withVerificationMetas } = await import('../scripts/build.mjs');
+  const tag = '<meta name="naver-site-verification" content="aed7135a527e86d697bfe5a53a86112012033673" />';
+  const out = withVerificationMetas('<html><head><title>t</title></head><body></body></html>');
+  assert.equal(out.split(tag).length - 1, 1);
+  assert.ok(out.includes('<meta name="google-site-verification" content="jwvBptKaMeO5PcMdZK0uI49if4qb5t_4OxF00X-FMJ8" />'));
+  const pre = '<head><meta name="google-site-verification" content="old"></head>';
+  assert.ok(!withVerificationMetas(pre).includes('FMJ8'), '같은 이름 태그가 이미 있으면 넣지 않음');
+  assert.ok(out.indexOf(tag) < out.indexOf('</head>'));
+  assert.equal(withVerificationMetas(out), out, '두 번 붙이지 않음');
+  assert.throws(() => withVerificationMetas('<body></body>'));
+});
+
+test('L04-W09 sitemap.xml·robots.txt: 운영 절대 URL, 랜딩·앱 두 페이지, robots에 사이트맵 위치', async () => {
   const { sitemapXml, SITE_ORIGIN } = await import('../scripts/build.mjs');
   assert.equal(SITE_ORIGIN, 'https://vencubator.vercel.app');
   const xml = readFileSync(D('sitemap.xml'), 'utf8');
   assert.match(xml, /^<\?xml version="1\.0" encoding="UTF-8"\?>\n<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
   const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
-  assert.deepEqual(locs, ['https://vencubator.vercel.app/']);
+  assert.deepEqual(locs, ['https://vencubator.vercel.app/', 'https://vencubator.vercel.app/app/']);
   assert.match(xml, /<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/);
-  assert.ok(!xml.includes('/app/'), '체험 앱은 사이트맵에서 제외');
   assert.match(sitemapXml('2026-01-02'), /<lastmod>2026-01-02<\/lastmod>/);
   const robots = readFileSync(D('robots.txt'), 'utf8');
   assert.match(robots, /^User-agent: \*\nAllow: \/\n/);

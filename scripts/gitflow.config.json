@@ -47,6 +47,14 @@
         "--test",
         "landing-v3.1/tests/*.test.mjs"
       ]
+    },
+    {
+      "name": "landing-v3.2 단위",
+      "run": [
+        "node",
+        "--test",
+        "landing-v3.2/tests/*.test.mjs"
+      ]
     }
   ]
 }

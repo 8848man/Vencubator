@@ -29,7 +29,7 @@ node site/scripts/serve.mjs        # http://127.0.0.1:4180/ 에서 마지막 확
 
 ## 3-0. 검색 등록 (Google Search Console) — L04-W08·W09
 
-- 소유권 확인: 루트 페이지 `<head>`의 `google-site-verification` 메타 태그(지우지 않기).
+- 소유권 확인: `site/scripts/build.mjs`의 `VERIFICATION_METAS`(구글 `google-site-verification`, 네이버 `naver-site-verification`)를 빌드가 루트 `<head>`에 붙인다. 랜딩 원본에는 넣지 않는다(지우지 않기).
 - 빌드가 `site/dist/sitemap.xml`·`robots.txt`를 만들어 `https://vencubator.vercel.app/sitemap.xml`, `/robots.txt`로 제공합니다. 사이트맵에는 공개 첫 페이지 `/`만 있고 `/app/`(체험 앱)은 넣지 않습니다.
 - 제출: Search Console → Sitemaps → `sitemap.xml` 입력 → 제출. 공개 페이지가 늘면 `site/scripts/build.mjs`의 `sitemapXml()`에 추가합니다.
 

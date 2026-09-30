@@ -13,7 +13,7 @@ const ANALYTICS_FIELDS = {
   feedback_prompt: ['category','slot'], feedback_answer: ['category','slot','rating'], feedback_skip: ['category','slot'], feedback_open: ['open_type']
 };
 const ANALYTICS_ENUMS = {
-  source: ['mine','sample'], from: ['v1','v2','v3','v31','direct'],
+  source: ['mine','sample'], from: ['v1','v2','v3','v31','v32','direct'],
   layer: ['surface','learn','ask','observe','decide','roots'], pain: ['build','praise','interview','late'],
   concept: ['customer','market','product','gtm','finance','operations','strategy'],
   step: ['concept','question','transfer','apply','application','complete'], kind: ['field','simulation','desk'],
@@ -29,7 +29,7 @@ export function analyticsPayload(ev) {
         (key === 'slot' && Number.isInteger(value) && value >= 1 && value <= 100) || (key === 'rating' && Number.isInteger(value) && value >= 1 && value <= 5) ||
         (key === 'placement' && /^(page|hero|footer|l[123]s-\d{1,2}|s\d{1,2})$/.test(value))) props[key] = value;
   }
-  return {schema_version:1,stage:'prototype',environment:'production',app_version:'analytics-1',page:['app','v31'].includes(ev.page)?ev.page:'v3',...props};
+  return {schema_version:1,stage:'prototype',environment:'production',app_version:'analytics-1',page:['app','v31','v32'].includes(ev.page)?ev.page:'v3',...props};
 }
 export function analyticsAllowed(win) {
   try {
@@ -73,6 +73,8 @@ export const MAX_EVENTS = 500;
 export const VARIANTS = ['v1', 'v2', 'v3'];
 // SPEC-016: 기존 변형 목록에 독립 v31을 등록한다.
 VARIANTS.push('v31');
+// SPEC-017: 독립 v32 등록 (메시지 개정판).
+VARIANTS.push('v32');
 
 const SAFE_VALUE = /^[A-Za-z0-9_.-]{0,32}$/;
 const SAFE_UTM = /^[\p{L}\p{N}_.-]{1,40}$/u;
