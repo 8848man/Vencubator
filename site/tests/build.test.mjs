@@ -24,15 +24,14 @@ test('dist: 루트 랜딩 + 앱, 개발용 파일 제외', async () => {
   assert.ok(!/(href|src)="\/(?!\/)/.test(app), '앱에 루트 기준 경로');
 });
 
-test('L04-W09 sitemap.xml·robots.txt: 운영 절대 URL, 공개 첫 페이지만, robots에 사이트맵 위치', async () => {
+test('L04-W09 sitemap.xml·robots.txt: 운영 절대 URL, 랜딩·앱 두 페이지, robots에 사이트맵 위치', async () => {
   const { sitemapXml, SITE_ORIGIN } = await import('../scripts/build.mjs');
   assert.equal(SITE_ORIGIN, 'https://vencubator.vercel.app');
   const xml = readFileSync(D('sitemap.xml'), 'utf8');
   assert.match(xml, /^<\?xml version="1\.0" encoding="UTF-8"\?>\n<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
   const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
-  assert.deepEqual(locs, ['https://vencubator.vercel.app/']);
+  assert.deepEqual(locs, ['https://vencubator.vercel.app/', 'https://vencubator.vercel.app/app/']);
   assert.match(xml, /<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/);
-  assert.ok(!xml.includes('/app/'), '체험 앱은 사이트맵에서 제외');
   assert.match(sitemapXml('2026-01-02'), /<lastmod>2026-01-02<\/lastmod>/);
   const robots = readFileSync(D('robots.txt'), 'utf8');
   assert.match(robots, /^User-agent: \*\nAllow: \/\n/);

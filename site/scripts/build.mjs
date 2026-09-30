@@ -12,9 +12,11 @@ const DIST = resolve(SITE, 'dist');
 const APP_EXCLUDE = new Set(['tests', 'server.mjs', 'README.md', 'dist']);
 // L04-W09: 검색엔진 제출용. 운영 주소 기준 절대 URL(사이트맵 규칙).
 export const SITE_ORIGIN = 'https://vencubator.vercel.app';
-/** 공개 첫 진입 페이지만 싣는다. /app/은 브라우저 저장 기반 체험 화면이라 제외(색인 차단은 하지 않음). */
+/** 공개 페이지: 랜딩(/)과 체험 앱(/app/). */
+export const SITEMAP_PATHS = ['/', '/app/'];
 export function sitemapXml(date = new Date().toISOString().slice(0, 10)) {
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>${SITE_ORIGIN}/</loc>\n    <lastmod>${date}</lastmod>\n  </url>\n</urlset>\n`;
+  const urls = SITEMAP_PATHS.map(p => `  <url>\n    <loc>${SITE_ORIGIN}${p}</loc>\n    <lastmod>${date}</lastmod>\n  </url>\n`).join('');
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}</urlset>\n`;
 }
 export const robotsTxt = () => `User-agent: *\nAllow: /\n\nSitemap: ${SITE_ORIGIN}/sitemap.xml\n`;
 
