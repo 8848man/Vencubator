@@ -6,7 +6,6 @@
 <title>Vencubator · 아이디어를 심으면 근거가 뿌리내려요</title>
 <meta name="description" content="아이디어 한 문장을 이름표에 적어 심어 보세요. 땅속으로 내려갈수록 오늘 배울 것, 물어볼 질문, 들은 답, 내린 결정이 뿌리가 되어 자라요. 1인 빌더를 위한 창업 학습 코파일럿 Vencubator(체험판).">
 <meta name="theme-color" content="#f2f6ec">
-<meta name="google-site-verification" content="jwvBptKaMeO5PcMdZK0uI49if4qb5t_4OxF00X-FMJ8">
 <meta name="generator" content="landing-v3.1/scripts/build.mjs · SPEC-016">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232e5e47'/%3E%3Cpath d='M16 21l16 27 16-27M32 36V14' stroke='%23b9da8c' stroke-width='6' fill='none'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -648,7 +647,7 @@ const ANALYTICS_FIELDS = {
   feedback_prompt: ['category','slot'], feedback_answer: ['category','slot','rating'], feedback_skip: ['category','slot'], feedback_open: ['open_type']
 };
 const ANALYTICS_ENUMS = {
-  source: ['mine','sample'], from: ['v1','v2','v3','v31','direct'],
+  source: ['mine','sample'], from: ['v1','v2','v3','v31','v32','direct'],
   layer: ['surface','learn','ask','observe','decide','roots'], pain: ['build','praise','interview','late'],
   concept: ['customer','market','product','gtm','finance','operations','strategy'],
   step: ['concept','question','transfer','apply','application','complete'], kind: ['field','simulation','desk'],
@@ -664,7 +663,7 @@ function analyticsPayload(ev) {
         (key === 'slot' && Number.isInteger(value) && value >= 1 && value <= 100) || (key === 'rating' && Number.isInteger(value) && value >= 1 && value <= 5) ||
         (key === 'placement' && /^(page|hero|footer|l[123]s-\d{1,2}|s\d{1,2})$/.test(value))) props[key] = value;
   }
-  return {schema_version:1,stage:'prototype',environment:'production',app_version:'analytics-1',page:['app','v31'].includes(ev.page)?ev.page:'v3',...props};
+  return {schema_version:1,stage:'prototype',environment:'production',app_version:'analytics-1',page:['app','v31','v32'].includes(ev.page)?ev.page:'v3',...props};
 }
 function analyticsAllowed(win) {
   try {
@@ -708,6 +707,8 @@ const MAX_EVENTS = 500;
 const VARIANTS = ['v1', 'v2', 'v3'];
 // SPEC-016: 기존 변형 목록에 독립 v31을 등록한다.
 VARIANTS.push('v31');
+// SPEC-017: 독립 v32 등록 (메시지 개정판).
+VARIANTS.push('v32');
 const SAFE_VALUE = /^[A-Za-z0-9_.-]{0,32}$/;
 const SAFE_UTM = /^[\p{L}\p{N}_.-]{1,40}$/u;
 const store = s => s ?? (typeof localStorage !== 'undefined' ? localStorage : null);
