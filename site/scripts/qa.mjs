@@ -11,7 +11,7 @@ import { startServer } from './serve.mjs';
 const SITE = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const shots = process.argv.includes('--shots');
 let chromium;
-try { chromium = (await import('playwright')).chromium; }
+try { chromium = (await import(process.env.QA_PLAYWRIGHT_MODULE ? pathToFileURL(process.env.QA_PLAYWRIGHT_MODULE).href : 'playwright')).chromium; }
 catch { try { chromium = createRequire(execSync('npm root -g').toString().trim() + '/')('playwright').chromium; } catch { console.log('SKIP: playwright 없음'); process.exit(0); } }
 const routeFonts = process.env.QA_FONT_ROUTE ? (await import(pathToFileURL(process.env.QA_FONT_ROUTE).href)).routeFonts : null;
 if (shots) await mkdir(resolve(SITE, 'qa-shots'), { recursive: true });
@@ -31,6 +31,8 @@ try {
 
     // 1) / 는 곧바로 랜딩 v3.1 (리디렉션 없음), UTM 유지
     await page.goto(BASE + '/?utm_source=geeknews&utm_medium=community'); await page.waitForTimeout(700);
+    // SPEC-018: optional first-visit chooser precedes the preserved beginner flow.
+    await page.locator('[data-aud-close]').last().click();
     check(`${vp.n}: / = 랜딩 v3.1`, new URL(page.url()).pathname === '/' && await page.locator('form.l3-tag').count() === 1, page.url());
     const utm = await page.evaluate(() => sessionStorage.getItem('vencubator.utm.v1'));
     check(`${vp.n}: UTM 보관`, utm && utm.includes('geeknews'), utm);

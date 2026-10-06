@@ -21,7 +21,9 @@ Vencubator는 자신의 아이디어를 발전시키며 배우고 행동하는 *
 
 ## 랜딩 페이지
 
-**공개 랜딩 v3.1:** `landing-v3.1/start.cmd` 또는 `node landing-v3.1/scripts/serve.mjs` → http://127.0.0.1:4177/landing-v3.1/ · [SPEC-016](landing-v3.1/docs/SPEC-016-landing-v3.1.md) · [검증](landing-v3.1/docs/VAL-L31.md). 사이트 빌드의 루트(`/`)가 v3.1이며 v3는 보존합니다.
+**독자별 공개 랜딩:** 사이트 루트(`/`)에서 입문·가치·제품 테스트 설명을 선택합니다. `/beginner/`는 기존 v3.1, `/value/`는 간결한 가치 설명, `/test/`는 제품 테스트 안내입니다. [SPEC-018](docs/specs/SPEC-018-audience-landings.md) · [검증](docs/validation/VAL-018-audience.md). 기존 독립 랜딩은 보존합니다.
+
+**입문 콘텐츠 v3.1:** `landing-v3.1/start.cmd` 또는 `node landing-v3.1/scripts/serve.mjs` → http://127.0.0.1:4177/landing-v3.1/ · [SPEC-016](landing-v3.1/docs/SPEC-016-landing-v3.1.md) · [검증](landing-v3.1/docs/VAL-L31.md).
 
 `node landing/scripts/serve.mjs` → http://127.0.0.1:4174/landing/ · 단일 파일은 `landing/dist/index.html`. 명세 [SPEC-006](landing/docs/SPEC-006-landing.md), 안내 [landing/README](landing/README.md).
 
@@ -29,7 +31,7 @@ Vencubator는 자신의 아이디어를 발전시키며 배우고 행동하는 *
 
 **수요 검증 계획:** [growth/README](growth/README.md) — 채널·메시지·성공 기준·피벗. 실행 전 DR-G01~G06 결정 필요.
 
-**하나의 사이트(랜딩 A/B → 서비스):** `site/start.cmd` 또는 `node site/scripts/build.mjs && node site/scripts/serve.mjs` → http://127.0.0.1:4180/ · 명세 [SPEC-009](docs/specs/SPEC-009-site.md).
+**하나의 사이트(독자별 랜딩 → 앱):** `site/start.cmd` 또는 `node site/scripts/build.mjs && node site/scripts/serve.mjs` → http://127.0.0.1:4180/ · 안내 [site/README](site/README.md). 독자 선택은 A/B 무작위 배정이 아닙니다.
 
 ## 먼저 읽을 문서
 
