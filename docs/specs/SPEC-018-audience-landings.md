@@ -23,6 +23,7 @@ r0.1 · 2026-10-07 · L07-W01 · AUTH-029
 - `/` 재방문 시 저장된 experienced/tester로 location.replace 한다. beginner/dismissed는 `/`에 머문다. 기존 `/`의 해시 링크는 입문 콘텐츠 직접 링크로 우선 처리한다. 리디렉션 문서에서는 v31 초기화·뷰 계측을 실행하지 않는다.
 - 저장키 `vencubator.audience.v1`, JSON `{v:1, choice: beginner|experienced|tester|dismissed}`. 개인정보·숙련도 판정·앱 상태를 저장하지 않는다. 잘못된 버전/값은 기록 없음으로 취급한다. localStorage 실패 시 sessionStorage에 대체 저장하고, 둘 다 실패해도 현재 선택/닫기/탐색은 작동한다. 저장 실패 안내는 aria-live에 표시한다. 쿠키·로그인은 추가하지 않는다.
 - 저장 우선순위는 세션 → 로컬(로컬 실패 후 세션 선택을 오래된 로컬보다 우선). 저장 성공 시 둘에 같은 값 기록. 기록을 삭제하면 첫 방문 상태다.
+- 다시 연 선택창을 닫으면 현재 선호를 보존한다. 첫 선택창 닫기만 dismissed를 저장한다. 뒤로/앞으로 탐색으로 돌아온 `/`는 기억된 경로로 즉시 다시 보내지 않는다(탐색 가두기 방지).
 - 내부 경로는 고정 매핑만 사용한다. 검색 인자는 허용 문자 40자 이하의 utm_source/medium/campaign/content와 internal=0|1, lab만 보존한다. 자유 입력·외부 URL·임의 redirect는 전달하지 않는다.
 - 앱 CTA: 입문 `/app/?from=v31`, 경험 `/app/?from=value`, 테스트 `/app/?from=test`. 새 from은 이름표 저장소를 읽지 않는다. 앱 도착 후 기존 시작 절차를 따른다. 의견 폼 자동 열기·자동 제출 없음.
 
@@ -79,7 +80,7 @@ r0.1 · 2026-10-07 · L07-W01 · AUTH-029
 | audience_view | audience=beginner/experienced/tester |
 | audience_cta | audience=beginner/experienced/tester, placement=hero/footer |
 
-루트에서 다이얼로그를 보여준 동안에는 audience_view를 보류한다. 입문 선택·닫기 때 또는 dialog 없는 실제 페이지당 1회 기록. 리디렉션 중간 문서는 기록하지 않는다. 선택 닫기는 dismissed로 기록한다. 직접 방문에도 audience_view 기록.
+루트에서 다이얼로그를 보여준 동안에는 audience_view를 보류한다. 입문 선택·닫기 때 또는 dialog 없는 실제 페이지당 1회 기록. 리디렉션 중간 문서는 기록하지 않는다. 첫 선택창 닫기는 dismissed로 기록한다. 재선택창 취소는 선택 이벤트를 추가하지 않는다. 직접 방문에도 audience_view 기록.
 
 app_open/project_create/feedback_open에 audience=beginner/experienced/tester/unknown 추가. app_open의 from=v31/value/test로 세션 문맥을 설정하며 그 외는 unknown으로 초기화한다. 이 값은 선택 수준의 자기 보고일 뿐이다. from=value/test는 기존 앱 진입 enum에 추가한다. GA4 호스트·DNT·internal·lab 차단 유지. 주소는 허용된 경로만, 쿼리·입력 문장은 전송하지 않는다. 모든 신규 필드는 로컬 버퍼에도 enum만 저장한다.
 
