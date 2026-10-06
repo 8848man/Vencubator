@@ -49,3 +49,15 @@ test('직접 네트워크 API 대신 Google tag 어댑터, 복사본 동일', ()
   for (const p of ['../../landing/src/track.mjs', '../../landing-v2/src/track.mjs', '../../prototype/track.mjs', '../../landing-v3/src/track.mjs', '../../landing-v3.1/src/track.mjs', '../../landing-v3.2/src/track.mjs'])
     assert.equal(h(readFileSync(new URL(p, import.meta.url), 'utf8')), h(src), `${p}가 site/shared/track.mjs와 다름 — 복사해서 맞춰 주세요`);
 });
+test('SPEC-018 local audience payloads contain enums only; session context does not assign experiment',()=>{
+  const make=()=>{const m=new Map();return {getItem:k=>m.get(k),setItem:(k,v)=>m.set(k,v)};};
+  const storage=make(),session=make(),env={storage,session,page:'value'};
+  const event=track('audience_select',{audience:'private',text:'secret',placement:'first'},env);
+  assert.deepEqual(event.props,{});
+  assert.equal(storage.getItem('vencubator.exp.v1'),undefined);
+  for (const [from,audience] of [['value','experienced'],['test','tester'],['v31','beginner'],['direct','unknown']]) {
+    assert.equal(track('app_open',{from},env).props.audience,audience);
+    assert.equal(track('project_create',{from,imported:false},env).props.audience,audience);
+    assert.equal(track('feedback_open',{open_type:'helpful'},env).props.audience,audience);
+  }
+});

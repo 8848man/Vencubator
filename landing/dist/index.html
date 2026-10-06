@@ -635,17 +635,18 @@ ol.lp-route-list li:nth-child(4) { border-top: 4px solid var(--green); }
 const MEASUREMENT_ID = 'G-0GFT3M8ZG3';
 const ANALYTICS_HOST = 'vencubator.vercel.app';
 const ANALYTICS_FIELDS = {
+  audience_prompt: ['placement'], audience_select: ['audience'], audience_view: ['audience'], audience_cta: ['audience','placement'],
   next_click: ['layer'], pain_select: ['pain'],
   landing_view: [], idea_submit: ['source','len'], card_progress: ['filled'],
-  cta_click: ['placement','filled'], app_open: ['from'], entry_import: ['from'],
-  project_create: ['from','imported'], lesson_complete: ['count'],
+  cta_click: ['placement','filled'], app_open: ['from','audience'], entry_import: ['from'],
+  project_create: ['from','imported','audience'], lesson_complete: ['count'],
   lesson_start: ['concept'], lesson_step: ['concept','step'], lesson_answer: ['concept'],
   application_save: ['concept'], field_task_plan: ['concept'], evidence_save: ['kind'],
   // SPEC-015 §7: 가치 피드백 퍼널 집계만. 자유 입력·칩·respondent는 보내지 않는다.
-  feedback_prompt: ['category','slot'], feedback_answer: ['category','slot','rating'], feedback_skip: ['category','slot'], feedback_open: ['open_type']
+  feedback_prompt: ['category','slot'], feedback_answer: ['category','slot','rating'], feedback_skip: ['category','slot'], feedback_open: ['open_type','audience']
 };
 const ANALYTICS_ENUMS = {
-  source: ['mine','sample'], from: ['v1','v2','v3','v31','v32','direct'],
+  source: ['mine','sample'], from: ['v1','v2','v3','v31','v32','direct','value','test'],
   layer: ['surface','learn','ask','observe','decide','roots'], pain: ['build','praise','interview','late'],
   concept: ['customer','market','product','gtm','finance','operations','strategy'],
   step: ['concept','question','transfer','apply','application','complete'], kind: ['field','simulation','desk'],
@@ -656,12 +657,21 @@ function analyticsPayload(ev) {
   const props = {};
   for (const key of ANALYTICS_FIELDS[ev.name]) {
     const value = ev.props?.[key];
+    if (key === 'audience') {
+      const allowed = ['beginner','experienced','tester', ...(ev.name === 'audience_select' ? ['dismissed'] : ['app_open','project_create','feedback_open'].includes(ev.name) ? ['unknown'] : [])];
+      if (allowed.includes(value)) props[key] = value;
+      continue;
+    }
+    if (key === 'placement' && ev.name.startsWith('audience_')) {
+      if ((ev.name === 'audience_prompt' ? ['first','reopen'] : ['hero','footer']).includes(value)) props[key] = value;
+      continue;
+    }
     if (ANALYTICS_ENUMS[key]?.includes(value) || (key === 'imported' && typeof value === 'boolean') ||
         (['len','filled','count'].includes(key) && Number.isInteger(value) && value >= 0 && value <= 10000) ||
         (key === 'slot' && Number.isInteger(value) && value >= 1 && value <= 100) || (key === 'rating' && Number.isInteger(value) && value >= 1 && value <= 5) ||
         (key === 'placement' && /^(page|hero|footer|l[123]s-\d{1,2}|s\d{1,2})$/.test(value))) props[key] = value;
   }
-  return {schema_version:1,stage:'prototype',environment:'production',app_version:'analytics-1',page:['app','v31','v32'].includes(ev.page)?ev.page:'v3',...props};
+  return {schema_version:1,stage:'prototype',environment:'production',app_version:'analytics-1',page:['app','v31','v32','value','test'].includes(ev.page)?ev.page:'v3',...props};
 }
 function analyticsAllowed(win) {
   try {
@@ -680,7 +690,7 @@ function sendAnalytics(ev, win = globalThis.window) {
     if (!win.__vencubatorAnalytics) {
       const layer = win.dataLayer = win.dataLayer || [];
       const tag = function(){layer.push(arguments);};
-      const page = win.location.pathname.startsWith('/app') ? '/app/' : '/';
+      const page = ['/app/','/value/','/test/'].includes(win.location.pathname) ? win.location.pathname : '/';
       const safeUrl = 'https://' + ANALYTICS_HOST + page;
       tag('js',new Date());
       tag('config',MEASUREMENT_ID,{send_page_view:false,allow_google_signals:false,allow_ad_personalization_signals:false,
@@ -710,8 +720,8 @@ VARIANTS.push('v32');
 
 const SAFE_VALUE = /^[A-Za-z0-9_.-]{0,32}$/;
 const SAFE_UTM = /^[\p{L}\p{N}_.-]{1,40}$/u;
-const store = s => s ?? (typeof localStorage !== 'undefined' ? localStorage : null);
-const session = s => s ?? (typeof sessionStorage !== 'undefined' ? sessionStorage : null);
+const store = s => { try { return s ?? globalThis.localStorage ?? null; } catch { return null; } };
+const session = s => { try { return s ?? globalThis.sessionStorage ?? null; } catch { return null; } };
 const readJSON = (st, key, fallback) => { try { const raw = st?.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch { return fallback; } };
 const writeJSON = (st, key, value) => { try { st?.setItem(key, JSON.stringify(value)); return true; } catch { return false; } };
 const uuid = () => (globalThis.crypto?.randomUUID ? crypto.randomUUID() : 'v-' + Math.random().toString(36).slice(2) + Date.now().toString(36));
@@ -754,6 +764,20 @@ function captureUtm(search = '', sessionStore) {
 
 function track(name, props = {}, env = {}) {
   if (!/^[a-z][a-z0-9_]{1,31}$/.test(name)) return null;
+  // SPEC-018: independent, session-scoped audience attribution. Never change EXP_KEY.
+  const ss = session(env.session), contextKey = 'vencubator.audience.context.v1';
+  if (name === 'app_open') {
+    const audience = ({v31:'beginner',value:'experienced',test:'tester'})[props.from] || 'unknown';
+    writeJSON(ss,contextKey,audience); props = {...props,audience};
+  } else if (['project_create','feedback_open'].includes(name)) {
+    const remembered = readJSON(ss,contextKey,'unknown');
+    props = {...props,audience:['beginner','experienced','tester'].includes(remembered)?remembered:'unknown'};
+  }
+  if (name.startsWith('audience_')) {
+    const payload = analyticsPayload({name,props,page:env.page});
+    if (!payload) return null;
+    props = Object.fromEntries(ANALYTICS_FIELDS[name].filter(k=>Object.hasOwn(payload,k)).map(k=>[k,payload[k]]));
+  }
   const st = store(env.storage), a = readAssignment(st);
   const ev = { t: Date.now(), name, page: env.page || 'unknown', visitor: a?.visitor || null, variant: a?.variant || null, utm: readJSON(session(env.session), UTM_KEY, {}), props: cleanProps(props) };
   const list = readJSON(st, EVENTS_KEY, []);

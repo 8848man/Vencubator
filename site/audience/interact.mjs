@@ -19,7 +19,7 @@ export function bindAudience(win) {
   };
   const close = () => { remember('dismissed'); dialog.close(); view(); trigger?.focus(); };
   const open = placement => {
-    trigger = doc.activeElement === opener ? opener : opener;
+    trigger = opener;
     dialog.showModal(); shell.querySelector('#aud-title').focus(); emit('audience_prompt',{placement});
   };
   opener.hidden = false;
