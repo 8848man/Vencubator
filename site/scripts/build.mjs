@@ -41,6 +41,7 @@ export const robotsTxt = () => `User-agent: *\nAllow: /\n\nSitemap: ${SITE_ORIGI
 
 // Compose the audience shell outside the preserved v3.1 source/build.
 export async function withAudienceShell(html, { root = false } = {}) {
+  if (!html.includes('rel="canonical"')) html = html.replace('</head>','<link rel="canonical" href="https://vencubator.vercel.app/"></head>');
   let bootstrap = '';
   if (root) {
     const state = (await readFile(resolve(SITE,'audience/state.mjs'),'utf8')).replace(/^export /gm,'');
