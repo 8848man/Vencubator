@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 96,
-  "updated_at": "2026-10-06T15:29:44.727Z",
+  "revision": 97,
+  "updated_at": "2026-10-06T15:33:12.556Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -15,18 +15,18 @@
     "stage": "S1",
     "phase": "L07",
     "work_item": "L07-W01",
-    "action": "체크리스트 1: SPEC018 화면·경로·저장·AC 작성",
+    "action": "체크리스트 2: site/audience 선택 상태·렌더·상호작용 및 사이트 조립 구현",
     "condition": "AUTH-029"
   },
   "checkpoint": {
-    "id": "CP-0096",
-    "path": "docs/execution/checkpoints/CP-0096.md",
-    "manifest": "docs/execution/checkpoints/CP-0096.manifest.json"
+    "id": "CP-0097",
+    "path": "docs/execution/checkpoints/CP-0097.md",
+    "manifest": "docs/execution/checkpoints/CP-0097.manifest.json"
   },
   "git": {
     "branch": "w/L07-W01-audience-landings",
     "base": "1b7dfeaf63e007aee0e09ef04db2d282fddb3486",
-    "head": "39b44881f072662a53ea02bb1e6c1ddd12e11d79",
+    "head": "9b093091e5e35bd39dfc8208a6e17bd9f523461a",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -1263,7 +1263,7 @@
       "status": "in_progress",
       "authorization_ref": "AUTH-029",
       "definition_path": "docs/execution/work-items/L07-W01.md",
-      "checklist": "0/5",
+      "checklist": "1/5",
       "validation_status": "not_run",
       "validation_refs": [
         "docs/validation/VAL-018-audience.md"
