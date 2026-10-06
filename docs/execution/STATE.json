@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 99,
-  "updated_at": "2026-10-06T15:42:44.915Z",
+  "revision": 100,
+  "updated_at": "2026-10-06T15:53:24.750Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -15,18 +15,18 @@
     "stage": "S1",
     "phase": "L07",
     "work_item": "L07-W01",
-    "action": "체크리스트 4: 브라우저 QA와 캡처·회귀·VAL 문서",
+    "action": "체크리스트 5: 완료 CP·필수검사 finish --pr·PR 본문 작성",
     "condition": "AUTH-029"
   },
   "checkpoint": {
-    "id": "CP-0099",
-    "path": "docs/execution/checkpoints/CP-0099.md",
-    "manifest": "docs/execution/checkpoints/CP-0099.manifest.json"
+    "id": "CP-0100",
+    "path": "docs/execution/checkpoints/CP-0100.md",
+    "manifest": "docs/execution/checkpoints/CP-0100.manifest.json"
   },
   "git": {
     "branch": "w/L07-W01-audience-landings",
     "base": "1b7dfeaf63e007aee0e09ef04db2d282fddb3486",
-    "head": "169bd587b1d7006eeda2c5104035130ade737c73",
+    "head": "5152948936e6b3a57eeb4df52284e1e034be96f6",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -1263,7 +1263,7 @@
       "status": "in_progress",
       "authorization_ref": "AUTH-029",
       "definition_path": "docs/execution/work-items/L07-W01.md",
-      "checklist": "3/5",
+      "checklist": "4/5",
       "validation_status": "not_run",
       "validation_refs": [
         "docs/validation/VAL-018-audience.md"
