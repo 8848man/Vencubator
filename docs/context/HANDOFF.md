@@ -1,11 +1,11 @@
 # HANDOFF
 
-CP-0095 / STATE revision 95
+CP-0096 / STATE revision 96
 
-L05-W01 completed · AUTH-027 · SPEC-016 r0.1 · 체크리스트 5/5
+L07-W01 in_progress · AUTH-029 · SPEC-018 r0.1 · 체크리스트 0/5
 
-단계 1~5 제품 작업 완료. 자동 검사 192/192, 무결성 오류 0, 두 빌드 성공. 브라우저 QA·캡처는 Playwright 없음으로 미실행. finish/PR 인계는 이 CP 뒤 실행.
+계획·AUTH029 커밋. fetch 후 L06/SEO가 PR14로 main에 병합된 사실 확인, origin/main에서 분기. CP95 해시 21건은 후속 커밋으로 오래된 기록이며 기존 CP는 보존. 현재 tracked dirty 없음. 새 제품 코드·검사 미실행.
 
-다음 첫 행동: gitflow finish --pr 한 번 실행; 병합 전 GA4 기준선·브라우저 QA·사용성 5명 확인
+다음 첫 행동: 체크리스트 1: SPEC018 화면·경로·저장·AC 작성
 
-브랜치 w/L05-W01-landing-v31. main 병합·배포 없음. P08-W04 기존 외부 검증 대기 상태 유지.
+브랜치 w/L07-W01-audience-landings. main 병합·배포 없음. P08-W04 기존 외부 검증 대기 유지.
