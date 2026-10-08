@@ -8,7 +8,7 @@ const D = p => new URL('../dist/' + p, import.meta.url);
 
 test('dist: 루트 랜딩 + 앱, 개발용 파일 제외', async () => {
   const { index } = await buildSite();
-  for (const p of ['index.html', 'app/index.html', 'app/app.mjs', 'app/entry.mjs', 'app/track.mjs', '_headers']) assert.ok(existsSync(D(p)), p);
+  for (const p of ['index.html', 'beginner/index.html', 'value/index.html', 'test/index.html', 'assets/audience/interact.mjs', 'app/index.html', 'app/app.mjs', 'app/entry.mjs', 'app/track.mjs', '_headers']) assert.ok(existsSync(D(p)), p);
   for (const p of ['app/tests', 'app/server.mjs', 'app/README.md']) assert.ok(!existsSync(D(p)), `${p}가 배포에 포함됨`);
   assert.ok(index.includes('href="./app/?from=v31"'), '랜딩 → 앱 링크');
   assert.ok(!/href="[^"]*(docs\/|\.md")/.test(index), '공개 빌드에 내부 문서 링크');
@@ -39,13 +39,13 @@ test('확인 메타: 없으면 head 앞쪽에 한 번만, 있으면 그대로', 
   assert.throws(() => withVerificationMetas('<body></body>'));
 });
 
-test('L04-W09 sitemap.xml·robots.txt: 운영 절대 URL, 랜딩·앱 두 페이지, robots에 사이트맵 위치', async () => {
+test('SPEC-018 sitemap.xml·robots.txt: canonical 랜딩·앱 네 페이지, robots에 사이트맵 위치', async () => {
   const { sitemapXml, SITE_ORIGIN } = await import('../scripts/build.mjs');
   assert.equal(SITE_ORIGIN, 'https://vencubator.vercel.app');
   const xml = readFileSync(D('sitemap.xml'), 'utf8');
   assert.match(xml, /^<\?xml version="1\.0" encoding="UTF-8"\?>\n<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
   const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
-  assert.deepEqual(locs, ['https://vencubator.vercel.app/', 'https://vencubator.vercel.app/app/']);
+  assert.deepEqual(locs, ['https://vencubator.vercel.app/', 'https://vencubator.vercel.app/app/', 'https://vencubator.vercel.app/value/', 'https://vencubator.vercel.app/test/']);
   assert.match(xml, /<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/);
   assert.match(sitemapXml('2026-01-02'), /<lastmod>2026-01-02<\/lastmod>/);
   const robots = readFileSync(D('robots.txt'), 'utf8');
@@ -63,5 +63,16 @@ test('앱 화면에 점검 도구는 ?lab=1 에서만', () => {
 
 test('계측 모듈 사본이 원본과 같다', () => {
   const src = readFileSync(new URL('../shared/track.mjs', import.meta.url), 'utf8');
-  for (const p of ['../../prototype/track.mjs', '../../landing-v3/src/track.mjs', '../../landing-v3.1/src/track.mjs', '../../landing/src/track.mjs', '../../landing-v2/src/track.mjs']) assert.equal(readFileSync(new URL(p, import.meta.url), 'utf8'), src, p);
+  for (const p of ['../../prototype/track.mjs', '../../landing-v3/src/track.mjs', '../../landing-v3.1/src/track.mjs', '../../landing-v3.2/src/track.mjs', '../../landing/src/track.mjs', '../../landing-v2/src/track.mjs']) assert.equal(readFileSync(new URL(p, import.meta.url), 'utf8'), src, p);
+});
+
+test('AC-A11 public audience paths preserve metadata, canonical and correct app target',()=>{
+  for(const [path,canonical,from] of [['beginner','/','v31'],['value','/value/','value'],['test','/test/','test']]) {
+    const html=readFileSync(D(path+'/index.html'),'utf8');
+    assert.ok(html.includes(`rel="canonical" href="https://vencubator.vercel.app${canonical}"`));
+    assert.ok(html.includes('name="google-site-verification"'));
+    assert.ok(html.includes('name="naver-site-verification"'));
+    assert.ok(html.includes(`href="/app/?from=${from}"`));
+    assert.ok(!html.includes('href="./app/'));
+  }
 });

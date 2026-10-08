@@ -1,9 +1,10 @@
 // SPEC-009 r0.3 사이트 조립: site/dist/{index.html(랜딩 v3.1), app/}
 // 사용: node site/scripts/build.mjs  → site/dist 폴더를 그대로 정적 호스팅에 올리면 된다
-import { mkdir, rm, readdir, copyFile, writeFile } from 'node:fs/promises';
+import { mkdir, rm, readdir, copyFile, writeFile, readFile } from 'node:fs/promises';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build as buildLanding } from '../../landing-v3.1/scripts/build.mjs';
+import { renderChooser, renderAudiencePage } from '../audience/render.mjs';
 
 const SITE = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO = resolve(SITE, '..');
@@ -13,7 +14,7 @@ const APP_EXCLUDE = new Set(['tests', 'server.mjs', 'README.md', 'dist']);
 // L04-W09: 검색엔진 제출용. 운영 주소 기준 절대 URL(사이트맵 규칙).
 export const SITE_ORIGIN = 'https://vencubator.vercel.app';
 /** 공개 페이지: 랜딩(/)과 체험 앱(/app/). */
-export const SITEMAP_PATHS = ['/', '/app/'];
+export const SITEMAP_PATHS = ['/', '/app/', '/value/', '/test/'];
 export function sitemapXml(date = new Date().toISOString().slice(0, 10)) {
   const urls = SITEMAP_PATHS.map(p => `  <url>\n    <loc>${SITE_ORIGIN}${p}</loc>\n    <lastmod>${date}</lastmod>\n  </url>\n`).join('');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}</urlset>\n`;
@@ -38,6 +39,20 @@ export function withVerificationMetas(html) {
 }
 export const robotsTxt = () => `User-agent: *\nAllow: /\n\nSitemap: ${SITE_ORIGIN}/sitemap.xml\n`;
 
+// Compose the audience shell outside the preserved v3.1 source/build.
+export async function withAudienceShell(html, { root = false } = {}) {
+  if (!html.includes('rel="canonical"')) html = html.replace('</head>','<link rel="canonical" href="https://vencubator.vercel.app/"></head>');
+  let bootstrap = '';
+  if (root) {
+    const state = (await readFile(resolve(SITE,'audience/state.mjs'),'utf8')).replace(/^export /gm,'');
+    bootstrap = `<script>(()=>{\n${state}\nconst route=audienceRoute(location.pathname,location.hash,readChoice(browserStorage(window,'localStorage'),browserStorage(window,'sessionStorage')));\nif(route.redirect && performance.getEntriesByType('navigation')[0]?.type!=='back_forward'){window.__audienceRedirect=true;location.replace(route.redirect+safeSearch(location.search));}\n})();</script>`;
+  }
+  return html.replace('</head>',`<link rel="stylesheet" href="/assets/audience/tokens.css"><link rel="stylesheet" href="/assets/audience/style.css">${bootstrap}</head>`)
+    .replace(/(<body[^>]*>)/,`$1${renderChooser('beginner')}`)
+    .replace('bindLanding(window);','if (!window.__audienceRedirect) bindLanding(window);')
+    .replace('</body>','<script type="module" src="/assets/audience/interact.mjs"></script></body>');
+}
+
 async function copyDir(from, to) {
   await mkdir(to, { recursive: true });
   for (const e of await readdir(from, { withFileTypes: true })) {
@@ -51,14 +66,24 @@ export async function buildSite() {
   // 이전 산출물을 지우고 다시 만든다. 삭제가 막힌 환경이면 남은 파일을 알려 준다.
   try { await rm(DIST, { recursive: true, force: true }); } catch { /* 덮어쓰기 */ }
   await mkdir(DIST, { recursive: true });
-  const index = withVerificationMetas(await buildLanding({ public: true, outFile: resolve(DIST, 'index.html') }));
+  const original = await buildLanding({ public: true, outFile: resolve(DIST, 'index.html') });
+  const index = withVerificationMetas(await withAudienceShell(original,{root:true}));
   await writeFile(resolve(DIST, 'index.html'), index);
+  await mkdir(resolve(DIST,'beginner'),{recursive:true});
+  await writeFile(resolve(DIST,'beginner/index.html'),withVerificationMetas(await withAudienceShell(original.replaceAll('./app/?from=v31','/app/?from=v31'))));
+  for (const [audience,path] of [['experienced','value'],['tester','test']]) {
+    await mkdir(resolve(DIST,path),{recursive:true});
+    await writeFile(resolve(DIST,path,'index.html'),withVerificationMetas(renderAudiencePage(audience)));
+  }
+  await mkdir(resolve(DIST,'assets/audience'),{recursive:true});
+  for (const file of ['state.mjs','content.mjs','interact.mjs','tokens.css','style.css']) await copyFile(resolve(SITE,'audience',file),resolve(DIST,'assets/audience',file));
+  await copyFile(resolve(SITE,'shared/track.mjs'),resolve(DIST,'assets/audience/track.mjs'));
   await copyDir(resolve(REPO, 'prototype'), resolve(DIST, 'app'));
   // 정적 호스팅(Netlify·Cloudflare Pages)용 기본 보안 헤더. 다른 호스트는 무시한다.
   await writeFile(resolve(DIST, 'sitemap.xml'), sitemapXml());
   await writeFile(resolve(DIST, 'robots.txt'), robotsTxt());
   await writeFile(resolve(DIST, '_headers'), '/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: DENY\n');
-  const leftovers = (await readdir(DIST)).filter(n => !['index.html', 'app', '_headers', 'sitemap.xml', 'robots.txt'].includes(n));
+  const leftovers = (await readdir(DIST)).filter(n => !['index.html', 'app', 'beginner', 'value', 'test', 'assets', '_headers', 'sitemap.xml', 'robots.txt'].includes(n));
   return { index, leftovers };
 }
 

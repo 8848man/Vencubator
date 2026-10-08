@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 95,
-  "updated_at": "2026-09-29T03:19:19.582Z",
+  "revision": 101,
+  "updated_at": "2026-10-06T15:54:50.110Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -13,20 +13,20 @@
   },
   "next": {
     "stage": "S1",
-    "phase": "L05",
-    "work_item": "L05-W01",
-    "action": "gitflow finish --pr 한 번 실행; 병합 전 GA4 기준선·브라우저 QA·사용성 5명 확인",
-    "condition": "AUTH-027 승인 범위"
+    "phase": "L07",
+    "work_item": "L07-W01",
+    "action": "gitflow finish --pr 한 번 실행 후 PR 본문·URL 기록",
+    "condition": "AUTH-029"
   },
   "checkpoint": {
-    "id": "CP-0095",
-    "path": "docs/execution/checkpoints/CP-0095.md",
-    "manifest": "docs/execution/checkpoints/CP-0095.manifest.json"
+    "id": "CP-0101",
+    "path": "docs/execution/checkpoints/CP-0101.md",
+    "manifest": "docs/execution/checkpoints/CP-0101.manifest.json"
   },
   "git": {
-    "branch": "w/L05-W01-landing-v31",
-    "base": "b5eeb68da12f6050152fcc749b0d1c8a40876e7f",
-    "head": "26dd2e148e194e88e572dff31b1f0ceb8d50a3f2",
+    "branch": "w/L07-W01-audience-landings",
+    "base": "1b7dfeaf63e007aee0e09ef04db2d282fddb3486",
+    "head": "3aa91eb0585655d9cb60a98e377c576a60b5d78b",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -36,7 +36,7 @@
       "status": "not_started",
       "checked_at": null
     },
-    "note": "origin/main에서 시작. main 병합·배포 없음."
+    "note": "main에 병합된 L06/SEO 선행 변경 보존. L07은 origin/main에서 분기."
   },
   "stages": {
     "S1": {
@@ -53,7 +53,8 @@
         "P06",
         "P07",
         "P08",
-        "L05"
+        "L05",
+        "L07"
       ]
     },
     "S2": {
@@ -480,6 +481,19 @@
       "validation_refs": [
         "landing-v3.1/docs/VAL-L31.md"
       ]
+    },
+    "L07": {
+      "stage": "S1",
+      "status": "completed",
+      "depends_on": [
+        "L05"
+      ],
+      "validation_status": "passed",
+      "gate_status": "not_evaluated",
+      "work_item_ids": [
+        "L07-W01"
+      ],
+      "completed_checkpoint": "CP-0101"
     }
   },
   "work_items": {
@@ -1244,6 +1258,18 @@
       "validation_refs": [
         "landing-v3.1/docs/VAL-L31.md"
       ]
+    },
+    "L07-W01": {
+      "phase": "L07",
+      "status": "completed",
+      "authorization_ref": "AUTH-029",
+      "definition_path": "docs/execution/work-items/L07-W01.md",
+      "checklist": "4/5",
+      "validation_status": "passed",
+      "validation_refs": [
+        "docs/validation/VAL-018-audience.md"
+      ],
+      "completed_checkpoint": "CP-0101"
     }
   }
 }

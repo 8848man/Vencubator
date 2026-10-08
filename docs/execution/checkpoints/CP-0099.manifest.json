@@ -1,0 +1,152 @@
+{
+  "checkpoint_id": "CP-0099",
+  "target_state_revision": 99,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "path": "docs/plans/stages/STAGE-01-prototype.md",
+      "exists": true,
+      "sha256": "D44C2C5ACACB0F54A299C1FEB568139240CF31822BE44CE47E238491923150F4"
+    },
+    {
+      "path": "docs/process/APPROVALS.md",
+      "exists": true,
+      "sha256": "B88AEAC1A9DBAB8BC8FA41ED4CE0A12C936FFC8FBAEA28895011B2AB51467387"
+    },
+    {
+      "path": "docs/specs/SPEC-018-audience-landings.md",
+      "exists": true,
+      "sha256": "6A11ED2D11354190D7B233B2551B85D694C43686A811132806A3137649296DF4"
+    },
+    {
+      "path": "landing-v2/dist/index.html",
+      "exists": true,
+      "sha256": "E8AA09F0F18D842309BD1E64918F7F96FFD85481F828BA6AEE0A9E4B14D2F7D8"
+    },
+    {
+      "path": "landing-v2/src/track.mjs",
+      "exists": true,
+      "sha256": "E88E854153B4C29AE40E5C727AEA4EB91B61DD2B4C7495CDB57441B471EFBAD6"
+    },
+    {
+      "path": "landing-v3.1/dist/index.html",
+      "exists": true,
+      "sha256": "FE9C2CF73A9C8E6CE9125F6BE4141747D64C90FD1D53383EF0CD65CEF84E2056"
+    },
+    {
+      "path": "landing-v3.1/src/track.mjs",
+      "exists": true,
+      "sha256": "E88E854153B4C29AE40E5C727AEA4EB91B61DD2B4C7495CDB57441B471EFBAD6"
+    },
+    {
+      "path": "landing-v3.2/dist/index.html",
+      "exists": true,
+      "sha256": "746C9169A27AFDA274290ACFD74E3EC417DE0FBA5315E4ECA82289FA53DBCC64"
+    },
+    {
+      "path": "landing-v3.2/src/track.mjs",
+      "exists": true,
+      "sha256": "E88E854153B4C29AE40E5C727AEA4EB91B61DD2B4C7495CDB57441B471EFBAD6"
+    },
+    {
+      "path": "landing-v3/dist/index.html",
+      "exists": true,
+      "sha256": "B0BFA34E32B30E1E2096889E3AB426092020A910DD12964B17B343E42515A7F0"
+    },
+    {
+      "path": "landing-v3/src/track.mjs",
+      "exists": true,
+      "sha256": "E88E854153B4C29AE40E5C727AEA4EB91B61DD2B4C7495CDB57441B471EFBAD6"
+    },
+    {
+      "path": "landing/dist/index.html",
+      "exists": true,
+      "sha256": "EAE8FA35213B17DC129AACCB4D75460AA3E713FE0DF4129015CA786E910B15DA"
+    },
+    {
+      "path": "landing/src/track.mjs",
+      "exists": true,
+      "sha256": "E88E854153B4C29AE40E5C727AEA4EB91B61DD2B4C7495CDB57441B471EFBAD6"
+    },
+    {
+      "path": "prototype/entry.mjs",
+      "exists": true,
+      "sha256": "A126CE330E68C0446DE79B9A076A073605ABE32E1C164362D7B7C21EE5A12EF7"
+    },
+    {
+      "path": "prototype/tests/entry.test.mjs",
+      "exists": true,
+      "sha256": "1452300FA514E14606680D4E605398A125D9487A51249B5450422D12666A23B2"
+    },
+    {
+      "path": "prototype/track.mjs",
+      "exists": true,
+      "sha256": "E88E854153B4C29AE40E5C727AEA4EB91B61DD2B4C7495CDB57441B471EFBAD6"
+    },
+    {
+      "path": "site/audience/content.mjs",
+      "exists": true,
+      "sha256": "9D372048EA4B8E93055C76BC89EF899CA6BB9E7855243B65887A34F7400CCA24"
+    },
+    {
+      "path": "site/audience/interact.mjs",
+      "exists": true,
+      "sha256": "46EBB8B01530F2C7B4CBA0DB9668BF9B77C750373EAA9F239D78EE9C48DEE03C"
+    },
+    {
+      "path": "site/audience/render.mjs",
+      "exists": true,
+      "sha256": "2ED943868F4CF2D51A258BB0EAA6E3ADB6CC1B726C9D96A81D1DA79962136FAB"
+    },
+    {
+      "path": "site/audience/state.mjs",
+      "exists": true,
+      "sha256": "BE197ECB82CAC976057153C0EA7F422158BE24CCA1970A49A0E00AE0D2246D12"
+    },
+    {
+      "path": "site/audience/style.css",
+      "exists": true,
+      "sha256": "7B0C18E028821AE6FE7D4AEE8E8F4F6D46BB4B6059BD33B1DCDF1A7ECA6B762F"
+    },
+    {
+      "path": "site/audience/tokens.css",
+      "exists": true,
+      "sha256": "852C3045D5C58AF16F892FCADCB409EF4A6A948FB422D3E192CC48758F3EFC1E"
+    },
+    {
+      "path": "site/scripts/build.mjs",
+      "exists": true,
+      "sha256": "FD484C8BC1FD0FB3D4A9AA93E6C998634CCBF6A140C53D55FCD88AF37114DCB8"
+    },
+    {
+      "path": "site/shared/track.mjs",
+      "exists": true,
+      "sha256": "E88E854153B4C29AE40E5C727AEA4EB91B61DD2B4C7495CDB57441B471EFBAD6"
+    },
+    {
+      "path": "site/tests/analytics.test.mjs",
+      "exists": true,
+      "sha256": "7B3EEE84A46A8586BFCC90890E0EB733551E291527633CEC3FDFD2235864F253"
+    },
+    {
+      "path": "site/tests/assign.test.mjs",
+      "exists": true,
+      "sha256": "39F7E5A779F673C437A7D7164E76500EC26DAFCDA669A3F1D1CDA24972B87A09"
+    },
+    {
+      "path": "site/tests/audience.test.mjs",
+      "exists": true,
+      "sha256": "FAE82B4EB1A4F2C0EAC8D2768F7CA4C0BD660959536629CEB5EBF4284280AFCD"
+    },
+    {
+      "path": "site/tests/build.test.mjs",
+      "exists": true,
+      "sha256": "33DA342AB94DB0F758352048D31CEB05F4C70EFEF9E5F40E2894811FA71B2C48"
+    },
+    {
+      "path": "site/tests/track.test.mjs",
+      "exists": true,
+      "sha256": "72A8A9D0B09D28284D9FE343577777F7D603C799BAC0C6F5E2ACCE34AD7F9EE3"
+    }
+  ]
+}

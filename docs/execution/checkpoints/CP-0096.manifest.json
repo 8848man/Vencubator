@@ -1,0 +1,47 @@
+{
+  "checkpoint_id": "CP-0096",
+  "target_state_revision": 96,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "path": "docs/process/APPROVALS.md",
+      "exists": true,
+      "sha256": "B88AEAC1A9DBAB8BC8FA41ED4CE0A12C936FFC8FBAEA28895011B2AB51467387"
+    },
+    {
+      "path": "prototype/entry.mjs",
+      "exists": true,
+      "sha256": "39AA2792DEC0388BBCF287F820402E1ADEF0CD9EE7D08857190D4489A6FD5754"
+    },
+    {
+      "path": "site/scripts/build.mjs",
+      "exists": true,
+      "sha256": "FC8C1C1B72735E0E2E8A67DADF5D4B3B6E163783A1DB1728525DB3F13415A135"
+    },
+    {
+      "path": "site/shared/track.mjs",
+      "exists": true,
+      "sha256": "1D9851F08F4F86BF3FF1ADEDF86F8CED3239EC1A86A7A70D3ADE536B92B5A413"
+    },
+    {
+      "path": "site/tests/analytics.test.mjs",
+      "exists": true,
+      "sha256": "FBD5C887B445DE5821EFC2BFA9C909700C32AED4FD1F5DB23654B746358A29C8"
+    },
+    {
+      "path": "site/tests/assign.test.mjs",
+      "exists": true,
+      "sha256": "39F7E5A779F673C437A7D7164E76500EC26DAFCDA669A3F1D1CDA24972B87A09"
+    },
+    {
+      "path": "site/tests/build.test.mjs",
+      "exists": true,
+      "sha256": "64EBD4A8740397627969F6EE7E943D4462A8CBA228D8C11713B812934E827931"
+    },
+    {
+      "path": "site/tests/track.test.mjs",
+      "exists": true,
+      "sha256": "26746140E15B0EBCF47F67610BDF34EA28132167ABF886634ED8321D1A12A218"
+    }
+  ]
+}

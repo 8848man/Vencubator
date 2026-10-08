@@ -66,3 +66,12 @@ test('AC-L32-01 v32 독립 저장소에서 아이디어 문장만 인계',()=>{
  assert.deepEqual(readEntry('?from=v32',st),{from:'v32',idea:'v32'});
  assert.deepEqual(readEntry('?from=v32',mem({[LANDING_KEYS.v31]:JSON.stringify({idea:{text:'v31'}})})),{from:'v32',idea:null});
 });
+test('SPEC-018 새 랜딩 유입은 과거 이름표를 가져오지 않고 초안도 보존',()=>{
+  for (const from of ['value','test']) {
+    const entry=readEntry('?from='+from,{getItem(){throw Error('must not read old label');}});
+    assert.deepEqual(entry,{from,idea:null});
+    const s=blankStore();s.forms.new={description:'쓰던 문장'};
+    assert.equal(applyEntry(s,entry),false);
+    assert.equal(s.forms.new.description,'쓰던 문장');
+  }
+});

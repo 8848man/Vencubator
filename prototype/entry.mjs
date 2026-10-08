@@ -2,7 +2,7 @@
 // 문장을 넘기는 랜딩: v2(아이디어 카드), v3(뿌리 — 공개 랜딩). v1은 문장 입력이 없다.
 export const LANDING_KEYS = { v2: 'vencubator.landing.v2', v3: 'vencubator.landing.v3', v31: 'vencubator.landing.v31', v32: 'vencubator.landing.v32' };
 export const LANDING_KEY = LANDING_KEYS.v2; // 하위 호환
-const FROM = ['v1', 'v2', 'v3', 'v31', 'v32'];
+const FROM = ['v1', 'v2', 'v3', 'v31', 'v32', 'value', 'test'];
 const clean = v => String(v ?? '').replace(/\s+/g, ' ').trim().slice(0, 120);
 
 export function readEntry(search = '', storage) {

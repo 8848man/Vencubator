@@ -1,0 +1,92 @@
+{
+  "checkpoint_id": "CP-0098",
+  "target_state_revision": 98,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "path": "docs/plans/stages/STAGE-01-prototype.md",
+      "exists": true,
+      "sha256": "D44C2C5ACACB0F54A299C1FEB568139240CF31822BE44CE47E238491923150F4"
+    },
+    {
+      "path": "docs/process/APPROVALS.md",
+      "exists": true,
+      "sha256": "B88AEAC1A9DBAB8BC8FA41ED4CE0A12C936FFC8FBAEA28895011B2AB51467387"
+    },
+    {
+      "path": "docs/specs/SPEC-018-audience-landings.md",
+      "exists": true,
+      "sha256": "6A11ED2D11354190D7B233B2551B85D694C43686A811132806A3137649296DF4"
+    },
+    {
+      "path": "prototype/entry.mjs",
+      "exists": true,
+      "sha256": "39AA2792DEC0388BBCF287F820402E1ADEF0CD9EE7D08857190D4489A6FD5754"
+    },
+    {
+      "path": "site/audience/content.mjs",
+      "exists": true,
+      "sha256": "9D372048EA4B8E93055C76BC89EF899CA6BB9E7855243B65887A34F7400CCA24"
+    },
+    {
+      "path": "site/audience/interact.mjs",
+      "exists": true,
+      "sha256": "673EAFEEB2A5C3B09DEE7DE95CE27DAE706585A991E9B14ABFEDFEB924CD1C05"
+    },
+    {
+      "path": "site/audience/render.mjs",
+      "exists": true,
+      "sha256": "2ED943868F4CF2D51A258BB0EAA6E3ADB6CC1B726C9D96A81D1DA79962136FAB"
+    },
+    {
+      "path": "site/audience/state.mjs",
+      "exists": true,
+      "sha256": "BE197ECB82CAC976057153C0EA7F422158BE24CCA1970A49A0E00AE0D2246D12"
+    },
+    {
+      "path": "site/audience/style.css",
+      "exists": true,
+      "sha256": "7B0C18E028821AE6FE7D4AEE8E8F4F6D46BB4B6059BD33B1DCDF1A7ECA6B762F"
+    },
+    {
+      "path": "site/audience/tokens.css",
+      "exists": true,
+      "sha256": "852C3045D5C58AF16F892FCADCB409EF4A6A948FB422D3E192CC48758F3EFC1E"
+    },
+    {
+      "path": "site/scripts/build.mjs",
+      "exists": true,
+      "sha256": "FD484C8BC1FD0FB3D4A9AA93E6C998634CCBF6A140C53D55FCD88AF37114DCB8"
+    },
+    {
+      "path": "site/shared/track.mjs",
+      "exists": true,
+      "sha256": "1D9851F08F4F86BF3FF1ADEDF86F8CED3239EC1A86A7A70D3ADE536B92B5A413"
+    },
+    {
+      "path": "site/tests/analytics.test.mjs",
+      "exists": true,
+      "sha256": "FBD5C887B445DE5821EFC2BFA9C909700C32AED4FD1F5DB23654B746358A29C8"
+    },
+    {
+      "path": "site/tests/assign.test.mjs",
+      "exists": true,
+      "sha256": "39F7E5A779F673C437A7D7164E76500EC26DAFCDA669A3F1D1CDA24972B87A09"
+    },
+    {
+      "path": "site/tests/audience.test.mjs",
+      "exists": true,
+      "sha256": "FAE82B4EB1A4F2C0EAC8D2768F7CA4C0BD660959536629CEB5EBF4284280AFCD"
+    },
+    {
+      "path": "site/tests/build.test.mjs",
+      "exists": true,
+      "sha256": "33DA342AB94DB0F758352048D31CEB05F4C70EFEF9E5F40E2894811FA71B2C48"
+    },
+    {
+      "path": "site/tests/track.test.mjs",
+      "exists": true,
+      "sha256": "26746140E15B0EBCF47F67610BDF34EA28132167ABF886634ED8321D1A12A218"
+    }
+  ]
+}

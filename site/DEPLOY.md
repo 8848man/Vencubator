@@ -1,4 +1,4 @@
-# 배포 안내 — Vencubator 사이트 (랜딩 v3.1 + 앱)
+# 배포 안내 — Vencubator 사이트 (독자별 랜딩 + 앱)
 
 `site/dist/`는 서버 코드가 없는 **정적 파일 묶음**입니다. 아무 정적 호스팅에나 폴더째 올리면 `/`에 랜딩, `/app/`에 앱이 열립니다.
 
@@ -23,14 +23,15 @@ node site/scripts/serve.mjs        # http://127.0.0.1:4180/ 에서 마지막 확
 
 ## 3. 올린 뒤 확인
 
-- `/` 첫 화면, 이름표에 문장 → “이 이름표로 앱에서 심기” → 앱 새 프로젝트 칸에 문장이 들어오는지
+- `/` 첫 선택창 → 각 설명; 건너뛰기·재방문·다른 설명 보기; `/beginner/` 이름표 → `/app/?from=v31` 문장 인계
+- `/value/`·`/test/` 직접 방문과 앱 CTA; 두 새 경로에서는 이름표를 가져오지 않는지
 - 휴대폰에서 가로 스크롤이 없는지
 - `/app/?lab=1` 은 점검용 주소입니다. 공유하지 마세요.
 
 ## 3-0. 검색 등록 (Google Search Console) — L04-W08·W09
 
 - 소유권 확인: `site/scripts/build.mjs`의 `VERIFICATION_METAS`(구글 `google-site-verification`, 네이버 `naver-site-verification`)를 빌드가 루트 `<head>`에 붙인다. 랜딩 원본에는 넣지 않는다(지우지 않기).
-- 빌드가 `site/dist/sitemap.xml`·`robots.txt`를 만들어 `https://vencubator.vercel.app/sitemap.xml`, `/robots.txt`로 제공합니다. 사이트맵에는 공개 첫 페이지 `/`만 있고 `/app/`(체험 앱)은 넣지 않습니다.
+- 빌드가 `site/dist/sitemap.xml`·`robots.txt`를 만듭니다. 사이트맵에는 `/`, `/app/`, `/value/`, `/test/`가 있습니다. 중복 입문 경로 `/beginner/`는 canonical `/`를 사용하고 사이트맵에서는 제외합니다.
 - 제출: Search Console → Sitemaps → `sitemap.xml` 입력 → 제출. 공개 페이지가 늘면 `site/scripts/build.mjs`의 `sitemapXml()`에 추가합니다.
 
 ## 3-1. 피드백 저장소(Firestore) 설정 — SPEC-015 · ADR-006
@@ -49,7 +50,7 @@ node site/scripts/serve.mjs        # http://127.0.0.1:4180/ 에서 마지막 확
 ## 4. 공개 전에 정할 것
 
 - 주소(도메인) — DR-G01
-- 분석 도구 연결 여부 — DR-G02. 지금은 이벤트가 방문자 브라우저에만 쌓이고 어디로도 전송되지 않습니다.
+- 분석 도구 — 운영 GA4 허용 이벤트만 전송. 배포 전 `internal=1`로 내부 점검을 제외하고, 실제 독자별 수신은 GA4에서 확인합니다.
 - 개인정보 수집 — DR-G03. 지금 사이트는 이름·연락처를 받지 않습니다. 신청 폼을 붙이면 개인정보 안내가 먼저 필요합니다.
 
-L05-W01 / AUTH-027: 이 PR을 병합하면 운영 루트(`/`)가 v3.1로 바뀝니다. v3 폴더는 저장소에 보존하고 배포하지 않습니다. 병합 전 GA4 v3 최근 2주 기준선 기록과 사용성 5명 확인이 필요합니다.
+L07-W01 / AUTH-029: 이 PR을 병합하면 운영 루트(`/`)에 독자 선택창이 추가되고 가치·테스트 랜딩이 배포 대상에 포함됩니다. main 병합·배포는 사용자가 수행합니다. 기존 v3.1 기준선 기록, 독자별 사용성 확인, 실제 의견 전송 상태 확인은 로컬 테스트와 별도로 수행합니다.

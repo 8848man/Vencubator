@@ -41,3 +41,14 @@ test('AC-L31-06 새 enum·v31 페이지, 자유 텍스트 폐기',()=>{
  assert.equal(analyticsPayload({name:'app_open',page:'app',props:{from:'v31'}}).from,'v31');
  assert.equal(analyticsPayload({name:'landing_view',page:'v3'}).page,'v3');
 });
+test('SPEC-018 audience events whitelist per event and safe route attribution',()=>{
+ for(const audience of ['beginner','experienced','tester'])assert.equal(analyticsPayload({name:'audience_view',page:'value',props:{audience}}).audience,audience);
+ for(const audience of ['dismissed','unknown','private text'])assert.equal(analyticsPayload({name:'audience_view',props:{audience}}).audience,undefined);
+ assert.equal(analyticsPayload({name:'audience_select',props:{audience:'dismissed'}}).audience,'dismissed');
+ assert.equal(analyticsPayload({name:'audience_prompt',props:{placement:'first'}}).placement,'first');
+ assert.equal(analyticsPayload({name:'audience_cta',props:{placement:'first'}}).placement,undefined);
+ const w=browser(undefined,'?idea=private');w.location.pathname='/test/';
+ sendAnalytics({name:'audience_view',page:'test',props:{audience:'tester',text:'private'}},w);
+ assert.ok(JSON.stringify(w.dataLayer).includes('https://vencubator.vercel.app/test/'));
+ assert.ok(!JSON.stringify(w.dataLayer).includes('private'));
+});
