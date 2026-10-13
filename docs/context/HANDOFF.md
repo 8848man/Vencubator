@@ -1,17 +1,9 @@
 # HANDOFF
 
-CP-0104 / STATE revision 104
+CP-0105 / STATE revision 105
 
-CP-0104에서 원격 push 자동 승인 검토 거부를 기록했다. 이후 사용자가 `github.com/8848man/Vencubator`의 L08 작업 커밋 push·PR을 명시적으로 승인. 다음 행동: L08 브랜치 커밋만 push·PR 재시도. 기존 사용자 수정·미추적 자료 제외.
+L08-W01 완료 · AUTH-030 · SPEC-019 r0.2 · 체크리스트 9/9. 사용자 정정 이후 `/v3.3/`은 기존 랜딩, 모바일 폭은 `/app/` 직접 진입, `/v3.3/reference/`는 벤큐베이터 개념으로 번안한 54장 인터랙티브 체험이다. 첫 실행 앱 온보딩은 기존 구현을 유지한다. 로컬 서버 4180에서 두 경로를 볼 수 있다.
 
-L08-W01 제품 작업 completed · AUTH-030 · SPEC-019 r0.1 · 체크리스트 4/5. 앱80·사이트31·독립 랜딩145·gitflow7 통과, 브라우저 첫 사용·모바일 경로 확인. 로컬 미리보기 `/v3.3/`와 `/app/`. 다음 행동: `gitflow finish --pr` 또는 기존 `site/audience/render.mjs` 사용자 수정·미추적 자료를 보존한 PR 인계. main 병합·운영 배포 없음.
+검증은 VAL-019: 앱80·사이트31·레퍼런스1 및 브라우저 경로·상호작용 확인. 실제 기기·사용자 연구·운영 분석은 미실행. PR #16: https://github.com/8848man/Vencubator/pull/16 . 사용자 승인으로 작업 커밋만 push했다. 기존 `site/audience/render.mjs`와 선행 미추적 파일은 보존·제외. `gitflow finish --pr`는 이 dirty 상태로 중단돼 PR을 직접 인계했다. main 병합·운영 배포 없음.
 
-이전 L07 상태:
-
-L07-W01 completed · AUTH-029 · SPEC-018 r0.1 · 체크리스트 4/5
-
-제품 구현·검증 완료. 단위259·브라우저84 모두 통과. VAL018과 캡처14개 준비. 체크리스트5의 finish/PR 인계만 남음. 운영 계측·사용자 연구·배포 미실행.
-
-다음 첫 행동: gitflow finish --pr 한 번 실행 후 PR 본문·URL 기록
-
-브랜치 w/L07-W01-audience-landings. main 병합·배포 없음. P08-W04 기존 외부 검증 대기 유지.
+다음 첫 행동: 사용자가 PR #16 검토·병합 여부를 결정한다. 후속 실제 모바일 기기와 첫 사용자 관찰은 VAL-019 미검증 항목을 기준으로 진행한다. P08-W04 외부 검증 대기는 유지한다.

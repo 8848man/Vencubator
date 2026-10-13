@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 104,
-  "updated_at": "2026-10-13T06:51:59.704Z",
+  "revision": 105,
+  "updated_at": "2026-10-13T08:06:26.000Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -13,30 +13,30 @@
   },
   "next": {
     "stage": "S1",
-    "phase": "L08",
-    "work_item": "L08-W01",
-    "action": "사용자 승인 범위로 L08 브랜치 push 및 PR 생성",
-    "condition": "AUTH-030 + explicit remote approval 2026-10-13"
+    "phase": "P08",
+    "work_item": "P08-W04",
+    "action": "기존 외부 검증 조건과 사용자 의사결정 확인",
+    "condition": "P08-W04 외부 검증 대기; L08 PR #16 검토는 사용자"
   },
   "checkpoint": {
-    "id": "CP-0104",
-    "path": "docs/execution/checkpoints/CP-0104.md",
-    "manifest": "docs/execution/checkpoints/CP-0104.manifest.json"
+    "id": "CP-0105",
+    "path": "docs/execution/checkpoints/CP-0105.md",
+    "manifest": "docs/execution/checkpoints/CP-0105.manifest.json"
   },
   "git": {
     "branch": "w/L08-W01-mobile-entry-onboarding",
     "base": "origin/main",
-    "head": "a994dc9",
+    "head": "4b92251",
     "dirty": true,
     "committed": true,
-    "pr": null,
+    "pr": "https://github.com/8848man/Vencubator/pull/16",
     "merged_sha": null,
     "deploy": {
       "target": "vercel-production",
       "status": "not_started",
       "checked_at": null
     },
-    "note": "finish dirty guard; remote push 최초 auto-review 거부 후 사용자 저장소·payload 승인. 기존 사용자 수정 보존."
+    "note": "SPEC-019 r0.2 사용자 정정을 L08 PR #16에 반영. finish dirty guard로 직접 인계, 기존 사용자 수정·미추적 파일 보존. Preview 자동 생성, production 미배포."
   },
   "stages": {
     "S1": {
@@ -510,7 +510,7 @@
       "validation_refs": [
         "docs/validation/VAL-019-mobile-entry.md"
       ],
-      "completed_checkpoint": "CP-0103"
+      "completed_checkpoint": "CP-0105"
     }
   },
   "work_items": {
@@ -1293,12 +1293,12 @@
       "status": "completed",
       "authorization_ref": "AUTH-030",
       "definition_path": "docs/execution/work-items/L08-W01.md",
-      "checklist": "4/5; 5 in progress, remote approved",
+        "checklist": "9/9; PR #16 updated",
       "validation_status": "passed",
       "validation_refs": [
         "docs/validation/VAL-019-mobile-entry.md"
       ],
-      "completed_checkpoint": "CP-0103"
+        "completed_checkpoint": "CP-0105"
     }
   }
 }
