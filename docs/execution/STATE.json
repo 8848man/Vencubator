@@ -1,42 +1,42 @@
 {
   "schema_version": 1,
-  "revision": 108,
-  "updated_at": "2026-10-13T13:50:50.000Z",
+  "revision": 109,
+  "updated_at": "2026-10-13T14:00:00.000Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "stage": null,
-    "phase": null,
-    "work_item": null,
-    "owner": null,
-    "run_state": "idle"
+    "stage": "S1",
+    "phase": "L08",
+    "work_item": "L08-W03",
+    "owner": "Codex",
+    "run_state": "in_progress"
   },
   "next": {
     "stage": "S1",
     "phase": "L08",
-    "work_item": null,
-    "action": "SPEC-019 r0.3과 ADR-007 검토 후 실제 인증·첫 흐름 구현 범위 결정",
-    "condition": "새 구현 요청·승인 필요"
+    "work_item": "L08-W03",
+    "action": "SPEC-019 r0.4 저장형 흐름·실제 앱 코치마크 수용 기준 작성",
+    "condition": "AUTH-032"
   },
   "checkpoint": {
-    "id": "CP-0108",
-    "path": "docs/execution/checkpoints/CP-0108.md",
-    "manifest": "docs/execution/checkpoints/CP-0108.manifest.json"
+    "id": "CP-0109",
+    "path": "docs/execution/checkpoints/CP-0109.md",
+    "manifest": "docs/execution/checkpoints/CP-0109.manifest.json"
   },
   "git": {
-    "branch": "w/L08-W02-first-flow-login-gate",
-    "base": "w/L08-W01-mobile-entry-onboarding",
-    "head": "96b049c",
+    "branch": "w/L08-W03-guided-first-project",
+    "base": "w/L08-W02-first-flow-login-gate",
+    "head": "ae6d095",
     "dirty": true,
     "committed": true,
-    "pr": "https://github.com/8848man/Vencubator/pull/17",
+    "pr": null,
     "merged_sha": null,
     "deploy": {
       "target": "vercel-production",
       "status": "not_started",
       "checked_at": null
     },
-    "note": "L08-W02 문서 설계 완료, PR #17 게시. L08-W01 PR #16 위에 쌓임. 기존 사용자 수정·미추적 파일 보존."
+    "note": "L08-W03 계획·시작 CP, 제품 구현 전"
   },
   "stages": {
     "S1": {
@@ -1295,12 +1295,12 @@
       "status": "completed",
       "authorization_ref": "AUTH-030",
       "definition_path": "docs/execution/work-items/L08-W01.md",
-        "checklist": "9/9; PR #16 updated",
+      "checklist": "9/9; PR #16 updated",
       "validation_status": "passed",
       "validation_refs": [
         "docs/validation/VAL-019-mobile-entry.md"
       ],
-        "completed_checkpoint": "CP-0105"
+      "completed_checkpoint": "CP-0105"
     },
     "L08-W02": {
       "phase": "L08",
@@ -1313,6 +1313,15 @@
         "docs/validation/VAL-020-first-flow-login-design.md"
       ],
       "completed_checkpoint": "CP-0107"
+    },
+    "L08-W03": {
+      "phase": "L08",
+      "status": "in_progress",
+      "authorization_ref": "AUTH-032",
+      "definition_path": "docs/execution/work-items/L08-W03.md",
+      "validation_status": "not_run",
+      "validation_refs": [],
+      "checklist": "1/6"
     }
   }
 }

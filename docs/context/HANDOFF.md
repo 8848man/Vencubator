@@ -1,7 +1,1 @@
-# HANDOFF
-
-CP-0108 / STATE revision 108
-
-L08-W02 설계 완료, 체크리스트 5/5. AUTH-031에 따라 SPEC-019 r0.3에 첫 흐름 완료×인증 상태별 화면과 별도 로그인 게이트를, ADR-007에 비밀 아닌 기기 표시와 서버 인증 권위를 적었다. VAL-020은 설계 검토 통과이며 실제 기능 테스트는 미실행이다. 현재 S1 앱은 `demo-user` 자동 생성 방식 그대로다.
-
-PR [#17](https://github.com/8848man/Vencubator/pull/17)은 미병합 L08-W01 PR #16 브랜치를 기준으로 생성됐다. 기존 `site/audience/render.mjs` 사용자 수정과 선행 미추적 파일은 커밋·전송하지 않았다. 다음 첫 행동: 사용자가 PR #16을 먼저 검토·병합하고 PR #17의 기준 브랜치를 main으로 바꿀지 결정한다. 이후 실제 인증·계정 저장 구현 요청은 새 W로 진행한다. main 병합·운영 배포는 사용자 몫이다.
+# HANDOFF`n`nCP-0109 / STATE revision 109`n`nL08-W03 · 체크리스트 1/6. 브랜치 `w/L08-W03-guided-first-project`는 미병합 W02 위에 쌓였다. AUTH-032·W 계획만 커밋했고 제품 코드는 변경 전이다. 다음 첫 행동: SPEC-019 r0.4에 `/v3.3/` 저장·튜토리얼과 실제 앱 코치마크 기준을 작성한다. `site/audience/render.mjs` 사용자 수정과 선행 미추적 자료 보존.
