@@ -76,7 +76,8 @@ export async function buildSite() {
     await writeFile(resolve(DIST,path,'index.html'),withVerificationMetas(renderAudiencePage(audience)));
   }
   await mkdir(resolve(DIST,'v3.3'),{recursive:true});
-  await copyFile(resolve(REPO,'landing-v3.3/index.html'),resolve(DIST,'v3.3/index.html'));
+  await writeFile(resolve(DIST,'v3.3/index.html'),withVerificationMetas(await withAudienceShell(original.replaceAll('./app/?from=v31','/app/?from=v31'),{root:true})));
+  await copyDir(resolve(REPO,'landing-v3.3/reference'),resolve(DIST,'v3.3/reference'));
   await mkdir(resolve(DIST,'assets/audience'),{recursive:true});
   for (const file of ['state.mjs','content.mjs','interact.mjs','tokens.css','style.css']) await copyFile(resolve(SITE,'audience',file),resolve(DIST,'assets/audience',file));
   await copyFile(resolve(SITE,'shared/track.mjs'),resolve(DIST,'assets/audience/track.mjs'));
