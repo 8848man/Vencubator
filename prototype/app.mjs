@@ -9,7 +9,7 @@ import {createReviewUI} from './review-ui.mjs';
 import {finishFieldTask} from './guided.mjs';
 import {onboardingView,advanceOnboarding,firstSuggestion} from './onboarding.mjs';
 import {createFirstProjectGuide} from './first-project-guide.mjs';
-import {firstFlowDestination} from './first-flow-entry.mjs';
+import {firstFlowDestination,isFirstFlowCompleted} from './first-flow-entry.mjs';
 import {STATS,QUESTIONS,LESSONS,SAMPLE,LEVELS,EVIDENCE_LABELS} from './content.mjs';
 import {blankStore,projectById,createProject,confirmContext,seedSample,submitQuiz,chooseAction,commitEvidence,commitDecision,transact} from './domain.mjs';
 import {storageAdapter,interviewAdapter} from './adapters.mjs';
@@ -91,7 +91,7 @@ function render(){
  const screen=screenMotionKey(state,{variant:`${state.forms.quiz?.variant||0}:${state.forms.quiz?.stage||''}`,application:!!state.forms.quiz?.application,preview:!!pendingEvidence});
  const changed=screen!==renderedScreen;renderedScreen=screen;
  document.body.classList.toggle('reduce-motion',state.preferences.reducedMotion);
- if(!state.user&&!loadError&&!state.forms.onboarding?.completed){$('#app').innerHTML=onboardingView(state.forms.onboarding);$('#app h1')?.focus({preventScroll:true});return;}
+ if(!state.user&&!loadError&&!state.forms.onboarding?.completed&&!isFirstFlowCompleted(localStorage)){$('#app').innerHTML=onboardingView(state.forms.onboarding);$('#app h1')?.focus({preventScroll:true});return;}
  if(!state.user){$('#app').innerHTML=welcome();paintMotion(screen);return;}
  const views={projects,new:newProject,interview,review,born,dashboard:guided.home,session:guided.session,fieldtask:guided.task,taskdetail:taskUI.detail,details,learning,quiz:reviewUI.view,evidence:()=>!pendingEvidence&&(state.route.fieldTaskId||pNow()?.uiDraft.evidence?.taskId)?guided.reflection():evidence(),decision,actions,journal,settings,feedback:()=>feedbackUI.view()};
  document.body.classList.toggle('has-task-fab',!!pNow()&&['dashboard','details'].includes(state.route.view));
