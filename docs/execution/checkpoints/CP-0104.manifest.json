@@ -1,0 +1,22 @@
+{
+  "checkpoint_id": "CP-0104",
+  "target_state_revision": 104,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "path": "docs/execution/checkpoints/CP-0104.md",
+      "exists": true,
+      "sha256": "332E5B4A19CB9F419400D611850E7A03619FAF62111005AD56C9D57A9F6B34B9"
+    },
+    {
+      "path": "docs/specs/SPEC-019-mobile-entry.md",
+      "exists": true,
+      "sha256": "2FB7C2F9BEC95DC703BC36890B09C9721B855D5850E470EE97696D1BD1E310D5"
+    },
+    {
+      "path": "docs/validation/VAL-019-mobile-entry.md",
+      "exists": true,
+      "sha256": "5AB14CF36C8D04EB86E55F929D696B4E349F139DEECA5280FB098924B1A4E9D7"
+    }
+  ]
+}

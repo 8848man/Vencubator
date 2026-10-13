@@ -1,0 +1,52 @@
+{
+  "checkpoint_id": "CP-0105",
+  "target_state_revision": 105,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "path": "docs/execution/checkpoints/CP-0105.md",
+      "exists": true,
+      "sha256": "C54621CDAF89BAC9AE2733DDC17D96CE0D5992EB7770884DD7281F5E65BC1C7B"
+    },
+    {
+      "path": "docs/specs/SPEC-019-mobile-entry.md",
+      "exists": true,
+      "sha256": "65BDC95DF74B44310A67BC980281FE7D53BE363B56CD0B9A9A30B6AE52599771"
+    },
+    {
+      "path": "docs/validation/VAL-019-mobile-entry.md",
+      "exists": true,
+      "sha256": "55B72C6EE5029116F169769DB86D62158C75B8FB44695A5451819895881A7E7D"
+    },
+    {
+      "path": "site/scripts/build.mjs",
+      "exists": true,
+      "sha256": "0B5E9705E08D889378766B40854682AAABEA5B51F2B41FF6FD9FC7C17EBCAE65"
+    },
+    {
+      "path": "site/tests/mobile-entry.test.mjs",
+      "exists": true,
+      "sha256": "113CF5F48B37D7A6B60512ACEE3502A76A803C3E137EA63964B9BC9C1520CCFB"
+    },
+    {
+      "path": "landing-v3.3/reference/index.html",
+      "exists": true,
+      "sha256": "4340EEE8844C51D5BCC35C8CB61FDE915299FF9DD228332E9921471541E2DF5E"
+    },
+    {
+      "path": "landing-v3.3/reference/style.css",
+      "exists": true,
+      "sha256": "202F4E48554F5D001F92430CC928F22D46344E9F26877467478DBFE4AD8ED4FD"
+    },
+    {
+      "path": "landing-v3.3/reference/flow.mjs",
+      "exists": true,
+      "sha256": "512E6EAA8C0749A34E362F048E9121DA814E549829E320BAA56F6D4F4B574E4C"
+    },
+    {
+      "path": "landing-v3.3/tests/reference.test.mjs",
+      "exists": true,
+      "sha256": "8061F9D7981F5F4EDF2B0FEB6A5070CA17327602DA11753AF1096502387DAA49"
+    }
+  ]
+}

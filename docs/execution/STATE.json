@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 101,
-  "updated_at": "2026-10-06T15:54:50.110Z",
+  "revision": 105,
+  "updated_at": "2026-10-13T08:06:26.000Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -13,30 +13,30 @@
   },
   "next": {
     "stage": "S1",
-    "phase": "L07",
-    "work_item": "L07-W01",
-    "action": "gitflow finish --pr 한 번 실행 후 PR 본문·URL 기록",
-    "condition": "AUTH-029"
+    "phase": "P08",
+    "work_item": "P08-W04",
+    "action": "기존 외부 검증 조건과 사용자 의사결정 확인",
+    "condition": "P08-W04 외부 검증 대기; L08 PR #16 검토는 사용자"
   },
   "checkpoint": {
-    "id": "CP-0101",
-    "path": "docs/execution/checkpoints/CP-0101.md",
-    "manifest": "docs/execution/checkpoints/CP-0101.manifest.json"
+    "id": "CP-0105",
+    "path": "docs/execution/checkpoints/CP-0105.md",
+    "manifest": "docs/execution/checkpoints/CP-0105.manifest.json"
   },
   "git": {
-    "branch": "w/L07-W01-audience-landings",
-    "base": "1b7dfeaf63e007aee0e09ef04db2d282fddb3486",
-    "head": "3aa91eb0585655d9cb60a98e377c576a60b5d78b",
+    "branch": "w/L08-W01-mobile-entry-onboarding",
+    "base": "origin/main",
+    "head": "4b92251",
     "dirty": true,
-    "committed": false,
-    "pr": null,
+    "committed": true,
+    "pr": "https://github.com/8848man/Vencubator/pull/16",
     "merged_sha": null,
     "deploy": {
       "target": "vercel-production",
       "status": "not_started",
       "checked_at": null
     },
-    "note": "main에 병합된 L06/SEO 선행 변경 보존. L07은 origin/main에서 분기."
+    "note": "SPEC-019 r0.2 사용자 정정을 L08 PR #16에 반영. finish dirty guard로 직접 인계, 기존 사용자 수정·미추적 파일 보존. Preview 자동 생성, production 미배포."
   },
   "stages": {
     "S1": {
@@ -54,7 +54,8 @@
         "P07",
         "P08",
         "L05",
-        "L07"
+        "L07",
+        "L08"
       ]
     },
     "S2": {
@@ -494,6 +495,22 @@
         "L07-W01"
       ],
       "completed_checkpoint": "CP-0101"
+    },
+    "L08": {
+      "stage": "S1",
+      "status": "completed",
+      "depends_on": [
+        "L07"
+      ],
+      "validation_status": "passed",
+      "gate_status": "not_evaluated",
+      "work_item_ids": [
+        "L08-W01"
+      ],
+      "validation_refs": [
+        "docs/validation/VAL-019-mobile-entry.md"
+      ],
+      "completed_checkpoint": "CP-0105"
     }
   },
   "work_items": {
@@ -1270,6 +1287,18 @@
         "docs/validation/VAL-018-audience.md"
       ],
       "completed_checkpoint": "CP-0101"
+    },
+    "L08-W01": {
+      "phase": "L08",
+      "status": "completed",
+      "authorization_ref": "AUTH-030",
+      "definition_path": "docs/execution/work-items/L08-W01.md",
+        "checklist": "9/9; PR #16 updated",
+      "validation_status": "passed",
+      "validation_refs": [
+        "docs/validation/VAL-019-mobile-entry.md"
+      ],
+        "completed_checkpoint": "CP-0105"
     }
   }
 }
