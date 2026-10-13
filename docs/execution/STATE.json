@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 107,
-  "updated_at": "2026-10-13T13:07:28.000Z",
+  "revision": 108,
+  "updated_at": "2026-10-13T13:50:50.000Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -19,24 +19,24 @@
     "condition": "새 구현 요청·승인 필요"
   },
   "checkpoint": {
-    "id": "CP-0107",
-    "path": "docs/execution/checkpoints/CP-0107.md",
-    "manifest": "docs/execution/checkpoints/CP-0107.manifest.json"
+    "id": "CP-0108",
+    "path": "docs/execution/checkpoints/CP-0108.md",
+    "manifest": "docs/execution/checkpoints/CP-0108.manifest.json"
   },
   "git": {
     "branch": "w/L08-W02-first-flow-login-gate",
     "base": "w/L08-W01-mobile-entry-onboarding",
-    "head": "ae250f1",
+    "head": "96b049c",
     "dirty": true,
     "committed": true,
-    "pr": null,
+    "pr": "https://github.com/8848man/Vencubator/pull/17",
     "merged_sha": null,
     "deploy": {
       "target": "vercel-production",
       "status": "not_started",
       "checked_at": null
     },
-    "note": "L08-W02 문서 설계 완료. L08-W01 PR #16 위에 쌓임. 기존 사용자 수정·미추적 파일 보존. PR 또는 handoff 대기."
+    "note": "L08-W02 문서 설계 완료, PR #17 게시. L08-W01 PR #16 위에 쌓임. 기존 사용자 수정·미추적 파일 보존."
   },
   "stages": {
     "S1": {
@@ -1307,7 +1307,7 @@
       "status": "completed",
       "authorization_ref": "AUTH-031",
       "definition_path": "docs/execution/work-items/L08-W02.md",
-      "checklist": "5/5; PR 또는 handoff 대기",
+      "checklist": "5/5; PR #17 게시",
       "validation_status": "passed",
       "validation_refs": [
         "docs/validation/VAL-020-first-flow-login-design.md"
