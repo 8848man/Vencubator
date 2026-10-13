@@ -1,42 +1,42 @@
 {
   "schema_version": 1,
-  "revision": 119,
-  "updated_at": "2026-10-13T21:44:41.4222456Z",
+  "revision": 120,
+  "updated_at": "2026-10-13T21:47:15.5228995Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "owner": "Codex",
-    "stage": "S1",
-    "phase": "L08",
-    "work_item": "L08-W06",
-    "run_state": "validating"
+    "owner": null,
+    "stage": null,
+    "phase": null,
+    "work_item": null,
+    "run_state": "idle"
   },
   "next": {
-    "action": "L08-W06 PR 게시 및 완료 CP",
+    "action": "4180 루트 튜토리얼·/landing/ 수동 체험 및 PR #16→#21 검토·병합 여부 결정",
     "stage": "S1",
     "phase": "L08",
-    "work_item": "L08-W06",
-    "condition": "AUTH-035"
+    "work_item": null,
+    "condition": "사용자 수동 체험·PR 검토"
   },
   "checkpoint": {
-    "id": "CP-0119",
-    "path": "docs/execution/checkpoints/CP-0119.md",
-    "manifest": "docs/execution/checkpoints/CP-0119.manifest.json"
+    "id": "CP-0120",
+    "path": "docs/execution/checkpoints/CP-0120.md",
+    "manifest": "docs/execution/checkpoints/CP-0120.manifest.json"
   },
   "git": {
     "branch": "w/L08-W06-tutorial-main-route",
     "base": "w/L08-W05-connected-first-flow",
-    "head": "33596a2",
+    "head": "c4f96ba",
     "dirty": true,
     "committed": true,
-    "pr": null,
+    "pr": "https://github.com/8848man/Vencubator/pull/21",
     "merged_sha": null,
     "deploy": {
       "target": "vercel-production",
       "status": "not_started",
       "checked_at": null
     },
-    "note": "제품·자동 검사 완료, PR 대기; 사용자 수정 제외"
+    "note": "L08-W06 제품·자동 검증 완료 및 PR #21 게시. 4180 수동 검증 미실행. 기존 사용자 수정 보존."
   },
   "stages": {
     "S1": {
@@ -1359,15 +1359,15 @@
     },
     "L08-W06": {
       "phase": "L08",
-      "status": "validating",
+      "status": "completed",
       "authorization_ref": "AUTH-035",
       "definition_path": "docs/execution/work-items/L08-W06.md",
       "validation_status": "passed",
       "validation_refs": [
         "docs/validation/VAL-024-tutorial-main-route.md"
       ],
-      "completed_checkpoint": null,
-      "checklist": "4/5"
+      "completed_checkpoint": "CP-0120",
+      "checklist": "5/5; PR #21 게시"
     }
   }
 }
