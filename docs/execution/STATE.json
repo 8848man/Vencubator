@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 103,
-  "updated_at": "2026-10-13T06:49:07.692Z",
+  "revision": 104,
+  "updated_at": "2026-10-13T06:51:59.704Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -15,20 +15,20 @@
     "stage": "S1",
     "phase": "L08",
     "work_item": "L08-W01",
-    "action": "gitflow finish --pr 또는 깨끗한 체크아웃에서 push/PR 인계",
-    "condition": "AUTH-030"
+    "action": "사용자 승인 범위로 L08 브랜치 push 및 PR 생성",
+    "condition": "AUTH-030 + explicit remote approval 2026-10-13"
   },
   "checkpoint": {
-    "id": "CP-0103",
-    "path": "docs/execution/checkpoints/CP-0103.md",
-    "manifest": "docs/execution/checkpoints/CP-0103.manifest.json"
+    "id": "CP-0104",
+    "path": "docs/execution/checkpoints/CP-0104.md",
+    "manifest": "docs/execution/checkpoints/CP-0104.manifest.json"
   },
   "git": {
     "branch": "w/L08-W01-mobile-entry-onboarding",
     "base": "origin/main",
-    "head": "b7a6a82",
+    "head": "a994dc9",
     "dirty": true,
-    "committed": false,
+    "committed": true,
     "pr": null,
     "merged_sha": null,
     "deploy": {
@@ -36,7 +36,7 @@
       "status": "not_started",
       "checked_at": null
     },
-    "note": "L08 제품 코드·검증 커밋. 이전 site/audience/render.mjs 사용자 수정 및 선행 미추적 파일 보존. finish/PR 대기."
+    "note": "finish dirty guard; remote push 최초 auto-review 거부 후 사용자 저장소·payload 승인. 기존 사용자 수정 보존."
   },
   "stages": {
     "S1": {
@@ -1293,7 +1293,7 @@
       "status": "completed",
       "authorization_ref": "AUTH-030",
       "definition_path": "docs/execution/work-items/L08-W01.md",
-      "checklist": "4/5",
+      "checklist": "4/5; 5 in progress, remote approved",
       "validation_status": "passed",
       "validation_refs": [
         "docs/validation/VAL-019-mobile-entry.md"

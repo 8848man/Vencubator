@@ -1,6 +1,8 @@
 # HANDOFF
 
-CP-0103 / STATE revision 103
+CP-0104 / STATE revision 104
+
+CP-0104에서 원격 push 자동 승인 검토 거부를 기록했다. 이후 사용자가 `github.com/8848man/Vencubator`의 L08 작업 커밋 push·PR을 명시적으로 승인. 다음 행동: L08 브랜치 커밋만 push·PR 재시도. 기존 사용자 수정·미추적 자료 제외.
 
 L08-W01 제품 작업 completed · AUTH-030 · SPEC-019 r0.1 · 체크리스트 4/5. 앱80·사이트31·독립 랜딩145·gitflow7 통과, 브라우저 첫 사용·모바일 경로 확인. 로컬 미리보기 `/v3.3/`와 `/app/`. 다음 행동: `gitflow finish --pr` 또는 기존 `site/audience/render.mjs` 사용자 수정·미추적 자료를 보존한 PR 인계. main 병합·운영 배포 없음.
 
