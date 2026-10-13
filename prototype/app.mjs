@@ -8,6 +8,7 @@ import {createGuided} from './guided-ui.mjs';
 import {createReviewUI} from './review-ui.mjs';
 import {finishFieldTask} from './guided.mjs';
 import {onboardingView,advanceOnboarding,firstSuggestion} from './onboarding.mjs';
+import {createFirstProjectGuide} from './first-project-guide.mjs';
 import {STATS,QUESTIONS,LESSONS,SAMPLE,LEVELS,EVIDENCE_LABELS} from './content.mjs';
 import {blankStore,projectById,createProject,confirmContext,seedSample,submitQuiz,chooseAction,commitEvidence,commitDecision,transact} from './domain.mjs';
 import {storageAdapter,interviewAdapter} from './adapters.mjs';
@@ -97,11 +98,13 @@ function render(){
  if(state.route.view==='interview')loadInterview();
  paintMotion(screen);
  feedbackUI.afterRender();
+ firstGuide.afterRender();
 }
 const guided=createGuided({getState:()=>state,update,go,esc,mascot,field,toast});
 const reviewUI=createReviewUI({getState:()=>state,update,esc,mascot});
 const taskUI=createTaskUI({getState:()=>state,update,esc,toast});
 const feedbackUI=createFeedbackUI({getState:()=>state,update,esc,toast});
+const firstGuide=createFirstProjectGuide({getState:()=>state,update,go});
 const formData=f=>Object.fromEntries(new FormData(f));
 document.addEventListener('input',e=>{if(e.target.id==='ob-idea')update(s=>{s.forms.onboarding=advanceOnboarding(s.forms.onboarding,'idea',e.target.value);},false);},true);
 document.addEventListener('click',e=>{
@@ -115,7 +118,7 @@ document.addEventListener('input',e=>{const el=e.target,form=el.closest('form');
 document.addEventListener('change',e=>{const el=e.target;taskUI.change(el);if(el.dataset.pref){update(s=>{s.preferences[el.dataset.pref]=el.type==='checkbox'?el.checked:el.value;});}if(el.id==='ai-mode'){aiMode=el.value;toast('인터뷰 대역 설정을 바꿨어요.');}if(el.id==='save-fault'){saveFault=el.checked;toast(saveFault?'저장 실패를 재현해요. 이 설정은 언제든 해제할 수 있어요.':'저장을 다시 사용할 수 있어요.');}if(el.id==='project-switch'){const p=state.projects.find(p=>p.id===el.value);go('dashboard',el.value);}});
 document.addEventListener('submit',e=>{e.preventDefault();const f=e.target,d=formData(f),p=pNow();if(taskUI.submit(f,d)||reviewUI.submit(f,d)||guided.submit(f,d))return;
  if(f.id==='login-form')update(s=>{s.user={id:'demo-user',name:cleanName(d.name)};s.route={view:s.forms.entry?.pending||!s.projects.length?'new':'dashboard',projectId:s.projects[0]?.id??null};});
- if(f.id==='new-form'){const id=state.forms.newId||uid();const imported=!!state.forms.entry?.pending,from=state.forms.entry?.from||entryInfo.from;const r=update(s=>{createProject(s,{id,...d});s.forms.new={};s.forms.newId=null;if(s.forms.entry)s.forms.entry.pending=false;s.route={view:'dashboard',projectId:id};});if(r.ok)track('project_create',{from,imported},TRACK);}
+ if(f.id==='new-form'){const id=state.forms.newId||uid();const imported=!!state.forms.entry?.pending,from=state.forms.entry?.from||entryInfo.from;const r=update(s=>{createProject(s,{id,...d});s.forms.new={};s.forms.newId=null;if(s.forms.entry)s.forms.entry.pending=false;s.route={view:'dashboard',projectId:id};});if(r.ok){firstGuide.onCreated();track('project_create',{from,imported},TRACK);}}
  if(f.id==='interview-form'){update(s=>{const project=projectById(s,p.id);project.draft[QUESTIONS[project.step].key]=d.answer.trim()||'아직 모르겠어요';if(project.step===5)s.route.view='review';else project.step++;});}
  if(f.id==='review-form'){const first=!p.context;const r=update(s=>{const rows=confirmContext(s,p.id,d);s.route.view=first?'born':'dashboard';return rows;});if(r.ok&&!first)reward('아이디어 요약을 갱신했어요.','새 가설 범위의 근거는 다시 확인해요. 이전 탐구 이력은 남아 있어요.',r.result);}
  if(f.id==='quiz-form'){const r=update(s=>submitQuiz(s,{concept:selectedConcept,variant:quizVariant,choice:d.choice,reason:d.reason,application:quizApplication}),false);if(r.ok){quizResult=r.result;render();if(r.result.delta)reward('내 배움이 한 걸음 자랐어요.','개념을 이해하고 다음 행동에 연결할 준비를 했어요.',[{subject:'user',stat:selectedConcept,delta:r.result.delta}]);}}
@@ -125,7 +128,7 @@ document.addEventListener('submit',e=>{e.preventDefault();const f=e.target,d=for
 });
 function cleanName(name){return String(name||'메이커').trim().slice(0,24)||'메이커';}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-action],[data-view],[data-guide],[data-task],[data-review]');if(!b)return;e.preventDefault();if(taskUI.click(b)||reviewUI.click(b)||guided.click(b))return;const a=b.dataset.action,p=pNow();if(a==='repair-save'){saveFault=false;b.closest('.save-error-banner')?.remove();toast('저장 실패 재현을 해제했어요. 현재 내용을 다시 저장해 주세요.');return;}if(b.dataset.view){const v=b.dataset.view;go(v);return;}
- if(['projects','new','dashboard','details','interview','learning','review','evidence','decision','actions','journal','settings'].includes(a)){go(a);return;}
+ if(['projects','new','dashboard','details','interview','learning','review','evidence','decision','actions','journal','settings'].includes(a)){if(a==='new'&&firstGuide.step===0){firstGuide.onNew();return;}go(a);return;}
  if(a==='home'){if(state.user)go('dashboard');return;}
  if(a==='sample')update(s=>{s.user??={id:'demo-user',name:'메이커'};const project=seedSample(s);s.route={view:'dashboard',projectId:project.id};});
  if(a==='open-project'){const project=state.projects.find(p=>p.id===b.dataset.id);go('details',project.id);}
@@ -147,4 +150,4 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-action],[d
  if(a==='logout')update(s=>{s.user=null;s.route={view:'welcome',projectId:s.route.projectId};});
  if(a==='reset'){if(confirm('이 브라우저에 저장된 Vencubator 기록을 모두 지울까요? 백업하지 않은 기록은 되돌릴 수 없어요.')){storage.reset();state=blankStore();loadError='';saveFault=false;render();}}
 });
-render();
+if(!firstGuide.start())render();
