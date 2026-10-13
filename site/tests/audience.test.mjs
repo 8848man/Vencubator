@@ -10,8 +10,10 @@ const blocked={getItem(){throw Error('blocked');},setItem(){throw Error('blocked
 
 test('AC-A01~03: first/remembered/dismissed/direct/hash routing matrix',()=>{
   assert.deepEqual(audienceRoute('/'),{current:'beginner',redirect:null,prompt:true});
+  assert.deepEqual(audienceRoute('/landing/'),{current:'beginner',redirect:null,prompt:true});
   for(const choice of ['beginner','experienced','tester','dismissed']) {
     const root=audienceRoute('/','',choice);
+    assert.deepEqual(audienceRoute('/landing/','',choice),root);
     assert.equal(root.prompt,false);
     assert.equal(root.redirect,['experienced','tester'].includes(choice)?AUDIENCE_PATHS[choice]:null);
     assert.equal(audienceRoute('/','#ask',choice).redirect,null);

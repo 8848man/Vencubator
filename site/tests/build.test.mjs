@@ -1,4 +1,4 @@
-// SPEC-009 r0.3 AC-S03 사이트 빌드: / = 랜딩 v3, /app/ = 앱
+// SPEC-019 r0.7 사이트 빌드: / = 첫 안내, /landing/ = 랜딩, /app/ = 앱
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
@@ -6,11 +6,12 @@ import { buildSite } from '../scripts/build.mjs';
 
 const D = p => new URL('../dist/' + p, import.meta.url);
 
-test('dist: 루트 랜딩 + 앱, 개발용 파일 제외', async () => {
+test('dist: 루트 첫 안내 + 별도 랜딩 + 앱, 개발용 파일 제외', async () => {
   const { index } = await buildSite();
-  for (const p of ['index.html', 'beginner/index.html', 'value/index.html', 'test/index.html', 'assets/audience/interact.mjs', 'app/index.html', 'app/app.mjs', 'app/entry.mjs', 'app/track.mjs', '_headers']) assert.ok(existsSync(D(p)), p);
+  for (const p of ['index.html', 'landing/index.html', 'beginner/index.html', 'value/index.html', 'test/index.html', 'assets/audience/interact.mjs', 'app/index.html', 'app/app.mjs', 'app/entry.mjs', 'app/track.mjs', '_headers']) assert.ok(existsSync(D(p)), p);
   for (const p of ['app/tests', 'app/server.mjs', 'app/README.md']) assert.ok(!existsSync(D(p)), `${p}가 배포에 포함됨`);
-  assert.ok(index.includes('href="./app/?from=v31"'), '랜딩 → 앱 링크');
+  assert.ok(index.includes('src="/v3.3/flow.mjs"'), '루트 → 첫 안내 모듈');
+  assert.ok(index.includes('href="/landing/"'), '첫 안내 → 랜딩 링크');
   assert.ok(!/href="[^"]*(docs\/|\.md")/.test(index), '공개 빌드에 내부 문서 링크');
   assert.ok(!/http:\/\/127\.0\.0\.1/.test(index), '로컬 주소가 남음');
   assert.ok(!/^\s*import\s/m.test(index) && !/^export\s/m.test(index));
@@ -19,8 +20,9 @@ test('dist: 루트 랜딩 + 앱, 개발용 파일 제외', async () => {
   assert.match(index.slice(0, index.indexOf('</head>')), /<meta name="google-site-verification" content="jwvBptKaMeO5PcMdZK0uI49if4qb5t_4OxF00X-FMJ8" \/>/, '루트 head에 Search Console 확인 태그');
   // 네이버 서치어드바이저 사이트 소유확인 — 사이트 빌드가 붙인다(랜딩 원본에는 없음).
   assert.match(index.slice(0, index.indexOf('</head>')), /<meta name="naver-site-verification" content="aed7135a527e86d697bfe5a53a86112012033673" \/>/, '루트 head에 네이버 서치어드바이저 확인 태그');
-  assert.ok(index.includes("variant: 'v31'") && index.includes('vencubator.landing.v31'));
-  assert.ok(index.includes('아이디어는 있는데, 뭘 먼저 확인해야 할지 몰라 멈춰 있나요?'));
+  const landing=readFileSync(D('landing/index.html'),'utf8');
+  assert.ok(landing.includes("variant: 'v31'") && landing.includes('vencubator.landing.v31'));
+  assert.ok(landing.includes('아이디어는 있는데, 뭘 먼저 확인해야 할지 몰라 멈춰 있나요?'));
   assert.equal(readFileSync(D('_headers'),'utf8'), '/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: DENY\n');
   const app = readFileSync(D('app/index.html'), 'utf8');
   assert.ok(!/(href|src)="\/(?!\/)/.test(app), '앱에 루트 기준 경로');
@@ -39,13 +41,13 @@ test('확인 메타: 없으면 head 앞쪽에 한 번만, 있으면 그대로', 
   assert.throws(() => withVerificationMetas('<body></body>'));
 });
 
-test('SPEC-018 sitemap.xml·robots.txt: canonical 랜딩·앱 네 페이지, robots에 사이트맵 위치', async () => {
+test('SPEC-019 sitemap.xml·robots.txt: 첫 안내·랜딩·앱 공개 경로', async () => {
   const { sitemapXml, SITE_ORIGIN } = await import('../scripts/build.mjs');
   assert.equal(SITE_ORIGIN, 'https://vencubator.vercel.app');
   const xml = readFileSync(D('sitemap.xml'), 'utf8');
   assert.match(xml, /^<\?xml version="1\.0" encoding="UTF-8"\?>\n<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
   const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
-  assert.deepEqual(locs, ['https://vencubator.vercel.app/', 'https://vencubator.vercel.app/app/', 'https://vencubator.vercel.app/value/', 'https://vencubator.vercel.app/test/']);
+  assert.deepEqual(locs, ['https://vencubator.vercel.app/', 'https://vencubator.vercel.app/landing/', 'https://vencubator.vercel.app/app/', 'https://vencubator.vercel.app/value/', 'https://vencubator.vercel.app/test/']);
   assert.match(xml, /<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/);
   assert.match(sitemapXml('2026-01-02'), /<lastmod>2026-01-02<\/lastmod>/);
   const robots = readFileSync(D('robots.txt'), 'utf8');
@@ -67,7 +69,7 @@ test('계측 모듈 사본이 원본과 같다', () => {
 });
 
 test('AC-A11 public audience paths preserve metadata, canonical and correct app target',()=>{
-  for(const [path,canonical,from] of [['beginner','/','v31'],['value','/value/','value'],['test','/test/','test']]) {
+  for(const [path,canonical,from] of [['landing','/landing/','v31'],['beginner','/landing/','v31'],['value','/value/','value'],['test','/test/','test']]) {
     const html=readFileSync(D(path+'/index.html'),'utf8');
     assert.ok(html.includes(`rel="canonical" href="https://vencubator.vercel.app${canonical}"`));
     assert.ok(html.includes('name="google-site-verification"'));

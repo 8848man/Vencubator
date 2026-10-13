@@ -1,4 +1,4 @@
-// SPEC-009 r0.3 AC-S05 브라우저 시나리오: / 랜딩 v3.1 → 이름표 → 앱 새 프로젝트 칸 (Playwright 필요, 없으면 건너뜀)
+// SPEC-009 r0.3 AC-S05 브라우저 시나리오: /landing/ v3.1 → 이름표 → 앱 새 프로젝트 칸 (Playwright 필요, 없으면 건너뜀)
 // 사용: node site/scripts/build.mjs && node site/scripts/qa.mjs [--shots]
 // QA_FONT_ROUTE=<모듈 경로>: 웹폰트 CDN이 막힌 환경에서 폰트 요청을 대체하는 routeFonts(page) (선택)
 import { resolve, dirname } from 'node:path';
@@ -25,15 +25,16 @@ const events = page => page.evaluate(() => JSON.parse(localStorage.getItem('venc
 try {
   for (const vp of [{ n: 'desktop', width: 1440, height: 900 }, { n: 'mobile', width: 390, height: 844 }]) {
     const ctx = await browser.newContext({ viewport: vp });
+    await ctx.addInitScript(() => localStorage.setItem('vencubator.firstFlow.v1', JSON.stringify({completedVersion:1})));
     const page = await ctx.newPage(); const errors = []; page.on('pageerror', e => errors.push(e.message));
     if (routeFonts) await routeFonts(page);
     const shot = async n => { if (shots) await page.screenshot({ path: resolve(SITE, `qa-shots/${vp.n}-${n}.png`) }); };
 
-    // 1) / 는 곧바로 랜딩 v3.1 (리디렉션 없음), UTM 유지
-    await page.goto(BASE + '/?utm_source=geeknews&utm_medium=community'); await page.waitForTimeout(700);
+    // 1) /landing/ 는 랜딩 v3.1, UTM 유지
+    await page.goto(BASE + '/landing/?utm_source=geeknews&utm_medium=community'); await page.waitForTimeout(700);
     // SPEC-018: optional first-visit chooser precedes the preserved beginner flow.
     await page.locator('[data-aud-close]').last().click();
-    check(`${vp.n}: / = 랜딩 v3.1`, new URL(page.url()).pathname === '/' && await page.locator('form.l3-tag').count() === 1, page.url());
+    check(`${vp.n}: /landing/ = 랜딩 v3.1`, new URL(page.url()).pathname === '/landing/' && await page.locator('form.l3-tag').count() === 1, page.url());
     const utm = await page.evaluate(() => sessionStorage.getItem('vencubator.utm.v1'));
     check(`${vp.n}: UTM 보관`, utm && utm.includes('geeknews'), utm);
     const text = await page.evaluate(() => document.body.innerText);
