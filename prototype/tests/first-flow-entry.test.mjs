@@ -16,6 +16,7 @@ test('transfer, prior app data and completed marker bypass introduction',()=>{
  assert.equal(firstFlowDestination({...args,state:{...blank,projects:[{id:'old'}]}}),null);
  assert.equal(firstFlowDestination({...args,state:{...blank,forms:{onboarding:{completed:true}}}}),null);
  assert.equal(firstFlowDestination({...args,storage:storage('{"completedVersion":1}')}),null);
+  assert.equal(firstFlowDestination({...args,storage:storage('{broken')}),'/v3.3/');
 });
 test('storage failure, failed app load and standalone prototype do not redirect',()=>{
  assert.equal(firstFlowDestination({...args,storage:{getItem(){throw Error('denied')}}}),null);
