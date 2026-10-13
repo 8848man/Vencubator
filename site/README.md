@@ -3,16 +3,19 @@
 명세: [SPEC-018 r0.1](../docs/specs/SPEC-018-audience-landings.md) · 기존 기반 [SPEC-009](../docs/specs/SPEC-009-site.md) · 배포: [DEPLOY.md](DEPLOY.md)
 
 ```
-/        첫 방문 선택창 · 닫으면 v3.1 · 재방문은 기억한 설명
+/        넓은 화면: 첫 방문 선택창·재방문 선호 / 600px 이하: 앱 직접 진입
 /beginner/  기존 v3.1 → /app/?from=v31 (이름표 문장만 인계)
 /value/    가치 중심 컴팩트 랜딩 → /app/?from=value
 /test/     제품 테스트·의견 안내 → /app/?from=test
 /app/    앱(체험판)
+/v3.3/  모바일 첫 시작 설명·미리 체험 (독립 랜딩)
 ```
+
+600px 이하의 `/` 방문은 `/app/`으로 직접 이동합니다. 직접 연 `/v3.3/` 및 기존 독자별 경로는 유지됩니다. 앱을 처음 실행할 때만 온보딩 질문이 보이고, 완료된 기존 사용자는 저장한 앱 화면으로 돌아갑니다. [SPEC-019](../docs/specs/SPEC-019-mobile-entry.md).
 
 ## 실행
 
-- Windows: `site/start.cmd` 더블클릭 → 빌드 후 http://127.0.0.1:4180/ 이 열린다.
+- Windows: `site/start.cmd` 더블클릭 → 빌드 후 http://127.0.0.1:4180/ 이 열린다. PC 창에서 모바일 흐름을 보려면 브라우저 폭을 600px 이하로 조절하거나 `/app/`을 직접 연다.
 - 직접: `node site/scripts/build.mjs && node site/scripts/serve.mjs`
 - 앱 점검 도구(AI 응답 지연·실패, 저장 실패 재현): `http://127.0.0.1:4180/app/?lab=1` → 설정
 - 쌓인 이벤트 보기: 개발자 도구 콘솔에서 `JSON.parse(localStorage.getItem('vencubator.events.v1'))`
