@@ -1,8 +1,8 @@
 # HANDOFF
 
-CP-0102 / STATE revision 102
+CP-0103 / STATE revision 103
 
-L08-W01 in_progress · AUTH-030 · SPEC-019 r0.1 · 체크리스트 1/5. 다음 행동: `prototype/onboarding.mjs`와 `prototype/app.mjs` 첫 사용 흐름 구현. 사용자 권한 허락 후 `gitflow start --carry` 성공. 기존 L07 사용자 수정 보존. 이후 검증·CP·finish 필요.
+L08-W01 제품 작업 completed · AUTH-030 · SPEC-019 r0.1 · 체크리스트 4/5. 앱80·사이트31·독립 랜딩145·gitflow7 통과, 브라우저 첫 사용·모바일 경로 확인. 로컬 미리보기 `/v3.3/`와 `/app/`. 다음 행동: `gitflow finish --pr` 또는 기존 `site/audience/render.mjs` 사용자 수정·미추적 자료를 보존한 PR 인계. main 병합·운영 배포 없음.
 
 이전 L07 상태:
 

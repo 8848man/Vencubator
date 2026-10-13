@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "revision": 102,
-  "updated_at": "2026-10-13T06:32:16.399Z",
+  "revision": 103,
+  "updated_at": "2026-10-13T06:49:07.692Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "stage": "S1",
-    "phase": "L08",
-    "work_item": "L08-W01",
-    "owner": "Codex",
-    "run_state": "in_progress"
+    "stage": null,
+    "phase": null,
+    "work_item": null,
+    "owner": null,
+    "run_state": "idle"
   },
   "next": {
     "stage": "S1",
     "phase": "L08",
     "work_item": "L08-W01",
-    "action": "체크리스트 2: 앱 온보딩 구현",
+    "action": "gitflow finish --pr 또는 깨끗한 체크아웃에서 push/PR 인계",
     "condition": "AUTH-030"
   },
   "checkpoint": {
-    "id": "CP-0102",
-    "path": "docs/execution/checkpoints/CP-0102.md",
-    "manifest": "docs/execution/checkpoints/CP-0102.manifest.json"
+    "id": "CP-0103",
+    "path": "docs/execution/checkpoints/CP-0103.md",
+    "manifest": "docs/execution/checkpoints/CP-0103.manifest.json"
   },
   "git": {
     "branch": "w/L08-W01-mobile-entry-onboarding",
     "base": "origin/main",
-    "head": "3aa91eb0585655d9cb60a98e377c576a60b5d78b",
+    "head": "b7a6a82",
     "dirty": true,
     "committed": false,
     "pr": null,
@@ -36,7 +36,7 @@
       "status": "not_started",
       "checked_at": null
     },
-    "note": "사용자 허락 후 gitflow start --carry 성공. L07 사용자 수정은 미커밋으로 보존."
+    "note": "L08 제품 코드·검증 커밋. 이전 site/audience/render.mjs 사용자 수정 및 선행 미추적 파일 보존. finish/PR 대기."
   },
   "stages": {
     "S1": {
@@ -54,7 +54,8 @@
         "P07",
         "P08",
         "L05",
-        "L07"
+        "L07",
+        "L08"
       ]
     },
     "S2": {
@@ -497,17 +498,19 @@
     },
     "L08": {
       "stage": "S1",
-      "status": "in_progress",
+      "status": "completed",
       "depends_on": [
         "L07"
       ],
-      "validation_status": "not_run",
+      "validation_status": "passed",
       "gate_status": "not_evaluated",
       "work_item_ids": [
         "L08-W01"
       ],
-      "validation_refs": [],
-      "completed_checkpoint": null
+      "validation_refs": [
+        "docs/validation/VAL-019-mobile-entry.md"
+      ],
+      "completed_checkpoint": "CP-0103"
     }
   },
   "work_items": {
@@ -1287,13 +1290,15 @@
     },
     "L08-W01": {
       "phase": "L08",
-      "status": "in_progress",
+      "status": "completed",
       "authorization_ref": "AUTH-030",
       "definition_path": "docs/execution/work-items/L08-W01.md",
-      "checklist": "1/5",
-      "validation_status": "not_run",
-      "validation_refs": [],
-      "completed_checkpoint": null
+      "checklist": "4/5",
+      "validation_status": "passed",
+      "validation_refs": [
+        "docs/validation/VAL-019-mobile-entry.md"
+      ],
+      "completed_checkpoint": "CP-0103"
     }
   }
 }

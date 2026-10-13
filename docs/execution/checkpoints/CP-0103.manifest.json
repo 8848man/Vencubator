@@ -1,0 +1,87 @@
+{
+  "checkpoint_id": "CP-0103",
+  "target_state_revision": 103,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "path": "README.md",
+      "exists": true,
+      "sha256": "FBD34B033BCC5D2EB3049F1966911BD663B909F325EEDD2DCD35811CA920E4C3"
+    },
+    {
+      "path": "site/README.md",
+      "exists": true,
+      "sha256": "27D32AEA2531AB5905E3025ACCE83283C707D4101B8D286AC8C39CF1347E17D3"
+    },
+    {
+      "path": "site/scripts/build.mjs",
+      "exists": true,
+      "sha256": "AB93822DDA0F5C6E629376F8AF0EA1ED07EDC86BF6DE0DC00578958E86F3341C"
+    },
+    {
+      "path": "site/tests/mobile-entry.test.mjs",
+      "exists": true,
+      "sha256": "B6C6371DFF497C75DD18BDDD5D61D9B788026E0D71A74E72F342FDD0F1E41A3F"
+    },
+    {
+      "path": "landing-v3.3/index.html",
+      "exists": true,
+      "sha256": "1A6D0DA0AE42435BDCA67C71CD1ED669198A0E5551D1AADFADCA1490D2C04DCA"
+    },
+    {
+      "path": "landing-v3.3/README.md",
+      "exists": true,
+      "sha256": "9179682BC4F1566BBA8C40EE8796A0F8C01941FC5B9B1047D77DF172BAB17516"
+    },
+    {
+      "path": "prototype/app.mjs",
+      "exists": true,
+      "sha256": "DE3AB7C143CB95346DA477ADC7689362382CB4D2DFF638B2348FD41086591CDD"
+    },
+    {
+      "path": "prototype/index.html",
+      "exists": true,
+      "sha256": "869683F613DBA2FC7A7C6456AAC490CB1D616D8484003697AD004635D830739C"
+    },
+    {
+      "path": "prototype/onboarding.mjs",
+      "exists": true,
+      "sha256": "899D85AF826DC87D6D7A2D714EA8DF912235A07F8FD4CFBA15CD5881C6B51E28"
+    },
+    {
+      "path": "prototype/onboarding.css",
+      "exists": true,
+      "sha256": "AB9213E0B9850DB0C0FB85B5FE2FC0534375AA3F4BA6F6F29F2C7EE67CA1073B"
+    },
+    {
+      "path": "prototype/tests/onboarding.test.mjs",
+      "exists": true,
+      "sha256": "57D96677A727144BC92291B600F6A084C9E8A2ED9BA3A3E84AE6A22112146E17"
+    },
+    {
+      "path": "docs/specs/SPEC-019-mobile-entry.md",
+      "exists": true,
+      "sha256": "2FB7C2F9BEC95DC703BC36890B09C9721B855D5850E470EE97696D1BD1E310D5"
+    },
+    {
+      "path": "docs/plans/stages/STAGE-01-prototype.md",
+      "exists": true,
+      "sha256": "3BD52A221C6D3BDC1B2D5DD42D4302F4FB0520D99D1B531D6B3184E54B019595"
+    },
+    {
+      "path": "docs/process/APPROVALS.md",
+      "exists": true,
+      "sha256": "255BE138F658E0F3A083EF0596B120B613F6F8FDAFF305904BF9A8C151393D29"
+    },
+    {
+      "path": "docs/validation/VAL-019-mobile-entry.md",
+      "exists": true,
+      "sha256": "5AB14CF36C8D04EB86E55F929D696B4E349F139DEECA5280FB098924B1A4E9D7"
+    },
+    {
+      "path": "docs/execution/checkpoints/CP-0103.md",
+      "exists": true,
+      "sha256": "D7BA8975F69926DC8A9C9D6CFA0B5B2F8D0DC4B0729BC4127CEBC99E4E9205F8"
+    }
+  ]
+}
