@@ -1,0 +1,87 @@
+{
+  "checkpoint_id": "CP-0111",
+  "target_state_revision": 111,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "exists": true,
+      "path": "docs/execution/checkpoints/CP-0111.md",
+      "sha256": "713E1B4B48DB68840D0AAD162F10DE60CE0D99C743CB738248919E64C7780037"
+    },
+    {
+      "exists": true,
+      "path": "docs/process/APPROVALS.md",
+      "sha256": "759F292D438BE8B72D6477C8FEA0F5BDAFBA3F7B4FE30F71041049396728C390"
+    },
+    {
+      "exists": true,
+      "path": "docs/specs/SPEC-019-mobile-entry.md",
+      "sha256": "E860AE23F6694DF092560F801F754955F1E5E8A84F4E4F48829F04AEDFACBA18"
+    },
+    {
+      "exists": true,
+      "path": "docs/plans/stages/STAGE-01-prototype.md",
+      "sha256": "9C228232249EA8BFC0AE3F13E8E776A35640CBFE7C623C0459E1AE3F9A88F2DA"
+    },
+    {
+      "exists": true,
+      "path": "docs/adr/ADR-007-first-flow-auth-state.md",
+      "sha256": "FBBF47C2BC4BDD9FC3FE027900E21BC5C397181225A81877521B0298DFCA2149"
+    },
+    {
+      "exists": true,
+      "path": "landing-v3.3/experience/index.html",
+      "sha256": "58317FC7A397AE23DD58AAF3EEC6D17770AC2A396B4D12372EA517CC872BB9FB"
+    },
+    {
+      "exists": true,
+      "path": "landing-v3.3/experience/style.css",
+      "sha256": "0D384FF8F6E309CA3D77FAD778A1C8106A8855D6B37BF0E63846F7C90B8C0EAB"
+    },
+    {
+      "exists": true,
+      "path": "landing-v3.3/experience/flow.mjs",
+      "sha256": "7DE816A9E710653E146AFCA74B48B03D17A84D7EA4069FF12F4172984684A556"
+    },
+    {
+      "exists": true,
+      "path": "prototype/first-project-guide.mjs",
+      "sha256": "3BE3688829DDA893F6329A2298D934E8204494766B4F6C13B1D4EBC2DBB1E3E1"
+    },
+    {
+      "exists": true,
+      "path": "prototype/first-project-guide.css",
+      "sha256": "CA4747615606DFDEEEC91D6EAF3EC1484AD0C796C3871F6D85822F465604A6BA"
+    },
+    {
+      "exists": true,
+      "path": "prototype/app.mjs",
+      "sha256": "A0CD90F23E5918013E2EC671D116EAE6D29FB0F47DB3F7746A67B6CC8C1BA62E"
+    },
+    {
+      "exists": true,
+      "path": "prototype/index.html",
+      "sha256": "25F4C4410A59DE2A6895E1405BD375FDE80184252D3E163F8ABEA506B10E9E22"
+    },
+    {
+      "exists": true,
+      "path": "site/scripts/build.mjs",
+      "sha256": "61D86E155EB985CE34CC96461615E4E42FE2453BF488EA1FA3DE9C78B899C5B3"
+    },
+    {
+      "exists": true,
+      "path": "site/tests/mobile-entry.test.mjs",
+      "sha256": "8AA6047B1F36F6098FA90B9E461C8BCE84B22C92B99C3E0742754E7BF7CD12DA"
+    },
+    {
+      "exists": true,
+      "path": "prototype/tests/first-project-guide.test.mjs",
+      "sha256": "D3E8EB4FA738A9FB4D34A6EA3B4CE8B3096ECF9B45784DC23E95E2801C9365F4"
+    },
+    {
+      "exists": true,
+      "path": "docs/validation/VAL-021-guided-first-project.md",
+      "sha256": "40A0AE54970F937CFE85A35D46A825C6B6C73AA5CD873FB764E97DA18576057B"
+    }
+  ]
+}

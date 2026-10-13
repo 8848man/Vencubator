@@ -1,5 +1,5 @@
 # HANDOFF
 
-CP-0110 / STATE revision 110
+CP-0111 / STATE revision 111
 
-L08-W03 체크리스트 5/6. 브랜치 `w/L08-W03-guided-first-project`는 미병합 W02 위에 쌓였다. AUTH-032 / SPEC-019 r0.4에 따라 체험·코치마크 구현, VAL-021 검증 완료. 로컬 4190 서버와 IAB 체험 페이지가 열려 있다. 다음 첫 행동: `node scripts/gitflow.mjs finish --pr`; 기존 `site/audience/render.mjs` 사용자 수정과 선행 미추적 자료를 커밋·push에서 제외한다. 실제 인증·운영 배포 미실행.
+L08-W03 체크리스트 6/6, PR #18 게시. 브랜치 `w/L08-W03-guided-first-project`는 미병합 W02 위에 쌓였다. AUTH-032 / SPEC-019 r0.4에 따라 체험·코치마크 구현, VAL-021 검증 완료. 로컬 4190 서버 종료. 사용자가 지정한 주소는 4180이며 브라우저 접근 정책으로 해당 화면을 직접 확인하지 못했다. 다음 첫 행동: 사용자 PR #16→#17→#18 순서 검토·병합 판단. 기존 `site/audience/render.mjs` 사용자 수정과 선행 미추적 자료는 커밋·push에서 제외했다. 실제 인증·운영 배포 미실행.
