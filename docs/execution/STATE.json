@@ -1,42 +1,42 @@
 {
   "schema_version": 1,
-  "revision": 111,
-  "updated_at": "2026-10-13T14:56:19.000Z",
+  "revision": 112,
+  "updated_at": "2026-10-13T16:00:00.000Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "stage": null,
-    "phase": null,
-    "work_item": null,
-    "owner": null,
-    "run_state": "idle"
+    "stage": "S1",
+    "phase": "L08",
+    "work_item": "L08-W04",
+    "owner": "Codex",
+    "run_state": "in_progress"
   },
   "next": {
     "stage": "S1",
     "phase": "L08",
-    "work_item": null,
-    "action": "PR #16→#17→#18 순서로 검토·병합 여부 결정; 실제 인증 구현 범위는 별도 확정",
-    "condition": "사용자 PR 검토 및 다음 작업 승인"
+    "work_item": "L08-W04",
+    "action": "SPEC-019 r0.5 화면 순서·아이디어 없음 분기 작성",
+    "condition": "AUTH-033와 W04 체크리스트 1 완료"
   },
   "checkpoint": {
-    "id": "CP-0111",
-    "path": "docs/execution/checkpoints/CP-0111.md",
-    "manifest": "docs/execution/checkpoints/CP-0111.manifest.json"
+    "id": "CP-0112",
+    "path": "docs/execution/checkpoints/CP-0112.md",
+    "manifest": "docs/execution/checkpoints/CP-0112.manifest.json"
   },
   "git": {
-    "branch": "w/L08-W03-guided-first-project",
-    "base": "w/L08-W02-first-flow-login-gate",
-    "head": "959659e",
+    "branch": "w/L08-W04-reference-inspired-first-flow",
+    "base": "w/L08-W03-guided-first-project",
+    "head": "d70411c",
     "dirty": true,
     "committed": true,
-    "pr": "https://github.com/8848man/Vencubator/pull/18",
+    "pr": null,
     "merged_sha": null,
     "deploy": {
       "target": "vercel-production",
       "status": "not_started",
       "checked_at": null
     },
-    "note": "L08-W03 제품·검증 완료 및 PR #18 게시. 기존 사용자 수정·미추적 보존. 4180 화면 직접 확인은 브라우저 정책으로 제한."
+    "note": "L08-W04 시작. 기존 사용자 수정·미추적 보존. 제품 코드 미변경."
   },
   "stages": {
     "S1": {
@@ -498,7 +498,7 @@
     },
     "L08": {
       "stage": "S1",
-      "status": "completed",
+      "status": "in_progress",
       "depends_on": [
         "L07"
       ],
@@ -507,7 +507,8 @@
       "work_item_ids": [
         "L08-W01",
         "L08-W02",
-        "L08-W03"
+        "L08-W03",
+        "L08-W04"
       ],
       "validation_refs": [
         "docs/validation/VAL-019-mobile-entry.md",
@@ -1327,6 +1328,16 @@
       ],
       "checklist": "6/6; PR #18 게시",
       "completed_checkpoint": "CP-0111"
+    },
+    "L08-W04": {
+      "phase": "L08",
+      "status": "in_progress",
+      "authorization_ref": "AUTH-033",
+      "definition_path": "docs/execution/work-items/L08-W04.md",
+      "validation_status": "not_run",
+      "validation_refs": [],
+      "checklist": "1/6",
+      "completed_checkpoint": null
     }
   }
 }

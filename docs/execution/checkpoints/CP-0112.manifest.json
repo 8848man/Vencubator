@@ -1,0 +1,42 @@
+{
+  "checkpoint_id": "CP-0112",
+  "target_state_revision": 112,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "exists": true,
+      "path": "docs/execution/checkpoints/CP-0112.md",
+      "sha256": "33C71EBDA9D54D95EABB41215538E981717B9EEB9F55E77F32B3F0EACA6773FF"
+    },
+    {
+      "exists": true,
+      "path": "docs/process/APPROVALS.md",
+      "sha256": "F39162A2A28ABE7AB27F65A93389DBD003D3D0F16CBDFA17DCBCE3AE3313516A"
+    },
+    {
+      "exists": true,
+      "path": "docs/specs/SPEC-019-mobile-entry.md",
+      "sha256": "E860AE23F6694DF092560F801F754955F1E5E8A84F4E4F48829F04AEDFACBA18"
+    },
+    {
+      "exists": true,
+      "path": "landing-v3.3/experience/flow.mjs",
+      "sha256": "7DE816A9E710653E146AFCA74B48B03D17A84D7EA4069FF12F4172984684A556"
+    },
+    {
+      "exists": true,
+      "path": "landing-v3.3/experience/index.html",
+      "sha256": "58317FC7A397AE23DD58AAF3EEC6D17770AC2A396B4D12372EA517CC872BB9FB"
+    },
+    {
+      "exists": true,
+      "path": "landing-v3.3/experience/style.css",
+      "sha256": "0D384FF8F6E309CA3D77FAD778A1C8106A8855D6B37BF0E63846F7C90B8C0EAB"
+    },
+    {
+      "exists": true,
+      "path": "prototype/first-project-guide.mjs",
+      "sha256": "3BE3688829DDA893F6329A2298D934E8204494766B4F6C13B1D4EBC2DBB1E3E1"
+    }
+  ]
+}
