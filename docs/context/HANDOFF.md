@@ -7,3 +7,7 @@ L08-W05 체크리스트 7/7, PR #20 게시. w/L08-W05-connected-first-flow는 W0
 
 STATE revision 118, `w/L08-W06-tutorial-main-route`, 체크리스트 1/5. 다음: SPEC-019 r0.7와 Stage 경로 계약, 이어서 정적 빌드·앱 첫 실행 변경. 기존 `site/audience/render.mjs` 수정과 미추적 자료를 제외한다.
 
+# CP-0119 / L08-W06 검증 경계
+
+STATE revision 119, 체크리스트 4/5, `w/L08-W06-tutorial-main-route`. SPEC-019 r0.7·VAL-024 확인. 앱 87/87, 사이트 32/32, 레퍼런스 1/1, 빌드 통과. 다음은 PR 게시와 완료 CP. 4180 직접 조작 미실행; `site/audience/render.mjs` 사용자 수정·미추적 제외.
+

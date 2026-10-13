@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 118,
-  "updated_at": "2026-10-13T21:39:29.0269434Z",
+  "revision": 119,
+  "updated_at": "2026-10-13T21:44:41.4222456Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -9,24 +9,24 @@
     "stage": "S1",
     "phase": "L08",
     "work_item": "L08-W06",
-    "run_state": "in_progress"
+    "run_state": "validating"
   },
   "next": {
-    "action": "SPEC-019 r0.7과 Stage 경로 계약 작성",
+    "action": "L08-W06 PR 게시 및 완료 CP",
     "stage": "S1",
     "phase": "L08",
     "work_item": "L08-W06",
     "condition": "AUTH-035"
   },
   "checkpoint": {
-    "id": "CP-0118",
-    "path": "docs/execution/checkpoints/CP-0118.md",
-    "manifest": "docs/execution/checkpoints/CP-0118.manifest.json"
+    "id": "CP-0119",
+    "path": "docs/execution/checkpoints/CP-0119.md",
+    "manifest": "docs/execution/checkpoints/CP-0119.manifest.json"
   },
   "git": {
     "branch": "w/L08-W06-tutorial-main-route",
     "base": "w/L08-W05-connected-first-flow",
-    "head": "e967e23",
+    "head": "33596a2",
     "dirty": true,
     "committed": true,
     "pr": null,
@@ -36,7 +36,7 @@
       "status": "not_started",
       "checked_at": null
     },
-    "note": "L08-W06 시작, 기존 사용자 수정 보존"
+    "note": "제품·자동 검사 완료, PR 대기; 사용자 수정 제외"
   },
   "stages": {
     "S1": {
@@ -1359,13 +1359,15 @@
     },
     "L08-W06": {
       "phase": "L08",
-      "status": "in_progress",
+      "status": "validating",
       "authorization_ref": "AUTH-035",
       "definition_path": "docs/execution/work-items/L08-W06.md",
-      "validation_status": "not_run",
-      "validation_refs": [],
+      "validation_status": "passed",
+      "validation_refs": [
+        "docs/validation/VAL-024-tutorial-main-route.md"
+      ],
       "completed_checkpoint": null,
-      "checklist": "1/5"
+      "checklist": "4/5"
     }
   }
 }
