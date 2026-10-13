@@ -1,4 +1,4 @@
-// SPEC-009 r0.3 사이트 조립: site/dist/{index.html(랜딩 v3.1), app/}
+// SPEC-019 r0.7 사이트 조립: / 첫 안내, /landing/ 기존 랜딩, /app/ 앱
 // 사용: node site/scripts/build.mjs  → site/dist 폴더를 그대로 정적 호스팅에 올리면 된다
 import { mkdir, rm, readdir, copyFile, writeFile, readFile } from 'node:fs/promises';
 import { resolve, dirname, join } from 'node:path';
@@ -13,8 +13,8 @@ const DIST = resolve(SITE, 'dist');
 const APP_EXCLUDE = new Set(['tests', 'server.mjs', 'README.md', 'dist']);
 // L04-W09: 검색엔진 제출용. 운영 주소 기준 절대 URL(사이트맵 규칙).
 export const SITE_ORIGIN = 'https://vencubator.vercel.app';
-/** 공개 페이지: 랜딩(/)과 체험 앱(/app/). */
-export const SITEMAP_PATHS = ['/', '/app/', '/value/', '/test/'];
+/** 공개 페이지: 첫 안내(/), 별도 랜딩(/landing/), 체험 앱(/app/). */
+export const SITEMAP_PATHS = ['/', '/landing/', '/app/', '/value/', '/test/'];
 export function sitemapXml(date = new Date().toISOString().slice(0, 10)) {
   const urls = SITEMAP_PATHS.map(p => `  <url>\n    <loc>${SITE_ORIGIN}${p}</loc>\n    <lastmod>${date}</lastmod>\n  </url>\n`).join('');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}</urlset>\n`;
@@ -40,12 +40,12 @@ export function withVerificationMetas(html) {
 export const robotsTxt = () => `User-agent: *\nAllow: /\n\nSitemap: ${SITE_ORIGIN}/sitemap.xml\n`;
 
 // Compose the audience shell outside the preserved v3.1 source/build.
-export async function withAudienceShell(html, { root = false } = {}) {
-  if (!html.includes('rel="canonical"')) html = html.replace('</head>','<link rel="canonical" href="https://vencubator.vercel.app/"></head>');
+export async function withAudienceShell(html, { root = false, canonical = '/landing/' } = {}) {
+  if (!html.includes('rel="canonical"')) html = html.replace('</head>',`<link rel="canonical" href="${SITE_ORIGIN}${canonical}"></head>`);
   let bootstrap = '';
   if (root) {
     const state = (await readFile(resolve(SITE,'audience/state.mjs'),'utf8')).replace(/^export /gm,'');
-    bootstrap = `<script>(()=>{\n${state}\nif(window.matchMedia('(max-width: 600px)').matches){window.__audienceRedirect=true;location.replace('/app/'+safeSearch(location.search));return;}\nconst route=audienceRoute(location.pathname,location.hash,readChoice(browserStorage(window,'localStorage'),browserStorage(window,'sessionStorage')));\nif(route.redirect && performance.getEntriesByType('navigation')[0]?.type!=='back_forward'){window.__audienceRedirect=true;location.replace(route.redirect+safeSearch(location.search));}\n})();</script>`;
+    bootstrap = `<script>(()=>{\n${state}\nconst route=audienceRoute(location.pathname,location.hash,readChoice(browserStorage(window,'localStorage'),browserStorage(window,'sessionStorage')));\nif(route.redirect && performance.getEntriesByType('navigation')[0]?.type!=='back_forward'){window.__audienceRedirect=true;location.replace(route.redirect+safeSearch(location.search));}\n})();</script>`;
   }
   return html.replace('</head>',`<link rel="stylesheet" href="/assets/audience/tokens.css"><link rel="stylesheet" href="/assets/audience/style.css">${bootstrap}</head>`)
     .replace(/(<body[^>]*>)/,`$1${renderChooser('beginner')}`)
@@ -67,7 +67,10 @@ export async function buildSite() {
   try { await rm(DIST, { recursive: true, force: true }); } catch { /* 덮어쓰기 */ }
   await mkdir(DIST, { recursive: true });
   const original = await buildLanding({ public: true, outFile: resolve(DIST, 'index.html') });
-  const index = withVerificationMetas(await withAudienceShell(original,{root:true}));
+  await mkdir(resolve(DIST,'landing'),{recursive:true});
+  await writeFile(resolve(DIST,'landing/index.html'),withVerificationMetas(await withAudienceShell(original.replaceAll('./app/?from=v31','/app/?from=v31'),{root:true})));
+  const flowHtml = await readFile(resolve(REPO,'landing-v3.3/experience/index.html'),'utf8');
+  const index = withVerificationMetas(flowHtml.replace('href="./style.css"','href="/v3.3/style.css"').replace('src="./flow.mjs"','src="/v3.3/flow.mjs"').replace('</head>',`<link rel="canonical" href="${SITE_ORIGIN}/"></head>`));
   await writeFile(resolve(DIST, 'index.html'), index);
   await mkdir(resolve(DIST,'beginner'),{recursive:true});
   await writeFile(resolve(DIST,'beginner/index.html'),withVerificationMetas(await withAudienceShell(original.replaceAll('./app/?from=v31','/app/?from=v31'))));
@@ -86,12 +89,12 @@ export async function buildSite() {
   await writeFile(resolve(DIST, 'sitemap.xml'), sitemapXml());
   await writeFile(resolve(DIST, 'robots.txt'), robotsTxt());
   await writeFile(resolve(DIST, '_headers'), '/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: DENY\n');
-  const leftovers = (await readdir(DIST)).filter(n => !['index.html', 'app', 'beginner', 'value', 'test', 'v3.3', 'assets', '_headers', 'sitemap.xml', 'robots.txt'].includes(n));
+  const leftovers = (await readdir(DIST)).filter(n => !['index.html', 'landing', 'app', 'beginner', 'value', 'test', 'v3.3', 'assets', '_headers', 'sitemap.xml', 'robots.txt'].includes(n));
   return { index, leftovers };
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const r = await buildSite();
-  console.log(`site/dist 생성: 랜딩 ${(r.index.length / 1024).toFixed(1)} KB · app 복사`);
+  console.log(`site/dist 생성: 첫 안내 ${(r.index.length / 1024).toFixed(1)} KB · /landing/ · app 복사`);
   if (r.leftovers.length) console.warn(`주의: 이전 빌드 파일이 남아 있어요(${r.leftovers.join(', ')}). site/dist 를 지우고 다시 빌드한 뒤 배포하세요.`);
 }
