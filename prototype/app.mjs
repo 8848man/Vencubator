@@ -9,6 +9,7 @@ import {createReviewUI} from './review-ui.mjs';
 import {finishFieldTask} from './guided.mjs';
 import {onboardingView,advanceOnboarding,firstSuggestion} from './onboarding.mjs';
 import {createFirstProjectGuide} from './first-project-guide.mjs';
+import {firstFlowDestination} from './first-flow-entry.mjs';
 import {STATS,QUESTIONS,LESSONS,SAMPLE,LEVELS,EVIDENCE_LABELS} from './content.mjs';
 import {blankStore,projectById,createProject,confirmContext,seedSample,submitQuiz,chooseAction,commitEvidence,commitDecision,transact} from './domain.mjs';
 import {storageAdapter,interviewAdapter} from './adapters.mjs';
@@ -18,6 +19,8 @@ const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>
 const uid=()=>crypto.randomUUID();let saveFault=false,aiMode='normal',loadError='',pendingEvidence=null,lastReward=null,toastTimer;
 const storage=storageAdapter(localStorage,{fail:()=>saveFault});let state;
 try{state=storage.load();}catch(e){loadError=e.message;state=blankStore();}
+const firstFlowPath=firstFlowDestination({pathname:location.pathname,search:location.search,storage:localStorage,state,loadError});
+if(firstFlowPath){document.body.classList.add('first-flow-leaving');location.replace(firstFlowPath);}
 // SPEC-009 §5: 같은 사이트 랜딩에서 온 경우 문장을 새 프로젝트 입력칸에만 채운다. §4 계측(로컬 버퍼)
 const entryInfo=readEntry(location.search,localStorage),TRACK={page:'app'};let lastDone=null;
 track('app_open',{from:entryInfo.from},TRACK);
