@@ -45,7 +45,7 @@ export async function withAudienceShell(html, { root = false } = {}) {
   let bootstrap = '';
   if (root) {
     const state = (await readFile(resolve(SITE,'audience/state.mjs'),'utf8')).replace(/^export /gm,'');
-    bootstrap = `<script>(()=>{\n${state}\nconst route=audienceRoute(location.pathname,location.hash,readChoice(browserStorage(window,'localStorage'),browserStorage(window,'sessionStorage')));\nif(route.redirect && performance.getEntriesByType('navigation')[0]?.type!=='back_forward'){window.__audienceRedirect=true;location.replace(route.redirect+safeSearch(location.search));}\n})();</script>`;
+    bootstrap = `<script>(()=>{\n${state}\nif(window.matchMedia('(max-width: 600px)').matches){window.__audienceRedirect=true;location.replace('/app/'+safeSearch(location.search));return;}\nconst route=audienceRoute(location.pathname,location.hash,readChoice(browserStorage(window,'localStorage'),browserStorage(window,'sessionStorage')));\nif(route.redirect && performance.getEntriesByType('navigation')[0]?.type!=='back_forward'){window.__audienceRedirect=true;location.replace(route.redirect+safeSearch(location.search));}\n})();</script>`;
   }
   return html.replace('</head>',`<link rel="stylesheet" href="/assets/audience/tokens.css"><link rel="stylesheet" href="/assets/audience/style.css">${bootstrap}</head>`)
     .replace(/(<body[^>]*>)/,`$1${renderChooser('beginner')}`)
@@ -75,6 +75,8 @@ export async function buildSite() {
     await mkdir(resolve(DIST,path),{recursive:true});
     await writeFile(resolve(DIST,path,'index.html'),withVerificationMetas(renderAudiencePage(audience)));
   }
+  await mkdir(resolve(DIST,'v3.3'),{recursive:true});
+  await copyFile(resolve(REPO,'landing-v3.3/index.html'),resolve(DIST,'v3.3/index.html'));
   await mkdir(resolve(DIST,'assets/audience'),{recursive:true});
   for (const file of ['state.mjs','content.mjs','interact.mjs','tokens.css','style.css']) await copyFile(resolve(SITE,'audience',file),resolve(DIST,'assets/audience',file));
   await copyFile(resolve(SITE,'shared/track.mjs'),resolve(DIST,'assets/audience/track.mjs'));
@@ -83,7 +85,7 @@ export async function buildSite() {
   await writeFile(resolve(DIST, 'sitemap.xml'), sitemapXml());
   await writeFile(resolve(DIST, 'robots.txt'), robotsTxt());
   await writeFile(resolve(DIST, '_headers'), '/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: DENY\n');
-  const leftovers = (await readdir(DIST)).filter(n => !['index.html', 'app', 'beginner', 'value', 'test', 'assets', '_headers', 'sitemap.xml', 'robots.txt'].includes(n));
+  const leftovers = (await readdir(DIST)).filter(n => !['index.html', 'app', 'beginner', 'value', 'test', 'v3.3', 'assets', '_headers', 'sitemap.xml', 'robots.txt'].includes(n));
   return { index, leftovers };
 }
 
