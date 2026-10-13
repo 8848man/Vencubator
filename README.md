@@ -21,7 +21,7 @@ Vencubator는 자신의 아이디어를 발전시키며 배우고 행동하는 *
 
 ## 랜딩 페이지
 
-**모바일 첫 진입·랜딩 v3.3 (로컬 작업):** 사이트 `/`를 600px 이하에서 열면 앱 `/app/`으로 이동합니다. 앱 첫 실행은 짧은 튜토리얼과 맞춤 질문으로 시작하고, 기존 사용자의 기록은 바로 이어집니다. 독립 설명/체험 페이지 `/v3.3/`은 `node site/scripts/build.mjs` 다음 `node site/scripts/serve.mjs`로 볼 수 있습니다. [UX 가이드](docs/specs/SPEC-019-mobile-entry.md) · [검증](docs/validation/VAL-019-mobile-entry.md).
+**모바일 첫 진입·랜딩 v3.3 (로컬 작업):** 사이트 `/`와 `/v3.3/`을 600px 이하에서 열면 앱 `/app/`으로 이동합니다. 넓은 화면의 `/v3.3/`은 기존 랜딩과 독자 선택을 그대로 사용합니다. 앱 첫 실행은 짧은 튜토리얼과 맞춤 질문으로 시작합니다. [마이루틴 구조를 벤큐베이터에 맞춘 54장 흐름 체험](landing-v3.3/reference/index.html)은 별도 인터랙티브 HTML입니다. [UX 가이드](docs/specs/SPEC-019-mobile-entry.md) · [검증](docs/validation/VAL-019-mobile-entry.md).
 
 **독자별 공개 랜딩:** 사이트 루트(`/`)에서 입문·가치·제품 테스트 설명을 선택합니다. `/beginner/`는 기존 v3.1, `/value/`는 간결한 가치 설명, `/test/`는 제품 테스트 안내입니다. [SPEC-018](docs/specs/SPEC-018-audience-landings.md) · [검증](docs/validation/VAL-018-audience.md). 기존 독립 랜딩은 보존합니다.
 

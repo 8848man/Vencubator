@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>벤큐베이터 첫 시작 흐름 체험 · 마이루틴 구조 참고</title>
+  <meta name="description" content="마이루틴 스크린샷 54장의 화면 전개를 벤큐베이터의 아이디어 학습과 검증 흐름으로 번안한 인터랙티브 체험">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./flow.mjs"></script>
+</head>
+<body>
+  <a class="skip" href="#phone">체험 화면으로 건너뛰기</a>
+  <div class="workspace">
+    <aside class="research">
+      <p class="overline">VENCUBATOR / UX REFERENCE 01</p>
+      <h1>생각 하나가<br><em>첫 검증</em>이 되는<br>54개 화면.</h1>
+      <p class="intro">마이루틴의 첫 실행 화면 전개를 참고해, 벤큐베이터의 아이디어 정리·학습·고객 확인 흐름으로 다시 썼습니다.</p>
+      <div class="disclaimer">마이루틴의 <strong>구조를 분석한 벤큐베이터 UX 시뮬레이션</strong>입니다. 실제 앱 화면이나 검증된 추천 결과가 아닙니다. 여기서 고른 답은 저장되지 않습니다.</div>
+      <div class="stage-list" aria-label="흐름 구간">
+        <button data-jump="0"><span>01</span><strong>왜 시작하나요</strong><small>레퍼런스 01–07</small></button>
+        <button data-jump="7"><span>02</span><strong>내 아이디어의 지금</strong><small>08–19</small></button>
+        <button data-jump="19"><span>03</span><strong>배움과 확인의 관계</strong><small>20–25</small></button>
+        <button data-jump="25"><span>04</span><strong>맞춤 시작점</strong><small>26–34</small></button>
+        <button data-jump="34"><span>05</span><strong>첫 프로젝트 실습</strong><small>35–54</small></button>
+      </div>
+      <p class="research-foot">가져온 구조: 한 화면 한 질문 → 선택을 반영한 요약 → 앱의 핵심 행동을 직접 수행</p>
+      <a class="back-link" href="/v3.3/">← 벤큐베이터 랜딩으로</a>
+    </aside>
+    <main class="stage-area">
+      <div class="toolbar"><span id="phase-label">가치 소개</span><span id="frame-count">01 / 54</span></div>
+      <div class="phone-shell" id="phone" tabindex="-1" aria-label="벤큐베이터 첫 실행 흐름 시뮬레이션">
+        <div class="status"><span>3:08</span><span>●●● ▰</span></div>
+        <div class="phone-progress"><span id="progress-bar"></span></div>
+        <div class="screen" id="screen" aria-live="polite"></div>
+        <div class="phone-bottom"><button id="prev" type="button" aria-label="이전 화면">←</button><button id="next" type="button">다음</button></div>
+      </div>
+      <div class="outside-controls"><button id="reset" type="button">처음부터 다시</button><span>선택 카드를 누르고 다음으로 진행하세요. ← → 키도 사용할 수 있습니다.</span></div>
+    </main>
+  </div>
+</body>
+</html>
