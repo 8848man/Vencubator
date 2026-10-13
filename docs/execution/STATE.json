@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 112,
-  "updated_at": "2026-10-13T16:00:00.000Z",
+  "revision": 113,
+  "updated_at": "2026-10-13T15:28:17.000Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -9,24 +9,24 @@
     "phase": "L08",
     "work_item": "L08-W04",
     "owner": "Codex",
-    "run_state": "in_progress"
+    "run_state": "validating"
   },
   "next": {
     "stage": "S1",
     "phase": "L08",
     "work_item": "L08-W04",
-    "action": "SPEC-019 r0.5 화면 순서·아이디어 없음 분기 작성",
-    "condition": "AUTH-033와 W04 체크리스트 1 완료"
+    "action": "gitflow finish --pr 시도, dirty guard 시 handoff 후 W04 브랜치만 게시",
+    "condition": "제품 구현·VAL-022 자동 검사 통과, 체크리스트 5/6"
   },
   "checkpoint": {
-    "id": "CP-0112",
-    "path": "docs/execution/checkpoints/CP-0112.md",
-    "manifest": "docs/execution/checkpoints/CP-0112.manifest.json"
+    "id": "CP-0113",
+    "path": "docs/execution/checkpoints/CP-0113.md",
+    "manifest": "docs/execution/checkpoints/CP-0113.manifest.json"
   },
   "git": {
     "branch": "w/L08-W04-reference-inspired-first-flow",
     "base": "w/L08-W03-guided-first-project",
-    "head": "d70411c",
+    "head": "966d662",
     "dirty": true,
     "committed": true,
     "pr": null,
@@ -36,7 +36,7 @@
       "status": "not_started",
       "checked_at": null
     },
-    "note": "L08-W04 시작. 기존 사용자 수정·미추적 보존. 제품 코드 미변경."
+    "note": "L08-W04 제품·자동 검증 완료, 게시 전. 4180 수동 검증은 브라우저 정책으로 미실행. 기존 사용자 수정·미추적 보존."
   },
   "stages": {
     "S1": {
@@ -1331,12 +1331,12 @@
     },
     "L08-W04": {
       "phase": "L08",
-      "status": "in_progress",
+      "status": "validating",
       "authorization_ref": "AUTH-033",
       "definition_path": "docs/execution/work-items/L08-W04.md",
-      "validation_status": "not_run",
-      "validation_refs": [],
-      "checklist": "1/6",
+      "validation_status": "passed",
+      "validation_refs": ["docs/validation/VAL-022-reference-first-flow.md"],
+      "checklist": "5/6",
       "completed_checkpoint": null
     }
   }
