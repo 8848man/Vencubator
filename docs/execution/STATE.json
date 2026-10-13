@@ -1,42 +1,42 @@
 {
   "schema_version": 1,
-  "revision": 114,
-  "updated_at": "2026-10-13T15:31:58.000Z",
+  "revision": 115,
+  "updated_at": "2026-10-13T19:42:22.724Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "stage": null,
-    "phase": null,
-    "work_item": null,
-    "owner": null,
-    "run_state": "idle"
+    "run_state": "in_progress",
+    "stage": "S1",
+    "owner": "codex",
+    "work_item": "L08-W05",
+    "phase": "L08"
   },
   "next": {
+    "action": "SPEC-019 r0.6 앱 진입·브랜드 모션 계약 작성",
     "stage": "S1",
-    "phase": "L08",
-    "work_item": null,
-    "action": "4180 `/v3.3/` 체험 및 PR #16→#17→#18→#19 검토·병합 여부 결정",
-    "condition": "사용자 수동 체험·PR 검토"
+    "condition": "AUTH-034",
+    "work_item": "L08-W05",
+    "phase": "L08"
   },
   "checkpoint": {
-    "id": "CP-0114",
-    "path": "docs/execution/checkpoints/CP-0114.md",
-    "manifest": "docs/execution/checkpoints/CP-0114.manifest.json"
+    "id": "CP-0115",
+    "path": "docs/execution/checkpoints/CP-0115.md",
+    "manifest": "docs/execution/checkpoints/CP-0115.manifest.json"
   },
   "git": {
-    "branch": "w/L08-W04-reference-inspired-first-flow",
-    "base": "w/L08-W03-guided-first-project",
-    "head": "7e16c2c",
+    "branch": "w/L08-W05-connected-first-flow",
+    "base": "w/L08-W04-reference-inspired-first-flow",
+    "head": "207c526",
     "dirty": true,
     "committed": true,
-    "pr": "https://github.com/8848man/Vencubator/pull/19",
+    "pr": null,
     "merged_sha": null,
     "deploy": {
       "target": "vercel-production",
       "status": "not_started",
       "checked_at": null
     },
-    "note": "L08-W04 제품·자동 검증 완료 및 PR #19 게시. 4180 수동 검증은 브라우저 정책으로 미실행. 기존 사용자 수정·미추적 보존."
+    "note": "L08-W05 시작. 기존 사용자 수정 보존."
   },
   "stages": {
     "S1": {
@@ -498,7 +498,7 @@
     },
     "L08": {
       "stage": "S1",
-      "status": "completed",
+      "status": "in_progress",
       "depends_on": [
         "L07"
       ],
@@ -508,7 +508,8 @@
         "L08-W01",
         "L08-W02",
         "L08-W03",
-        "L08-W04"
+        "L08-W04",
+        "L08-W05"
       ],
       "validation_refs": [
         "docs/validation/VAL-019-mobile-entry.md",
@@ -1336,9 +1337,21 @@
       "authorization_ref": "AUTH-033",
       "definition_path": "docs/execution/work-items/L08-W04.md",
       "validation_status": "passed",
-      "validation_refs": ["docs/validation/VAL-022-reference-first-flow.md"],
+      "validation_refs": [
+        "docs/validation/VAL-022-reference-first-flow.md"
+      ],
       "checklist": "6/6; PR #19 게시",
       "completed_checkpoint": "CP-0114"
+    },
+    "L08-W05": {
+      "completed_checkpoint": null,
+      "definition_path": "docs/execution/work-items/L08-W05.md",
+      "validation_refs": [],
+      "authorization_ref": "AUTH-034",
+      "phase": "L08",
+      "validation_status": "not_run",
+      "status": "in_progress",
+      "checklist": "1/7"
     }
   }
 }
