@@ -1,0 +1,72 @@
+{
+  "checkpoint_id": "CP-0114",
+  "target_state_revision": 114,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "sha256": "80DE9BF608C56913BDBEAE6D1704DF648B09469365EB30191AA3F92B092A9772",
+      "path": "docs/execution/checkpoints/CP-0114.md",
+      "exists": true
+    },
+    {
+      "sha256": "F39162A2A28ABE7AB27F65A93389DBD003D3D0F16CBDFA17DCBCE3AE3313516A",
+      "path": "docs/process/APPROVALS.md",
+      "exists": true
+    },
+    {
+      "sha256": "F18EC49702AE1CAD2F59C3CAAB1061A1C421076A78D1112BB56DD88F56E6F870",
+      "path": "docs/specs/SPEC-019-mobile-entry.md",
+      "exists": true
+    },
+    {
+      "sha256": "EA562E31503CAF4B459DAD5B2ABE36B9BD0A916A3E6EED0D24072070CF978663",
+      "path": "docs/plans/stages/STAGE-01-prototype.md",
+      "exists": true
+    },
+    {
+      "sha256": "026A40A48ED738470206B4DBA3904CD3379D31050F9B0EC2EECFDCA47A7E3861",
+      "path": "landing-v3.3/experience/index.html",
+      "exists": true
+    },
+    {
+      "sha256": "53FDE49C210766428FAB70046E10FCAD1B3521978436282752C55FB22E85CB87",
+      "path": "landing-v3.3/experience/style.css",
+      "exists": true
+    },
+    {
+      "sha256": "CABA263F77B6FC0FA4F78D9C80656CA74CD05A2246532C7BDB071EC6EC3C5901",
+      "path": "landing-v3.3/experience/flow.mjs",
+      "exists": true
+    },
+    {
+      "sha256": "0E300DD4207623AD6DA0F5FE51D061FCB4C29E7223A3268D597CDB55A5167A40",
+      "path": "prototype/first-project-guide.mjs",
+      "exists": true
+    },
+    {
+      "sha256": "2210EAB7FB73C0D740B352323082B4D8342DA1D6D41A85314750ED7C048CA34C",
+      "path": "prototype/tests/first-project-guide.test.mjs",
+      "exists": true
+    },
+    {
+      "sha256": "0CA36739FFC4F2643443CB6AA13516ABE7DBB0ED00F9E655D311F0F02006EF65",
+      "path": "site/tests/mobile-entry.test.mjs",
+      "exists": true
+    },
+    {
+      "sha256": "1C8CD3026E51543EF515E9DC2382B9AF07684412561707E5ADE213C6AFA9E3C9",
+      "path": "docs/validation/VAL-022-reference-first-flow.md",
+      "exists": true
+    },
+    {
+      "sha256": "B87C3191A1C0031E0CA47D53D17C8786C0301A5FA1B4F763033B9E65573DBC94",
+      "path": "README.md",
+      "exists": true
+    },
+    {
+      "sha256": "0A9A7441F725A2AE867A2BA47DEDF06C6A42EFFFC1BA61ED3A7BFF04A46A7C5F",
+      "path": "site/README.md",
+      "exists": true
+    }
+  ]
+}
