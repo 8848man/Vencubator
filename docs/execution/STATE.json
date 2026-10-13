@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "revision": 106,
-  "updated_at": "2026-10-13T12:56:08.000Z",
+  "revision": 107,
+  "updated_at": "2026-10-13T13:07:28.000Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "stage": "S1",
-    "phase": "L08",
-    "work_item": "L08-W02",
-    "owner": "codex-2026-10-13",
-    "run_state": "in_progress"
+    "stage": null,
+    "phase": null,
+    "work_item": null,
+    "owner": null,
+    "run_state": "idle"
   },
   "next": {
     "stage": "S1",
     "phase": "L08",
-    "work_item": "L08-W02",
-    "action": "SPEC-019 r0.3에 첫 흐름 완료와 인증 상태별 진입 화면 정의",
-    "condition": "AUTH-031"
+    "work_item": null,
+    "action": "SPEC-019 r0.3과 ADR-007 검토 후 실제 인증·첫 흐름 구현 범위 결정",
+    "condition": "새 구현 요청·승인 필요"
   },
   "checkpoint": {
-    "id": "CP-0106",
-    "path": "docs/execution/checkpoints/CP-0106.md",
-    "manifest": "docs/execution/checkpoints/CP-0106.manifest.json"
+    "id": "CP-0107",
+    "path": "docs/execution/checkpoints/CP-0107.md",
+    "manifest": "docs/execution/checkpoints/CP-0107.manifest.json"
   },
   "git": {
     "branch": "w/L08-W02-first-flow-login-gate",
     "base": "w/L08-W01-mobile-entry-onboarding",
-    "head": "29ffdb2",
+    "head": "ae250f1",
     "dirty": true,
     "committed": true,
     "pr": null,
@@ -36,7 +36,7 @@
       "status": "not_started",
       "checked_at": null
     },
-    "note": "L08-W02 설계 브랜치 시작. L08-W01 PR #16 위에 쌓임. 기존 사용자 수정·미추적 파일 보존."
+    "note": "L08-W02 문서 설계 완료. L08-W01 PR #16 위에 쌓임. 기존 사용자 수정·미추적 파일 보존. PR 또는 handoff 대기."
   },
   "stages": {
     "S1": {
@@ -498,20 +498,21 @@
     },
     "L08": {
       "stage": "S1",
-      "status": "in_progress",
+      "status": "completed",
       "depends_on": [
         "L07"
       ],
-      "validation_status": "not_run",
+      "validation_status": "passed",
       "gate_status": "not_evaluated",
       "work_item_ids": [
         "L08-W01",
         "L08-W02"
       ],
       "validation_refs": [
-        "docs/validation/VAL-019-mobile-entry.md"
+        "docs/validation/VAL-019-mobile-entry.md",
+        "docs/validation/VAL-020-first-flow-login-design.md"
       ],
-      "completed_checkpoint": null
+      "completed_checkpoint": "CP-0107"
     }
   },
   "work_items": {
@@ -1303,13 +1304,15 @@
     },
     "L08-W02": {
       "phase": "L08",
-      "status": "in_progress",
+      "status": "completed",
       "authorization_ref": "AUTH-031",
       "definition_path": "docs/execution/work-items/L08-W02.md",
-      "checklist": "1/5",
-      "validation_status": "not_run",
-      "validation_refs": [],
-      "completed_checkpoint": null
+      "checklist": "5/5; PR 또는 handoff 대기",
+      "validation_status": "passed",
+      "validation_refs": [
+        "docs/validation/VAL-020-first-flow-login-design.md"
+      ],
+      "completed_checkpoint": "CP-0107"
     }
   }
 }

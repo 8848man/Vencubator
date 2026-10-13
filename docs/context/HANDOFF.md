@@ -1,7 +1,7 @@
 # HANDOFF
 
-CP-0106 / STATE revision 106
+CP-0107 / STATE revision 107
 
-L08-W02 in_progress · AUTH-031 · 체크리스트 1/5. 첫 흐름 완료 표시와 로그인 상태 조합, 비로그인 재진입 화면을 설계하는 문서 W. 기능 구현은 범위 밖이다. 브랜치 `w/L08-W02-first-flow-login-gate`는 L08-W01 위 스택. 기존 사용자 수정·미추적 자료는 건드리지 않았다.
+L08-W02 설계 완료, 체크리스트 5/5. AUTH-031에 따라 SPEC-019 r0.3에 첫 흐름 완료×인증 상태별 화면과 별도 로그인 게이트를, ADR-007에 비밀 아닌 기기 표시와 서버 인증 권위를 적었다. VAL-020은 설계 검토 통과이며 실제 기능 테스트는 미실행이다. 현재 S1 앱은 `demo-user` 자동 생성 방식 그대로다.
 
-다음 첫 행동: `docs/specs/SPEC-019-mobile-entry.md`에 완료×인증 4상태, 로그인 취소·실패·저장 삭제 경로를 작성하고, `docs/adr/ADR-007-first-flow-auth-state.md`에서 저장 권위를 결정한다. 이전 제품 근거는 VAL-019/CP-0105. L08-W01 PR #16은 별도, main 병합·운영 배포 없음.
+브랜치 `w/L08-W02-first-flow-login-gate`는 미병합 L08-W01 PR #16 위 스택. 기존 `site/audience/render.mjs` 사용자 수정과 선행 미추적 파일은 커밋하지 않았다. 다음 첫 행동: `node scripts/verify-checkpoint.mjs`로 CP-0107을 확인하고, W02 변경 커밋만 push/PR 또는 `_handoff/open-pr.cmd`로 전달한다. 이후 사용자가 실제 인증·계정 저장 구현을 요청하면 새 W와 승인 근거를 만든다. main 병합·운영 배포는 사용자 몫이다.
