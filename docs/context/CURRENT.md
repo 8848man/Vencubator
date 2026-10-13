@@ -1,6 +1,10 @@
 # CURRENT
 
-CP-0101 / STATE revision 101
+CP-0102 / STATE revision 102
+
+L08-W01 in_progress · AUTH-030 · SPEC-019 r0.1 · 체크리스트 1/5. 모바일 직접 진입과 첫 사용 UX 가이드 작성. 다음은 앱 온보딩 구현. 사용자 권한 허락 후 `gitflow start --carry` 성공; 기존 L07 사용자 수정 보존.
+
+이전 L07 상태:
 
 L07-W01 completed · AUTH-029 · SPEC-018 r0.1 · 체크리스트 4/5
 
