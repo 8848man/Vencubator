@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 109,
-  "updated_at": "2026-10-13T14:00:00.000Z",
+  "revision": 110,
+  "updated_at": "2026-10-13T14:50:10.000Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -9,24 +9,24 @@
     "phase": "L08",
     "work_item": "L08-W03",
     "owner": "Codex",
-    "run_state": "in_progress"
+    "run_state": "validating"
   },
   "next": {
     "stage": "S1",
     "phase": "L08",
     "work_item": "L08-W03",
-    "action": "SPEC-019 r0.4 저장형 흐름·실제 앱 코치마크 수용 기준 작성",
-    "condition": "AUTH-032"
+    "action": "gitflow finish --pr 시도, 불가하면 handoff 생성",
+    "condition": "제품 구현·VAL-021 통과, 게시 절차만 남음"
   },
   "checkpoint": {
-    "id": "CP-0109",
-    "path": "docs/execution/checkpoints/CP-0109.md",
-    "manifest": "docs/execution/checkpoints/CP-0109.manifest.json"
+    "id": "CP-0110",
+    "path": "docs/execution/checkpoints/CP-0110.md",
+    "manifest": "docs/execution/checkpoints/CP-0110.manifest.json"
   },
   "git": {
     "branch": "w/L08-W03-guided-first-project",
     "base": "w/L08-W02-first-flow-login-gate",
-    "head": "ae6d095",
+    "head": "e1fcc51",
     "dirty": true,
     "committed": true,
     "pr": null,
@@ -36,7 +36,7 @@
       "status": "not_started",
       "checked_at": null
     },
-    "note": "L08-W03 계획·시작 CP, 제품 구현 전"
+    "note": "L08-W03 제품·검증 완료, 게시 전. 기존 사용자 수정·미추적 보존."
   },
   "stages": {
     "S1": {
@@ -1316,12 +1316,14 @@
     },
     "L08-W03": {
       "phase": "L08",
-      "status": "in_progress",
+      "status": "validating",
       "authorization_ref": "AUTH-032",
       "definition_path": "docs/execution/work-items/L08-W03.md",
-      "validation_status": "not_run",
-      "validation_refs": [],
-      "checklist": "1/6"
+      "validation_status": "passed",
+      "validation_refs": [
+        "docs/validation/VAL-021-guided-first-project.md"
+      ],
+      "checklist": "5/6"
     }
   }
 }
