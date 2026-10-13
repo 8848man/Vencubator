@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "revision": 115,
-  "updated_at": "2026-10-13T19:42:22.724Z",
+  "revision": 116,
+  "updated_at": "2026-10-13T19:49:10.853Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
-    "run_state": "in_progress",
+    "run_state": "validating",
     "stage": "S1",
     "owner": "codex",
     "work_item": "L08-W05",
     "phase": "L08"
   },
   "next": {
-    "action": "SPEC-019 r0.6 앱 진입·브랜드 모션 계약 작성",
+    "action": "L08-W05 브랜치 finish 또는 handoff 후 PR",
     "stage": "S1",
     "condition": "AUTH-034",
     "work_item": "L08-W05",
     "phase": "L08"
   },
   "checkpoint": {
-    "id": "CP-0115",
-    "path": "docs/execution/checkpoints/CP-0115.md",
-    "manifest": "docs/execution/checkpoints/CP-0115.manifest.json"
+    "path": "docs/execution/checkpoints/CP-0116.md",
+    "manifest": "docs/execution/checkpoints/CP-0116.manifest.json",
+    "id": "CP-0116"
   },
   "git": {
     "branch": "w/L08-W05-connected-first-flow",
     "base": "w/L08-W04-reference-inspired-first-flow",
-    "head": "207c526",
+    "head": "2ac1379",
     "dirty": true,
     "committed": true,
     "pr": null,
@@ -36,7 +36,7 @@
       "status": "not_started",
       "checked_at": null
     },
-    "note": "L08-W05 시작. 기존 사용자 수정 보존."
+    "note": "L08-W05 제품·검증 완료, PR 게시 대기. 기존 사용자 수정 보존."
   },
   "stages": {
     "S1": {
@@ -1346,12 +1346,14 @@
     "L08-W05": {
       "completed_checkpoint": null,
       "definition_path": "docs/execution/work-items/L08-W05.md",
-      "validation_refs": [],
+      "validation_refs": [
+        "docs/validation/VAL-023-connected-first-flow.md"
+      ],
       "authorization_ref": "AUTH-034",
       "phase": "L08",
-      "validation_status": "not_run",
-      "status": "in_progress",
-      "checklist": "1/7"
+      "validation_status": "passed",
+      "status": "validating",
+      "checklist": "6/7"
     }
   }
 }
