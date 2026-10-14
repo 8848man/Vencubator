@@ -1,0 +1,57 @@
+{
+  "algorithm": "SHA256",
+  "target_state_revision": 119,
+  "checkpoint_id": "CP-0119",
+  "files": [
+    {
+      "path": "docs/execution/checkpoints/CP-0119.md",
+      "exists": true,
+      "sha256": "EC885757DFF618EEBD255FD26D2CBFC7A7E9684AC6288DE82B9BC85CC6253C50"
+    },
+    {
+      "path": "docs/specs/SPEC-019-mobile-entry.md",
+      "exists": true,
+      "sha256": "8794AF77DE8AE73E7108CBE3E8E485AC99FB78588A5E61F3E9CE12D65260F487"
+    },
+    {
+      "path": "docs/validation/VAL-024-tutorial-main-route.md",
+      "exists": true,
+      "sha256": "A29444DE878209CA2EC46FA8001F310E257E048DAC627C7CC954D5D5DB2A88CD"
+    },
+    {
+      "path": "site/scripts/build.mjs",
+      "exists": true,
+      "sha256": "AC5DB41AA5BE9E023941197512109B58819AFE42C44D83C0790726A2557579D3"
+    },
+    {
+      "path": "prototype/first-flow-entry.mjs",
+      "exists": true,
+      "sha256": "12B3DAE0BFC63B0353E033E5BED07FD4764B5BA2C9976FDC7467607AF06504DC"
+    },
+    {
+      "path": "landing-v3.3/experience/index.html",
+      "exists": true,
+      "sha256": "CD0A04F4612529238EE473CD4FAC179E8F3187CC3D42C613A4CBB8EE6310015C"
+    },
+    {
+      "path": "landing-v3.3/reference/index.html",
+      "exists": true,
+      "sha256": "40D51B744D5E89A9FAE38DC6BF5524E2BFF19B8CD8429D870EB52EC3DBFAC76D"
+    },
+    {
+      "path": "docs/context/CURRENT.md",
+      "exists": true,
+      "sha256": "E0917933DD114F61A8F7C9FD9F9585E5D1D86AB69F885063AF24700E8626EE99"
+    },
+    {
+      "path": "docs/context/HANDOFF.md",
+      "exists": true,
+      "sha256": "55354FB6230EA07FE05E136CA4261004F94C4E1819B9F2A90187B001340A485D"
+    },
+    {
+      "path": "docs/execution/WORKLOG.md",
+      "exists": true,
+      "sha256": "0B425C6B0B2427E22B1B30D3768CD4C417CAD060C8105E55A0D510150898099B"
+    }
+  ]
+}

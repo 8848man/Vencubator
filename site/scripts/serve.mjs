@@ -30,6 +30,6 @@ export function startServer(port = PORT) {
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  startServer().then(() => console.log(`Vencubator 사이트: http://127.0.0.1:${PORT}/  (/ 랜딩 · /app/ 앱)`))
+  startServer().then(() => console.log(`Vencubator 사이트: http://127.0.0.1:${PORT}/  (/ 첫 안내 · /landing/ 랜딩 · /app/ 앱)`))
     .catch(e => { console.error(e.code === 'EADDRINUSE' ? `포트 ${PORT}가 사용 중이에요. 다른 포트로: node site/scripts/serve.mjs 4190` : e.message); process.exit(1); });
 }

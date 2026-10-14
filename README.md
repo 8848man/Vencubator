@@ -21,9 +21,9 @@ Vencubator는 자신의 아이디어를 발전시키며 배우고 행동하는 *
 
 ## 랜딩 페이지
 
-**모바일 진입·v3.3 첫 흐름 (로컬 작업):** 사이트 `/`은 600px 이하에서 앱 `/app/`으로 이동합니다. 새 데모 사용자의 `/app/` 첫 실행은 `/v3.3/`의 15화면 안내·맞춤 질문·요약으로 이어집니다. 아이디어 없이 앱 프로젝트 목록에 들어가거나, 문장이 있으면 실제 앱 첫 프로젝트 코치마크를 선택할 수 있습니다. 기존 입문 랜딩은 `/beginner/`에 있습니다. [54장 흐름 레퍼런스](landing-v3.3/reference/index.html)는 별도 시뮬레이션입니다. [UX 가이드](docs/specs/SPEC-019-mobile-entry.md) · [검증](docs/validation/VAL-023-connected-first-flow.md).
+**첫 사용 진입 (로컬 작업):** 사이트 `/`은 화면 폭과 관계없이 15화면 안내·맞춤 질문·요약을 보여 줍니다. 새 데모 사용자의 `/app/` 첫 실행도 이 메인 안내로 이어집니다. 아이디어 없이 앱 프로젝트 목록에 들어가거나, 문장이 있으면 실제 앱 첫 프로젝트 코치마크를 선택할 수 있습니다. 기존 랜딩은 `/landing/`, 기존 안내 공유 주소는 `/v3.3/`에 남습니다. [54장 흐름 레퍼런스](landing-v3.3/reference/index.html)는 별도 시뮬레이션입니다. [UX 가이드](docs/specs/SPEC-019-mobile-entry.md).
 
-**독자별 공개 랜딩:** 사이트 루트(`/`)에서 입문·가치·제품 테스트 설명을 선택합니다. `/beginner/`는 기존 v3.1, `/value/`는 간결한 가치 설명, `/test/`는 제품 테스트 안내입니다. [SPEC-018](docs/specs/SPEC-018-audience-landings.md) · [검증](docs/validation/VAL-018-audience.md). 기존 독립 랜딩은 보존합니다.
+**독자별 공개 랜딩:** `/landing/`에서 입문·가치·제품 테스트 설명을 선택합니다. `/beginner/`는 기존 v3.1, `/value/`는 간결한 가치 설명, `/test/`는 제품 테스트 안내입니다. [SPEC-018](docs/specs/SPEC-018-audience-landings.md) · [검증](docs/validation/VAL-018-audience.md). 기존 독립 랜딩은 보존합니다.
 
 **입문 콘텐츠 v3.1:** `landing-v3.1/start.cmd` 또는 `node landing-v3.1/scripts/serve.mjs` → http://127.0.0.1:4177/landing-v3.1/ · [SPEC-016](landing-v3.1/docs/SPEC-016-landing-v3.1.md) · [검증](landing-v3.1/docs/VAL-L31.md).
 

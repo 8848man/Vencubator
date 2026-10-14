@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 117,
-  "updated_at": "2026-10-13T19:51:50.185Z",
+  "revision": 120,
+  "updated_at": "2026-10-13T21:47:15.5228995Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -12,31 +12,31 @@
     "run_state": "idle"
   },
   "next": {
-    "action": "4180 새 데모 /app/ 첫 실행 체험 및 PR #16→#17→#18→#19→#20 검토·병합 여부 결정",
+    "action": "4180 루트 튜토리얼·/landing/ 수동 체험 및 PR #16→#21 검토·병합 여부 결정",
     "stage": "S1",
     "phase": "L08",
     "work_item": null,
     "condition": "사용자 수동 체험·PR 검토"
   },
   "checkpoint": {
-    "id": "CP-0117",
-    "path": "docs/execution/checkpoints/CP-0117.md",
-    "manifest": "docs/execution/checkpoints/CP-0117.manifest.json"
+    "id": "CP-0120",
+    "path": "docs/execution/checkpoints/CP-0120.md",
+    "manifest": "docs/execution/checkpoints/CP-0120.manifest.json"
   },
   "git": {
-    "branch": "w/L08-W05-connected-first-flow",
-    "base": "w/L08-W04-reference-inspired-first-flow",
-    "head": "63499c5",
+    "branch": "w/L08-W06-tutorial-main-route",
+    "base": "w/L08-W05-connected-first-flow",
+    "head": "c4f96ba",
     "dirty": true,
     "committed": true,
-    "pr": "https://github.com/8848man/Vencubator/pull/20",
+    "pr": "https://github.com/8848man/Vencubator/pull/21",
     "merged_sha": null,
     "deploy": {
       "target": "vercel-production",
       "status": "not_started",
       "checked_at": null
     },
-    "note": "L08-W05 제품·자동 검증 완료 및 PR #20 게시. 4180 수동 검증 미실행. 기존 사용자 수정 보존."
+    "note": "L08-W06 제품·자동 검증 완료 및 PR #21 게시. 4180 수동 검증 미실행. 기존 사용자 수정 보존."
   },
   "stages": {
     "S1": {
@@ -509,7 +509,8 @@
         "L08-W02",
         "L08-W03",
         "L08-W04",
-        "L08-W05"
+        "L08-W05",
+        "L08-W06"
       ],
       "validation_refs": [
         "docs/validation/VAL-019-mobile-entry.md",
@@ -1355,6 +1356,18 @@
       "validation_status": "passed",
       "status": "completed",
       "checklist": "7/7; PR #20 게시"
+    },
+    "L08-W06": {
+      "phase": "L08",
+      "status": "completed",
+      "authorization_ref": "AUTH-035",
+      "definition_path": "docs/execution/work-items/L08-W06.md",
+      "validation_status": "passed",
+      "validation_refs": [
+        "docs/validation/VAL-024-tutorial-main-route.md"
+      ],
+      "completed_checkpoint": "CP-0120",
+      "checklist": "5/5; PR #21 게시"
     }
   }
 }

@@ -11,5 +11,5 @@ export function firstFlowDestination({pathname,search='',storage,state,loadError
  let raw;
  try{raw=storage.getItem(FIRST_FLOW_MARK_KEY);}catch{return null;}
  try{if(raw&&JSON.parse(raw)?.completedVersion>=1)return null;}catch{/* damaged preference: show introduction */}
- return '/v3.3/';
+ return '/';
 }

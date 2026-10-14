@@ -30,7 +30,7 @@ export function safeSearch(search = '') {
 }
 export function audienceRoute(pathname, hash = '', choice = null) {
   const current = Object.keys(AUDIENCE_PATHS).find(k => AUDIENCE_PATHS[k] === pathname) || 'beginner';
-  if (pathname !== '/' || hash) return { current, redirect: null, prompt: false };
+  if (!['/','/landing/'].includes(pathname) || hash) return { current, redirect: null, prompt: false };
   return { current, redirect: ['experienced','tester'].includes(choice) ? AUDIENCE_PATHS[choice] : null, prompt: !choice };
 }
 export function browserStorage(win, name) { try { return win[name]; } catch { return null; } }

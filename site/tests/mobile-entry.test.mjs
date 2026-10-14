@@ -18,14 +18,23 @@ test('reference-inspired first flow keeps fifteen screens and optional idea entr
   assert.deepEqual(summaryFor(restored).map(([,value])=>value),['아직 아이디어가 없어요','개념 하나를 배워 보기','아직 정하지 않았어요','5분만 가볍게']);
 });
 
-test('root redirects mobile; v3.3 ships saved tutorial and actual app guide',async()=>{
+test('root serves tutorial at every width; landing and v3.3 alias stay available',async()=>{
   await buildSite();
   const root=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
+  const landing=await readFile(new URL('../dist/landing/index.html',import.meta.url),'utf8');
   const v33=await readFile(new URL('../dist/v3.3/index.html',import.meta.url),'utf8');
   const reference=await readFile(new URL('../dist/v3.3/reference/index.html',import.meta.url),'utf8');
   const app=await readFile(new URL('../dist/app/index.html',import.meta.url),'utf8');
-  assert.match(root,/matchMedia\('\(max-width: 600px\)'\)/);
-  assert.match(root,/location\.replace\('\/app\/'\+safeSearch/);
+  assert.match(root,/나의 첫 시작/);
+  assert.match(root,/src="\/v3\.3\/flow\.mjs"/);
+  assert.match(root,/href="\/v3\.3\/style\.css"/);
+  assert.match(root,/href="\/landing\/"/);
+  assert.doesNotMatch(root,/matchMedia|location\.replace/);
+  assert.match(landing,/data-audience/);
+  assert.match(landing,/href="\/app\/\?from=v31"/);
+  assert.doesNotMatch(landing,/location\.replace\('\/app\/'\+safeSearch/);
+  assert.doesNotMatch(root,/54장 흐름 레퍼런스 살펴보기/);
+  assert.doesNotMatch(v33,/54장 흐름 레퍼런스 살펴보기/);
   assert.match(v33,/나의 첫 시작/);
   assert.match(v33,/flow\.mjs/);
   assert.doesNotMatch(v33,/matchMedia\('\(max-width: 600px\)'\)/);

@@ -1,6 +1,6 @@
 # 배포 안내 — Vencubator 사이트 (독자별 랜딩 + 앱)
 
-`site/dist/`는 서버 코드가 없는 **정적 파일 묶음**입니다. 아무 정적 호스팅에나 폴더째 올리면 `/`에 랜딩, `/app/`에 앱이 열립니다.
+`site/dist/`는 서버 코드가 없는 **정적 파일 묶음**입니다. 정적 호스팅에 폴더째 올리면 `/`에 첫 안내, `/landing/`에 기존 랜딩, `/app/`에 앱이 열립니다.
 
 ## 1. 만들기
 
@@ -23,7 +23,7 @@ node site/scripts/serve.mjs        # http://127.0.0.1:4180/ 에서 마지막 확
 
 ## 3. 올린 뒤 확인
 
-- `/` 첫 선택창 → 각 설명; 건너뛰기·재방문·다른 설명 보기; `/beginner/` 이름표 → `/app/?from=v31` 문장 인계
+- `/` 첫 안내 → 요약 → 앱; `/landing/` 첫 선택창 → 각 설명; 건너뛰기·재방문·다른 설명 보기; `/beginner/` 이름표 → `/app/?from=v31` 문장 인계
 - `/value/`·`/test/` 직접 방문과 앱 CTA; 두 새 경로에서는 이름표를 가져오지 않는지
 - 휴대폰에서 가로 스크롤이 없는지
 - `/app/?lab=1` 은 점검용 주소입니다. 공유하지 마세요.
@@ -31,7 +31,7 @@ node site/scripts/serve.mjs        # http://127.0.0.1:4180/ 에서 마지막 확
 ## 3-0. 검색 등록 (Google Search Console) — L04-W08·W09
 
 - 소유권 확인: `site/scripts/build.mjs`의 `VERIFICATION_METAS`(구글 `google-site-verification`, 네이버 `naver-site-verification`)를 빌드가 루트 `<head>`에 붙인다. 랜딩 원본에는 넣지 않는다(지우지 않기).
-- 빌드가 `site/dist/sitemap.xml`·`robots.txt`를 만듭니다. 사이트맵에는 `/`, `/app/`, `/value/`, `/test/`가 있습니다. 중복 입문 경로 `/beginner/`는 canonical `/`를 사용하고 사이트맵에서는 제외합니다.
+- 빌드가 `site/dist/sitemap.xml`·`robots.txt`를 만듭니다. 사이트맵에는 `/`, `/landing/`, `/app/`, `/value/`, `/test/`가 있습니다. 중복 입문 경로 `/beginner/`는 canonical `/landing/`을 사용하고 사이트맵에서는 제외합니다.
 - 제출: Search Console → Sitemaps → `sitemap.xml` 입력 → 제출. 공개 페이지가 늘면 `site/scripts/build.mjs`의 `sitemapXml()`에 추가합니다.
 
 ## 3-1. 피드백 저장소(Firestore) 설정 — SPEC-015 · ADR-006

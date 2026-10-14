@@ -17,10 +17,11 @@ try {
   browser=await chromium.launch({headless:true});
   for(const [name,width,height] of [['desktop',1440,900],['mobile',390,844]]) {
     const context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce'}),page=await context.newPage(),errors=[];
+    await context.addInitScript(() => localStorage.setItem('vencubator.firstFlow.v1',JSON.stringify({completedVersion:1})));
     page.on('pageerror',e=>errors.push(e.message));
     const shot=async label=>{if(shots)await page.screenshot({path:resolve(out,`audience-${name}-${label}.png`),fullPage:label!=='dialog'});};
     const noOverflow=async label=>check(`${name} ${label} overflow`,await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
-    await page.goto(base+'/?utm_source=qa');await page.locator('.aud-dialog[open]').waitFor();
+    await page.goto(base+'/landing/?utm_source=qa');await page.locator('.aud-dialog[open]').waitFor();
     check(`${name} initial focus`,await page.locator('#aud-title').evaluate(e=>e===document.activeElement));
     check(`${name} view deferred`,!(await events(page)).some(e=>e.name==='audience_view'));
     await noOverflow('dialog');await shot('dialog');
@@ -38,7 +39,7 @@ try {
     await page.locator('[data-aud-open]').click();await page.keyboard.press('Escape');
     check(`${name} reopen cancel retains choice`,await page.evaluate(()=>JSON.parse(localStorage.getItem('vencubator.audience.v1')).choice)==='experienced');
     const before=(await events(page)).filter(e=>e.name==='landing_view').length;
-    await page.goto(base+'/');await page.waitForURL('**/value/');await page.locator('[data-aud-open]').waitFor();
+    await page.goto(base+'/landing/');await page.waitForURL('**/value/');await page.locator('[data-aud-open]').waitFor();
     check(`${name} remembered redirect without beginner view`,(await events(page)).filter(e=>e.name==='landing_view').length===before);
     await page.goto(base+'/test/');await page.locator('[data-aud-open]').waitFor();
     check(`${name} direct path wins`,new URL(page.url()).pathname==='/test/'&&await page.locator('dialog[open]').count()===0);
@@ -63,30 +64,31 @@ try {
   }
   const blocked=await browser.newContext({viewport:{width:390,height:680}});
   await blocked.addInitScript(()=>{for(const k of ['localStorage','sessionStorage'])Object.defineProperty(window,k,{get(){throw new Error('storage blocked');}});});
-  const p=await blocked.newPage();await p.goto(base+'/');await p.locator('.aud-dialog[open]').waitFor();await p.locator('[data-aud-close]').last().click();
+  const p=await blocked.newPage();await p.goto(base+'/landing/');await p.locator('.aud-dialog[open]').waitFor();await p.locator('[data-aud-close]').last().click();
   check('blocked storage: close works and live notice',await p.locator('dialog[open]').count()===0&&await p.locator('.aud-live').textContent()==='선택을 기억하지 못했어요. 지금은 계속 둘러볼 수 있어요.');
   await p.locator('[data-aud-open]').click();await p.locator('[data-aud-choice="experienced"]').click();await p.waitForURL('**/value/');
   check('blocked storage: navigation works',new URL(p.url()).pathname==='/value/');await blocked.close();
   const nojs=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}}),n=await nojs.newPage();
-  for(const path of ['/','/beginner/','/value/','/test/']) {
+  for(const path of ['/landing/','/beginner/','/value/','/test/']) {
     const response=await n.goto(base+path);
     check(`noJS ${path} static content/links`,response.status()===200&&await n.locator('h1').count()===1&&await n.locator('noscript nav a').count()===3&&await n.locator('a[href*="/app/?from="]').count()>0);
   }
   await nojs.close();
   const extra=await browser.newContext({viewport:{width:390,height:568}}),x=await extra.newPage();
-  await x.goto(base+'/');await x.locator('dialog[open]').waitFor();
+  await extra.addInitScript(() => localStorage.setItem('vencubator.firstFlow.v1',JSON.stringify({completedVersion:1})));
+  await x.goto(base+'/landing/');await x.locator('dialog[open]').waitFor();
   await x.locator('[data-aud-choice="tester"]').click();await x.waitForURL('**/test/');
   check('short viewport: third choice reachable',new URL(x.url()).pathname==='/test/');
-  await x.goto(base+'/');await x.waitForURL('**/test/');
+  await x.goto(base+'/landing/');await x.waitForURL('**/test/');
   check('tester preference remembered',await x.locator('dialog[open]').count()===0);
-  await x.goto(base+'/#ask');await x.locator('[data-aud-open]').waitFor();
-  check('root hash overrides stored tester',new URL(x.url()).pathname==='/'&&await x.locator('dialog[open]').count()===0);
+  await x.goto(base+'/landing/#ask');await x.locator('[data-aud-open]').waitFor();
+  check('landing hash overrides stored tester',new URL(x.url()).pathname==='/landing/'&&await x.locator('dialog[open]').count()===0);
   await x.goto(base+'/value/');await x.locator('[data-aud-cta="footer"]').click();await x.waitForURL('**/app/?from=value');await x.locator('#maker-name').waitFor();
   check('value footer app attribution', (await events(x)).some(e=>e.name==='app_open'&&e.props.audience==='experienced'&&e.props.from==='value'));
-  await x.goto(base+'/');await x.waitForURL('**/test/');await x.locator('[data-aud-open]').click();await x.locator('[data-aud-choice="beginner"]').click();await x.waitForURL('**/beginner/');
+  await x.goto(base+'/landing/');await x.waitForURL('**/test/');await x.locator('[data-aud-open]').click();await x.locator('[data-aud-choice="beginner"]').click();await x.waitForURL('**/beginner/');
   check('beginner selection stored',await x.evaluate(()=>JSON.parse(localStorage.getItem('vencubator.audience.v1')).choice)==='beginner');
-  await x.goto(base+'/');await x.locator('[data-aud-open]').waitFor();
-  check('beginner preference stays at root',new URL(x.url()).pathname==='/'&&await x.locator('dialog[open]').count()===0);
+  await x.goto(base+'/landing/');await x.locator('[data-aud-open]').waitFor();
+  check('beginner preference stays at landing',new URL(x.url()).pathname==='/landing/'&&await x.locator('dialog[open]').count()===0);
   await extra.close();
 } catch(e) { check('scenario execution',false,e.stack); }
 finally { if(browser)await browser.close();await new Promise(r=>server.close(r)); }
