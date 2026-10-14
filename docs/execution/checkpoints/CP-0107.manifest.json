@@ -1,0 +1,37 @@
+{
+  "checkpoint_id": "CP-0107",
+  "target_state_revision": 107,
+  "algorithm": "SHA256",
+  "files": [
+    {
+      "path": "docs/execution/checkpoints/CP-0107.md",
+      "exists": true,
+      "sha256": "7ED958BE4C14C243E840DC63580E0F14EC31E2CC53398BE91C594A5273B4E089"
+    },
+    {
+      "path": "docs/process/APPROVALS.md",
+      "exists": true,
+      "sha256": "433AC5576A7B5E207FE0C103E902C802F75C8FC95F41380CEEC330CB3AB428BC"
+    },
+    {
+      "path": "docs/specs/SPEC-019-mobile-entry.md",
+      "exists": true,
+      "sha256": "E9CC85E76F7765F6D19B034D1E76BEB2064A1DDE446E817C0CF023FE96B02B79"
+    },
+    {
+      "path": "docs/plans/stages/STAGE-01-prototype.md",
+      "exists": true,
+      "sha256": "E2AA122C0A23CEF60429B21C2E1E00EDDF0A364E53991A374D929B69B7B8AEAF"
+    },
+    {
+      "path": "docs/adr/ADR-007-first-flow-auth-state.md",
+      "exists": true,
+      "sha256": "FBBF47C2BC4BDD9FC3FE027900E21BC5C397181225A81877521B0298DFCA2149"
+    },
+    {
+      "path": "docs/validation/VAL-020-first-flow-login-design.md",
+      "exists": true,
+      "sha256": "653D33E5ED99307F56A6A914C43540EA16663B51A39B13DBB57EF16A3C865CBD"
+    }
+  ]
+}
