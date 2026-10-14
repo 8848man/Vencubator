@@ -1,42 +1,42 @@
 {
   "schema_version": 1,
-  "revision": 114,
-  "updated_at": "2026-10-13T15:31:58.000Z",
+  "revision": 117,
+  "updated_at": "2026-10-13T19:51:50.185Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
+    "owner": null,
     "stage": null,
     "phase": null,
     "work_item": null,
-    "owner": null,
     "run_state": "idle"
   },
   "next": {
+    "action": "4180 새 데모 /app/ 첫 실행 체험 및 PR #16→#17→#18→#19→#20 검토·병합 여부 결정",
     "stage": "S1",
     "phase": "L08",
     "work_item": null,
-    "action": "4180 `/v3.3/` 체험 및 PR #16→#17→#18→#19 검토·병합 여부 결정",
     "condition": "사용자 수동 체험·PR 검토"
   },
   "checkpoint": {
-    "id": "CP-0114",
-    "path": "docs/execution/checkpoints/CP-0114.md",
-    "manifest": "docs/execution/checkpoints/CP-0114.manifest.json"
+    "id": "CP-0117",
+    "path": "docs/execution/checkpoints/CP-0117.md",
+    "manifest": "docs/execution/checkpoints/CP-0117.manifest.json"
   },
   "git": {
-    "branch": "w/L08-W04-reference-inspired-first-flow",
-    "base": "w/L08-W03-guided-first-project",
-    "head": "7e16c2c",
+    "branch": "w/L08-W05-connected-first-flow",
+    "base": "w/L08-W04-reference-inspired-first-flow",
+    "head": "63499c5",
     "dirty": true,
     "committed": true,
-    "pr": "https://github.com/8848man/Vencubator/pull/19",
+    "pr": "https://github.com/8848man/Vencubator/pull/20",
     "merged_sha": null,
     "deploy": {
       "target": "vercel-production",
       "status": "not_started",
       "checked_at": null
     },
-    "note": "L08-W04 제품·자동 검증 완료 및 PR #19 게시. 4180 수동 검증은 브라우저 정책으로 미실행. 기존 사용자 수정·미추적 보존."
+    "note": "L08-W05 제품·자동 검증 완료 및 PR #20 게시. 4180 수동 검증 미실행. 기존 사용자 수정 보존."
   },
   "stages": {
     "S1": {
@@ -508,15 +508,17 @@
         "L08-W01",
         "L08-W02",
         "L08-W03",
-        "L08-W04"
+        "L08-W04",
+        "L08-W05"
       ],
       "validation_refs": [
         "docs/validation/VAL-019-mobile-entry.md",
         "docs/validation/VAL-020-first-flow-login-design.md",
         "docs/validation/VAL-021-guided-first-project.md",
-        "docs/validation/VAL-022-reference-first-flow.md"
+        "docs/validation/VAL-022-reference-first-flow.md",
+        "docs/validation/VAL-023-connected-first-flow.md"
       ],
-      "completed_checkpoint": "CP-0114"
+      "completed_checkpoint": "CP-0117"
     }
   },
   "work_items": {
@@ -1336,9 +1338,23 @@
       "authorization_ref": "AUTH-033",
       "definition_path": "docs/execution/work-items/L08-W04.md",
       "validation_status": "passed",
-      "validation_refs": ["docs/validation/VAL-022-reference-first-flow.md"],
+      "validation_refs": [
+        "docs/validation/VAL-022-reference-first-flow.md"
+      ],
       "checklist": "6/6; PR #19 게시",
       "completed_checkpoint": "CP-0114"
+    },
+    "L08-W05": {
+      "completed_checkpoint": "CP-0117",
+      "definition_path": "docs/execution/work-items/L08-W05.md",
+      "validation_refs": [
+        "docs/validation/VAL-023-connected-first-flow.md"
+      ],
+      "authorization_ref": "AUTH-034",
+      "phase": "L08",
+      "validation_status": "passed",
+      "status": "completed",
+      "checklist": "7/7; PR #20 게시"
     }
   }
 }

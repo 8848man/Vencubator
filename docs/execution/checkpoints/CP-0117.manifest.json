@@ -1,0 +1,77 @@
+{
+  "algorithm": "SHA256",
+  "target_state_revision": 117,
+  "checkpoint_id": "CP-0117",
+  "files": [
+    {
+      "sha256": "AAEFA4A7C944296C73FD18175034E7B1A4F26A606ED1338C53692FEBF93D6E51",
+      "exists": true,
+      "path": "docs/execution/checkpoints/CP-0117.md"
+    },
+    {
+      "sha256": "2ADB435584924D91C90F122C55572A102D8DE5FE93AC6B0DF3133D77C9CB8253",
+      "exists": true,
+      "path": "docs/process/APPROVALS.md"
+    },
+    {
+      "sha256": "DF8F80259ABF29142F66D53A5B6B3F2F45F07BDE8B6B9EDAD8BBC7EC7E7451EC",
+      "exists": true,
+      "path": "docs/specs/SPEC-019-mobile-entry.md"
+    },
+    {
+      "sha256": "3323F526B93B99ECBBDD6D147021B63E83E416D97CB680AD9789D25E8AE3FA58",
+      "exists": true,
+      "path": "docs/specs/SPEC-008-motion.md"
+    },
+    {
+      "sha256": "D8244DC58063AF113B0A0B81EC9A6D477535067109DF62790C56144FCB8BFBB2",
+      "exists": true,
+      "path": "docs/validation/VAL-023-connected-first-flow.md"
+    },
+    {
+      "sha256": "C73253FFECDE942706BDC38EFA5737693C97E0DC59C7E2AFC2DA50B039EE4AC4",
+      "exists": true,
+      "path": "docs/design/BRAND-ASSETS.md"
+    },
+    {
+      "sha256": "5B28DFB305B045DB4CF0AEE748BFF59682023BE95836402D3970048D1B628B5C",
+      "exists": true,
+      "path": "prototype/app.mjs"
+    },
+    {
+      "sha256": "AD4D2C69985FB364EE3AD2175EF185E659ACB96A8DC645F1C2F06C4D0E050D8C",
+      "exists": true,
+      "path": "prototype/index.html"
+    },
+    {
+      "sha256": "1CF2D29A25C39E2E8C9E341393A267013D14ACC9D95E42741716DF4BC2A0127B",
+      "exists": true,
+      "path": "prototype/first-flow-entry.mjs"
+    },
+    {
+      "sha256": "56529755C5FEACA0AE795522A8C7871184BC3BEE5CF48260139D7185E52F94E8",
+      "exists": true,
+      "path": "prototype/assets/mascot.svg"
+    },
+    {
+      "sha256": "AABC50EFFC0096A17A9A0E31B0C52E57486D11BCBE238ED9D158C1F7215B4C1F",
+      "exists": true,
+      "path": "prototype/assets/brandmark.svg"
+    },
+    {
+      "sha256": "89909F5DF0F600E9F3B7CC036EDF4A833CEE5834DC2F327140AA064EF458404D",
+      "exists": true,
+      "path": "landing-v3.3/experience/flow.mjs"
+    },
+    {
+      "sha256": "ACF969092FEF25A5BF3FA2F7A775A2FE5A2A64AA58ACCB93B642C7170F6714C9",
+      "exists": true,
+      "path": "landing-v3.3/experience/style.css"
+    },
+    {
+      "sha256": "F853A9A761D55DE7544E9F58D135DD6B29454656AC5073DEDEA4B4A29A025903",
+      "exists": true,
+      "path": "site/tests/mobile-entry.test.mjs"
+    }
+  ]
+}

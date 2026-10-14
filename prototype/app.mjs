@@ -9,6 +9,7 @@ import {createReviewUI} from './review-ui.mjs';
 import {finishFieldTask} from './guided.mjs';
 import {onboardingView,advanceOnboarding,firstSuggestion} from './onboarding.mjs';
 import {createFirstProjectGuide} from './first-project-guide.mjs';
+import {firstFlowDestination,isFirstFlowCompleted} from './first-flow-entry.mjs';
 import {STATS,QUESTIONS,LESSONS,SAMPLE,LEVELS,EVIDENCE_LABELS} from './content.mjs';
 import {blankStore,projectById,createProject,confirmContext,seedSample,submitQuiz,chooseAction,commitEvidence,commitDecision,transact} from './domain.mjs';
 import {storageAdapter,interviewAdapter} from './adapters.mjs';
@@ -18,6 +19,8 @@ const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>
 const uid=()=>crypto.randomUUID();let saveFault=false,aiMode='normal',loadError='',pendingEvidence=null,lastReward=null,toastTimer;
 const storage=storageAdapter(localStorage,{fail:()=>saveFault});let state;
 try{state=storage.load();}catch(e){loadError=e.message;state=blankStore();}
+const firstFlowPath=firstFlowDestination({pathname:location.pathname,search:location.search,storage:localStorage,state,loadError});
+if(firstFlowPath){document.body.classList.add('first-flow-leaving');location.replace(firstFlowPath);}
 // SPEC-009 §5: 같은 사이트 랜딩에서 온 경우 문장을 새 프로젝트 입력칸에만 채운다. §4 계측(로컬 버퍼)
 const entryInfo=readEntry(location.search,localStorage),TRACK={page:'app'};let lastDone=null;
 track('app_open',{from:entryInfo.from},TRACK);
@@ -29,8 +32,8 @@ const statOf=id=>STATS.find(t=>t.id===id),pNow=()=>state.projects.find(p=>p.id==
 function toast(msg){$('#toast').textContent=msg;$('#toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),4200);}
 function update(fn,paint=true){try{if(loadError)throw Error(loadError);const result=transact(state,storage,fn);state=result.store;if(paint)render();return {ok:true,result:result.result};}catch(e){toast(e.message);if(saveFault&&!document.querySelector('.save-error-banner')){const banner=document.createElement('div');banner.className='save-error-banner warning';banner.setAttribute('role','alert');banner.innerHTML='저장 실패 재현 중 · 아직 저장되지 않았어요. <button type="button" class="btn soft" data-action="repair-save">저장 실패 해제</button>';document.body.append(banner);}const status=$('#save-status');if(status)status.textContent='저장되지 않음 · 다시 시도';return {ok:false};}}
 function go(view,id=state.route.projectId){pendingEvidence=null;quizResult=null;const r=update(s=>{s.route={view,projectId:id};});if(!r.ok){state.route={view,projectId:id};render();toast('화면만 이동했어요. 저장되지 않은 입력은 새로고침하면 사라질 수 있어요.');}}
-function brand(){return `<a class="brand" href="#" data-action="home"><svg class="brandmark" viewBox="0 0 32 35" fill="none" aria-hidden="true"><path d="M4 9 16 30 28 9M16 24V4" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M16 14C7 14 8 4 8 4c7 0 8 5 8 10ZM17 13c0-8 9-9 9-9s0 9-9 9Z" fill="currentColor"/></svg>vencubator<span style="color:#9aa988;font-size:16px">.</span></a>`;}
-function mascot(cls=''){return `<svg class="mascot ${cls}" viewBox="0 0 220 240" role="img" aria-label="작은 새싹 창업 부캐"><ellipse cx="111" cy="219" rx="65" ry="10" fill="#bccbab" opacity=".35"/><path d="M108 98C111 60 102 47 91 31" stroke="#79965a" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M104 64C64 63 60 28 64 20c37 1 51 16 40 44Z" fill="#b0c98a"/><path d="M106 73c2-41 41-52 55-48-1 39-23 54-55 48Z" fill="#8faa69"/><path d="M110 62c15-14 25-22 38-26" stroke="#a8c385" stroke-width="2" fill="none"/><path d="M69 98c-8 8-28 17-32 35-5 24 13 35 34 24" fill="#c7da9e" stroke="#a4bc7b" stroke-width="2"/><path d="M153 106c14-12 29-10 34 2 5 11-1 26-18 33" fill="#c7da9e" stroke="#a4bc7b" stroke-width="2"/><path d="M75 187c-5 14-8 25 3 28 13 4 18-13 22-22M128 192c4 14 9 23 20 21 12-3 5-22 0-28" fill="#9eb880"/><path d="M56 124c0-37 23-50 55-50 32 0 59 21 59 64 0 44-23 63-58 63-35 0-56-24-56-77Z" fill="#c9dca7" stroke="#a5be82" stroke-width="2"/><path d="M65 122c3-29 16-39 34-41" stroke="#e1ecc9" stroke-width="6" stroke-linecap="round" fill="none"/><ellipse cx="87" cy="136" rx="5" ry="7" fill="#3b553b"/><ellipse cx="136" cy="136" rx="5" ry="7" fill="#3b553b"/><ellipse cx="78" cy="150" rx="10" ry="5" fill="#e8bba3" opacity=".7"/><ellipse cx="145" cy="150" rx="10" ry="5" fill="#e8bba3" opacity=".7"/><path d="M104 151q8 10 16 0" stroke="#526a43" stroke-width="3" stroke-linecap="round" fill="none"/><path d="m114 174 5-6 5 6-5 6Z" fill="#eff4d9"/><path d="m185 70 2-7 2 7 7 2-7 2-2 7-2-7-7-2Z" fill="#d0b878"/><circle cx="44" cy="82" r="3" fill="#b6c796"/></svg>`;}
+function brand(){return `<a class="brand" href="#" data-action="home"><img class="brandmark" src="./assets/brandmark.svg" alt="" aria-hidden="true">vencubator<span style="color:#9aa988;font-size:16px">.</span></a>`;}
+function mascot(cls=''){return `<img class="mascot ${cls}" src="./assets/mascot.svg" alt="작은 새싹 창업 부캐">`;}
 function btn(text,action,cls='',attrs=''){return `<button class="btn ${cls}" data-action="${action}" ${attrs}>${text}</button>`;}
 function heading(title,sub,eye='',extra=''){return `<div class="page-heading"><div>${eye?`<div class="eyebrow">${eye}</div>`:''}<h1>${title}</h1>${sub?`<p>${sub}</p>`:''}</div>${extra}</div>`;}
 function field(label,name,value='',placeholder='',type='textarea',attrs=''){return `<div class="field"><label for="f-${name}">${label}</label>${type==='textarea'?`<textarea id="f-${name}" name="${name}" placeholder="${esc(placeholder)}" maxlength="3000" ${attrs}>${esc(value)}</textarea>`:`<input id="f-${name}" name="${name}" type="${type}" value="${esc(value)}" placeholder="${esc(placeholder)}" ${attrs}>`}</div>`;}
@@ -88,7 +91,7 @@ function render(){
  const screen=screenMotionKey(state,{variant:`${state.forms.quiz?.variant||0}:${state.forms.quiz?.stage||''}`,application:!!state.forms.quiz?.application,preview:!!pendingEvidence});
  const changed=screen!==renderedScreen;renderedScreen=screen;
  document.body.classList.toggle('reduce-motion',state.preferences.reducedMotion);
- if(!state.user&&!loadError&&!state.forms.onboarding?.completed){$('#app').innerHTML=onboardingView(state.forms.onboarding);$('#app h1')?.focus({preventScroll:true});return;}
+ if(!state.user&&!loadError&&!state.forms.onboarding?.completed&&!isFirstFlowCompleted(localStorage)){$('#app').innerHTML=onboardingView(state.forms.onboarding);$('#app h1')?.focus({preventScroll:true});return;}
  if(!state.user){$('#app').innerHTML=welcome();paintMotion(screen);return;}
  const views={projects,new:newProject,interview,review,born,dashboard:guided.home,session:guided.session,fieldtask:guided.task,taskdetail:taskUI.detail,details,learning,quiz:reviewUI.view,evidence:()=>!pendingEvidence&&(state.route.fieldTaskId||pNow()?.uiDraft.evidence?.taskId)?guided.reflection():evidence(),decision,actions,journal,settings,feedback:()=>feedbackUI.view()};
  document.body.classList.toggle('has-task-fab',!!pNow()&&['dashboard','details'].includes(state.route.view));

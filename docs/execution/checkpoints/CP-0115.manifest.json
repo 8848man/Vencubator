@@ -1,0 +1,42 @@
+{
+  "target_state_revision": 115,
+  "files": [
+    {
+      "exists": true,
+      "path": "docs/execution/checkpoints/CP-0115.md",
+      "sha256": "DCD556EC638E68B775977BE209E6AF9DF5D1A5AE523FA97D931FB0759BDF2563"
+    },
+    {
+      "exists": true,
+      "path": "docs/process/APPROVALS.md",
+      "sha256": "2ADB435584924D91C90F122C55572A102D8DE5FE93AC6B0DF3133D77C9CB8253"
+    },
+    {
+      "exists": true,
+      "path": "docs/specs/SPEC-019-mobile-entry.md",
+      "sha256": "F18EC49702AE1CAD2F59C3CAAB1061A1C421076A78D1112BB56DD88F56E6F870"
+    },
+    {
+      "exists": true,
+      "path": "prototype/app.mjs",
+      "sha256": "A0CD90F23E5918013E2EC671D116EAE6D29FB0F47DB3F7746A67B6CC8C1BA62E"
+    },
+    {
+      "exists": true,
+      "path": "prototype/motion.css",
+      "sha256": "2DA016DFA1F8E348C3098FB5A0993A65DB964CC94F3B09103A0143EA5E97F600"
+    },
+    {
+      "exists": true,
+      "path": "landing-v3.3/experience/flow.mjs",
+      "sha256": "CABA263F77B6FC0FA4F78D9C80656CA74CD05A2246532C7BDB071EC6EC3C5901"
+    },
+    {
+      "exists": true,
+      "path": "landing-v3.3/experience/style.css",
+      "sha256": "53FDE49C210766428FAB70046E10FCAD1B3521978436282752C55FB22E85CB87"
+    }
+  ],
+  "algorithm": "SHA256",
+  "checkpoint_id": "CP-0115"
+}

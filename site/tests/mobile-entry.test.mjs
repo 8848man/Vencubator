@@ -34,6 +34,12 @@ test('root redirects mobile; v3.3 ships saved tutorial and actual app guide',asy
   assert.match(flow,/vencubator\.firstFlow\.v1/);
   assert.match(flow,/\/app\/\?v33Guide=1/);
   assert.match(flow,/\/app\/\?v33Explore=1/);
+  assert.match(flow,/\/app\/assets\/mascot\.svg/);
+  const mascot=await readFile(new URL('../dist/app/assets/mascot.svg',import.meta.url),'utf8');
+  const brandmark=await readFile(new URL('../dist/app/assets/brandmark.svg',import.meta.url),'utf8');
+  assert.match(mascot,/<svg[^>]+viewBox="0 0 220 240"/);
+  assert.match(brandmark,/<svg[^>]+viewBox="0 0 32 35"/);
+  assert.match(await readFile(new URL('../dist/app/first-flow-entry.mjs',import.meta.url),'utf8'),/firstFlowDestination/);
   assert.match(reference,/마이루틴의/);
   assert.match(reference,/flow\.mjs/);
   assert.match(app,/onboarding\.css/);
