@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "revision": 108,
-  "updated_at": "2026-10-13T13:50:50.000Z",
+  "revision": 111,
+  "updated_at": "2026-10-13T14:56:19.000Z",
   "plan_baseline": "planning-v0.2",
   "implementation_status": "in_progress",
   "active": {
@@ -15,28 +15,28 @@
     "stage": "S1",
     "phase": "L08",
     "work_item": null,
-    "action": "SPEC-019 r0.3과 ADR-007 검토 후 실제 인증·첫 흐름 구현 범위 결정",
-    "condition": "새 구현 요청·승인 필요"
+    "action": "PR #16→#17→#18 순서로 검토·병합 여부 결정; 실제 인증 구현 범위는 별도 확정",
+    "condition": "사용자 PR 검토 및 다음 작업 승인"
   },
   "checkpoint": {
-    "id": "CP-0108",
-    "path": "docs/execution/checkpoints/CP-0108.md",
-    "manifest": "docs/execution/checkpoints/CP-0108.manifest.json"
+    "id": "CP-0111",
+    "path": "docs/execution/checkpoints/CP-0111.md",
+    "manifest": "docs/execution/checkpoints/CP-0111.manifest.json"
   },
   "git": {
-    "branch": "w/L08-W02-first-flow-login-gate",
-    "base": "w/L08-W01-mobile-entry-onboarding",
-    "head": "96b049c",
+    "branch": "w/L08-W03-guided-first-project",
+    "base": "w/L08-W02-first-flow-login-gate",
+    "head": "959659e",
     "dirty": true,
     "committed": true,
-    "pr": "https://github.com/8848man/Vencubator/pull/17",
+    "pr": "https://github.com/8848man/Vencubator/pull/18",
     "merged_sha": null,
     "deploy": {
       "target": "vercel-production",
       "status": "not_started",
       "checked_at": null
     },
-    "note": "L08-W02 문서 설계 완료, PR #17 게시. L08-W01 PR #16 위에 쌓임. 기존 사용자 수정·미추적 파일 보존."
+    "note": "L08-W03 제품·검증 완료 및 PR #18 게시. 기존 사용자 수정·미추적 보존. 4180 화면 직접 확인은 브라우저 정책으로 제한."
   },
   "stages": {
     "S1": {
@@ -506,13 +506,15 @@
       "gate_status": "not_evaluated",
       "work_item_ids": [
         "L08-W01",
-        "L08-W02"
+        "L08-W02",
+        "L08-W03"
       ],
       "validation_refs": [
         "docs/validation/VAL-019-mobile-entry.md",
-        "docs/validation/VAL-020-first-flow-login-design.md"
+        "docs/validation/VAL-020-first-flow-login-design.md",
+        "docs/validation/VAL-021-guided-first-project.md"
       ],
-      "completed_checkpoint": "CP-0107"
+      "completed_checkpoint": "CP-0111"
     }
   },
   "work_items": {
@@ -1295,12 +1297,12 @@
       "status": "completed",
       "authorization_ref": "AUTH-030",
       "definition_path": "docs/execution/work-items/L08-W01.md",
-        "checklist": "9/9; PR #16 updated",
+      "checklist": "9/9; PR #16 updated",
       "validation_status": "passed",
       "validation_refs": [
         "docs/validation/VAL-019-mobile-entry.md"
       ],
-        "completed_checkpoint": "CP-0105"
+      "completed_checkpoint": "CP-0105"
     },
     "L08-W02": {
       "phase": "L08",
@@ -1313,6 +1315,18 @@
         "docs/validation/VAL-020-first-flow-login-design.md"
       ],
       "completed_checkpoint": "CP-0107"
+    },
+    "L08-W03": {
+      "phase": "L08",
+      "status": "completed",
+      "authorization_ref": "AUTH-032",
+      "definition_path": "docs/execution/work-items/L08-W03.md",
+      "validation_status": "passed",
+      "validation_refs": [
+        "docs/validation/VAL-021-guided-first-project.md"
+      ],
+      "checklist": "6/6; PR #18 게시",
+      "completed_checkpoint": "CP-0111"
     }
   }
 }
